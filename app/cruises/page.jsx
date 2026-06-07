@@ -234,12 +234,10 @@ export default function CruisesPage() {
                 style={{ background: "#fff", color: "#991b1b", border: "none", borderRadius: "8px", padding: "11px 28px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>
                 Search Cruises →
               </button>
-              {hasFilters && (
-                <button onClick={clearFilters}
-                  style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.4)", borderRadius: "8px", padding: "11px 20px", fontSize: "13px", cursor: "pointer" }}>
-                  Clear filters
-                </button>
-              )}
+              <button onClick={clearFilters}
+                style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.4)", borderRadius: "8px", padding: "11px 20px", fontSize: "13px", cursor: "pointer" }}>
+                Clear filters
+              </button>
             </div>
           </div>
         </div>

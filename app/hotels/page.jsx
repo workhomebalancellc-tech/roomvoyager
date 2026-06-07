@@ -124,15 +124,13 @@ export default function HotelsPage() {
                 >
                   Search Hotels →
                 </button>
-                {hasFilters && (
-                  <button
-                    type="button"
-                    onClick={clearFilters}
-                    style={{ width: "100%", padding: "8px 24px", background: "none", color: "#6b7280", border: "1px solid #d1d5db", borderRadius: "8px", fontSize: "13px", cursor: "pointer" }}
-                  >
-                    Clear filters
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  style={{ width: "100%", padding: "8px 24px", background: "none", color: "#6b7280", border: "1px solid #d1d5db", borderRadius: "8px", fontSize: "13px", cursor: "pointer" }}
+                >
+                  Clear filters
+                </button>
               </div>
             </div>
           </form>
