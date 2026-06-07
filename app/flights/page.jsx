@@ -57,6 +57,10 @@ export default function FlightsPage() {
 
       {/* Travelpayouts whitelabel */}
       <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB" }}>
+        <div style={{ background: NAVY, padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <span style={{ color: "#fff", fontSize: "13px", fontWeight: "600" }}>✈️ Search flights</span>
+          <span style={{ color: "#93C5FD", fontSize: "12px" }}>Free — no account required</span>
+        </div>
         <iframe
           src="https://flights.roomvoyagertravel.com"
           title="Flight Search"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 const NAVY = "#003B95";
@@ -21,6 +22,8 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/profile";
 
   const handleEmailSignIn = async (e) => {
     e.preventDefault();
@@ -29,10 +32,10 @@ export default function SignInPage() {
     if (!email || !password) { setError("Please fill in all fields"); setLoading(false); return; }
     const result = await signIn("credentials", { email, password, redirect: false });
     if (result?.error) { setError("Invalid email or password. Please try again."); setLoading(false); }
-    else { window.location.href = "/"; }
+    else { window.location.href = callbackUrl; }
   };
 
-  const handleGoogleSignIn = () => signIn("google", { callbackUrl: "/" });
+  const handleGoogleSignIn = () => signIn("google", { callbackUrl });
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>

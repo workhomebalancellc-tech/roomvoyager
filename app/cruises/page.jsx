@@ -308,12 +308,10 @@ export default function CruisesPage() {
       <div style={{ position: "relative", overflow: "hidden" }}>
         <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1600&h=480&fit=crop&auto=format" alt="Cruise ship at sea" style={{ width: "100%", height: "340px", objectFit: "cover" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.65) 0%, rgba(0,15,60,0.88) 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "0 24px 0" }}>
-          <div style={{ maxWidth: "960px", margin: "0 auto", width: "100%", paddingBottom: "0" }}>
-            <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 8px" }}>🚢 Cruise Search</p>
-            <h1 style={{ color: "#fff", fontSize: "clamp(26px, 4vw, 42px)", fontWeight: "800", margin: "0 0 8px", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>Find your perfect cruise</h1>
-            <p style={{ color: "#BFDBFE", fontSize: "15px", margin: "0 0 20px", maxWidth: "500px" }}>Royal Caribbean, Celebrity, Cunard, Virgin Voyages, Carnival and more.</p>
-          </div>
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🚢 Cruise Search</p>
+          <h1 style={{ color: "#fff", fontSize: "clamp(26px, 4vw, 42px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>Find your perfect cruise</h1>
+          <p style={{ color: "#BFDBFE", fontSize: "15px", margin: 0, maxWidth: "500px" }}>Royal Caribbean, Celebrity, Cunard, Virgin Voyages, Carnival and more.</p>
         </div>
       </div>
 

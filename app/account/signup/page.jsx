@@ -37,14 +37,14 @@ export default function SignUpPage() {
       if (!res.ok) throw new Error(data.error || "Failed to create account");
       const result = await signIn("credentials", { email, password, redirect: false });
       if (result?.error) throw new Error("Account created — please sign in manually.");
-      window.location.href = "/";
+      window.location.href = "/profile";
     } catch (err) {
       setError(err.message);
       setLoading(false);
     }
   };
 
-  const handleGoogleSignIn = () => signIn("google", { callbackUrl: "/" });
+  const handleGoogleSignIn = () => signIn("google", { callbackUrl: "/profile" });
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
