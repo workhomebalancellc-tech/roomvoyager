@@ -196,6 +196,10 @@ const LINE_COLORS = {
   "Virgin Voyages":  "#D81C33",
 };
 
+const NAVY = "#003B95";
+const ORANGE = "#FF6600";
+const LIGHT_BLUE = "#EBF3FF";
+
 export default function CruisesPage() {
   const [destination, setDestination] = useState("");
   const [tripType, setTripType] = useState("");
@@ -206,6 +210,9 @@ export default function CruisesPage() {
   const [usingMock, setUsingMock] = useState(false);
   const [expandedId, setExpandedId] = useState(null);
   const [agentModal, setAgentModal] = useState(null);
+  const [quoteForm, setQuoteForm] = useState({ firstName:"", lastName:"", email:"", phone:"", departureCity:"", destination:"", checkIn:"", checkOut:"", adults:"2", children:"0", cabin:"No preference", cruiseLine:"", budget:"", occasion:"", heardAbout:"", specialRequests:"" });
+  const [quoteSubmitting, setQuoteSubmitting] = useState(false);
+  const [quoteSuccess, setQuoteSuccess] = useState(false);
 
   const hasFilters = destination || tripType || duration || departurePort;
 
@@ -268,90 +275,83 @@ export default function CruisesPage() {
       })
     : cruises;
 
+  async function handleQuoteSubmit(e) {
+    e.preventDefault();
+    setQuoteSubmitting(true);
+    const cruise = agentModal;
+    const subject = `Cruise Quote Request: ${cruise?.name || "Custom Cruise"}`;
+    const body = `Hi Alyse,\n\nNew cruise quote request:\n\nCustomer: ${quoteForm.firstName} ${quoteForm.lastName}\nEmail: ${quoteForm.email}\nPhone: ${quoteForm.phone}\nDeparture City: ${quoteForm.departureCity}\nDestination: ${quoteForm.destination || cruise?.destination || "Flexible"}\nTravel Dates: ${quoteForm.checkIn} – ${quoteForm.checkOut}\nGuests: ${quoteForm.adults} adults, ${quoteForm.children} children\nCabin Preference: ${quoteForm.cabin}\nCruise Line Preference: ${quoteForm.cruiseLine || cruise?.cruise_line || "Any"}\nBudget (per person): ${quoteForm.budget}\nSpecial Occasion: ${quoteForm.occasion}\nSpecial Requests: ${quoteForm.specialRequests}\nHeard About Us: ${quoteForm.heardAbout}\n\nCruise of Interest: ${cruise?.name || "Custom"}\nApprox. Price Shown: $${cruise?.inside_price || 0}/pp\n\nPlease send a personalized quote within 24 hours.\n\nThank you!`;
+    window.location.href = `mailto:workhomebalancellc@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setTimeout(() => { setQuoteSubmitting(false); setQuoteSuccess(true); }, 800);
+  }
+
   return (
-    <div style={{ minHeight: "100vh", background: "#f9fafb", fontFamily: "system-ui, sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
       {/* NAV */}
-      <nav style={{ background: "#991B1B", padding: "16px 24px", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 2px 12px rgba(0,0,0,0.15)" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <a href="/" style={{ fontSize: "22px", fontWeight: "700", color: "#fff", textDecoration: "none" }}>RoomVoyager</a>
-          <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", justifyContent: "flex-end" }}>
-            <a href="/hotels" style={{ color: "#fca5a5", textDecoration: "none" }}>Hotels</a>
-            <a href="/flights" style={{ color: "#fca5a5", textDecoration: "none" }}>Flights</a>
-            <a href="/cruises" style={{ color: "#fff", fontWeight: "600", textDecoration: "none", borderBottom: "2px solid #fff", paddingBottom: "2px" }}>Cruises</a>
-            <a href="/rewards" style={{ color: "#fca5a5", textDecoration: "none" }}>Rewards</a>
-            <a href="/profile" style={{ color: "#fca5a5", textDecoration: "none" }}>Profile</a>
-            <a href="/contact" style={{ color: "#fca5a5", textDecoration: "none" }}>Contact</a>
+      <nav style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 24px", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 1px 8px rgba(0,0,0,0.07)" }}>
+        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px" }}>
+          <a href="/" style={{ fontSize: "22px", fontWeight: "800", color: NAVY, textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
+          <div style={{ display: "flex", gap: "20px", alignItems: "center", flexWrap: "wrap" }}>
+            <a href="/hotels" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Hotels</a>
+            <a href="/flights" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Flights</a>
+            <a href="/cruises" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "700", borderBottom: `2px solid ${ORANGE}`, paddingBottom: "2px" }}>Cruises</a>
+            <a href="/rewards" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Rewards</a>
+            <a href="/profile" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Profile</a>
+            <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "7px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
+            <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
           </div>
         </div>
       </nav>
 
       {/* HERO + SEARCH */}
-      <div style={{ background: "linear-gradient(135deg, #7f1d1d 0%, #991b1b 40%, #7f1d1d 100%)", padding: "48px 24px 40px" }}>
-        <div style={{ maxWidth: "960px", margin: "0 auto" }}>
-          <p style={{ color: "#fca5a5", fontSize: "11px", fontWeight: "600", margin: "0 0 10px", textTransform: "uppercase", letterSpacing: "0.1em" }}>🚢 Live Cruise Search</p>
-          <h1 style={{ color: "#fff", fontSize: "clamp(28px, 5vw, 42px)", fontWeight: "700", margin: "0 0 12px", lineHeight: "1.2" }}>Find your perfect cruise</h1>
-          <p style={{ color: "#fca5a5", fontSize: "16px", margin: "0 0 32px", maxWidth: "520px", lineHeight: "1.6" }}>
-            Search sailings from Royal Caribbean, Carnival, Celebrity, Viking, Cunard, Virgin Voyages and more.
-          </p>
-          <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: "12px", padding: "20px", backdropFilter: "blur(8px)" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px", marginBottom: "14px" }}>
-              <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#fca5a5", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Trip Type</label>
-                <select value={tripType} onChange={(e) => setTripType(e.target.value)}
-                  style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827" }}>
-                  <option value="">All Trips</option>
-                  <option value="family">👨‍👩‍👧 Family</option>
-                  <option value="honeymoon">💍 Honeymoon & Romance</option>
-                  <option value="solo">🧳 Solo-Friendly</option>
-                  <option value="adults-only">🍹 Adults-Only</option>
-                  <option value="short">⚡ Short Getaway (≤5 nights)</option>
-                  <option value="luxury">✨ Luxury</option>
-                  <option value="adventure">🏔️ Adventure & Nature</option>
+      <div style={{ position: "relative", overflow: "hidden" }}>
+        <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1600&h=480&fit=crop&auto=format" alt="Cruise ship at sea" style={{ width: "100%", height: "340px", objectFit: "cover" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.65) 0%, rgba(0,15,60,0.88) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "0 24px 0" }}>
+          <div style={{ maxWidth: "960px", margin: "0 auto", width: "100%", paddingBottom: "0" }}>
+            <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 8px" }}>🚢 Cruise Search</p>
+            <h1 style={{ color: "#fff", fontSize: "clamp(26px, 4vw, 42px)", fontWeight: "800", margin: "0 0 8px", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>Find your perfect cruise</h1>
+            <p style={{ color: "#BFDBFE", fontSize: "15px", margin: "0 0 20px", maxWidth: "500px" }}>Royal Caribbean, Celebrity, Cunard, Virgin Voyages, Carnival and more.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* SEARCH FILTERS — seamlessly attached below hero */}
+      <div style={{ background: NAVY, padding: "0 24px" }}>
+        <div style={{ maxWidth: "960px", margin: "0 auto", padding: "20px 0" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px", marginBottom: "14px" }}>
+            {[
+              { label: "Trip Type", value: tripType, onChange: e => setTripType(e.target.value), options: [["","All Trips"],["family","👨‍👩‍👧 Family"],["honeymoon","💍 Honeymoon & Romance"],["solo","🧳 Solo-Friendly"],["adults-only","🍹 Adults-Only"],["short","⚡ Short Getaway"],["luxury","✨ Luxury"],["adventure","🏔️ Adventure"]] },
+              { label: "Destination", value: destination, onChange: e => setDestination(e.target.value), options: [["","All Destinations"],["Caribbean","Caribbean"],["Mediterranean","Mediterranean"],["Alaska","Alaska"],["Bahamas","Bahamas"],["Mexico","Mexico"],["Transatlantic","Transatlantic"]] },
+              { label: "Duration", value: duration, onChange: e => setDuration(e.target.value), options: [["","Any Length"],["3-5","3–5 nights"],["6-8","6–8 nights"],["9-12","9–12 nights"],["13+","13+ nights"]] },
+            ].map(({ label, value, onChange, options }) => (
+              <div key={label}>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</label>
+                <select value={value} onChange={onChange} style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827" }}>
+                  {options.map(([val, text]) => <option key={val} value={val}>{text}</option>)}
                 </select>
               </div>
-              <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#fca5a5", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Destination</label>
-                <select value={destination} onChange={(e) => setDestination(e.target.value)}
-                  style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827" }}>
-                  <option value="">All Destinations</option>
-                  <option>Caribbean</option><option>Mediterranean</option><option>Alaska</option><option>Bahamas</option><option>Mexico</option><option>Transatlantic</option>
-                </select>
-              </div>
-              <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#fca5a5", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Duration</label>
-                <select value={duration} onChange={(e) => setDuration(e.target.value)}
-                  style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827" }}>
-                  <option value="">Any Length</option>
-                  <option value="3-5">3–5 nights</option><option value="6-8">6–8 nights</option><option value="9-12">9–12 nights</option><option value="13+">13+ nights</option>
-                </select>
-              </div>
-              <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#fca5a5", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Departure Port</label>
-                <input type="text" placeholder="e.g. Miami" value={departurePort} onChange={(e) => setDeparturePort(e.target.value)}
-                  style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box" }} />
-              </div>
+            ))}
+            <div>
+              <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Departure Port</label>
+              <input type="text" placeholder="e.g. Miami" value={departurePort} onChange={e => setDeparturePort(e.target.value)}
+                style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box" }} />
             </div>
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-              <button onClick={fetchCruises}
-                style={{ background: "#fff", color: "#991b1b", border: "none", borderRadius: "8px", padding: "11px 28px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>
-                Search Cruises →
-              </button>
-              <button onClick={clearFilters}
-                style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.4)", borderRadius: "8px", padding: "11px 20px", fontSize: "13px", cursor: "pointer" }}>
-                Clear filters
-              </button>
-            </div>
+          </div>
+          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            <button onClick={fetchCruises} style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", padding: "11px 28px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>Search Cruises →</button>
+            <button onClick={clearFilters} style={{ background: "rgba(255,255,255,0.12)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "8px", padding: "11px 20px", fontSize: "13px", cursor: "pointer" }}>Clear filters</button>
           </div>
         </div>
       </div>
 
       {/* REWARDS BANNER */}
-      <div style={{ background: "#991b1b", padding: "10px 24px" }}>
+      <div style={{ background: "#EBF3FF", borderBottom: "1px solid #BFDBFE", padding: "10px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
-          <p style={{ color: "#fff", fontSize: "13px", margin: 0 }}>
+          <p style={{ color: NAVY, fontSize: "13px", margin: 0 }}>
             💰 <strong>Earn 10 RoomVoyager Rewards points per $1</strong> on cruise bookings —{" "}
-            <a href="/rewards" style={{ color: "#fca5a5", textDecoration: "underline" }}>learn more →</a>
+            <a href="/rewards" style={{ color: ORANGE, textDecoration: "underline" }}>learn more →</a>
           </p>
         </div>
       </div>
@@ -406,14 +406,14 @@ export default function CruisesPage() {
                   {cruise.ports_of_call?.length > 0 && (
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", marginBottom: "12px" }}>
                       {cruise.ports_of_call.slice(0, 3).map((port, i) => (
-                        <span key={i} style={{ fontSize: "11px", background: "#fef2f2", color: "#991b1b", padding: "2px 8px", borderRadius: "999px" }}>📍 {port}</span>
+                        <span key={i} style={{ fontSize: "11px", background: LIGHT_BLUE, color: NAVY, padding: "2px 8px", borderRadius: "999px" }}>📍 {port}</span>
                       ))}
                       {cruise.ports_of_call.length > 3 && <span style={{ fontSize: "11px", color: "#9ca3af", padding: "2px 4px" }}>+{cruise.ports_of_call.length - 3} more</span>}
                     </div>
                   )}
                   <div style={{ marginBottom: "10px" }}>
                     {cruise.inside_price > 0 && (
-                      <p style={{ fontSize: "20px", fontWeight: "700", color: "#991b1b", margin: "0 0 2px" }}>
+                      <p style={{ fontSize: "20px", fontWeight: "700", color: NAVY, margin: "0 0 2px" }}>
                         From ${cruise.inside_price.toLocaleString()}<span style={{ fontSize: "12px", fontWeight: "400", color: "#6b7280" }}>/pp</span>
                       </p>
                     )}
@@ -440,12 +440,12 @@ export default function CruisesPage() {
                 </div>
                 <div style={{ padding: "12px 16px", borderTop: "1px solid #f3f4f6", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                   <a href={buildCruiseDirectUrl(cruise)} target="_blank" rel="noopener noreferrer"
-                    style={{ background: "#991b1b", color: "#fff", textAlign: "center", padding: "10px", borderRadius: "8px", fontSize: "13px", fontWeight: "600", textDecoration: "none" }}>
+                    style={{ background: ORANGE, color: "#fff", textAlign: "center", padding: "10px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", textDecoration: "none" }}>
                     Book now →
                   </a>
-                  <button onClick={() => setAgentModal(cruise)}
-                    style={{ background: "#fff", color: "#991b1b", border: "1.5px solid #991b1b", borderRadius: "8px", padding: "10px", fontSize: "13px", fontWeight: "600", cursor: "pointer" }}>
-                    Book with agent
+                  <button onClick={() => { setAgentModal(cruise); setQuoteSuccess(false); setQuoteForm(f => ({ ...f, destination: cruise.destination, cruiseLine: cruise.cruise_line })); }}
+                    style={{ background: "#fff", color: NAVY, border: `1.5px solid ${NAVY}`, borderRadius: "8px", padding: "10px", fontSize: "13px", fontWeight: "600", cursor: "pointer" }}>
+                    Get a quote
                   </button>
                 </div>
               </div>
@@ -467,50 +467,163 @@ export default function CruisesPage() {
         )}
 
         {/* Bundle CTA */}
-        <div style={{ background: "linear-gradient(135deg, #7f1d1d, #991b1b)", borderRadius: "16px", padding: "28px 32px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px", marginTop: "48px" }}>
-          <div>
-            <h3 style={{ fontSize: "18px", fontWeight: "700", color: "#fff", margin: "0 0 4px" }}>Want a bundle? Flights + hotel + cruise</h3>
-            <p style={{ fontSize: "13px", color: "#fca5a5", margin: 0 }}>Our licensed travel advisor can package everything together — often cheaper than booking separately.</p>
+        <div style={{ position: "relative", borderRadius: "20px", overflow: "hidden", marginTop: "48px" }}>
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&h=260&fit=crop&auto=format" alt="Airplane" style={{ width: "100%", height: "180px", objectFit: "cover" }} />
+          <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${NAVY}f2, rgba(0,30,80,0.5))` }} />
+          <div style={{ position: "absolute", inset: 0, display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 32px", flexWrap: "wrap", gap: "16px" }}>
+            <div>
+              <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#fff", margin: "0 0 4px" }}>Want a bundle? Flights + hotel + cruise</h3>
+              <p style={{ fontSize: "13px", color: "#BFDBFE", margin: 0 }}>Our licensed travel advisor packages everything together — often cheaper than booking separately.</p>
+            </div>
+            <button onClick={() => { setAgentModal({ name: "Flight + Hotel + Cruise Bundle", cruise_line: "", nights: "", inside_price: 0, destination: "" }); setQuoteSuccess(false); }}
+              style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 24px", fontSize: "14px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap" }}>
+              Get a bundle quote →
+            </button>
           </div>
-          <button onClick={() => setAgentModal({ name: "Flight + Hotel + Cruise Bundle", cruise_line: "", nights: "", inside_price: 0 })}
-            style={{ background: "#fff", color: "#7f1d1d", border: "none", borderRadius: "8px", padding: "12px 24px", fontSize: "14px", fontWeight: "600", cursor: "pointer", whiteSpace: "nowrap" }}>
-            Get a bundle quote →
-          </button>
         </div>
       </div>
 
-      {/* AGENT MODAL */}
+      {/* QUOTE MODAL */}
       {agentModal && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}
-          onClick={(e) => { if (e.target === e.currentTarget) setAgentModal(null); }}>
-          <div style={{ background: "#fff", borderRadius: "16px", padding: "32px", maxWidth: "480px", width: "100%", maxHeight: "90vh", overflowY: "auto" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
-              <h2 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: 0 }}>Book with our agent</h2>
-              <button onClick={() => setAgentModal(null)} style={{ background: "none", border: "none", fontSize: "24px", color: "#9ca3af", cursor: "pointer", lineHeight: 1 }}>×</button>
-            </div>
-            {agentModal.name && (
-              <div style={{ background: "#fef2f2", borderRadius: "10px", padding: "14px", marginBottom: "20px" }}>
-                <p style={{ fontWeight: "600", color: "#7f1d1d", margin: "0 0 4px", fontSize: "15px" }}>{agentModal.name}</p>
-                {agentModal.cruise_line && <p style={{ color: "#374151", margin: "0 0 2px", fontSize: "13px" }}>{agentModal.cruise_line}{agentModal.nights ? ` · ${agentModal.nights} nights` : ""}</p>}
-                {agentModal.inside_price > 0 && <p style={{ color: "#374151", margin: 0, fontSize: "13px" }}>From ~${agentModal.inside_price.toLocaleString()}/pp</p>}
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.65)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px" }}
+          onClick={e => { if (e.target === e.currentTarget) { setAgentModal(null); setQuoteSuccess(false); } }}>
+          <div style={{ background: "#fff", borderRadius: "20px", width: "100%", maxWidth: "560px", maxHeight: "92vh", overflowY: "auto" }}>
+
+            {/* Modal header */}
+            <div style={{ background: NAVY, borderRadius: "20px 20px 0 0", padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div>
+                <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", margin: "0 0 4px", letterSpacing: "0.1em" }}>🚢 Free Quote</p>
+                <h2 style={{ color: "#fff", fontSize: "18px", fontWeight: "800", margin: 0 }}>Request a Personalized Cruise Quote</h2>
               </div>
-            )}
-            <div style={{ marginBottom: "24px" }}>
-              <p style={{ fontWeight: "600", color: "#111827", margin: "0 0 12px", fontSize: "14px" }}>Why book with our agent?</p>
-              {["Access to exclusive rates not available online", "Flight + cruise bundles priced together", "Personal service & support throughout your trip", "No booking fees — ever"].map((item, i) => (
-                <div key={i} style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
-                  <span style={{ color: "#991b1b", fontWeight: "700", flexShrink: 0 }}>✓</span>
-                  <span style={{ fontSize: "13px", color: "#374151" }}>{item}</span>
-                </div>
-              ))}
+              <button onClick={() => { setAgentModal(null); setQuoteSuccess(false); }} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", fontSize: "20px", borderRadius: "8px", width: "32px", height: "32px", cursor: "pointer", lineHeight: 1 }}>×</button>
             </div>
-            <a href={`mailto:workhomebalancellc@gmail.com?subject=Cruise Booking Request: ${encodeURIComponent(agentModal.name)}&body=${encodeURIComponent(`Hi,\n\nI'm interested in booking the following cruise:\n\nCruise: ${agentModal.name}\nLine: ${agentModal.cruise_line}\nNights: ${agentModal.nights}\nStarting from: $${agentModal.inside_price}/pp\n\nPlease send me more details and availability.\n\nThank you!`)}`}
-              style={{ display: "block", background: "#991b1b", color: "#fff", textAlign: "center", padding: "14px", borderRadius: "10px", fontSize: "15px", fontWeight: "600", textDecoration: "none", marginBottom: "16px" }}>
-              📧 Email our agent →
-            </a>
-            <div style={{ textAlign: "center", fontSize: "12px", color: "#9ca3af" }}>
-              <p style={{ margin: "0 0 2px" }}>Mon–Fri 6–9PM · Sat 10AM–4PM EST</p>
-              <p style={{ margin: 0 }}>We respond within 24 hours · No obligation</p>
+
+            <div style={{ padding: "24px" }}>
+              {/* Cruise of interest */}
+              {agentModal.name && (
+                <div style={{ background: LIGHT_BLUE, borderRadius: "10px", padding: "12px 16px", marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <p style={{ fontWeight: "700", color: NAVY, margin: "0 0 2px", fontSize: "14px" }}>{agentModal.name}</p>
+                    {agentModal.cruise_line && <p style={{ color: "#374151", margin: 0, fontSize: "12px" }}>{agentModal.cruise_line}{agentModal.nights ? ` · ${agentModal.nights} nights` : ""}</p>}
+                  </div>
+                  {agentModal.inside_price > 0 && <span style={{ background: ORANGE, color: "#fff", fontSize: "12px", fontWeight: "700", padding: "4px 10px", borderRadius: "8px" }}>From ~${agentModal.inside_price.toLocaleString()}/pp</span>}
+                </div>
+              )}
+
+              {quoteSuccess ? (
+                <div style={{ textAlign: "center", padding: "32px 16px" }}>
+                  <div style={{ fontSize: "48px", marginBottom: "16px" }}>✅</div>
+                  <h3 style={{ fontSize: "20px", fontWeight: "800", color: NAVY, margin: "0 0 8px" }}>Quote request sent!</h3>
+                  <p style={{ color: "#374151", fontSize: "14px", margin: "0 0 24px" }}>We'll email you a personalized quote within 24 hours. Check your inbox at <strong>{quoteForm.email}</strong>.</p>
+                  <p style={{ color: "#6B7280", fontSize: "12px", margin: 0 }}>Mon–Fri 6–9PM · Sat 10AM–4PM EST</p>
+                </div>
+              ) : (
+                <form onSubmit={handleQuoteSubmit}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
+                    {[["First Name","firstName","text",true],["Last Name","lastName","text",true]].map(([label,field,type,req]) => (
+                      <div key={field}>
+                        <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>{label}{req&&<span style={{color:ORANGE}}> *</span>}</label>
+                        <input type={type} required={req} value={quoteForm[field]} onChange={e => setQuoteForm(f=>({...f,[field]:e.target.value}))}
+                          style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
+                    {[["Email","email","email",true],["Phone","phone","tel",false]].map(([label,field,type,req]) => (
+                      <div key={field}>
+                        <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>{label}{req&&<span style={{color:ORANGE}}> *</span>}</label>
+                        <input type={type} required={req} value={quoteForm[field]} onChange={e => setQuoteForm(f=>({...f,[field]:e.target.value}))}
+                          style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginBottom: "12px" }}>
+                    <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Departure City / Airport <span style={{color:ORANGE}}>*</span></label>
+                    <input type="text" required placeholder="e.g. Indianapolis, IN" value={quoteForm.departureCity} onChange={e => setQuoteForm(f=>({...f,departureCity:e.target.value}))}
+                      style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Earliest Travel Date</label>
+                      <input type="date" value={quoteForm.checkIn} onChange={e => setQuoteForm(f=>({...f,checkIn:e.target.value}))}
+                        style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Latest Travel Date</label>
+                      <input type="date" value={quoteForm.checkOut} onChange={e => setQuoteForm(f=>({...f,checkOut:e.target.value}))}
+                        style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
+                    </div>
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Adults</label>
+                      <select value={quoteForm.adults} onChange={e => setQuoteForm(f=>({...f,adults:e.target.value}))}
+                        style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", background: "#fff", boxSizing: "border-box" }}>
+                        {[1,2,3,4,5,6,7,8].map(n=><option key={n} value={n}>{n} adult{n>1?"s":""}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Children</label>
+                      <select value={quoteForm.children} onChange={e => setQuoteForm(f=>({...f,children:e.target.value}))}
+                        style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", background: "#fff", boxSizing: "border-box" }}>
+                        {[0,1,2,3,4,5].map(n=><option key={n} value={n}>{n} {n===1?"child":"children"}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Cabin Preference</label>
+                      <select value={quoteForm.cabin} onChange={e => setQuoteForm(f=>({...f,cabin:e.target.value}))}
+                        style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", background: "#fff", boxSizing: "border-box" }}>
+                        {["No preference","Inside","Oceanview","Balcony","Suite"].map(c=><option key={c}>{c}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Budget (per person)</label>
+                      <select value={quoteForm.budget} onChange={e => setQuoteForm(f=>({...f,budget:e.target.value}))}
+                        style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", background: "#fff", boxSizing: "border-box" }}>
+                        {["Under $500","$500–$1,000","$1,000–$2,000","$2,000–$3,500","$3,500+","Flexible"].map(b=><option key={b}>{b}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: "12px" }}>
+                    <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Special Occasion</label>
+                    <select value={quoteForm.occasion} onChange={e => setQuoteForm(f=>({...f,occasion:e.target.value}))}
+                      style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", background: "#fff", boxSizing: "border-box" }}>
+                      {["None","Honeymoon","Anniversary","Birthday","Family Reunion","Graduation","Retirement","Just for fun"].map(o=><option key={o}>{o}</option>)}
+                    </select>
+                  </div>
+                  <div style={{ marginBottom: "12px" }}>
+                    <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Special Requests or Questions</label>
+                    <textarea rows={3} placeholder="Dietary needs, accessibility, excursion interests, anything else..." value={quoteForm.specialRequests} onChange={e => setQuoteForm(f=>({...f,specialRequests:e.target.value}))}
+                      style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", resize: "vertical", boxSizing: "border-box" }} />
+                  </div>
+                  <div style={{ marginBottom: "20px" }}>
+                    <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>How did you hear about us?</label>
+                    <select value={quoteForm.heardAbout} onChange={e => setQuoteForm(f=>({...f,heardAbout:e.target.value}))}
+                      style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", background: "#fff", boxSizing: "border-box" }}>
+                      {["","TikTok","Instagram","Google","Friend/Family","Facebook","Other"].map(h=><option key={h} value={h}>{h||"Select..."}</option>)}
+                    </select>
+                  </div>
+
+                  {/* Why book with agent */}
+                  <div style={{ background: LIGHT_BLUE, borderRadius: "10px", padding: "14px", marginBottom: "20px" }}>
+                    <p style={{ fontSize: "12px", fontWeight: "700", color: NAVY, margin: "0 0 8px" }}>Why request a quote?</p>
+                    {["Personalized pricing based on your departure city","Flights + cruise bundled together","Access to rates not always shown online","No booking fees — ever"].map((item,i) => (
+                      <div key={i} style={{ display: "flex", gap: "8px", marginBottom: "4px" }}>
+                        <span style={{ color: ORANGE, fontWeight: "700", flexShrink: 0 }}>✓</span>
+                        <span style={{ fontSize: "12px", color: "#374151" }}>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button type="submit" disabled={quoteSubmitting}
+                    style={{ width: "100%", background: quoteSubmitting ? "#9CA3AF" : ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "14px", fontSize: "15px", fontWeight: "700", cursor: quoteSubmitting ? "default" : "pointer", marginBottom: "10px" }}>
+                    {quoteSubmitting ? "Sending..." : "📧 Request My Free Quote →"}
+                  </button>
+                  <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: 0 }}>Mon–Fri 6–9PM · Sat 10AM–4PM EST · Response within 24 hours</p>
+                </form>
+              )}
             </div>
           </div>
         </div>
