@@ -1,35 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import Script from "next/script";
 
 export default function HotelsPage() {
-  const scriptLoaded = useRef(false);
-  const widgetRef = useRef(null);
-
-  useEffect(() => {
-    if (scriptLoaded.current) return;
-    if (!widgetRef.current) return;
-
-    scriptLoaded.current = true;
-
-    const existing = document.querySelector(".eg-widgets-script");
-    if (existing) existing.remove();
-
-    const script = document.createElement("script");
-    script.className = "eg-widgets-script";
-    script.src = "https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js";
-    script.async = true;
-    script.onload = () => {
-      if (window.EGWidgets) window.EGWidgets.init();
-    };
-    document.body.appendChild(script);
-
-    return () => {
-      const s = document.querySelector(".eg-widgets-script");
-      if (s) s.remove();
-      scriptLoaded.current = false;
-    };
-  }, []);
 
   const destinations = [
     { name: "Cancun", emoji: "🌴", country: "Mexico", tag: "Most Popular" },
@@ -81,7 +54,6 @@ export default function HotelsPage() {
           <div style={{ padding: "20px 0 24px", pointerEvents: "auto", position: "relative", zIndex: 2 }}>
             <div
               className="eg-widget"
-              ref={widgetRef}
               data-widget="search"
               data-program="us-expedia"
               data-lobs="stays"
@@ -191,6 +163,14 @@ export default function HotelsPage() {
           </a>
         </div>
       </div>
+
+      <Script
+        src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          if (window.EGWidgets) window.EGWidgets.init();
+        }}
+      />
 
       {/* EXPEDIA CSS OVERRIDES */}
       <style>{`
