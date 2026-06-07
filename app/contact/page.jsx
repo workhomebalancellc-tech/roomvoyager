@@ -65,17 +65,17 @@ export default function ContactPage() {
 
       {/* CONTACT CARDS */}
       <div style={{ maxWidth: "960px", margin: "0 auto", padding: "48px 24px 0" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginBottom: "48px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "40px" }}>
           {[
             { icon: "✉️", title: "Email Us", lines: ["workhomebalancellc@gmail.com"] },
             { icon: "📞", title: "Call Us", lines: ["1-800-VOYAGER", "Mon–Fri 9am–6pm EST"] },
-            { icon: "💬", title: "Live Chat", lines: ["Available on site", "Avg. response under 5 min"] },
-            { icon: "🚢", title: "Group Bookings", lines: ["Cruises, hotels & more", "Special group rates available"] },
+            { icon: "💬", title: "Live Chat", lines: ["Available on site", "Under 5 min response"] },
+            { icon: "🚢", title: "Group Bookings", lines: ["Cruises, hotels & more", "Special group rates"] },
           ].map((card, i) => (
-            <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "16px", padding: "24px" }}>
-              <div style={{ width: "44px", height: "44px", background: LIGHT_BLUE, borderRadius: "12px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", marginBottom: "12px" }}>{card.icon}</div>
-              <p style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>{card.title}</p>
-              {card.lines.map((line, j) => <p key={j} style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 2px" }}>{line}</p>)}
+            <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "16px" }}>
+              <div style={{ width: "36px", height: "36px", background: LIGHT_BLUE, borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", marginBottom: "10px" }}>{card.icon}</div>
+              <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>{card.title}</p>
+              {card.lines.map((line, j) => <p key={j} style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 2px" }}>{line}</p>)}
             </div>
           ))}
         </div>
