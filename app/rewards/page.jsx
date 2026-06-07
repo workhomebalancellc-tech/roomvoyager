@@ -43,7 +43,7 @@ const PAYMENT_METHODS = [
 
 export default function RewardsPage() {
   const { user: session } = useAuth();
-  const userPoints = 0; // TODO: fetch from DB once users table is set up
+  const [userPoints, setUserPoints] = useState(0);
   const cashValue = (userPoints / 100).toFixed(2);
   const canRedeem = userPoints >= 1000;
 
@@ -60,6 +60,9 @@ export default function RewardsPage() {
   const [autoPaySaved, setAutoPaySaved] = useState(false);
 
   useEffect(() => {
+    const pts = localStorage.getItem("rv_points");
+    if (pts) setUserPoints(parseInt(pts, 10) || 0);
+
     const saved = localStorage.getItem("rv_autopay");
     if (saved) {
       try {
@@ -302,7 +305,7 @@ export default function RewardsPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
                 <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 12px", fontSize: "14px" }}>How to redeem</p>
-                {["Reach 1,000+ redeemable points (45 days after trip completion)", "Click "Redeem Cash" in your account or below", "Choose your payout method: Zelle, Cash App, or Venmo", "Enter your payment handle and submit — processed in 2 business days"].map((step, i) => (
+                {["Reach 1,000+ redeemable points (45 days after trip completion)", "Click 'Redeem Cash' in your account or below", "Choose your payout method: Zelle, Cash App, or Venmo", "Enter your payment handle and submit — processed in 2 business days"].map((step, i) => (
                   <div key={i} style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
                     <span style={{ width: "20px", height: "20px", background: LIGHT_BLUE, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: "700", color: NAVY, flexShrink: 0 }}>{i + 1}</span>
                     <span style={{ fontSize: "13px", color: "#374151", lineHeight: 1.5 }}>{step}</span>
