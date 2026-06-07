@@ -78,16 +78,29 @@ export default function HomePage() {
           <div style={{ background: "#fff", borderRadius: "16px", padding: "8px", width: "100%", maxWidth: "700px", boxShadow: "0 12px 48px rgba(0,0,0,0.3)" }}>
             <div style={{ display: "flex", gap: "2px", padding: "4px 4px 8px" }}>
               {[["hotels", "🏨 Hotels"], ["flights", "✈️ Flights"], ["cruises", "🚢 Cruises"]].map(([tab, label]) => (
-                <button key={tab} onClick={() => setActiveTab(tab)}
+                <button key={tab} onClick={() => { setActiveTab(tab); setSearchVal(""); }}
                   style={{ padding: "8px 18px", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: "600", cursor: "pointer", background: activeTab === tab ? NAVY : "transparent", color: activeTab === tab ? "#fff" : "#6B7280", transition: "all 0.15s" }}>
                   {label}
                 </button>
               ))}
             </div>
             <form onSubmit={handleSearch} style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
-              <input type="text" placeholder={activeTab === "hotels" ? "Where are you going?" : activeTab === "cruises" ? "Caribbean, Mediterranean, Alaska..." : "Where are you flying?"}
-                value={searchVal} onChange={e => setSearchVal(e.target.value)}
-                style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827" }} />
+              {activeTab === "cruises" ? (
+                <select value={searchVal} onChange={e => setSearchVal(e.target.value)}
+                  style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: searchVal ? "#111827" : "#9CA3AF", background: "#fff" }}>
+                  <option value="">All Destinations</option>
+                  <option value="Caribbean">🌴 Caribbean</option>
+                  <option value="Mediterranean">🏛️ Mediterranean</option>
+                  <option value="Alaska">🏔️ Alaska</option>
+                  <option value="Bahamas">🐚 Bahamas</option>
+                  <option value="Mexico">🌮 Mexico</option>
+                  <option value="Transatlantic">🌊 Transatlantic</option>
+                </select>
+              ) : (
+                <input type="text" placeholder={activeTab === "hotels" ? "Where are you going?" : "Where are you flying from?"}
+                  value={searchVal} onChange={e => setSearchVal(e.target.value)}
+                  style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827" }} />
+              )}
               <button type="submit" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer" }}>Search →</button>
             </form>
           </div>
