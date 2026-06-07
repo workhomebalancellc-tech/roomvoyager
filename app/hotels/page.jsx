@@ -166,10 +166,7 @@ export default function HotelsPage() {
 
       <Script
         src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js"
-        strategy="afterInteractive"
-        onLoad={() => {
-          if (window.EGWidgets) window.EGWidgets.init();
-        }}
+        strategy="lazyOnload"
       />
 
       {/* EXPEDIA CSS OVERRIDES */}
