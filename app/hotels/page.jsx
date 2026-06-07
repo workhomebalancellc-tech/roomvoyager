@@ -1,7 +1,5 @@
 "use client";
 
-import Script from "next/script";
-
 export default function HotelsPage() {
 
   const destinations = [
@@ -51,15 +49,12 @@ export default function HotelsPage() {
             <span style={{ color: "#fff", fontSize: "13px", fontWeight: "500" }}>🔍 Search hotels</span>
             <span style={{ color: "#fca5a5", fontSize: "12px" }}>Free — no account required</span>
           </div>
-          <div style={{ padding: "20px 0 24px", pointerEvents: "auto", position: "relative", zIndex: 2 }}>
-            <div
-              className="eg-widget"
-              data-widget="search"
-              data-program="us-expedia"
-              data-lobs="stays"
-              data-network="pz"
-              data-camref="1110l8R3Z"
-              data-pubref="hotels-page"
+          <div style={{ padding: "20px 0 24px" }}>
+            <iframe
+              src="/expedia-widget.html"
+              style={{ width: "100%", minHeight: "160px", border: "none", display: "block" }}
+              scrolling="no"
+              title="Hotel Search"
             />
           </div>
         </div>
@@ -163,11 +158,6 @@ export default function HotelsPage() {
           </a>
         </div>
       </div>
-
-      <Script
-        src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js"
-        strategy="lazyOnload"
-      />
 
       {/* EXPEDIA CSS OVERRIDES */}
       <style>{`
