@@ -461,7 +461,7 @@ function CruisesContent() {
                     style={{ background: "#fff", color: NAVY, border: `1.5px solid ${NAVY}`, borderRadius: "8px", padding: "10px", fontSize: "13px", fontWeight: "600", cursor: "pointer" }}>
                     Get a quote
                   </button>
-                  <a href="/schedule" style={{ display: "block", background: LIGHT_BLUE, color: NAVY, border: `1.5px solid #BFDBFE`, borderRadius: "8px", padding: "10px", fontSize: "13px", fontWeight: "600", cursor: "pointer", textDecoration: "none", textAlign: "center" }}>
+                  <a href="/schedule" style={{ display: "block", gridColumn: "1 / -1", background: LIGHT_BLUE, color: NAVY, border: `1.5px solid #BFDBFE`, borderRadius: "8px", padding: "10px", fontSize: "13px", fontWeight: "600", cursor: "pointer", textDecoration: "none", textAlign: "center" }}>
                     📅 Schedule a call
                   </a>
                 </div>

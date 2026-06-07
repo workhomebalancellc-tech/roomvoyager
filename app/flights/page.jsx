@@ -1,5 +1,7 @@
 "use client";
 
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { useAuth } from "../../contexts/AuthContext";
 
 const NAVY = "#003B95";
@@ -26,8 +28,13 @@ const tips = [
   { icon: "🎒", title: "Travel carry-on only", desc: "Skipping checked bags saves $30–$60 each way on most budget and major carriers." },
 ];
 
-export default function FlightsPage() {
+function FlightsContent() {
   const { user } = useAuth();
+  const searchParams = useSearchParams();
+  const destination = searchParams.get("q") || "";
+  const iframeSrc = destination
+    ? `https://flights.roomvoyagertravel.com?destination=${encodeURIComponent(destination)}`
+    : "https://flights.roomvoyagertravel.com";
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
@@ -74,7 +81,7 @@ export default function FlightsPage() {
           <span style={{ color: "#93C5FD", fontSize: "12px" }}>Free — no account required</span>
         </div>
         <iframe
-          src="https://flights.roomvoyagertravel.com"
+          src={iframeSrc}
           title="Flight Search"
           style={{ width: "100%", minHeight: "100vh", border: "none", display: "block" }}
           allow="same-origin"
@@ -174,5 +181,13 @@ export default function FlightsPage() {
       </div>
 
     </div>
+  );
+}
+
+export default function FlightsPage() {
+  return (
+    <Suspense fallback={<div />}>
+      <FlightsContent />
+    </Suspense>
   );
 }
