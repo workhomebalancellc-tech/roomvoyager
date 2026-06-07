@@ -41,14 +41,38 @@ const MOCK_CRUISES = [
   },
 ];
 
+const DESTINATION_SLUGS = {
+  "Caribbean": "caribbean-cruises",
+  "Bahamas": "bahamas-cruises",
+  "Mediterranean": "mediterranean-cruises",
+  "Alaska": "alaska-cruises",
+  "Mexico": "mexico-cruises",
+};
+
+const LINE_SLUGS = {
+  "Royal Caribbean": "royal-caribbean",
+  "Carnival": "carnival-cruise-line",
+  "Norwegian": "norwegian-cruise-line",
+  "Princess": "princess-cruises",
+  "MSC": "msc-cruises",
+  "Disney": "disney-cruise-line",
+};
+
 function buildCruiseDirectUrl(cruise) {
-  const params = new URLSearchParams();
-  if (cruise.destination) params.set("destination", cruise.destination);
-  if (cruise.cruise_line) params.set("cruiseLine", cruise.cruise_line);
-  if (cruise.nights) params.set("duration", String(cruise.nights));
-  // TODO: Replace with CJ affiliate link once CJ ID is confirmed:
-  // return `https://www.jdoqocy.com/click-YOUR_CJ_ID?url=${encodeURIComponent("https://www.cruisedirect.com/search?" + params)}`;
-  return `https://www.cruisedirect.com/search?${params.toString()}`;
+  // Prefer cruise line page, fall back to destination page, fall back to homepage
+  const lineSlug = LINE_SLUGS[cruise.cruise_line];
+  const destSlug = DESTINATION_SLUGS[cruise.destination];
+  let url;
+  if (lineSlug) {
+    url = `https://www.cruisedirect.com/cruise-lines/${lineSlug}`;
+  } else if (destSlug) {
+    url = `https://www.cruisedirect.com/cruise-deals/${destSlug}`;
+  } else {
+    url = "https://www.cruisedirect.com";
+  }
+  // TODO: Wrap with CJ affiliate link once CJ ID is confirmed:
+  // return `https://www.jdoqocy.com/click-YOUR_CJ_ID?url=${encodeURIComponent(url)}`;
+  return url;
 }
 
 function normalizeCruise(raw, index) {
