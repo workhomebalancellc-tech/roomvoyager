@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useAuth } from "../../contexts/AuthContext";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -27,8 +27,7 @@ const tips = [
 ];
 
 export default function FlightsPage() {
-  const { data: session } = useSession();
-  const user = session?.user;
+  const { user } = useAuth();
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 

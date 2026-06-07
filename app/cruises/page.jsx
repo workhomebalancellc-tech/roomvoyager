@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useAuth } from "../../contexts/AuthContext";
 
 const MOCK_CRUISES = [
   {
@@ -203,8 +203,7 @@ const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 function CruisesContent() {
-  const { data: session } = useSession();
-  const user = session?.user;
+  const { user } = useAuth();
   const searchParams = useSearchParams();
   const [destination, setDestination] = useState(searchParams.get("q") || "");
   const [tripType, setTripType] = useState("");

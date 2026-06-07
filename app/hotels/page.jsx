@@ -3,15 +3,14 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "../../contexts/AuthContext";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 function HotelsContent() {
-  const { data: session } = useSession();
-  const user = session?.user;
+  const { user } = useAuth();
   const searchParams = useSearchParams();
   const [destination, setDestination] = useState(searchParams.get("q") || "");
   const [checkIn, setCheckIn] = useState("");

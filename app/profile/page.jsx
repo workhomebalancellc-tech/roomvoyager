@@ -1,18 +1,17 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { useAuth } from "../../contexts/AuthContext";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 export default function ProfilePage() {
-  const { data: session, status } = useSession();
-  const user = session?.user;
-  const loading = status === "loading";
+  const { user, loading, logout } = useAuth();
 
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/", redirect: true });
+    await logout();
+    window.location.href = "/";
   };
 
   const Nav = () => (

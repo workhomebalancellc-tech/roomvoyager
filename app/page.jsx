@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "../contexts/AuthContext";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -10,8 +10,7 @@ const LIGHT_BLUE = "#EBF3FF";
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState("hotels");
   const [searchVal, setSearchVal] = useState("");
-  const { data: session } = useSession();
-  const user = session?.user;
+  const { user } = useAuth();
 
   const destinations = [
     { name: "Cancún", country: "Mexico", photo: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=500&h=320&fit=crop&auto=format", tag: "Most Popular", href: "/hotels" },

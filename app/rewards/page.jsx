@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useAuth } from "../../contexts/AuthContext";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -35,7 +35,7 @@ const REFERRAL = [
 ];
 
 export default function RewardsPage() {
-  const { data: session } = useSession();
+  const { user: session } = useAuth();
   const userPoints = 0; // TODO: fetch from DB once users table is set up
   const cashValue = (userPoints / 100).toFixed(2);
   const canRedeem = userPoints >= 1000;

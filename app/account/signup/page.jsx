@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -17,39 +18,54 @@ const GoogleIcon = () => (
 );
 
 export default function SignUpPage() {
+  const { signInWithGoogle, signUpWithEmail } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setError(null);
+      await signInWithGoogle();
+      router.push("/profile");
+    } catch (err) {
+      console.error("Google sign-up error:", err.code, err.message);
+      if (err.code === "auth/popup-blocked") {
+        setError("Popup was blocked by your browser. Please allow popups for this site and try again.");
+      } else if (err.code === "auth/unauthorized-domain") {
+        setError("Sign-in is not authorized for this domain. Please contact support.");
+      } else if (err.code === "auth/popup-closed-by-user") {
+        setError(null); // User closed the popup — not an error
+      } else {
+        setError(`Google sign-up failed (${err.code || "unknown"}). Please try again.`);
+      }
+    }
+  };
 
   const handleEmailSignUp = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    if (!email || !password || !confirmPassword) { setError("Please fill in all fields"); setLoading(false); return; }
     if (password !== confirmPassword) { setError("Passwords do not match"); setLoading(false); return; }
     if (password.length < 8) { setError("Password must be at least 8 characters"); setLoading(false); return; }
     try {
-      const res = await fetch("/api/auth/register", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: name || undefined, email, password }) });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to create account");
-      const result = await signIn("credentials", { email, password, redirect: false });
-      if (result?.error) throw new Error("Account created — please sign in manually.");
-      window.location.href = "/profile";
+      await signUpWithEmail(name, email, password);
+      router.push("/profile");
     } catch (err) {
-      setError(err.message);
+      console.error("Email sign-up error:", err.code, err.message);
+      if (err.code === "auth/email-already-in-use") setError("An account with this email already exists.");
+      else if (err.code === "auth/weak-password") setError("Password is too weak. Please choose a stronger password.");
+      else setError(`Failed to create account (${err.code || "unknown"}). Please try again.`);
       setLoading(false);
     }
   };
 
-  const handleGoogleSignIn = () => signIn("google", { callbackUrl: "/profile" });
-
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
-
-      {/* NAV */}
       <nav style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 24px", boxShadow: "0 1px 8px rgba(0,0,0,0.07)" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px" }}>
           <a href="/" style={{ fontSize: "22px", fontWeight: "800", color: NAVY, textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
@@ -57,14 +73,12 @@ export default function SignUpPage() {
         </div>
       </nav>
 
-      {/* HERO STRIP */}
       <div style={{ background: NAVY, padding: "32px 24px", textAlign: "center" }}>
         <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 8px" }}>Join for free</p>
         <h1 style={{ color: "#fff", fontSize: "28px", fontWeight: "800", margin: "0 0 6px" }}>Create your RoomVoyager account</h1>
         <p style={{ color: "#BFDBFE", fontSize: "14px", margin: 0 }}>Earn rewards on every hotel, flight, and cruise you book</p>
       </div>
 
-      {/* PERKS STRIP */}
       <div style={{ background: LIGHT_BLUE, borderBottom: "1px solid #DBEAFE", padding: "12px 24px" }}>
         <div style={{ maxWidth: "440px", margin: "0 auto", display: "flex", justifyContent: "center", gap: "24px", flexWrap: "wrap" }}>
           {["🏆 Earn rewards points", "✈️ Exclusive member deals", "📋 Booking history"].map((item, i) => (
@@ -73,11 +87,9 @@ export default function SignUpPage() {
         </div>
       </div>
 
-      {/* CARD */}
       <div style={{ flex: 1, display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "40px 24px 60px" }}>
         <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", width: "100%", maxWidth: "440px", overflow: "hidden" }}>
 
-          {/* Google button */}
           <div style={{ padding: "28px 28px 20px" }}>
             <button onClick={handleGoogleSignIn}
               style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", padding: "13px 16px", background: "#fff", border: "1.5px solid #E5E7EB", borderRadius: "12px", fontSize: "15px", fontWeight: "600", color: "#374151", cursor: "pointer" }}
@@ -88,33 +100,28 @@ export default function SignUpPage() {
             </button>
           </div>
 
-          {/* Divider */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px", padding: "0 28px 20px" }}>
             <div style={{ flex: 1, borderTop: "1px solid #E5E7EB" }} />
             <span style={{ fontSize: "13px", color: "#9CA3AF" }}>or sign up with email</span>
             <div style={{ flex: 1, borderTop: "1px solid #E5E7EB" }} />
           </div>
 
-          {/* Form */}
           <form onSubmit={handleEmailSignUp} style={{ padding: "0 28px 28px" }}>
             {[
-              { id: "name", label: "Full Name (Optional)", type: "text", placeholder: "Jane Doe", value: name, onChange: e => setName(e.target.value), required: false },
-              { id: "email", label: "Email Address", type: "email", placeholder: "you@example.com", value: email, onChange: e => setEmail(e.target.value), required: true },
-              { id: "password", label: "Password", type: "password", placeholder: "Minimum 8 characters", value: password, onChange: e => setPassword(e.target.value), required: true },
-              { id: "confirm", label: "Confirm Password", type: "password", placeholder: "••••••••", value: confirmPassword, onChange: e => setConfirmPassword(e.target.value), required: true },
-            ].map(field => (
-              <div key={field.id} style={{ marginBottom: "16px" }}>
+              { label: "Full Name (Optional)", type: "text", placeholder: "Jane Doe", value: name, onChange: e => setName(e.target.value), required: false },
+              { label: "Email Address", type: "email", placeholder: "you@example.com", value: email, onChange: e => setEmail(e.target.value), required: true },
+              { label: "Password", type: "password", placeholder: "Minimum 8 characters", value: password, onChange: e => setPassword(e.target.value), required: true },
+              { label: "Confirm Password", type: "password", placeholder: "••••••••", value: confirmPassword, onChange: e => setConfirmPassword(e.target.value), required: true },
+            ].map((field, i) => (
+              <div key={i} style={{ marginBottom: "16px" }}>
                 <label style={{ display: "block", fontSize: "12px", fontWeight: "700", color: "#374151", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{field.label}</label>
                 <input type={field.type} required={field.required} placeholder={field.placeholder} value={field.value} onChange={field.onChange}
                   style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box" }}
-                  onFocus={e => e.target.style.borderColor = NAVY}
-                  onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
+                  onFocus={e => e.target.style.borderColor = NAVY} onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
               </div>
             ))}
 
-            {error && (
-              <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", color: "#DC2626", padding: "12px 14px", borderRadius: "10px", fontSize: "13px", marginBottom: "16px" }}>{error}</div>
-            )}
+            {error && <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", color: "#DC2626", padding: "12px 14px", borderRadius: "10px", fontSize: "13px", marginBottom: "16px" }}>{error}</div>}
 
             <button type="submit" disabled={loading}
               style={{ width: "100%", background: ORANGE, color: "#fff", padding: "13px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", border: "none", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1, boxShadow: "0 4px 14px rgba(255,102,0,0.3)" }}>
@@ -122,14 +129,13 @@ export default function SignUpPage() {
             </button>
           </form>
 
-          {/* Footer */}
           <div style={{ borderTop: "1px solid #E5E7EB", padding: "20px 28px", textAlign: "center" }}>
             <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 8px" }}>
               Already have an account?{" "}
               <a href="/account/signin" style={{ color: NAVY, fontWeight: "700", textDecoration: "none" }}>Sign in</a>
             </p>
             <p style={{ fontSize: "12px", color: "#9CA3AF", margin: 0 }}>
-              By creating an account, you agree to our{" "}
+              By creating an account you agree to our{" "}
               <a href="/terms" style={{ color: NAVY, textDecoration: "none" }}>Terms</a> and{" "}
               <a href="/privacy" style={{ color: NAVY, textDecoration: "none" }}>Privacy Policy</a>
             </p>
