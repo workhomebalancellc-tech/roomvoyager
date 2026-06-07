@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 const MOCK_CRUISES = [
@@ -201,10 +202,11 @@ const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
-export default function CruisesPage() {
+function CruisesContent() {
   const { data: session } = useSession();
   const user = session?.user;
-  const [destination, setDestination] = useState("");
+  const searchParams = useSearchParams();
+  const [destination, setDestination] = useState(searchParams.get("q") || "");
   const [tripType, setTripType] = useState("");
   const [duration, setDuration] = useState("");
   const [departurePort, setDeparturePort] = useState("");
@@ -645,5 +647,13 @@ export default function CruisesPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function CruisesPage() {
+  return (
+    <Suspense fallback={null}>
+      <CruisesContent />
+    </Suspense>
   );
 }

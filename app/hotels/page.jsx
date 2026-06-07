@@ -1,16 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { useSession } from "next-auth/react";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
-export default function HotelsPage() {
+function HotelsContent() {
   const { data: session } = useSession();
   const user = session?.user;
-  const [destination, setDestination] = useState("");
+  const searchParams = useSearchParams();
+  const [destination, setDestination] = useState(searchParams.get("q") || "");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [adults, setAdults] = useState("2");
@@ -188,5 +191,13 @@ export default function HotelsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function HotelsPage() {
+  return (
+    <Suspense fallback={null}>
+      <HotelsContent />
+    </Suspense>
   );
 }

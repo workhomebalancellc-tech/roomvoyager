@@ -24,9 +24,10 @@ export default function HomePage() {
 
   function handleSearch(e) {
     e.preventDefault();
-    if (activeTab === "hotels") window.location.href = "/hotels";
-    else if (activeTab === "cruises") window.location.href = "/cruises";
-    else window.location.href = "/flights";
+    const q = searchVal.trim() ? `?q=${encodeURIComponent(searchVal.trim())}` : "";
+    if (activeTab === "hotels") window.location.href = `/hotels${q}`;
+    else if (activeTab === "cruises") window.location.href = `/cruises${q}`;
+    else window.location.href = `/flights${q}`;
   }
 
   return (
