@@ -39,40 +39,57 @@ const MOCK_CRUISES = [
     ports_of_call: ["St. Maarten", "St. Thomas, USVI", "Perfect Day, CocoCay"],
     inside_price: 549, balcony_price: 849,
   },
+  {
+    id: 7, name: "Adriatic & Greek Isles", cruise_line: "Celebrity", ship: "Celebrity Beyond",
+    nights: 10, destination: "Mediterranean", departure_port: "Athens, Greece", departure_date: "2026-09-22",
+    ports_of_call: ["Dubrovnik, Croatia", "Kotor, Montenegro", "Mykonos, Greece", "Santorini, Greece"],
+    inside_price: 1099, balcony_price: 1549,
+  },
+  {
+    id: 8, name: "Transatlantic Voyage", cruise_line: "Cunard", ship: "Queen Mary 2",
+    nights: 14, destination: "Transatlantic", departure_port: "New York, NY", departure_date: "2026-10-05",
+    ports_of_call: ["Halifax, Canada", "Southampton, UK", "Hamburg, Germany"],
+    inside_price: 1299, balcony_price: 2199,
+  },
+  {
+    id: 10, name: "Riviera & Adriatic", cruise_line: "Oceania", ship: "Riviera",
+    nights: 12, destination: "Mediterranean", departure_port: "Rome, Italy", departure_date: "2026-08-28",
+    ports_of_call: ["Monte Carlo, Monaco", "Nice, France", "Florence, Italy", "Venice, Italy"],
+    inside_price: 2499, balcony_price: 3299,
+  },
+  {
+    id: 11, name: "Alaska Inside Passage", cruise_line: "Holland America", ship: "ms Koningsdam",
+    nights: 7, destination: "Alaska", departure_port: "Seattle, WA", departure_date: "2026-07-18",
+    ports_of_call: ["Juneau, AK", "Glacier Bay, AK", "Sitka, AK", "Ketchikan, AK"],
+    inside_price: 699, balcony_price: 1099,
+  },
+  {
+    id: 12, name: "Caribbean Scarlet Night", cruise_line: "Virgin Voyages", ship: "Scarlet Lady",
+    nights: 5, destination: "Caribbean", departure_port: "Miami, FL", departure_date: "2026-08-10",
+    ports_of_call: ["Bimini, Bahamas", "Puerto Plata, Dominican Republic"],
+    inside_price: 799, balcony_price: 1199,
+  },
 ];
 
-const DESTINATION_SLUGS = {
-  "Caribbean": "caribbean-cruises",
-  "Bahamas": "bahamas-cruises",
-  "Mediterranean": "mediterranean-cruises",
-  "Alaska": "alaska-cruises",
-  "Mexico": "mexico-cruises",
+const CJ_LINKS = {
+  "Royal Caribbean": "https://www.tkqlhce.com/click-101734691-15533918",
+  "Celebrity":       "https://www.kqzyfj.com/click-101734691-13096784",
+  "Cunard":          "https://www.dpbolvw.net/click-101734691-13096789",
+  "Holland America": "https://www.kqzyfj.com/click-101734691-13096799",
+  "Carnival":        "https://www.dpbolvw.net/click-101734691-13096782",
+  "Princess":        "https://www.anrdoezrs.net/click-101734691-12526292",
+  "Norwegian":       "https://www.tkqlhce.com/click-101734691-15533851",
+  "MSC":             "https://www.jdoqocy.com/click-101734691-15534062",
+  "Oceania":         "https://www.kqzyfj.com/click-101734691-15535742",
+  "Virgin Voyages":  "https://www.tkqlhce.com/click-101734691-15534638",
+  "Disney":          "https://www.tkqlhce.com/click-101734691-13096793",
 };
 
-const LINE_SLUGS = {
-  "Royal Caribbean": "royal-caribbean",
-  "Carnival": "carnival-cruise-line",
-  "Norwegian": "norwegian-cruise-line",
-  "Princess": "princess-cruises",
-  "MSC": "msc-cruises",
-  "Disney": "disney-cruise-line",
-};
+// Generic fallback — still CJ-tracked even without a line-specific link
+const CJ_FALLBACK = "https://www.dpbolvw.net/click-101734691-13096782";
 
 function buildCruiseDirectUrl(cruise) {
-  // Prefer cruise line page, fall back to destination page, fall back to homepage
-  const lineSlug = LINE_SLUGS[cruise.cruise_line];
-  const destSlug = DESTINATION_SLUGS[cruise.destination];
-  let url;
-  if (lineSlug) {
-    url = `https://www.cruisedirect.com/cruise-lines/${lineSlug}`;
-  } else if (destSlug) {
-    url = `https://www.cruisedirect.com/cruise-deals/${destSlug}`;
-  } else {
-    url = "https://www.cruisedirect.com";
-  }
-  // TODO: Wrap with CJ affiliate link once CJ ID is confirmed:
-  // return `https://www.jdoqocy.com/click-YOUR_CJ_ID?url=${encodeURIComponent(url)}`;
-  return url;
+  return CJ_LINKS[cruise?.cruise_line] || CJ_FALLBACK;
 }
 
 function normalizeCruise(raw, index) {
@@ -93,11 +110,16 @@ function normalizeCruise(raw, index) {
 
 const LINE_COLORS = {
   "Royal Caribbean": "#003087",
-  "Carnival": "#E31837",
-  "Norwegian": "#003DA5",
-  "Princess": "#7B3F99",
-  "MSC": "#00539B",
-  "Disney": "#003087",
+  "Carnival":        "#E31837",
+  "Norwegian":       "#003DA5",
+  "Princess":        "#7B3F99",
+  "MSC":             "#00539B",
+  "Disney":          "#003087",
+  "Celebrity":       "#1A1A6E",
+  "Cunard":          "#8B0000",
+  "Oceania":         "#C8922A",
+  "Holland America": "#003F87",
+  "Virgin Voyages":  "#D81C33",
 };
 
 export default function CruisesPage() {
@@ -195,7 +217,7 @@ export default function CruisesPage() {
           <p style={{ color: "#fca5a5", fontSize: "11px", fontWeight: "600", margin: "0 0 10px", textTransform: "uppercase", letterSpacing: "0.1em" }}>🚢 Live Cruise Search</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(28px, 5vw, 42px)", fontWeight: "700", margin: "0 0 12px", lineHeight: "1.2" }}>Find your perfect cruise</h1>
           <p style={{ color: "#fca5a5", fontSize: "16px", margin: "0 0 32px", maxWidth: "520px", lineHeight: "1.6" }}>
-            Search live availability from Royal Caribbean, Carnival, Norwegian, Princess and more.
+            Search sailings from Royal Caribbean, Carnival, Celebrity, Viking, Cunard, Virgin Voyages and more.
           </p>
           <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: "12px", padding: "20px", backdropFilter: "blur(8px)" }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px", marginBottom: "14px" }}>
@@ -213,6 +235,7 @@ export default function CruisesPage() {
                   style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827" }}>
                   <option value="">All Lines</option>
                   <option>Royal Caribbean</option><option>Carnival</option><option>Norwegian</option><option>Princess</option><option>MSC</option><option>Disney</option>
+                  <option>Celebrity</option><option>Cunard</option><option>Oceania</option><option>Holland America</option><option>Virgin Voyages</option>
                 </select>
               </div>
               <div>
