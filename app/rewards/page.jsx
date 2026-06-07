@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
 const NAVY = "#003B95";
@@ -47,6 +47,7 @@ export default function RewardsPage() {
   const cashValue = (userPoints / 100).toFixed(2);
   const canRedeem = userPoints >= 1000;
 
+  const redeemRef = useRef(null);
   const [showRedeemModal, setShowRedeemModal] = useState(false);
   const [redeemAmount, setRedeemAmount] = useState(1000);
   const [redeemMethod, setRedeemMethod] = useState("zelle");
@@ -157,7 +158,7 @@ export default function RewardsPage() {
               </div>
               {canRedeem && (
                 <div style={{ display: "flex", alignItems: "flex-end" }}>
-                  <button onClick={() => { setShowRedeemModal(true); setRedeemSubmitted(false); }}
+                  <button onClick={() => { setRedeemSubmitted(false); redeemRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
                     style={{ background: ORANGE, color: "#fff", padding: "10px 20px", borderRadius: "8px", fontSize: "14px", fontWeight: "700", border: "none", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
                     Redeem Cash →
                   </button>
@@ -326,7 +327,7 @@ export default function RewardsPage() {
 
           {/* Redeem form — shown when signed in and eligible */}
           {session && canRedeem && (
-            <div style={{ marginTop: "24px", background: "#fff", border: `2px solid ${ORANGE}`, borderRadius: "16px", padding: "28px" }}>
+            <div ref={redeemRef} style={{ marginTop: "24px", background: "#fff", border: `2px solid ${ORANGE}`, borderRadius: "16px", padding: "28px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "8px", marginBottom: "20px" }}>
                 <div>
                   <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>🎉 You're eligible to redeem!</p>
