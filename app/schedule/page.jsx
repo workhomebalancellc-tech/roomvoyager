@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "../../contexts/AuthContext";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -11,8 +11,7 @@ const TIMES = ["11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM"];
 const DAYS = ["Friday", "Saturday"];
 
 export default function SchedulePage() {
-  const { data: session } = useSession();
-  const user = session?.user;
+  const { user } = useAuth();
 
   const [form, setForm] = useState({
     name: user?.name || "",
