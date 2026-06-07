@@ -4,70 +4,144 @@ import { useState, useEffect } from "react";
 
 const MOCK_CRUISES = [
   {
-    id: 1, name: "Caribbean Adventure", cruise_line: "Royal Caribbean", ship: "Wonder of the Seas",
+    id: 1, name: "Caribbean Family Adventure", cruise_line: "Royal Caribbean", ship: "Wonder of the Seas",
     nights: 7, destination: "Caribbean", departure_port: "Miami, FL", departure_date: "2026-08-15",
     ports_of_call: ["Nassau, Bahamas", "Cozumel, Mexico", "Labadee, Haiti"],
     inside_price: 499, balcony_price: 749,
+    tags: ["family"],
   },
   {
-    id: 2, name: "Bahamas Escape", cruise_line: "Carnival", ship: "Carnival Celebration",
-    nights: 5, destination: "Bahamas", departure_port: "Port Canaveral, FL", departure_date: "2026-07-20",
+    id: 2, name: "Bahamas Long Weekend", cruise_line: "Carnival", ship: "Carnival Celebration",
+    nights: 4, destination: "Bahamas", departure_port: "Port Canaveral, FL", departure_date: "2026-07-17",
     ports_of_call: ["Nassau, Bahamas", "Half Moon Cay"],
-    inside_price: 349, balcony_price: 529,
+    inside_price: 279, balcony_price: 429,
+    tags: ["family", "short"],
   },
   {
-    id: 3, name: "Mediterranean Dream", cruise_line: "Norwegian", ship: "Norwegian Epic",
+    id: 3, name: "Mediterranean Solo Explorer", cruise_line: "Norwegian", ship: "Norwegian Epic",
     nights: 10, destination: "Mediterranean", departure_port: "Barcelona, Spain", departure_date: "2026-09-10",
     ports_of_call: ["Rome, Italy", "Naples, Italy", "Santorini, Greece", "Athens, Greece"],
     inside_price: 899, balcony_price: 1299,
+    tags: ["solo"],
   },
   {
     id: 4, name: "Alaska Glacier Explorer", cruise_line: "Princess", ship: "Majestic Princess",
     nights: 7, destination: "Alaska", departure_port: "Seattle, WA", departure_date: "2026-06-28",
     ports_of_call: ["Juneau, AK", "Skagway, AK", "Ketchikan, AK", "Victoria, BC"],
     inside_price: 649, balcony_price: 949,
+    tags: ["adventure"],
   },
   {
-    id: 5, name: "Mexican Riviera", cruise_line: "Carnival", ship: "Carnival Panorama",
+    id: 5, name: "Mexican Riviera Family Fun", cruise_line: "Carnival", ship: "Carnival Panorama",
     nights: 7, destination: "Mexico", departure_port: "Long Beach, CA", departure_date: "2026-08-01",
     ports_of_call: ["Cabo San Lucas", "Mazatlán", "Puerto Vallarta"],
     inside_price: 499, balcony_price: 729,
+    tags: ["family"],
   },
   {
-    id: 6, name: "Eastern Caribbean", cruise_line: "Royal Caribbean", ship: "Harmony of the Seas",
+    id: 6, name: "Eastern Caribbean Escape", cruise_line: "Royal Caribbean", ship: "Harmony of the Seas",
     nights: 7, destination: "Caribbean", departure_port: "Port Canaveral, FL", departure_date: "2026-07-05",
     ports_of_call: ["St. Maarten", "St. Thomas, USVI", "Perfect Day, CocoCay"],
     inside_price: 549, balcony_price: 849,
+    tags: ["family"],
   },
   {
-    id: 7, name: "Adriatic & Greek Isles", cruise_line: "Celebrity", ship: "Celebrity Beyond",
+    id: 7, name: "Adriatic & Greek Isles Honeymoon", cruise_line: "Celebrity", ship: "Celebrity Beyond",
     nights: 10, destination: "Mediterranean", departure_port: "Athens, Greece", departure_date: "2026-09-22",
     ports_of_call: ["Dubrovnik, Croatia", "Kotor, Montenegro", "Mykonos, Greece", "Santorini, Greece"],
     inside_price: 1099, balcony_price: 1549,
+    tags: ["honeymoon", "luxury"],
   },
   {
-    id: 8, name: "Transatlantic Voyage", cruise_line: "Cunard", ship: "Queen Mary 2",
+    id: 8, name: "Transatlantic Grand Voyage", cruise_line: "Cunard", ship: "Queen Mary 2",
     nights: 14, destination: "Transatlantic", departure_port: "New York, NY", departure_date: "2026-10-05",
     ports_of_call: ["Halifax, Canada", "Southampton, UK", "Hamburg, Germany"],
     inside_price: 1299, balcony_price: 2199,
+    tags: ["honeymoon", "luxury"],
   },
   {
-    id: 10, name: "Riviera & Adriatic", cruise_line: "Oceania", ship: "Riviera",
+    id: 9, name: "Riviera & Adriatic Luxury", cruise_line: "Oceania", ship: "Riviera",
     nights: 12, destination: "Mediterranean", departure_port: "Rome, Italy", departure_date: "2026-08-28",
     ports_of_call: ["Monte Carlo, Monaco", "Nice, France", "Florence, Italy", "Venice, Italy"],
     inside_price: 2499, balcony_price: 3299,
+    tags: ["honeymoon", "luxury"],
   },
   {
-    id: 11, name: "Alaska Inside Passage", cruise_line: "Holland America", ship: "ms Koningsdam",
+    id: 10, name: "Alaska Inside Passage Adventure", cruise_line: "Holland America", ship: "ms Koningsdam",
     nights: 7, destination: "Alaska", departure_port: "Seattle, WA", departure_date: "2026-07-18",
     ports_of_call: ["Juneau, AK", "Glacier Bay, AK", "Sitka, AK", "Ketchikan, AK"],
     inside_price: 699, balcony_price: 1099,
+    tags: ["adventure"],
   },
   {
-    id: 12, name: "Caribbean Scarlet Night", cruise_line: "Virgin Voyages", ship: "Scarlet Lady",
+    id: 11, name: "Caribbean Scarlet Night", cruise_line: "Virgin Voyages", ship: "Scarlet Lady",
     nights: 5, destination: "Caribbean", departure_port: "Miami, FL", departure_date: "2026-08-10",
     ports_of_call: ["Bimini, Bahamas", "Puerto Plata, Dominican Republic"],
     inside_price: 799, balcony_price: 1199,
+    tags: ["adults-only", "solo", "honeymoon", "short"],
+  },
+  {
+    id: 12, name: "Disney Magic Caribbean", cruise_line: "Disney", ship: "Disney Magic",
+    nights: 4, destination: "Bahamas", departure_port: "Port Canaveral, FL", departure_date: "2026-07-10",
+    ports_of_call: ["Nassau, Bahamas", "Disney's Castaway Cay"],
+    inside_price: 899, balcony_price: 1399,
+    tags: ["family", "short"],
+  },
+  {
+    id: 13, name: "MSC Mediterranean Week", cruise_line: "MSC", ship: "MSC Bellissima",
+    nights: 7, destination: "Mediterranean", departure_port: "Genoa, Italy", departure_date: "2026-09-05",
+    ports_of_call: ["Naples, Italy", "Palermo, Sicily", "Valletta, Malta", "Barcelona, Spain"],
+    inside_price: 599, balcony_price: 899,
+    tags: ["family"],
+  },
+  {
+    id: 14, name: "Solo Caribbean Explorer", cruise_line: "Norwegian", ship: "Norwegian Getaway",
+    nights: 7, destination: "Caribbean", departure_port: "Miami, FL", departure_date: "2026-08-22",
+    ports_of_call: ["Harvest Caye", "Belize City", "Roatán, Honduras", "Cozumel, Mexico"],
+    inside_price: 649, balcony_price: 949,
+    tags: ["solo"],
+  },
+  {
+    id: 15, name: "Quick Bahamas Getaway", cruise_line: "Royal Caribbean", ship: "Mariner of the Seas",
+    nights: 3, destination: "Bahamas", departure_port: "Miami, FL", departure_date: "2026-07-25",
+    ports_of_call: ["Nassau, Bahamas", "Perfect Day, CocoCay"],
+    inside_price: 229, balcony_price: 349,
+    tags: ["short", "family"],
+  },
+  {
+    id: 16, name: "Cunard Mediterranean Voyage", cruise_line: "Cunard", ship: "Queen Victoria",
+    nights: 14, destination: "Mediterranean", departure_port: "Southampton, UK", departure_date: "2026-09-15",
+    ports_of_call: ["Lisbon, Portugal", "Barcelona, Spain", "Monte Carlo, Monaco", "Rome, Italy"],
+    inside_price: 1599, balcony_price: 2499,
+    tags: ["luxury", "honeymoon"],
+  },
+  {
+    id: 17, name: "Adults-Only Mediterranean Escape", cruise_line: "Celebrity", ship: "Celebrity Edge",
+    nights: 9, destination: "Mediterranean", departure_port: "Barcelona, Spain", departure_date: "2026-09-01",
+    ports_of_call: ["Palma, Mallorca", "Rome, Italy", "Naples, Italy", "Mykonos, Greece"],
+    inside_price: 999, balcony_price: 1399,
+    tags: ["adults-only", "luxury"],
+  },
+  {
+    id: 18, name: "Princess Alaska Adventure", cruise_line: "Princess", ship: "Crown Princess",
+    nights: 10, destination: "Alaska", departure_port: "San Francisco, CA", departure_date: "2026-07-02",
+    ports_of_call: ["Juneau, AK", "Glacier Bay, AK", "Ketchikan, AK", "Victoria, BC"],
+    inside_price: 849, balcony_price: 1249,
+    tags: ["adventure"],
+  },
+  {
+    id: 19, name: "Holland America Solo Europe", cruise_line: "Holland America", ship: "ms Nieuw Amsterdam",
+    nights: 14, destination: "Mediterranean", departure_port: "Rome, Italy", departure_date: "2026-10-12",
+    ports_of_call: ["Naples, Italy", "Athens, Greece", "Dubrovnik, Croatia", "Venice, Italy"],
+    inside_price: 1199, balcony_price: 1799,
+    tags: ["solo", "adventure"],
+  },
+  {
+    id: 20, name: "Carnival Short Caribbean Break", cruise_line: "Carnival", ship: "Carnival Vista",
+    nights: 5, destination: "Caribbean", departure_port: "Miami, FL", departure_date: "2026-08-06",
+    ports_of_call: ["Cozumel, Mexico", "Mahogany Bay, Honduras"],
+    inside_price: 319, balcony_price: 489,
+    tags: ["short", "family"],
   },
 ];
 
@@ -124,7 +198,7 @@ const LINE_COLORS = {
 
 export default function CruisesPage() {
   const [destination, setDestination] = useState("");
-  const [cruiseLine, setCruiseLine] = useState("");
+  const [tripType, setTripType] = useState("");
   const [duration, setDuration] = useState("");
   const [departurePort, setDeparturePort] = useState("");
   const [cruises, setCruises] = useState([]);
@@ -133,11 +207,11 @@ export default function CruisesPage() {
   const [expandedId, setExpandedId] = useState(null);
   const [agentModal, setAgentModal] = useState(null);
 
-  const hasFilters = destination || cruiseLine || duration || departurePort;
+  const hasFilters = destination || tripType || duration || departurePort;
 
   function clearFilters() {
     setDestination("");
-    setCruiseLine("");
+    setTripType("");
     setDuration("");
     setDeparturePort("");
   }
@@ -154,7 +228,7 @@ export default function CruisesPage() {
     try {
       const params = new URLSearchParams();
       if (destination) params.set("destination", destination);
-      if (cruiseLine) params.set("cruise_line", cruiseLine);
+      if (tripType) params.set("trip_type", tripType);
       if (departurePort) params.set("port", departurePort);
       const res = await fetch(`https://cruise-api1.p.rapidapi.com/cruises?${params}`, {
         headers: {
@@ -181,7 +255,7 @@ export default function CruisesPage() {
   const displayCruises = usingMock
     ? MOCK_CRUISES.filter((c) => {
         if (destination && !c.destination.toLowerCase().includes(destination.toLowerCase())) return false;
-        if (cruiseLine && c.cruise_line !== cruiseLine) return false;
+        if (tripType && !c.tags?.includes(tripType)) return false;
         if (duration) {
           const n = c.nights;
           if (duration === "3-5" && (n < 3 || n > 5)) return false;
@@ -189,6 +263,7 @@ export default function CruisesPage() {
           if (duration === "9-12" && (n < 9 || n > 12)) return false;
           if (duration === "13+" && n < 13) return false;
         }
+        if (departurePort && !c.departure_port.toLowerCase().includes(departurePort.toLowerCase())) return false;
         return true;
       })
     : cruises;
@@ -222,20 +297,25 @@ export default function CruisesPage() {
           <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: "12px", padding: "20px", backdropFilter: "blur(8px)" }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px", marginBottom: "14px" }}>
               <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#fca5a5", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Trip Type</label>
+                <select value={tripType} onChange={(e) => setTripType(e.target.value)}
+                  style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827" }}>
+                  <option value="">All Trips</option>
+                  <option value="family">👨‍👩‍👧 Family</option>
+                  <option value="honeymoon">💍 Honeymoon & Romance</option>
+                  <option value="solo">🧳 Solo-Friendly</option>
+                  <option value="adults-only">🍹 Adults-Only</option>
+                  <option value="short">⚡ Short Getaway (≤5 nights)</option>
+                  <option value="luxury">✨ Luxury</option>
+                  <option value="adventure">🏔️ Adventure & Nature</option>
+                </select>
+              </div>
+              <div>
                 <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#fca5a5", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Destination</label>
                 <select value={destination} onChange={(e) => setDestination(e.target.value)}
                   style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827" }}>
                   <option value="">All Destinations</option>
-                  <option>Caribbean</option><option>Mediterranean</option><option>Alaska</option><option>Bahamas</option><option>Mexico</option>
-                </select>
-              </div>
-              <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#fca5a5", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Cruise Line</label>
-                <select value={cruiseLine} onChange={(e) => setCruiseLine(e.target.value)}
-                  style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827" }}>
-                  <option value="">All Lines</option>
-                  <option>Royal Caribbean</option><option>Carnival</option><option>Norwegian</option><option>Princess</option><option>MSC</option><option>Disney</option>
-                  <option>Celebrity</option><option>Cunard</option><option>Oceania</option><option>Holland America</option><option>Virgin Voyages</option>
+                  <option>Caribbean</option><option>Mediterranean</option><option>Alaska</option><option>Bahamas</option><option>Mexico</option><option>Transatlantic</option>
                 </select>
               </div>
               <div>

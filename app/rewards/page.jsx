@@ -12,8 +12,8 @@ const TIERS = [
 const EARNING_RATES = [
   { product: "Flights", icon: "✈️", pts: 5, note: "Per $1 spent" },
   { product: "Hotels", icon: "🏨", pts: 5, note: "Per $1 spent" },
-  { product: "Cruises (self-book)", icon: "🚢", pts: 10, note: "Per $1 spent" },
-  { product: "Cruises (agent)", icon: "🚢", pts: 10, note: "Per $1 spent" },
+  { product: "Cruises (self-book)", icon: "🚢", pts: 10, note: "Per $1 spent · redeemable 45 days after sailing" },
+  { product: "Cruises (agent)", icon: "🚢", pts: 10, note: "Per $1 spent · redeemable 45 days after sailing" },
   { product: "Vacation Packages", icon: "🌴", pts: 10, note: "Per $1 spent" },
 ];
 
