@@ -22,12 +22,12 @@ export default function HotelsPage() {
   }
 
   const destinations = [
-    { name: "Cancun", emoji: "🌴", country: "Mexico", tag: "Most Popular" },
-    { name: "Miami", emoji: "🌆", country: "Florida, USA", tag: "Trending" },
-    { name: "Las Vegas", emoji: "🎰", country: "Nevada, USA", tag: "Best Value" },
-    { name: "Paris", emoji: "🗼", country: "France", tag: "Romantic" },
-    { name: "Orlando", emoji: "🎡", country: "Florida, USA", tag: "Family Pick" },
-    { name: "Punta Cana", emoji: "🐚", country: "Dominican Republic", tag: "All-Inclusive" },
+    { name: "Cancun", photo: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=96&h=96&fit=crop&auto=format", country: "Mexico", tag: "Most Popular" },
+    { name: "Miami", photo: "https://images.unsplash.com/photo-1503891450247-ee5f8ec46dc3?w=96&h=96&fit=crop&auto=format", country: "Florida, USA", tag: "Trending" },
+    { name: "Las Vegas", photo: "https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=96&h=96&fit=crop&auto=format", country: "Nevada, USA", tag: "Best Value" },
+    { name: "Paris", photo: "https://images.unsplash.com/photo-1431274172761-fca41d930114?w=96&h=96&fit=crop&auto=format", country: "France", tag: "Romantic" },
+    { name: "Orlando", photo: "https://images.unsplash.com/photo-1526472050800-0d8e22b0a0c8?w=96&h=96&fit=crop&auto=format", country: "Florida, USA", tag: "Family Pick" },
+    { name: "Punta Cana", photo: "https://images.unsplash.com/photo-1548574505-5e239809ee19?w=96&h=96&fit=crop&auto=format", country: "Dominican Republic", tag: "All-Inclusive" },
   ];
 
   return (
@@ -170,8 +170,8 @@ export default function HotelsPage() {
                   onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 4px 16px rgba(153,27,27,0.15)"; e.currentTarget.style.borderColor = "#fca5a5"; e.currentTarget.style.transform = "translateY(-1px)"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "#e5e7eb"; e.currentTarget.style.transform = "translateY(0)"; }}
                 >
-                  <div style={{ width: "48px", height: "48px", background: "#fef2f2", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", flexShrink: 0 }}>
-                    {dest.emoji}
+                  <div style={{ width: "56px", height: "56px", borderRadius: "10px", overflow: "hidden", flexShrink: 0 }}>
+                    <img src={dest.photo} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>
                   <div style={{ flex: 1 }}>
                     <p style={{ fontSize: "14px", fontWeight: "600", color: "#111827", margin: "0 0 2px" }}>{dest.name}</p>
