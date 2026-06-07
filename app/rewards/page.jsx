@@ -144,6 +144,12 @@ export default function RewardsPage() {
           </p>
           {session ? (
             <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", borderRadius: "16px", padding: "20px 28px", display: "inline-flex", gap: "36px", flexWrap: "wrap", justifyContent: "center", border: "1px solid rgba(255,255,255,0.2)" }}>
+              {session.name && (
+                <div>
+                  <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Welcome back</p>
+                  <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: 0 }}>{session.name.split(" ")[0]}</p>
+                </div>
+              )}
               <div>
                 <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Your Points</p>
                 <p style={{ color: "#fff", fontSize: "32px", fontWeight: "800", margin: 0 }}>{userPoints.toLocaleString()}</p>
@@ -382,7 +388,7 @@ export default function RewardsPage() {
                   </div>
                   <button type="submit"
                     style={{ width: "100%", background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "14px", fontSize: "15px", fontWeight: "700", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.3)" }}>
-                    💵 Submit Redemption Request →
+                    💵 Redeem
                   </button>
                   <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "10px 0 0" }}>Opens your email client · Processed within 2 business days · Standard (free) transfers only</p>
                 </form>
