@@ -8,6 +8,153 @@ const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
+// City name → IATA airport code lookup
+const CITY_TO_IATA = {
+  // USA
+  "new york": "JFK", "nyc": "JFK", "new york city": "JFK",
+  "los angeles": "LAX", "la": "LAX",
+  "chicago": "ORD",
+  "miami": "MIA",
+  "las vegas": "LAS", "vegas": "LAS",
+  "orlando": "MCO",
+  "dallas": "DFW", "dfw": "DFW",
+  "houston": "IAH",
+  "atlanta": "ATL",
+  "denver": "DEN",
+  "seattle": "SEA",
+  "san francisco": "SFO", "sf": "SFO",
+  "boston": "BOS",
+  "phoenix": "PHX",
+  "washington": "DCA", "washington dc": "DCA", "dc": "DCA",
+  "nashville": "BNA",
+  "new orleans": "MSY",
+  "charlotte": "CLT",
+  "minneapolis": "MSP",
+  "detroit": "DTW",
+  "tampa": "TPA",
+  "fort lauderdale": "FLL",
+  "salt lake city": "SLC",
+  "portland": "PDX",
+  "san diego": "SAN",
+  "baltimore": "BWI",
+  "austin": "AUS",
+  "raleigh": "RDU",
+  "jacksonville": "JAX",
+  "philadelphia": "PHL",
+  "philly": "PHL",
+  "pittsburgh": "PIT",
+  "memphis": "MEM",
+  "kansas city": "MCI",
+  "st louis": "STL",
+  "saint louis": "STL",
+  "indianapolis": "IND",
+  "columbus": "CMH",
+  "cleveland": "CLE",
+  "san antonio": "SAT",
+  "albuquerque": "ABQ",
+  "tucson": "TUS",
+  "honolulu": "HNL", "hawaii": "HNL",
+  "anchorage": "ANC", "alaska": "ANC",
+  // Caribbean / Mexico / Central America
+  "cancun": "CUN", "cancún": "CUN",
+  "punta cana": "PUJ",
+  "montego bay": "MBJ", "jamaica": "MBJ",
+  "nassau": "NAS", "bahamas": "NAS",
+  "aruba": "AUA",
+  "barbados": "BGI",
+  "st maarten": "SXM", "saint maarten": "SXM",
+  "puerto rico": "SJU", "san juan": "SJU",
+  "havana": "HAV", "cuba": "HAV",
+  "mexico city": "MEX",
+  "cabo san lucas": "SJD", "cabo": "SJD",
+  "puerto vallarta": "PVR",
+  "costa rica": "SJO",
+  "panama city": "PTY", "panama": "PTY",
+  // South America
+  "bogota": "BOG", "colombia": "BOG",
+  "lima": "LIM", "peru": "LIM",
+  "buenos aires": "EZE", "argentina": "EZE",
+  "rio de janeiro": "GIG", "rio": "GIG",
+  "sao paulo": "GRU",
+  "brazil": "GRU",
+  // Europe
+  "london": "LHR",
+  "paris": "CDG",
+  "rome": "FCO", "italy": "FCO",
+  "barcelona": "BCN",
+  "madrid": "MAD", "spain": "MAD",
+  "amsterdam": "AMS", "netherlands": "AMS",
+  "dublin": "DUB", "ireland": "DUB",
+  "lisbon": "LIS", "portugal": "LIS",
+  "frankfurt": "FRA",
+  "munich": "MUC",
+  "berlin": "BER",
+  "zurich": "ZRH", "switzerland": "ZRH",
+  "vienna": "VIE", "austria": "VIE",
+  "brussels": "BRU", "belgium": "BRU",
+  "stockholm": "ARN", "sweden": "ARN",
+  "oslo": "OSL", "norway": "OSL",
+  "copenhagen": "CPH", "denmark": "CPH",
+  "athens": "ATH", "greece": "ATH",
+  "istanbul": "IST", "turkey": "IST",
+  "edinburgh": "EDI", "scotland": "EDI",
+  "nice": "NCE",
+  "milan": "MXP",
+  "prague": "PRG", "czech republic": "PRG",
+  "budapest": "BUD", "hungary": "BUD",
+  "warsaw": "WAW", "poland": "WAW",
+  "reykjavik": "KEF", "iceland": "KEF",
+  // Middle East / Africa
+  "dubai": "DXB",
+  "abu dhabi": "AUH",
+  "doha": "DOH", "qatar": "DOH",
+  "cairo": "CAI", "egypt": "CAI",
+  "tel aviv": "TLV", "israel": "TLV",
+  "cape town": "CPT",
+  "johannesburg": "JNB", "south africa": "JNB",
+  "nairobi": "NBO", "kenya": "NBO",
+  // Asia / Pacific
+  "tokyo": "NRT", "japan": "NRT",
+  "osaka": "KIX",
+  "beijing": "PEK", "china": "PEK",
+  "shanghai": "PVG",
+  "hong kong": "HKG",
+  "singapore": "SIN",
+  "bangkok": "BKK", "thailand": "BKK",
+  "bali": "DPS", "denpasar": "DPS",
+  "jakarta": "CGK",
+  "kuala lumpur": "KUL", "malaysia": "KUL",
+  "manila": "MNL", "philippines": "MNL",
+  "seoul": "ICN", "korea": "ICN",
+  "taipei": "TPE", "taiwan": "TPE",
+  "mumbai": "BOM",
+  "delhi": "DEL", "india": "DEL",
+  "sydney": "SYD", "australia": "SYD",
+  "melbourne": "MEL",
+  "auckland": "AKL", "new zealand": "AKL",
+  "maldives": "MLE",
+  // Canada
+  "toronto": "YYZ", "ontario": "YYZ",
+  "vancouver": "YVR",
+  "montreal": "YUL",
+  "calgary": "YYC",
+};
+
+function cityToIata(input) {
+  if (!input) return null;
+  const key = input.trim().toLowerCase();
+  // Direct match first
+  if (CITY_TO_IATA[key]) return CITY_TO_IATA[key];
+  // Already an IATA code (3 uppercase letters)
+  if (/^[A-Z]{3}$/.test(input.trim())) return input.trim().toUpperCase();
+  if (/^[a-z]{3}$/.test(key)) return key.toUpperCase();
+  // Partial match — check if any key starts with the input
+  for (const [city, code] of Object.entries(CITY_TO_IATA)) {
+    if (city.startsWith(key) || key.startsWith(city)) return code;
+  }
+  return null;
+}
+
 const destinations = [
   { name: "Cancún", country: "Mexico", photo: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=400&h=280&fit=crop&auto=format", tag: "🏖️ Beach" },
   { name: "Miami", country: "Florida, USA", photo: "https://images.unsplash.com/photo-1503891450247-ee5f8ec46dc3?w=400&h=280&fit=crop&auto=format", tag: "🌆 City" },
@@ -32,8 +179,9 @@ function FlightsContent() {
   const { user } = useAuth();
   const searchParams = useSearchParams();
   const destination = searchParams.get("q") || "";
-  const iframeSrc = destination
-    ? `https://flights.roomvoyagertravel.com?destination=${encodeURIComponent(destination)}`
+  const iataCode = cityToIata(destination);
+  const iframeSrc = iataCode
+    ? `https://flights.roomvoyagertravel.com/flights/?destination_iata=${iataCode}`
     : "https://flights.roomvoyagertravel.com";
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
