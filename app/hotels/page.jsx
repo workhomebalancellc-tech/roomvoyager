@@ -1,6 +1,25 @@
 "use client";
 
+import { useState } from "react";
+
 export default function HotelsPage() {
+  const [destination, setDestination] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [adults, setAdults] = useState("2");
+
+  function handleSearch(e) {
+    e.preventDefault();
+    const params = new URLSearchParams({
+      destination: destination || "United States",
+      startDate: checkIn,
+      endDate: checkOut,
+      adults,
+      camref: "1110l8R3Z",
+      pubref: "hotels-page",
+    });
+    window.open(`https://www.expedia.com/Hotel-Search?${params.toString()}`, "_blank");
+  }
 
   const destinations = [
     { name: "Cancun", emoji: "🌴", country: "Mexico", tag: "Most Popular" },
@@ -49,14 +68,56 @@ export default function HotelsPage() {
             <span style={{ color: "#fff", fontSize: "13px", fontWeight: "500" }}>🔍 Search hotels</span>
             <span style={{ color: "#fca5a5", fontSize: "12px" }}>Free — no account required</span>
           </div>
-          <div style={{ padding: "20px 0 24px" }}>
-            <iframe
-              src="/expedia-widget.html"
-              style={{ width: "100%", minHeight: "160px", border: "none", display: "block" }}
-              scrolling="no"
-              title="Hotel Search"
-            />
-          </div>
+          <form onSubmit={handleSearch} style={{ padding: "24px 0" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px", alignItems: "end" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>Destination</label>
+                <input
+                  type="text"
+                  placeholder="City, hotel, or area"
+                  value={destination}
+                  onChange={(e) => setDestination(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", border: "1px solid #d1d5db", borderRadius: "8px", fontSize: "14px", outline: "none" }}
+                />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>Check-in</label>
+                <input
+                  type="date"
+                  value={checkIn}
+                  onChange={(e) => setCheckIn(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", border: "1px solid #d1d5db", borderRadius: "8px", fontSize: "14px", outline: "none" }}
+                />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>Check-out</label>
+                <input
+                  type="date"
+                  value={checkOut}
+                  onChange={(e) => setCheckOut(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", border: "1px solid #d1d5db", borderRadius: "8px", fontSize: "14px", outline: "none" }}
+                />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>Guests</label>
+                <select
+                  value={adults}
+                  onChange={(e) => setAdults(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", border: "1px solid #d1d5db", borderRadius: "8px", fontSize: "14px", outline: "none", background: "#fff" }}
+                >
+                  {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} {n === 1 ? "guest" : "guests"}</option>)}
+                </select>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  style={{ width: "100%", padding: "11px 24px", background: "#991b1b", color: "#fff", border: "none", borderRadius: "8px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}
+                >
+                  Search Hotels →
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -159,22 +220,6 @@ export default function HotelsPage() {
         </div>
       </div>
 
-      {/* EXPEDIA CSS OVERRIDES */}
-      <style>{`
-        .eg-widget button[type="submit"], .eg-widget .search-button, .eg-widget [class*="submit"], .eg-widget [class*="SearchButton"], .eg-widget [class*="searchButton"] {
-          background-color: #991b1b !important; border-color: #991b1b !important; color: #ffffff !important;
-        }
-        .eg-widget button[type="submit"]:hover, .eg-widget .search-button:hover {
-          background-color: #7f1d1d !important; border-color: #7f1d1d !important;
-        }
-        .eg-widget input, .eg-widget select { border-color: #e5e7eb !important; border-radius: 8px !important; }
-        .eg-widget input:focus, .eg-widget select:focus { border-color: #991b1b !important; outline-color: #991b1b !important; box-shadow: 0 0 0 2px rgba(153,27,27,0.15) !important; }
-        .eg-widget [class*="tab"][class*="active"], .eg-widget [class*="Tab"][class*="active"], .eg-widget [class*="selected"] { border-bottom-color: #991b1b !important; color: #991b1b !important; }
-        .eg-widget [class*="tab"]:hover, .eg-widget [class*="Tab"]:hover { color: #991b1b !important; }
-        .eg-widget a { color: #991b1b !important; }
-        .eg-widget [class*="primary"], .eg-widget [class*="Primary"] { color: #991b1b !important; border-color: #991b1b !important; }
-        .eg-widget input[type="checkbox"]:checked { accent-color: #991b1b !important; }
-      `}</style>
     </div>
   );
 }
