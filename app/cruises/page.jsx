@@ -87,6 +87,15 @@ export default function CruisesPage() {
   const [expandedId, setExpandedId] = useState(null);
   const [agentModal, setAgentModal] = useState(null);
 
+  const hasFilters = destination || cruiseLine || duration || departurePort;
+
+  function clearFilters() {
+    setDestination("");
+    setCruiseLine("");
+    setDuration("");
+    setDeparturePort("");
+  }
+
   async function fetchCruises() {
     setLoading(true);
     const apiKey = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
@@ -196,10 +205,18 @@ export default function CruisesPage() {
                   style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box" }} />
               </div>
             </div>
-            <button onClick={fetchCruises}
-              style={{ background: "#fff", color: "#991b1b", border: "none", borderRadius: "8px", padding: "11px 28px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>
-              Search Cruises →
-            </button>
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              <button onClick={fetchCruises}
+                style={{ background: "#fff", color: "#991b1b", border: "none", borderRadius: "8px", padding: "11px 28px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>
+                Search Cruises →
+              </button>
+              {hasFilters && (
+                <button onClick={clearFilters}
+                  style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.4)", borderRadius: "8px", padding: "11px 20px", fontSize: "13px", cursor: "pointer" }}>
+                  Clear filters
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

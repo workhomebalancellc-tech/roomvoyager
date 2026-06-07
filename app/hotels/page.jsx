@@ -8,6 +8,15 @@ export default function HotelsPage() {
   const [checkOut, setCheckOut] = useState("");
   const [adults, setAdults] = useState("2");
 
+  function clearFilters() {
+    setDestination("");
+    setCheckIn("");
+    setCheckOut("");
+    setAdults("2");
+  }
+
+  const hasFilters = destination || checkIn || checkOut || adults !== "2";
+
   function handleSearch(e) {
     e.preventDefault();
     const params = new URLSearchParams({
@@ -108,13 +117,22 @@ export default function HotelsPage() {
                   {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} {n === 1 ? "guest" : "guests"}</option>)}
                 </select>
               </div>
-              <div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                 <button
                   type="submit"
                   style={{ width: "100%", padding: "11px 24px", background: "#991b1b", color: "#fff", border: "none", borderRadius: "8px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}
                 >
                   Search Hotels →
                 </button>
+                {hasFilters && (
+                  <button
+                    type="button"
+                    onClick={clearFilters}
+                    style={{ width: "100%", padding: "8px 24px", background: "none", color: "#6b7280", border: "1px solid #d1d5db", borderRadius: "8px", fontSize: "13px", cursor: "pointer" }}
+                  >
+                    Clear filters
+                  </button>
+                )}
               </div>
             </div>
           </form>
