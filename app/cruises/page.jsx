@@ -52,12 +52,12 @@ const DESTINATIONS = [
 ];
 
 const LINES = [
-  { name: "Royal Caribbean", abbr: "RC",  color: "#00205B", accent: "#D4AF37", tag: "Families & adventure",      href: "https://www.royalcaribbean.com" },
-  { name: "Carnival",        abbr: "CCL", color: "#C8102E", accent: "#fff",    tag: "Fun & budget travel",       href: "https://www.carnival.com" },
-  { name: "Norwegian",       abbr: "NCL", color: "#001489", accent: "#00AEEF", tag: "Freestyle flexibility",      href: "https://www.ncl.com" },
+  { name: "Royal Caribbean", abbr: "RC",  color: "#00205B", accent: "#D4AF37", tag: "Families & adventure",      href: "https://www.tkqlhce.com/click-101734691-15533918" },
+  { name: "Carnival",        abbr: "CCL", color: "#C8102E", accent: "#fff",    tag: "Fun & budget travel",       href: "https://www.dpbolvw.net/click-101734691-13096782" },
+  { name: "Norwegian",       abbr: "NCL", color: "#001489", accent: "#00AEEF", tag: "Freestyle flexibility",      href: "https://www.tkqlhce.com/click-101734691-15533851" },
   { name: "Princess",        abbr: "PCL", color: "#7B0046", accent: "#E8C97A", tag: "Scenic & Alaska routes",    href: "https://www.dpbolvw.net/click-101734691-15534065" },
-  { name: "MSC Cruises",     abbr: "MSC", color: "#003087", accent: "#FFD700", tag: "Mediterranean specialist",  href: "https://www.msccruises.com" },
-  { name: "Disney Cruise",   abbr: "DCL", color: "#003B8E", accent: "#FFD700", tag: "Best for families & kids",  href: "https://disneycruise.disney.go.com" },
+  { name: "MSC Cruises",     abbr: "MSC", color: "#003087", accent: "#FFD700", tag: "Mediterranean specialist",  href: "https://www.jdoqocy.com/click-101734691-15534062" },
+  { name: "Disney Cruise",   abbr: "DCL", color: "#003B8E", accent: "#FFD700", tag: "Best for families & kids",  href: "https://www.tkqlhce.com/click-101734691-13096793" },
 ];
 
 const TIME_SLOTS = ["11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM"];
