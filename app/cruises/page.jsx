@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 
-const NAVY   = "#003B95";
-const ORANGE = "#FF6600";
+const NAVY       = "#003B95";
+const ORANGE     = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 const DESTINATIONS = [
@@ -27,20 +27,31 @@ const LINES = [
 export default function CruisesPage() {
 
   useEffect(() => {
+    // Hide widget headline & logo — target first block before the form
+    const style = document.createElement("style");
+    style.id = "cd-widget-overrides";
+    style.textContent = `
+      #cruiseSearchBox300x250 > *:first-child { display: none !important; }
+      #cruiseSearchBox300x250 img { display: none !important; }
+      #cruiseSearchBox300x250 table { border-radius: 12px; overflow: hidden; }
+    `;
+    document.head.appendChild(style);
+
     // Google Fonts for widget
     const link = document.createElement("link");
     link.href = "https://fonts.googleapis.com/css?family=Montserrat";
     link.rel = "stylesheet";
     document.head.appendChild(link);
 
-    // CruiseDirect widget script
+    // CruiseDirect 300x250 widget
     const script = document.createElement("script");
-    script.src = "https://cruisedirect.com/cjjs/snippet-300x600.js";
+    script.src = "https://www.cruisedirect.com/cjjs/snippet-300x250.js";
     script.type = "text/javascript";
     script.async = true;
     document.body.appendChild(script);
 
     return () => {
+      document.getElementById("cd-widget-overrides")?.remove();
       if (document.head.contains(link)) document.head.removeChild(link);
       if (document.body.contains(script)) document.body.removeChild(script);
     };
@@ -65,22 +76,40 @@ export default function CruisesPage() {
         </div>
       </nav>
 
-      {/* HERO */}
+      {/* HERO with widget */}
       <div style={{ position: "relative", overflow: "hidden" }}>
         <img
-          src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1600&h=380&fit=crop&auto=format"
+          src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1600&h=480&fit=crop&auto=format"
           alt="Cruise ship at sea"
-          style={{ width: "100%", height: "340px", objectFit: "cover", objectPosition: "center 40%" }}
+          style={{ width: "100%", height: "480px", objectFit: "cover", objectPosition: "center 40%" }}
         />
-        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to bottom, ${NAVY}bb 0%, ${NAVY}ee 100%)` }} />
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
-          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🚢 Cruise Search</p>
-          <h1 style={{ color: "#fff", fontSize: "clamp(26px, 5vw, 44px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.15, textShadow: "0 2px 12px rgba(0,0,0,0.3)" }}>
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to bottom, ${NAVY}cc 0%, ${NAVY}f0 100%)` }} />
+
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+          {/* Headline */}
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 8px", textAlign: "center" }}>🚢 Cruise Search</p>
+          <h1 style={{ color: "#fff", fontSize: "clamp(22px, 4vw, 38px)", fontWeight: "800", margin: "0 0 6px", textAlign: "center", textShadow: "0 2px 12px rgba(0,0,0,0.4)", lineHeight: 1.2 }}>
             Find Your Perfect Cruise
           </h1>
-          <p style={{ color: "#BFDBFE", fontSize: "16px", margin: 0, maxWidth: "520px", lineHeight: 1.6 }}>
-            Search live inventory across top cruise lines — or let our agents find you the best deal.
+          <p style={{ color: "#BFDBFE", fontSize: "14px", margin: "0 0 20px", textAlign: "center" }}>
+            Search live inventory across all major cruise lines
           </p>
+
+          {/* Widget */}
+          <div style={{ background: "rgba(255,255,255,0.07)", backdropFilter: "blur(8px)", borderRadius: "16px", padding: "12px", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 8px 32px rgba(0,0,0,0.3)" }}>
+            <div
+              id="cdsearch"
+              data-redirect-server="https://www.jdoqocy.com/click-101734691-15534471?url="
+            />
+            <div id="cruiseSearchBox300x250" />
+            <img
+              src="https://www.awltovhc.com/image-101734691-15534471"
+              width="1"
+              height="1"
+              alt=""
+              style={{ display: "block" }}
+            />
+          </div>
         </div>
       </div>
 
@@ -95,43 +124,43 @@ export default function CruisesPage() {
         </div>
       </div>
 
-      {/* MAIN — two column */}
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "48px 24px 80px", display: "grid", gridTemplateColumns: "1fr 320px", gap: "40px", alignItems: "start" }}>
+      {/* CONTENT */}
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "48px 24px 80px" }}>
 
-        {/* ── LEFT COLUMN ── */}
-        <div>
-
-          {/* Destinations */}
-          <section style={{ marginBottom: "48px" }}>
-            <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Where do you want to go?</p>
-            <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>Popular Cruise Destinations</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
-              {DESTINATIONS.map((d, i) => (
-                <div key={i}
-                  style={{ background: "#fff", borderRadius: "14px", padding: "18px", border: "1px solid #E5E7EB", boxShadow: "0 2px 8px rgba(0,59,149,0.06)", cursor: "default" }}
-                  onMouseEnter={e => e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,59,149,0.13)"}
-                  onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,59,149,0.06)"}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "8px" }}>
-                    <span style={{ fontSize: "26px" }}>{d.icon}</span>
-                    <span style={{ background: LIGHT_BLUE, color: NAVY, fontSize: "11px", fontWeight: "700", padding: "3px 8px", borderRadius: "6px" }}>from {d.from}</span>
-                  </div>
-                  <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 4px", fontSize: "15px" }}>{d.name}</p>
-                  <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 8px", lineHeight: 1.5 }}>{d.desc}</p>
-                  <p style={{ fontSize: "11px", fontWeight: "600", color: ORANGE, margin: 0 }}>⏱ {d.nights}</p>
+        {/* Destinations */}
+        <section style={{ marginBottom: "56px" }}>
+          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Where do you want to go?</p>
+          <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>Popular Cruise Destinations</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }}>
+            {DESTINATIONS.map((d, i) => (
+              <div key={i}
+                style={{ background: "#fff", borderRadius: "14px", padding: "20px", border: "1px solid #E5E7EB", boxShadow: "0 2px 8px rgba(0,59,149,0.06)" }}
+                onMouseEnter={e => e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,59,149,0.13)"}
+                onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,59,149,0.06)"}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
+                  <span style={{ fontSize: "28px" }}>{d.icon}</span>
+                  <span style={{ background: LIGHT_BLUE, color: NAVY, fontSize: "11px", fontWeight: "700", padding: "3px 8px", borderRadius: "6px" }}>from {d.from}</span>
                 </div>
-              ))}
-            </div>
-          </section>
+                <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 6px", fontSize: "15px" }}>{d.name}</p>
+                <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 10px", lineHeight: 1.5 }}>{d.desc}</p>
+                <p style={{ fontSize: "11px", fontWeight: "600", color: ORANGE, margin: 0 }}>⏱ {d.nights}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Cruise Lines + Agent CTA side by side */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px", marginBottom: "48px" }}>
 
           {/* Cruise Lines */}
-          <section style={{ marginBottom: "48px" }}>
+          <section>
             <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>All major cruise lines</p>
-            <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 16px" }}>Book Any Line Through Us</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "10px" }}>
+            <h2 style={{ fontSize: "20px", fontWeight: "800", color: "#111827", margin: "0 0 16px" }}>Book Any Line Through Us</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
               {LINES.map((l, i) => (
-                <div key={i} style={{ background: "#fff", borderRadius: "12px", padding: "16px", border: "1px solid #E5E7EB", textAlign: "center" }}>
+                <div key={i} style={{ background: "#fff", borderRadius: "12px", padding: "14px", border: "1px solid #E5E7EB", textAlign: "center" }}>
                   <p style={{ fontSize: "22px", margin: "0 0 4px" }}>{l.icon}</p>
-                  <p style={{ fontWeight: "700", color: "#111827", fontSize: "13px", margin: "0 0 3px" }}>{l.name}</p>
+                  <p style={{ fontWeight: "700", color: "#111827", fontSize: "13px", margin: "0 0 2px" }}>{l.name}</p>
                   <p style={{ fontSize: "10px", color: "#6B7280", margin: 0 }}>{l.tag}</p>
                 </div>
               ))}
@@ -139,72 +168,46 @@ export default function CruisesPage() {
           </section>
 
           {/* Agent CTA */}
-          <section style={{ background: "#fff", borderRadius: "20px", padding: "28px", border: "1px solid #E5E7EB", boxShadow: "0 2px 12px rgba(0,59,149,0.07)", marginBottom: "32px" }}>
-            <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Not sure which cruise to pick?</p>
+          <section style={{ background: "#fff", borderRadius: "20px", padding: "28px", border: "1px solid #E5E7EB", boxShadow: "0 2px 12px rgba(0,59,149,0.07)" }}>
+            <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Prefer personal service?</p>
             <h2 style={{ fontSize: "20px", fontWeight: "800", color: "#111827", margin: "0 0 6px" }}>Let Our Agent Find Your Best Deal</h2>
-            <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 20px", lineHeight: 1.6 }}>
-              Our travel agents have access to exclusive group rates, cabin upgrades, and bundle pricing you won&apos;t find searching on your own.
+            <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px", lineHeight: 1.6 }}>
+              Access exclusive group rates, cabin upgrades, and bundle pricing you won&apos;t find on your own.
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "24px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
               {[
-                ["💰","Exclusive group rates","Often 15–30% below public pricing"],
-                ["🛏️","Cabin upgrades","Best cabin negotiated for your budget"],
-                ["✈️","Cruise + flight bundles","One price, one point of contact"],
-                ["🏆","Earn 10x rewards pts","$2,200 cruise = $220 cash back"],
-              ].map(([icon, title, sub], i) => (
-                <div key={i} style={{ background: LIGHT_BLUE, borderRadius: "12px", padding: "14px" }}>
-                  <p style={{ fontSize: "20px", margin: "0 0 6px" }}>{icon}</p>
-                  <p style={{ fontWeight: "700", color: NAVY, fontSize: "13px", margin: "0 0 2px" }}>{title}</p>
-                  <p style={{ fontSize: "11px", color: "#6B7280", margin: 0 }}>{sub}</p>
+                ["💰","Exclusive group rates — often 15–30% below public pricing"],
+                ["🛏️","Cabin upgrades negotiated for your budget"],
+                ["✈️","Cruise + flight bundles — one price, one contact"],
+                ["🏆","$2,200 cruise = 22,000 pts = $220 cash back"],
+              ].map(([icon, text], i) => (
+                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px", background: LIGHT_BLUE, borderRadius: "10px", padding: "10px 12px" }}>
+                  <span style={{ fontSize: "16px", flexShrink: 0 }}>{icon}</span>
+                  <span style={{ fontSize: "12px", color: NAVY, fontWeight: "600", lineHeight: 1.4 }}>{text}</span>
                 </div>
               ))}
             </div>
             <a
               href="mailto:workhomebalancellc@gmail.com?subject=Cruise Quote Request&body=Hi! I'd like a cruise quote.%0A%0ADestination: %0ADates: %0AGuests: %0ABudget per person: %0ACabin preference: %0ASpecial requests: "
-              style={{ display: "block", background: NAVY, color: "#fff", textDecoration: "none", textAlign: "center", padding: "14px", borderRadius: "10px", fontWeight: "700", fontSize: "15px" }}>
+              style={{ display: "block", background: NAVY, color: "#fff", textDecoration: "none", textAlign: "center", padding: "13px", borderRadius: "10px", fontWeight: "700", fontSize: "14px" }}>
               📧 Request a Free Agent Quote
             </a>
-            <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "10px 0 0" }}>
-              Mon–Fri 6–9PM · Sat 10AM–4PM EST · Response within 24 hours
+            <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "8px 0 0" }}>
+              Mon–Fri 6–9PM · Sat 10AM–4PM EST · Within 24 hours
             </p>
           </section>
-
-          {/* Rewards callout */}
-          <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #0052CC 100%)`, borderRadius: "16px", padding: "24px 28px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
-            <div>
-              <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>🏆 RoomVoyager Rewards</p>
-              <p style={{ color: "#fff", fontWeight: "800", fontSize: "17px", margin: "0 0 4px" }}>Earn 10 pts per $1 on every cruise</p>
-              <p style={{ color: "#BFDBFE", fontSize: "13px", margin: 0 }}>A $2,200 cruise = 22,000 pts = $220 cash back</p>
-            </div>
-            <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "11px 22px", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", flexShrink: 0, boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
-              Learn more →
-            </a>
-          </div>
-
         </div>
 
-        {/* ── RIGHT COLUMN — sticky widget ── */}
-        <div style={{ position: "sticky", top: "80px" }}>
-          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 10px", textAlign: "center" }}>
-            🔍 Search & Book Cruises
-          </p>
-          <div style={{ background: "#fff", borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,59,149,0.12)", border: "1px solid #E5E7EB", display: "inline-block", width: "300px" }}>
-            <div
-              id="cdsearch"
-              data-redirect-server="https://www.jdoqocy.com/click-101734691-15534473?url="
-            />
-            <div id="cruiseSearchBox300x600" />
-            <img
-              src="https://www.lduhtrp.net/image-101734691-15534473"
-              width="1"
-              height="1"
-              alt=""
-              style={{ display: "block" }}
-            />
+        {/* Rewards callout */}
+        <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #0052CC 100%)`, borderRadius: "16px", padding: "28px 32px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
+          <div>
+            <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>🏆 RoomVoyager Rewards</p>
+            <p style={{ color: "#fff", fontWeight: "800", fontSize: "18px", margin: "0 0 4px" }}>Earn 10 pts per $1 on every cruise</p>
+            <p style={{ color: "#BFDBFE", fontSize: "13px", margin: 0 }}>A $2,200 cruise = 22,000 pts = $220 cash back via Zelle, Cash App, or Venmo</p>
           </div>
-          <p style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "center", margin: "10px 0 0" }}>
-            Powered by CruiseDirect · Best price guarantee
-          </p>
+          <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "12px 24px", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", flexShrink: 0, boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
+            Learn more →
+          </a>
         </div>
 
       </div>
