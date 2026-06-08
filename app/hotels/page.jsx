@@ -73,6 +73,15 @@ function HotelsContent() {
         </div>
       </div>
 
+      {/* TRUST BAR */}
+      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
+        <div style={{ maxWidth: "960px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
+          {[["✅","Best price guarantee"],["🔄","Free cancellation on most rooms"],["💳","No booking fees"],["🏆","Earn 5 pts per $1"],["🏨","1M+ verified properties"]].map(([icon,text],i) => (
+            <div key={i} style={{ display:"flex", alignItems:"center", gap:"6px", fontSize:"13px", color:"#374151" }}><span>{icon}</span><span>{text}</span></div>
+          ))}
+        </div>
+      </div>
+
       {/* SEARCH */}
       <div style={{ background: NAVY, padding: "24px 24px 28px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
@@ -104,15 +113,6 @@ function HotelsContent() {
             <button onClick={handleSearch} style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", padding: "11px 28px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>Search Hotels →</button>
             <button onClick={clearFilters} style={{ background: "rgba(255,255,255,0.12)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "8px", padding: "11px 20px", fontSize: "13px", cursor: "pointer" }}>Clear filters</button>
           </div>
-        </div>
-      </div>
-
-      {/* TRUST BAR */}
-      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
-        <div style={{ maxWidth: "960px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
-          {[["✅","Best price guarantee"],["🔄","Free cancellation on most rooms"],["💳","No booking fees"],["🏆","Earn 5 pts per $1"],["🏨","1M+ verified properties"]].map(([icon,text],i) => (
-            <div key={i} style={{ display:"flex", alignItems:"center", gap:"6px", fontSize:"13px", color:"#374151" }}><span>{icon}</span><span>{text}</span></div>
-          ))}
         </div>
       </div>
 

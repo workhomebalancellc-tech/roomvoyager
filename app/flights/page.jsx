@@ -222,6 +222,15 @@ function FlightsContent() {
         </div>
       </div>
 
+      {/* TRUST BAR */}
+      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
+          {[["🔍","500+ airlines compared"],["💰","No hidden fees"],["🏆","Earn 5 pts per $1"],["🔄","Free cancellation options"],["📱","Book in under 2 minutes"]].map(([icon,text],i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#374151" }}><span>{icon}</span><span>{text}</span></div>
+          ))}
+        </div>
+      </div>
+
       {/* Travelpayouts whitelabel */}
       <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB" }}>
         <div style={{ background: NAVY, padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -234,15 +243,6 @@ function FlightsContent() {
           style={{ width: "100%", minHeight: "100vh", border: "none", display: "block" }}
           allow="same-origin"
         />
-      </div>
-
-      {/* TRUST BAR */}
-      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
-          {[["🔍","500+ airlines compared"],["💰","No hidden fees"],["🏆","Earn 5 pts per $1"],["🔄","Free cancellation options"],["📱","Book in under 2 minutes"]].map(([icon,text],i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#374151" }}><span>{icon}</span><span>{text}</span></div>
-          ))}
-        </div>
       </div>
 
       {/* POPULAR DESTINATIONS */}
