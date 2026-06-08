@@ -53,18 +53,17 @@ const DESTINATIONS = [
     desc: "Epic ocean crossings between the Americas and Europe — a bucket-list voyage.",
     nights: "12–18 nights",
     from: "$899",
-    photo: "https://images.unsplash.com/photo-1504215680853-026ed2a45def?w=600&h=300&fit=crop&auto=format",
+    photo: "https://images.unsplash.com/photo-1548954993-c3a8c5c5d73d?w=600&h=300&fit=crop&auto=format",
   },
 ];
 
-// Brand colors + logo URLs (official CDN / Wikimedia free-use)
 const LINES = [
-  { name: "Royal Caribbean", abbr: "RC",  color: "#00205B", logo: "https://logo.clearbit.com/royalcaribbean.com",  tag: "Families & adventure" },
-  { name: "Carnival",        abbr: "CCL", color: "#CC0000", logo: "https://logo.clearbit.com/carnival.com",        tag: "Fun & budget travel" },
-  { name: "Norwegian",       abbr: "NCL", color: "#001489", logo: "https://logo.clearbit.com/ncl.com",             tag: "Freestyle flexibility" },
-  { name: "Princess",        abbr: "PCL", color: "#7B0046", logo: "https://logo.clearbit.com/princess.com",       tag: "Scenic & Alaska routes" },
-  { name: "MSC",             abbr: "MSC", color: "#003087", logo: "https://logo.clearbit.com/msccruises.com",      tag: "Mediterranean specialist" },
-  { name: "Disney",          abbr: "DCL", color: "#003B8E", logo: "https://logo.clearbit.com/disneycruise.com",    tag: "Best for families & kids" },
+  { name: "Royal Caribbean", abbr: "RC",  color: "#00205B", accent: "#D4AF37", tag: "Families & adventure" },
+  { name: "Carnival",        abbr: "CCL", color: "#C8102E", accent: "#fff",    tag: "Fun & budget travel" },
+  { name: "Norwegian",       abbr: "NCL", color: "#001489", accent: "#00AEEF", tag: "Freestyle flexibility" },
+  { name: "Princess",        abbr: "PCL", color: "#7B0046", accent: "#E8C97A", tag: "Scenic & Alaska routes" },
+  { name: "MSC Cruises",     abbr: "MSC", color: "#003087", accent: "#FFD700", tag: "Mediterranean specialist" },
+  { name: "Disney Cruise",   abbr: "DCL", color: "#003B8E", accent: "#FFD700", tag: "Best for families & kids" },
 ];
 
 export default function CruisesPage() {
@@ -116,7 +115,7 @@ export default function CruisesPage() {
         <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to bottom, ${NAVY}cc 0%, ${NAVY}ee 100%)` }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px", textAlign: "center" }}>
           <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 8px" }}>🚢 Cruise Search</p>
-          <h1 style={{ color: "#fff", fontSize: "clamp(24px, 4vw, 40px)", fontWeight: "800", margin: "0 0 8px", textShadow: "0 2px 12px rgba(0,0,0,0.4)", lineHeight: 1.2 }}>
+          <h1 style={{ color: "#fff", fontSize: "clamp(24px, 4vw, 40px)", fontWeight: "800", margin: "0 0 8px", textShadow: "0 2px 12px rgba(0,0,0,0.4)", lineHeight: 1.2, fontFamily: "Montserrat, sans-serif" }}>
             Find Your Perfect Cruise
           </h1>
           <p style={{ color: "#BFDBFE", fontSize: "15px", margin: 0 }}>
@@ -137,9 +136,33 @@ export default function CruisesPage() {
       </div>
 
       {/* MAIN — two column */}
-      <div style={{ maxWidth: "1140px", margin: "0 auto", padding: "48px 24px 80px", display: "grid", gridTemplateColumns: "1fr 320px", gap: "40px", alignItems: "start" }}>
+      <div style={{ maxWidth: "1140px", margin: "0 auto", padding: "48px 24px 80px", display: "grid", gridTemplateColumns: "320px 1fr", gap: "40px", alignItems: "start" }}>
 
-        {/* ── LEFT COLUMN ── */}
+        {/* ── LEFT COLUMN — static 300x600 widget ── */}
+        <div style={{ position: "sticky", top: "80px" }}>
+          <p style={{ fontSize: "12px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px", textAlign: "center", fontFamily: "Montserrat, sans-serif" }}>
+            🔍 Search &amp; Book Cruises
+          </p>
+          <div style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,59,149,0.15)", border: "1px solid #E5E7EB", width: "300px" }}>
+            <div
+              id="cdsearch"
+              data-redirect-server="https://www.jdoqocy.com/click-101734691-15534473?url="
+            />
+            <div id="cruiseSearchBox300x600" />
+            <img
+              src="https://www.lduhtrp.net/image-101734691-15534473"
+              width="1"
+              height="1"
+              alt=""
+              style={{ display: "block" }}
+            />
+          </div>
+          <p style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "center", margin: "10px 0 0", fontFamily: "Montserrat, sans-serif" }}>
+            Powered by CruiseDirect · Best price guarantee
+          </p>
+        </div>
+
+        {/* ── RIGHT COLUMN ── */}
         <div>
 
           {/* Destination Cards with Photos */}
@@ -175,13 +198,10 @@ export default function CruisesPage() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
               {LINES.map((l, i) => (
                 <div key={i} style={{ background: "#fff", borderRadius: "12px", padding: "16px", border: "1px solid #E5E7EB", display: "flex", alignItems: "center", gap: "12px" }}>
-                  <div style={{ width: "44px", height: "44px", borderRadius: "10px", overflow: "hidden", background: l.color, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <img
-                      src={l.logo}
-                      alt={l.name}
-                      style={{ width: "40px", height: "40px", objectFit: "contain" }}
-                      onError={e => { e.currentTarget.style.display = "none"; e.currentTarget.parentElement.innerHTML = `<span style="color:#fff;font-weight:800;font-size:11px">${l.abbr}</span>`; }}
-                    />
+                  {/* Styled brand badge — always renders */}
+                  <div style={{ width: "48px", height: "48px", borderRadius: "10px", background: l.color, flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1px", boxShadow: `inset 0 0 0 2px ${l.accent}33` }}>
+                    <span style={{ color: l.accent, fontWeight: "900", fontSize: "12px", fontFamily: "Montserrat, sans-serif", letterSpacing: "0.04em", lineHeight: 1 }}>{l.abbr}</span>
+                    <div style={{ width: "28px", height: "1px", background: l.accent, opacity: 0.6 }} />
                   </div>
                   <div>
                     <p style={{ fontWeight: "700", color: "#111827", fontSize: "13px", margin: "0 0 2px" }}>{l.name}</p>
@@ -235,30 +255,6 @@ export default function CruisesPage() {
             </a>
           </div>
 
-        </div>
-
-        {/* ── RIGHT COLUMN — static 300x600 widget ── */}
-        <div style={{ position: "sticky", top: "80px" }}>
-          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 10px", textAlign: "center" }}>
-            🔍 Search & Book Cruises
-          </p>
-          <div style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,59,149,0.15)", border: "1px solid #E5E7EB", width: "300px" }}>
-            <div
-              id="cdsearch"
-              data-redirect-server="https://www.jdoqocy.com/click-101734691-15534473?url="
-            />
-            <div id="cruiseSearchBox300x600" />
-            <img
-              src="https://www.lduhtrp.net/image-101734691-15534473"
-              width="1"
-              height="1"
-              alt=""
-              style={{ display: "block" }}
-            />
-          </div>
-          <p style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "center", margin: "10px 0 0" }}>
-            Powered by CruiseDirect · Best price guarantee
-          </p>
         </div>
 
       </div>
