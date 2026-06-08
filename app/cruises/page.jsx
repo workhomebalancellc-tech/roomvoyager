@@ -27,13 +27,11 @@ const LINES = [
 export default function CruisesPage() {
 
   useEffect(() => {
-    // Hide widget headline & logo — target first block before the form
+    // Minimal widget style overrides
     const style = document.createElement("style");
     style.id = "cd-widget-overrides";
     style.textContent = `
-      #cruiseSearchBox300x250 > *:first-child { display: none !important; }
-      #cruiseSearchBox300x250 img { display: none !important; }
-      #cruiseSearchBox300x250 table { border-radius: 12px; overflow: hidden; }
+      #cruiseSearchBox300x250 { border-radius: 12px; overflow: hidden; }
     `;
     document.head.appendChild(style);
 
