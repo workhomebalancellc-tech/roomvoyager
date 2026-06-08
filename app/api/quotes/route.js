@@ -55,46 +55,45 @@ export async function POST(request) {
       }
     }
 
-    // 2. Send email notification via Resend
-    const RESEND_KEY = process.env.RESEND_API_KEY;
-    if (RESEND_KEY) {
-      const emailText = [
-        "New Cruise Quote Request",
-        "─────────────────────────",
-        `Name:           ${firstName} ${lastName}`,
-        `Email:          ${email}`,
-        `Phone:          ${phone || "Not provided"}`,
-        `Destination:    ${destination || "Flexible"}`,
-        `Travelers:      ${travelers}`,
-        `Budget/person:  ${budget || "Flexible"}`,
-        `Travel Dates:   ${travelFrom || "TBD"} – ${travelTo || "TBD"}`,
-        `Cabin:          ${cabin}`,
-        `Notes:          ${notes || "None"}`,
-        "",
-        `Submitted: ${new Date().toLocaleString("en-US", { timeZone: "America/New_York" })} EST`,
-      ].join("\n");
+    // 2. Send email notification via EmailJS
+    const EJ_SERVICE  = process.env.EMAILJS_SERVICE_ID;
+    const EJ_TEMPLATE = process.env.EMAILJS_TEMPLATE_ID;
+    const EJ_PUBLIC   = process.env.EMAILJS_PUBLIC_KEY;
+    const EJ_PRIVATE  = process.env.EMAILJS_PRIVATE_KEY;
 
+    if (EJ_SERVICE && EJ_TEMPLATE && EJ_PUBLIC) {
       try {
-        const emailRes = await fetch("https://api.resend.com/emails", {
+        const emailRes = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${RESEND_KEY}`,
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            from: "RoomVoyager Quotes <onboarding@resend.dev>",
-            to:   ["workhomebalancellc@gmail.com"],
-            subject: `🚢 New Quote: ${firstName} ${lastName} — ${destination || "Flexible"}`,
-            text: emailText,
+            service_id:   EJ_SERVICE,
+            template_id:  EJ_TEMPLATE,
+            user_id:      EJ_PUBLIC,
+            ...(EJ_PRIVATE && { accessToken: EJ_PRIVATE }),
+            template_params: {
+              to_email:    "workhomebalancellc@gmail.com",
+              from_name:   `${firstName} ${lastName}`,
+              from_email:  email,
+              phone:       phone       || "Not provided",
+              destination: destination || "Flexible",
+              travelers,
+              budget:      budget      || "Flexible",
+              travel_from: travelFrom  || "TBD",
+              travel_to:   travelTo    || "TBD",
+              cabin,
+              notes:       notes       || "None",
+              submitted_at: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }) + " EST",
+            },
           }),
         });
         results.email = emailRes.ok;
         if (!emailRes.ok) {
           const err = await emailRes.text();
-          console.warn("Resend error:", err);
+          console.warn("EmailJS error:", err);
         }
       } catch (emailErr) {
-        console.warn("Resend fetch failed:", emailErr.message);
+        console.warn("EmailJS fetch failed:", emailErr.message);
       }
     }
 
