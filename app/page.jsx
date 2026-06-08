@@ -84,25 +84,21 @@ export default function HomePage() {
                 </button>
               ))}
             </div>
-            <form onSubmit={handleSearch} style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
-              {activeTab === "cruises" ? (
-                <select value={searchVal} onChange={e => setSearchVal(e.target.value)}
-                  style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: searchVal ? "#111827" : "#9CA3AF", background: "#fff" }}>
-                  <option value="">All Destinations</option>
-                  <option value="Caribbean">🌴 Caribbean</option>
-                  <option value="Mediterranean">🏛️ Mediterranean</option>
-                  <option value="Alaska">🏔️ Alaska</option>
-                  <option value="Bahamas">🐚 Bahamas</option>
-                  <option value="Mexico">🌮 Mexico</option>
-                  <option value="Transatlantic">🌊 Transatlantic</option>
-                </select>
-              ) : (
+            {activeTab === "cruises" ? (
+              <div style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
+                <div style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", color: "#9CA3AF", background: "#F9FAFB" }}>
+                  🚢 Caribbean, Mediterranean, Alaska &amp; more
+                </div>
+                <a href="/cruises" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", textDecoration: "none", display: "flex", alignItems: "center", whiteSpace: "nowrap" }}>Browse →</a>
+              </div>
+            ) : (
+              <form onSubmit={handleSearch} style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
                 <input type="text" placeholder={activeTab === "hotels" ? "Where are you going?" : "Where are you flying from?"}
                   value={searchVal} onChange={e => setSearchVal(e.target.value)}
                   style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827" }} />
-              )}
-              <button type="submit" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer" }}>Search →</button>
-            </form>
+                <button type="submit" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer" }}>Search →</button>
+              </form>
+            )}
           </div>
         </div>
       </div>
