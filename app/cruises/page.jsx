@@ -64,7 +64,7 @@ export default function CruisesPage() {
   const [callError, setCallError]           = useState(null);
   const [callForm, setCallForm] = useState({ firstName: "", lastName: "", email: "", phone: "" });
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
 
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", phone: "",
@@ -87,7 +87,6 @@ export default function CruisesPage() {
     document.body.appendChild(script);
 
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
     window.addEventListener("resize", checkMobile);
 
     return () => {
@@ -348,11 +347,12 @@ export default function CruisesPage() {
             </button>
           ) : (
             <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
-              <a href="/hotels"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Hotels</a>
-              <a href="/flights" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Flights</a>
-              <a href="/cruises" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "700", borderBottom: `2px solid ${ORANGE}`, paddingBottom: "2px" }}>Cruises</a>
-              <a href="/rewards" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Rewards</a>
-              <a href="/profile" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Profile</a>
+              <a href="/hotels"   style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Hotels</a>
+              <a href="/flights"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Flights</a>
+              <a href="/cruises"  style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "700", borderBottom: `2px solid ${ORANGE}`, paddingBottom: "2px" }}>Cruises</a>
+              <a href="/packages" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Packages</a>
+              <a href="/rewards"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Rewards</a>
+              <a href="/profile"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Profile</a>
               <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "7px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
               <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
             </div>
@@ -362,11 +362,12 @@ export default function CruisesPage() {
         {/* Mobile dropdown */}
         {isMobile && menuOpen && (
           <div style={{ borderTop: "1px solid #E5E7EB", padding: "16px 24px", display: "flex", flexDirection: "column", gap: "16px", background: "#fff" }}>
-            <a href="/hotels"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Hotels</a>
-            <a href="/flights" style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Flights</a>
-            <a href="/cruises" style={{ color: NAVY,     textDecoration: "none", fontSize: "15px", fontWeight: "700" }}>Cruises</a>
-            <a href="/rewards" style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Rewards</a>
-            <a href="/profile" style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Profile</a>
+            <a href="/hotels"   style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Hotels</a>
+            <a href="/flights"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Flights</a>
+            <a href="/cruises"  style={{ color: NAVY,     textDecoration: "none", fontSize: "15px", fontWeight: "700" }}>Cruises</a>
+            <a href="/packages" style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Packages</a>
+            <a href="/rewards"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Rewards</a>
+            <a href="/profile"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Profile</a>
             <div style={{ display: "flex", gap: "10px", paddingTop: "8px", borderTop: "1px solid #E5E7EB" }}>
               <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "8px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
               <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
