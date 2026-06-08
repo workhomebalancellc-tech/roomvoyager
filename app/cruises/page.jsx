@@ -31,7 +31,7 @@ export default function CruisesPage() {
     const style = document.createElement("style");
     style.id = "cd-widget-overrides";
     style.textContent = `
-      #cruiseSearchBox300x250 { border-radius: 12px; overflow: hidden; }
+      #cruiseSearchBox250x250 { border-radius: 12px; overflow: hidden; }
     `;
     document.head.appendChild(style);
 
@@ -43,7 +43,7 @@ export default function CruisesPage() {
 
     // CruiseDirect 300x250 widget
     const script = document.createElement("script");
-    script.src = "https://www.cruisedirect.com/cjjs/snippet-300x250.js";
+    script.src = "https://www.cruisedirect.com/cjjs/snippet-250x250.js";
     script.type = "text/javascript";
     script.async = true;
     document.body.appendChild(script);
@@ -84,30 +84,13 @@ export default function CruisesPage() {
         <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to bottom, ${NAVY}cc 0%, ${NAVY}f0 100%)` }} />
 
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px" }}>
-          {/* Headline */}
           <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 8px", textAlign: "center" }}>🚢 Cruise Search</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(22px, 4vw, 38px)", fontWeight: "800", margin: "0 0 6px", textAlign: "center", textShadow: "0 2px 12px rgba(0,0,0,0.4)", lineHeight: 1.2 }}>
             Find Your Perfect Cruise
           </h1>
-          <p style={{ color: "#BFDBFE", fontSize: "14px", margin: "0 0 20px", textAlign: "center" }}>
+          <p style={{ color: "#BFDBFE", fontSize: "14px", margin: 0, textAlign: "center" }}>
             Search live inventory across all major cruise lines
           </p>
-
-          {/* Widget */}
-          <div style={{ background: "rgba(255,255,255,0.07)", backdropFilter: "blur(8px)", borderRadius: "16px", padding: "12px", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 8px 32px rgba(0,0,0,0.3)" }}>
-            <div
-              id="cdsearch"
-              data-redirect-server="https://www.jdoqocy.com/click-101734691-15534471?url="
-            />
-            <div id="cruiseSearchBox300x250" />
-            <img
-              src="https://www.awltovhc.com/image-101734691-15534471"
-              width="1"
-              height="1"
-              alt=""
-              style={{ display: "block" }}
-            />
-          </div>
         </div>
       </div>
 
@@ -119,6 +102,18 @@ export default function CruisesPage() {
               <span>{icon}</span><span>{text}</span>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* WIDGET SECTION */}
+      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "32px 24px", display: "flex", justifyContent: "center" }}>
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 12px" }}>🔍 Search & Book Cruises</p>
+          <div style={{ display: "inline-block", borderRadius: "14px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,59,149,0.12)", border: "1px solid #E5E7EB" }}>
+            <div id="cdsearch" data-redirect-server="https://www.jdoqocy.com/click-101734691-15534467?url=" />
+            <div id="cruiseSearchBox250x250" />
+            <img src="https://www.lduhtrp.net/image-101734691-15534467" width="1" height="1" alt="" style={{ display: "block" }} />
+          </div>
         </div>
       </div>
 
