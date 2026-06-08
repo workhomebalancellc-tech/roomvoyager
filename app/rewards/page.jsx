@@ -99,10 +99,30 @@ export default function RewardsPage() {
 
   const currentTier = getCurrentTier();
 
-  function handleRedeemSubmit(e) {
+  async function handleRedeemSubmit(e) {
     e.preventDefault();
     const method = PAYMENT_METHODS.find(m => m.id === redeemMethod);
     const cashOut = (redeemAmount / 100).toFixed(2);
+
+    // Log to Airtable tracker (non-blocking — email still fires even if this fails)
+    try {
+      await fetch('/api/redemptions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:           session?.name || 'Unknown',
+          email:          session?.email || '',
+          pointsRedeemed: redeemAmount,
+          cashValue:      parseFloat(cashOut),
+          paymentMethod:  method?.label,
+          paymentHandle:  redeemHandle,
+        })
+      });
+    } catch (err) {
+      console.error('Failed to log redemption to tracker:', err);
+    }
+
+    // Send email to owner
     const subject = `Rewards Redemption Request — ${redeemAmount.toLocaleString()} pts ($${cashOut})`;
     const body = `Hi Alyse,\n\nI would like to redeem my RoomVoyager Rewards points.\n\nAccount: ${session?.email}\nName: ${session?.name || "N/A"}\nPoints to redeem: ${redeemAmount.toLocaleString()}\nCash value: $${cashOut}\nPayment method: ${method?.label}\nSend to: ${redeemHandle}\n\nPlease process within 2 business days. Thank you!`;
     window.location.href = `mailto:workhomebalancellc@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
