@@ -94,26 +94,26 @@ export default function CruisesPage() {
         </div>
       </div>
 
+      {/* WIDGET SECTION */}
+      <div style={{ background: NAVY, padding: "32px 24px", display: "flex", justifyContent: "center" }}>
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontSize: "11px", color: "#93C5FD", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 12px" }}>🔍 Search & Book Cruises</p>
+          <div style={{ display: "inline-block", borderRadius: "14px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.3)" }}>
+            <div id="cdsearch" data-redirect-server="https://www.jdoqocy.com/click-101734691-15534467?url=" />
+            <div id="cruiseSearchBox250x250" />
+            <img src="https://www.lduhtrp.net/image-101734691-15534467" width="1" height="1" alt="" style={{ display: "block" }} />
+          </div>
+        </div>
+      </div>
+
       {/* TRUST BAR */}
-      <div style={{ background: NAVY, padding: "12px 24px" }}>
+      <div style={{ background: NAVY, borderTop: "1px solid rgba(255,255,255,0.15)", padding: "12px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
           {[["🏆","Top cruise lines"],["💰","Earn 10 pts per $1"],["🤝","Free agent assistance"],["📞","24hr quote turnaround"],["🚫","No booking fees"]].map(([icon,text],i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#BFDBFE", fontWeight: "500" }}>
               <span>{icon}</span><span>{text}</span>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* WIDGET SECTION */}
-      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "32px 24px", display: "flex", justifyContent: "center" }}>
-        <div style={{ textAlign: "center" }}>
-          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 12px" }}>🔍 Search & Book Cruises</p>
-          <div style={{ display: "inline-block", borderRadius: "14px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,59,149,0.12)", border: "1px solid #E5E7EB" }}>
-            <div id="cdsearch" data-redirect-server="https://www.jdoqocy.com/click-101734691-15534467?url=" />
-            <div id="cruiseSearchBox250x250" />
-            <img src="https://www.lduhtrp.net/image-101734691-15534467" width="1" height="1" alt="" style={{ display: "block" }} />
-          </div>
         </div>
       </div>
 
