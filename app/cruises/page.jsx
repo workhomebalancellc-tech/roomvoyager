@@ -84,6 +84,8 @@ export default function CruisesPage() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [submitted, setSubmitted]     = useState(false);
+  const [submitting, setSubmitting]   = useState(false);
+  const [submitError, setSubmitError] = useState(null);
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", phone: "",
     destination: "", travelers: "2", budget: "", travelFrom: "", travelTo: "",
@@ -110,22 +112,23 @@ export default function CruisesPage() {
     };
   }, []);
 
-  function handleEmailSubmit(e) {
+  async function handleEmailSubmit(e) {
     e.preventDefault();
-    const subject = `Cruise Quote Request — ${form.firstName} ${form.lastName}`;
-    const body = [
-      `Name: ${form.firstName} ${form.lastName}`,
-      `Email: ${form.email}`,
-      `Phone: ${form.phone || "Not provided"}`,
-      `Destination: ${form.destination || "Flexible"}`,
-      `Travelers: ${form.travelers}`,
-      `Budget (per person): ${form.budget || "Flexible"}`,
-      `Travel Dates: ${form.travelFrom || "TBD"} – ${form.travelTo || "TBD"}`,
-      `Cabin Preference: ${form.cabin}`,
-      `Notes: ${form.notes || "None"}`,
-    ].join("\n");
-    window.location.href = `mailto:workhomebalancellc@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await fetch("/api/quotes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Submission failed");
+      setSubmitted(true);
+    } catch {
+      setSubmitError("Something went wrong. Please try again or email us at workhomebalancellc@gmail.com.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   function handleCallConfirm() {
@@ -135,7 +138,7 @@ export default function CruisesPage() {
     window.location.href = `mailto:workhomebalancellc@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
-  function closeModal() { setShowModal(false); setMode(null); setSelectedDate(null); setSelectedTime(null); setSubmitted(false); }
+  function closeModal() { setShowModal(false); setMode(null); setSelectedDate(null); setSelectedTime(null); setSubmitted(false); setSubmitting(false); setSubmitError(null); }
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
@@ -233,10 +236,11 @@ export default function CruisesPage() {
                       placeholder="Dietary needs, accessibility, occasion, specific ships you like..."
                       style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", boxSizing: "border-box", resize: "vertical" }} />
                   </div>
-                  <button type="submit" style={{ marginTop: "16px", width: "100%", background: NAVY, color: "#fff", border: "none", padding: "13px", borderRadius: "10px", fontWeight: "700", fontSize: "15px", cursor: "pointer" }}>
-                    📧 Send Quote Request
+                  <button type="submit" disabled={submitting} style={{ marginTop: "16px", width: "100%", background: submitting ? "#6B7280" : NAVY, color: "#fff", border: "none", padding: "13px", borderRadius: "10px", fontWeight: "700", fontSize: "15px", cursor: submitting ? "default" : "pointer" }}>
+                    {submitting ? "⏳ Sending..." : "📧 Send Quote Request"}
                   </button>
-                  <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "8px 0 0" }}>Opens your email client. Response within 24 hours.</p>
+                  {submitError && <p style={{ textAlign: "center", fontSize: "12px", color: "#DC2626", margin: "8px 0 0" }}>{submitError}</p>}
+                  <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "8px 0 0" }}>We&apos;ll respond within 24 hours.</p>
                 </form>
               )}
 
@@ -324,29 +328,29 @@ export default function CruisesPage() {
       </nav>
 
       {/* HERO */}
-      <div style={{ position: "relative", overflow: "hidden" }}>
+      <div style={{ position: "relative", height: "320px", overflow: "hidden" }}>
         <img
-          src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1600&h=340&fit=crop&auto=format"
+          src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1600&h=500&fit=crop&auto=format"
           alt="Cruise ship at sea"
-          style={{ width: "100%", height: "300px", objectFit: "cover", objectPosition: "center 40%" }}
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }}
         />
-        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to bottom, ${NAVY}cc 0%, ${NAVY}ee 100%)` }} />
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px", textAlign: "center" }}>
-          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 8px" }}>🚢 Cruise Search</p>
-          <h1 style={{ color: "#fff", fontSize: "clamp(24px, 4vw, 40px)", fontWeight: "800", margin: "0 0 8px", textShadow: "0 2px 12px rgba(0,0,0,0.4)", lineHeight: 1.2 }}>
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.65) 0%, rgba(0,15,60,0.82) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🚢 Powered by CruiseDirect</p>
+          <h1 style={{ color: "#fff", fontSize: "clamp(26px, 4vw, 44px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
             Find Your Perfect Cruise
           </h1>
-          <p style={{ color: "#BFDBFE", fontSize: "15px", margin: 0 }}>
+          <p style={{ color: "#BFDBFE", fontSize: "16px", margin: 0, maxWidth: "480px" }}>
             Search live inventory across all major cruise lines
           </p>
         </div>
       </div>
 
       {/* TRUST BAR */}
-      <div style={{ background: NAVY, padding: "12px 24px" }}>
+      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
-          {[["🏆","Top cruise lines"],["💰","Earn 10 pts per $1"],["🤝","Free agent assistance"],["📞","24hr quote turnaround"],["🚫","No booking fees"]].map(([icon,text],i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#BFDBFE", fontWeight: "500" }}>
+          {[["🚢","Top cruise lines"],["💰","No booking fees"],["🤝","Free agent assistance"],["🏆","Earn 10 pts per $1"],["📞","24hr quote turnaround"]].map(([icon,text],i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#374151" }}>
               <span>{icon}</span><span>{text}</span>
             </div>
           ))}

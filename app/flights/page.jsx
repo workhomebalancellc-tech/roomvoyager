@@ -237,10 +237,10 @@ function FlightsContent() {
       </div>
 
       {/* TRUST BAR */}
-      <div style={{ background: NAVY, padding: "14px 24px" }}>
+      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
-          {[["🔍","Searches 500+ airlines"],["💰","No hidden fees"],["✈️","Earn rewards on every flight"],["🔄","Free cancellation options"],["📱","Book in under 2 minutes"]].map(([icon,text],i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#BFDBFE", fontWeight: "500" }}><span>{icon}</span><span>{text}</span></div>
+          {[["🔍","500+ airlines compared"],["💰","No hidden fees"],["🏆","Earn 5 pts per $1"],["🔄","Free cancellation options"],["📱","Book in under 2 minutes"]].map(([icon,text],i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#374151" }}><span>{icon}</span><span>{text}</span></div>
           ))}
         </div>
       </div>

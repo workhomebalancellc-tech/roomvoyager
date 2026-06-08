@@ -107,21 +107,10 @@ function HotelsContent() {
         </div>
       </div>
 
-      {/* REWARDS BANNER */}
-      <div style={{ background: NAVY, padding: "12px 24px" }}>
-        <div style={{ maxWidth: "960px", margin: "0 auto", display: "flex", alignItems: "center", gap: "10px" }}>
-          <span>💰</span>
-          <p style={{ color: "#fff", fontSize: "13px", margin: 0 }}>
-            <strong>Earn 5 RoomVoyager Rewards points for every $1 spent on hotels</strong> — redeemable for real cash via Zelle, Cash App, or Venmo.{" "}
-            <a href="/rewards" style={{ color: "#FFA366", textDecoration: "underline" }}>Learn more →</a>
-          </p>
-        </div>
-      </div>
-
-      {/* TRUST BADGES */}
+      {/* TRUST BAR */}
       <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
-          {[["✅","Best price guarantee"],["🔄","Free cancellation on most rooms"],["💳","No booking fees"],["🏨","1M+ properties worldwide"],["⭐","Verified guest reviews"]].map(([icon,text],i) => (
+          {[["✅","Best price guarantee"],["🔄","Free cancellation on most rooms"],["💳","No booking fees"],["🏆","Earn 5 pts per $1"],["🏨","1M+ verified properties"]].map(([icon,text],i) => (
             <div key={i} style={{ display:"flex", alignItems:"center", gap:"6px", fontSize:"13px", color:"#374151" }}><span>{icon}</span><span>{text}</span></div>
           ))}
         </div>
