@@ -86,7 +86,7 @@ export default function HomePage() {
             </div>
             {activeTab === "cruises" ? (
               <div style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
-                <div style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", background: "#F9FAFB" }} />
+                <div style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", background: "#fff" }} />
                 <a href="/cruises" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", textDecoration: "none", display: "flex", alignItems: "center", whiteSpace: "nowrap" }}>Browse →</a>
               </div>
             ) : (
