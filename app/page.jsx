@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import { cityLabel, filterCities } from "./components/cityData";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -12,7 +13,18 @@ const LIGHT_BLUE = "#EBF3FF";
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState("hotels");
   const [searchVal, setSearchVal] = useState("");
+  const [citySugg, setCitySugg] = useState([]);
+  const [showSugg, setShowSugg] = useState(false);
   const { user } = useAuth();
+
+  function handleSearchChange(val) {
+    setSearchVal(val);
+    if (activeTab === "hotels") {
+      const matches = filterCities(val, 7);
+      setCitySugg(matches);
+      setShowSugg(matches.length > 0);
+    }
+  }
 
   const destinations = [
     { name: "Cancún", country: "Mexico", photo: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=500&h=320&fit=crop&auto=format", tag: "Most Popular", href: "/hotels" },
@@ -53,7 +65,7 @@ export default function HomePage() {
           <div style={{ background: "#fff", borderRadius: "16px", padding: "8px", width: "100%", maxWidth: "700px", boxShadow: "0 12px 48px rgba(0,0,0,0.3)" }}>
             <div style={{ display: "flex", gap: "2px", padding: "4px 4px 8px" }}>
               {[["hotels", "🏨 Hotels"], ["flights", "✈️ Flights"], ["cruises", "🚢 Cruises"]].map(([tab, label]) => (
-                <button key={tab} onClick={() => { setActiveTab(tab); setSearchVal(""); }}
+                <button key={tab} onClick={() => { setActiveTab(tab); setSearchVal(""); setShowSugg(false); setCitySugg([]); }}
                   style={{ padding: "8px 18px", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: "600", cursor: "pointer", background: activeTab === tab ? NAVY : "transparent", color: activeTab === tab ? "#fff" : "#6B7280", transition: "all 0.15s" }}>
                   {label}
                 </button>
@@ -65,9 +77,29 @@ export default function HomePage() {
               </div>
             ) : (
               <form onSubmit={handleSearch} style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
-                <input type="text" placeholder={activeTab === "hotels" ? "Where are you going?" : "Where are you flying from?"}
-                  value={searchVal} onChange={e => setSearchVal(e.target.value)}
-                  style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827" }} />
+                <div style={{ flex: 1, position: "relative" }}>
+                  <input type="text"
+                    placeholder={activeTab === "hotels" ? "Where are you going?" : "Where are you flying from?"}
+                    value={searchVal}
+                    onChange={e => handleSearchChange(e.target.value)}
+                    onBlur={() => setTimeout(() => setShowSugg(false), 160)}
+                    onFocus={() => searchVal.length >= 1 && citySugg.length > 0 && setShowSugg(true)}
+                    style={{ width: "100%", padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827", boxSizing: "border-box" }} />
+                  {showSugg && activeTab === "hotels" && (
+                    <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "10px", boxShadow: "0 6px 24px rgba(0,0,0,0.13)", zIndex: 200, marginTop: "4px", overflow: "hidden" }}>
+                      {citySugg.map((c, i) => (
+                        <div key={i}
+                          onMouseDown={() => { setSearchVal(cityLabel(c)); setShowSugg(false); }}
+                          style={{ padding: "10px 14px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < citySugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
+                          onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
+                          onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
+                          <span style={{ fontSize: "14px", color: "#111827", fontWeight: "600" }}>{c.name}</span>
+                          <span style={{ fontSize: "12px", color: "#9CA3AF" }}>{c.sub}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <button type="submit" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer" }}>Search →</button>
               </form>
             )}

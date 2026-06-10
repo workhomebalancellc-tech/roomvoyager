@@ -6,42 +6,12 @@ import { Suspense } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { CITY_LIST, cityLabel, filterCities } from "../components/cityData";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
-const POPULAR_CITIES = [
-  { name: "New York", country: "USA" }, { name: "Los Angeles", country: "USA" },
-  { name: "Miami", country: "USA" }, { name: "Chicago", country: "USA" },
-  { name: "Las Vegas", country: "USA" }, { name: "Orlando", country: "USA" },
-  { name: "Dallas", country: "USA" }, { name: "Houston", country: "USA" },
-  { name: "Atlanta", country: "USA" }, { name: "Denver", country: "USA" },
-  { name: "Seattle", country: "USA" }, { name: "San Francisco", country: "USA" },
-  { name: "Boston", country: "USA" }, { name: "Phoenix", country: "USA" },
-  { name: "Washington DC", country: "USA" }, { name: "Nashville", country: "USA" },
-  { name: "Tampa", country: "USA" }, { name: "San Diego", country: "USA" },
-  { name: "Austin", country: "USA" }, { name: "New Orleans", country: "USA" },
-  { name: "Honolulu", country: "Hawaii, USA" }, { name: "Philadelphia", country: "USA" },
-  { name: "Cancún", country: "Mexico" }, { name: "Cabo San Lucas", country: "Mexico" },
-  { name: "Puerto Vallarta", country: "Mexico" }, { name: "Mexico City", country: "Mexico" },
-  { name: "Punta Cana", country: "Dominican Republic" }, { name: "Nassau", country: "Bahamas" },
-  { name: "Montego Bay", country: "Jamaica" }, { name: "San Juan", country: "Puerto Rico" },
-  { name: "Aruba", country: "Aruba" }, { name: "St Maarten", country: "Caribbean" },
-  { name: "Paris", country: "France" }, { name: "London", country: "UK" },
-  { name: "Rome", country: "Italy" }, { name: "Barcelona", country: "Spain" },
-  { name: "Amsterdam", country: "Netherlands" }, { name: "Lisbon", country: "Portugal" },
-  { name: "Madrid", country: "Spain" }, { name: "Dublin", country: "Ireland" },
-  { name: "Athens", country: "Greece" }, { name: "Prague", country: "Czech Republic" },
-  { name: "Budapest", country: "Hungary" }, { name: "Vienna", country: "Austria" },
-  { name: "Dubai", country: "UAE" }, { name: "Tokyo", country: "Japan" },
-  { name: "Bali", country: "Indonesia" }, { name: "Bangkok", country: "Thailand" },
-  { name: "Singapore", country: "Singapore" }, { name: "Sydney", country: "Australia" },
-  { name: "Toronto", country: "Canada" }, { name: "Vancouver", country: "Canada" },
-  { name: "Buenos Aires", country: "Argentina" }, { name: "Rio de Janeiro", country: "Brazil" },
-  { name: "Nairobi", country: "Kenya" }, { name: "Cape Town", country: "South Africa" },
-  { name: "Maldives", country: "Maldives" }, { name: "Reykjavik", country: "Iceland" },
-];
 
 function HotelsContent() {
   const { user } = useAuth();
@@ -80,18 +50,9 @@ function HotelsContent() {
 
   function handleDestChange(val) {
     setDestination(val);
-    if (val.length >= 1) {
-      const lower = val.toLowerCase();
-      const matches = POPULAR_CITIES.filter(c =>
-        c.name.toLowerCase().startsWith(lower) ||
-        c.name.toLowerCase().includes(lower)
-      ).slice(0, 6);
-      setDestSugg(matches);
-      setShowSugg(matches.length > 0);
-    } else {
-      setDestSugg([]);
-      setShowSugg(false);
-    }
+    const matches = filterCities(val, 7);
+    setDestSugg(matches);
+    setShowSugg(matches.length > 0);
   }
 
   function handleSearch(e) {
@@ -150,12 +111,12 @@ function HotelsContent() {
                   <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "8px", boxShadow: "0 6px 20px rgba(0,0,0,0.15)", zIndex: 200, marginTop: "3px", overflow: "hidden" }}>
                     {destSugg.map((c, i) => (
                       <div key={i}
-                        onMouseDown={() => { setDestination(c.name); setShowSugg(false); }}
+                        onMouseDown={() => { setDestination(cityLabel(c)); setShowSugg(false); }}
                         style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < destSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
                         onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
                         onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
-                        <span style={{ fontSize: "13px", color: "#111827", fontWeight: "600" }}>🏙️ {c.name}</span>
-                        <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{c.country}</span>
+                        <span style={{ fontSize: "13px", color: "#111827", fontWeight: "600" }}>{c.name}</span>
+                        <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{c.sub}</span>
                       </div>
                     ))}
                   </div>

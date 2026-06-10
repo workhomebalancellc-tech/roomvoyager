@@ -216,9 +216,6 @@ function FlightsContent() {
       ? `https://flights.roomvoyagertravel.com/flights/?destination_iata=${initialIata}`
       : "https://flights.roomvoyagertravel.com"
   );
-  const [citySearch, setCitySearch] = useState(initialDest);
-  const [citySugg, setCitySugg] = useState([]);
-  const [showCitySugg, setShowCitySugg] = useState(false);
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
   // menuOpen handled by shared NavBar
 
@@ -228,40 +225,6 @@ function FlightsContent() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  function handleCityChange(val) {
-    setCitySearch(val);
-    if (val.length >= 1) {
-      const lower = val.toLowerCase();
-      const matches = POPULAR_CITIES_FLIGHTS.filter(c =>
-        c.name.toLowerCase().startsWith(lower) ||
-        c.name.toLowerCase().includes(lower) ||
-        c.code.toLowerCase() === lower
-      ).slice(0, 7);
-      setCitySugg(matches);
-      setShowCitySugg(matches.length > 0);
-    } else {
-      setCitySugg([]);
-      setShowCitySugg(false);
-    }
-  }
-
-  function applyCity(city) {
-    setCitySearch(city.name);
-    setShowCitySugg(false);
-    setIframeSrc(`https://flights.roomvoyagertravel.com/flights/?destination_iata=${city.code}`);
-  }
-
-  function handleCitySearch(e) {
-    e.preventDefault();
-    if (!citySearch.trim()) return;
-    const iata = cityToIata(citySearch);
-    setIframeSrc(
-      iata
-        ? `https://flights.roomvoyagertravel.com/flights/?destination_iata=${iata}`
-        : `https://flights.roomvoyagertravel.com/flights/?destination=${encodeURIComponent(citySearch)}`
-    );
-    setShowCitySugg(false);
-  }
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
@@ -285,44 +248,6 @@ function FlightsContent() {
           {[["🔍","500+ airlines compared"],["💰","No hidden fees"],["🏆","Earn 5 pts per $1"],["🔄","Free cancellation options"],["📱","Book in under 2 minutes"]].map(([icon,text],i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#374151" }}><span>{icon}</span><span>{text}</span></div>
           ))}
-        </div>
-      </div>
-
-      {/* CITY SEARCH BAR */}
-      <div style={{ background: NAVY, padding: "18px 24px 20px", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
-        <div style={{ maxWidth: "760px", margin: "0 auto" }}>
-          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 10px" }}>Where are you flying?</p>
-          <form onSubmit={handleCitySearch} style={{ display: "flex", gap: "10px" }}>
-            <div style={{ flex: 1, position: "relative" }}>
-              <input
-                type="text"
-                placeholder="Type a city or destination…"
-                value={citySearch}
-                onChange={e => handleCityChange(e.target.value)}
-                onBlur={() => setTimeout(() => setShowCitySugg(false), 160)}
-                onFocus={() => citySearch.length >= 1 && citySugg.length > 0 && setShowCitySugg(true)}
-                style={{ width: "100%", padding: "11px 14px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none" }}
-              />
-              {showCitySugg && (
-                <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "8px", boxShadow: "0 6px 24px rgba(0,0,0,0.18)", zIndex: 200, marginTop: "3px", overflow: "hidden" }}>
-                  {citySugg.map((c, i) => (
-                    <div key={i}
-                      onMouseDown={() => applyCity(c)}
-                      style={{ padding: "10px 14px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < citySugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
-                      onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
-                      onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
-                      <span style={{ fontSize: "13px", color: "#111827", fontWeight: "600" }}>✈️ {c.name}</span>
-                      <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{c.country} · {c.code}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <button type="submit"
-              style={{ padding: "11px 22px", background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", fontSize: "14px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap" }}>
-              Search Flights →
-            </button>
-          </form>
         </div>
       </div>
 
