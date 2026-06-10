@@ -66,7 +66,7 @@ export default function CruisesPage() {
   const [callError, setCallError]           = useState(null);
   const [callForm, setCallForm] = useState({ firstName: "", lastName: "", email: "", phone: "" });
   // menuOpen handled by shared NavBar
-  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 1024 : false);
 
   const [form, setForm] = useState({
     firstName: "", lastName: "", email: "", phone: "",
@@ -88,7 +88,7 @@ export default function CruisesPage() {
     script.async = true;
     document.body.appendChild(script);
 
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     window.addEventListener("resize", checkMobile);
 
     return () => {
