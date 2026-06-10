@@ -9,7 +9,7 @@ const ORANGE = "#FF6600";
 const sections = [
   {
     title: "1. Acceptance of Terms",
-    body: "By accessing or using RoomVoyager Travel ("we," "us," "our"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.",
+    body: `By accessing or using RoomVoyager Travel ("we," "us," "our"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.`,
   },
   {
     title: "2. Description of Services",
