@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const NAVY       = "#003B95";
 const ORANGE     = "#FF6600";
@@ -27,12 +27,12 @@ const inputStyle  = { width: "100%", padding: "9px 12px", border: "1.5px solid #
 const labelStyle  = { fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "4px" };
 
 const BUNDLE_TYPES = [
-  { icon: "🏖️", name: "Beach Escape",       desc: "Hotel + flights + airport transfer. Arrive, relax, and let us handle the rest.",                tag: "Most Popular"   },
-  { icon: "🚢", name: "Cruise + Hotel",      desc: "Pre- or post-cruise hotel bundled with your sailing for one seamless, worry-free trip.",        tag: "Great Value"    },
-  { icon: "✈️", name: "Flight + Hotel",      desc: "We compare bundled rates across 500+ airlines and 1M+ properties to find your best price.",    tag: "Classic Bundle" },
-  { icon: "🎡", name: "Family Theme Park",   desc: "Orlando, Disneyland, Universal — hotel, park tickets, and flights all in one package.",         tag: "Family Fave"    },
-  { icon: "💍", name: "Honeymoon / Romance", desc: "Champagne welcome, couples spa, sunset dinner reservations — fully tailored to your love story.", tag: "Most Personal" },
-  { icon: "🌍", name: "Custom World Trip",   desc: "Multi-city bucket-list itinerary built around your dreams. We handle every leg.",               tag: "Bucket List"    },
+  { icon: "🏖️", name: "Beach Escape",       desc: "Hotel + flights + airport transfer. Arrive, relax, and let us handle the rest.",                 tag: "Most Popular",   placeholder: "Which beach destination are you dreaming of? Any preferred resort type, beach activities, or must-haves?" },
+  { icon: "🚢", name: "Cruise + Hotel",      desc: "Pre- or post-cruise hotel bundled with your sailing for one seamless, worry-free trip.",         tag: "Great Value",    placeholder: "Which cruise line or destination interests you? How many nights pre/post cruise hotel? Any cabin preferences?" },
+  { icon: "✈️", name: "Flight + Hotel",      desc: "We compare bundled rates across 500+ airlines and 1M+ properties to find your best price.",     tag: "Classic Bundle", placeholder: "Where are you flying from and to? Any hotel preferences — brand, star rating, neighborhood?" },
+  { icon: "🎡", name: "Family Theme Park",   desc: "Orlando, Disneyland, Universal — hotel, park tickets, and flights all in one package.",          tag: "Family Fave",    placeholder: "Which park(s) are on your list? Ages of kids? Any accessibility needs or character dining preferences?" },
+  { icon: "💍", name: "Honeymoon / Romance", desc: "Champagne welcome, couples spa, sunset dinner reservations — fully tailored to your love story.", tag: "Most Personal",  placeholder: "When is your big day? Any dream destination? What would make this trip unforgettable — overwater bungalow, private villa, spa, culinary experiences?" },
+  { icon: "🌍", name: "Custom World Trip",   desc: "Multi-city bucket-list itinerary built around your dreams. We handle every leg.",                tag: "Bucket List",    placeholder: "Which cities or countries are on your bucket list? How many stops? Any experiences you absolutely must have?" },
 ];
 
 const AGENT_PERKS = [
@@ -47,10 +47,12 @@ const AGENT_PERKS = [
 export default function PackagesPage() {
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const ctaRef = useRef(null);
 
   // Modal state
-  const [showModal, setShowModal] = useState(false);
-  const [mode, setMode]           = useState(null);
+  const [showModal, setShowModal]   = useState(false);
+  const [mode, setMode]             = useState(null); // "email" | "call"
+  const [notePlaceholder, setNotePlaceholder] = useState("");
 
   // Email quote form
   const [form, setForm] = useState({ firstName: "", lastName: "", email: "", phone: "", destination: "", travelers: "2", budget: "", travelFrom: "", travelTo: "", packageType: "", notes: "" });
@@ -110,8 +112,27 @@ export default function PackagesPage() {
     }
   }
 
+  function openEmail(packageType = "", placeholder = "") {
+    setForm(f => ({ ...f, packageType, notes: "" }));
+    setNotePlaceholder(placeholder);
+    setMode("email");
+    setSubmitted(false);
+    setSubmitError(null);
+    setShowModal(true);
+  }
+
+  function openCall() {
+    setMode("call");
+    setCallSubmitted(false);
+    setCallError(null);
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setCallForm({ firstName: "", lastName: "", email: "", phone: "" });
+    setShowModal(true);
+  }
+
   function closeModal() {
-    setShowModal(false); setMode(null);
+    setShowModal(false); setMode(null); setNotePlaceholder("");
     setSubmitted(false); setSubmitting(false); setSubmitError(null);
     setCallSubmitted(false); setCallSubmitting(false); setCallError(null);
     setSelectedDate(null); setSelectedTime(null);
@@ -130,38 +151,28 @@ export default function PackagesPage() {
 
             <div style={{ background: NAVY, borderRadius: "20px 20px 0 0", padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
-                <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>Free Agent Quote</p>
-                <p style={{ color: "#fff", fontWeight: "800", fontSize: "18px", margin: 0 }}>How would you like to connect?</p>
+                <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>
+                  {mode === "call" ? "Schedule a Call" : "Free Agent Quote"}
+                </p>
+                <p style={{ color: "#fff", fontWeight: "800", fontSize: "18px", margin: 0 }}>
+                  {mode === "call" ? "Pick a date & time" : form.packageType ? `${form.packageType} Quote` : "Tell us about your dream trip"}
+                </p>
               </div>
               <button onClick={closeModal} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", width: "32px", height: "32px", borderRadius: "50%", fontSize: "18px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
             </div>
 
             <div style={{ padding: "24px" }}>
 
-              {/* Choose mode */}
-              {!mode && (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
-                  <button onClick={() => setMode("email")} style={{ border: `2px solid ${NAVY}`, borderRadius: "14px", padding: "22px 16px", background: "#fff", cursor: "pointer", textAlign: "center" }}
-                    onMouseEnter={e => e.currentTarget.style.background = LIGHT_BLUE}
-                    onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
-                    <div style={{ fontSize: "32px", marginBottom: "8px" }}>📧</div>
-                    <p style={{ fontWeight: "800", color: NAVY, fontSize: "15px", margin: "0 0 4px" }}>Email Quote</p>
-                    <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>Fill out a quick form — response within 24 hrs</p>
-                  </button>
-                  <button onClick={() => setMode("call")} style={{ border: `2px solid ${ORANGE}`, borderRadius: "14px", padding: "22px 16px", background: "#fff", cursor: "pointer", textAlign: "center" }}
-                    onMouseEnter={e => e.currentTarget.style.background = "#FFF7F0"}
-                    onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
-                    <div style={{ fontSize: "32px", marginBottom: "8px" }}>📞</div>
-                    <p style={{ fontWeight: "800", color: ORANGE, fontSize: "15px", margin: "0 0 4px" }}>Schedule a Call</p>
-                    <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>Pick a time Fri or Sat, 11 AM–2 PM EST</p>
-                  </button>
-                </div>
-              )}
-
               {/* Email form */}
               {mode === "email" && !submitted && (
                 <form onSubmit={handleEmailSubmit}>
-                  <button type="button" onClick={() => setMode(null)} style={{ background: "none", border: "none", color: "#6B7280", fontSize: "13px", cursor: "pointer", marginBottom: "16px", padding: 0 }}>← Back</button>
+                  {form.packageType && (
+                    <div style={{ background: LIGHT_BLUE, borderRadius: "8px", padding: "8px 12px", marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
+                      <span style={{ fontSize: "13px", fontWeight: "700", color: NAVY }}>
+                        {BUNDLE_TYPES.find(b => b.name === form.packageType)?.icon} {form.packageType}
+                      </span>
+                    </div>
+                  )}
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                     {[["First Name","firstName","text",true],["Last Name","lastName","text",true],["Email","email","email",true],["Phone (optional)","phone","tel",false]].map(([label,key,type,req]) => (
                       <div key={key}>
@@ -169,13 +180,15 @@ export default function PackagesPage() {
                         <input required={req} type={type} value={form[key]} onChange={e => setForm(f => ({...f,[key]:e.target.value}))} style={inputStyle} />
                       </div>
                     ))}
-                    <div>
-                      <label style={labelStyle}>Package type</label>
-                      <select value={form.packageType} onChange={e => setForm(f => ({...f,packageType:e.target.value}))} style={inputStyle}>
-                        <option value="">Not sure yet</option>
-                        {BUNDLE_TYPES.map(b => <option key={b.name} value={b.name}>{b.name}</option>)}
-                      </select>
-                    </div>
+                    {!form.packageType && (
+                      <div>
+                        <label style={labelStyle}>Package type</label>
+                        <select value={form.packageType} onChange={e => setForm(f => ({...f,packageType:e.target.value}))} style={inputStyle}>
+                          <option value="">Not sure yet</option>
+                          {BUNDLE_TYPES.map(b => <option key={b.name} value={b.name}>{b.name}</option>)}
+                        </select>
+                      </div>
+                    )}
                     <div>
                       <label style={labelStyle}>Destination</label>
                       <input type="text" placeholder="Anywhere / Not sure" value={form.destination} onChange={e => setForm(f => ({...f,destination:e.target.value}))} style={inputStyle} />
@@ -201,9 +214,9 @@ export default function PackagesPage() {
                     </div>
                   </div>
                   <div style={{ marginTop: "12px" }}>
-                    <label style={labelStyle}>Tell us your dream trip</label>
+                    <label style={labelStyle}>{form.packageType ? "Tell us more" : "Tell us your dream trip"}</label>
                     <textarea rows={3} value={form.notes} onChange={e => setForm(f => ({...f,notes:e.target.value}))}
-                      placeholder="Occasion, travel style, must-haves, anything special..."
+                      placeholder={notePlaceholder || "Occasion, travel style, must-haves, anything special..."}
                       style={{ ...inputStyle, resize: "vertical" }} />
                   </div>
                   <button type="submit" disabled={submitting} style={{ marginTop: "16px", width: "100%", background: submitting ? "#6B7280" : NAVY, color: "#fff", border: "none", padding: "13px", borderRadius: "10px", fontWeight: "700", fontSize: "15px", cursor: submitting ? "default" : "pointer" }}>
@@ -340,7 +353,7 @@ export default function PackagesPage() {
           <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>✈️ Custom Vacation Packages</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(26px, 4vw, 44px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>Your Dream Trip, Built for You</h1>
           <p style={{ color: "#BFDBFE", fontSize: "16px", margin: "0 0 24px", maxWidth: "500px", lineHeight: 1.6 }}>Flights, hotels, cruises, and experiences — hand-curated by your personal travel agent.</p>
-          <button onClick={() => { setShowModal(true); setMode(null); }}
+          <button onClick={() => ctaRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
             style={{ background: ORANGE, color: "#fff", border: "none", padding: "14px 36px", borderRadius: "10px", fontSize: "16px", fontWeight: "700", cursor: "pointer", boxShadow: "0 4px 20px rgba(255,102,0,0.45)" }}>
             Request a Free Quote →
           </button>
@@ -377,7 +390,7 @@ export default function PackagesPage() {
                 <div style={{ fontSize: "36px", marginBottom: "12px" }}>{b.icon}</div>
                 <p style={{ fontWeight: "800", color: "#111827", fontSize: "16px", margin: "0 0 8px" }}>{b.name}</p>
                 <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px", lineHeight: 1.6 }}>{b.desc}</p>
-                <button onClick={() => { setShowModal(true); setMode(null); setForm(f => ({ ...f, packageType: b.name })); }}
+                <button onClick={() => openEmail(b.name, b.placeholder)}
                   style={{ background: "none", border: `1.5px solid ${NAVY}`, color: NAVY, padding: "8px 18px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", cursor: "pointer" }}>
                   Get a quote →
                 </button>
@@ -428,7 +441,7 @@ export default function PackagesPage() {
         </section>
 
         {/* Main agent CTA */}
-        <section style={{ background: "#fff", borderRadius: "24px", padding: isMobile ? "28px 20px" : "40px 48px", border: "1px solid #E5E7EB", boxShadow: "0 4px 24px rgba(0,59,149,0.08)", marginBottom: "40px" }}>
+        <section ref={ctaRef} style={{ background: "#fff", borderRadius: "24px", padding: isMobile ? "28px 20px" : "40px 48px", border: "1px solid #E5E7EB", boxShadow: "0 4px 24px rgba(0,59,149,0.08)", marginBottom: "40px", scrollMarginTop: "80px" }}>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "40px", alignItems: "center" }}>
             <div>
               <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 8px" }}>Let&apos;s plan your trip</p>
@@ -436,13 +449,13 @@ export default function PackagesPage() {
               <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px", lineHeight: 1.7 }}>
                 Weekend beach getaway, multi-city European honeymoon, or a family cruise + theme park combo — we&apos;ll create a package that fits your life and your budget. No two trips are the same.
               </p>
-              <button onClick={() => { setShowModal(true); setMode(null); }}
+              <button onClick={() => openEmail()}
                 style={{ display: "block", width: "100%", background: NAVY, color: "#fff", border: "none", padding: "14px", borderRadius: "12px", fontWeight: "700", fontSize: "15px", cursor: "pointer", marginBottom: "10px" }}>
-                📧 Request a Free Agent Quote
+                📧 Email Quote Request
               </button>
-              <button onClick={() => { setShowModal(true); setMode("call"); }}
+              <button onClick={() => openCall()}
                 style={{ display: "block", width: "100%", background: "#fff", color: ORANGE, border: `2px solid ${ORANGE}`, padding: "12px", borderRadius: "12px", fontWeight: "700", fontSize: "15px", cursor: "pointer" }}>
-                📞 Schedule a Call Instead
+                📞 Schedule a Call
               </button>
               <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "10px 0 0" }}>Calls: Fri &amp; Sat · 11 AM–2 PM EST · Email response within 24 hrs</p>
             </div>
