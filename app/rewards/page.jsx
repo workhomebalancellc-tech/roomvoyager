@@ -70,8 +70,18 @@ function ShipIcon({ size = 24, color = "currentColor" }) {
 }
 
 function EarningsSlider() {
-  const [amount, setAmount] = useState(1500);
-  const [useDouble, setUseDouble] = useState(false);
+  const [amount, setAmount]         = useState(1500);
+  const [useDouble, setUseDouble]   = useState(false);
+  const [selectedTier, setSelectedTier] = useState("explorer");
+
+  const SLIDER_TIERS = [
+    { id: "explorer",  label: "Explorer",  icon: "🧭", multiplier: 1.0, color: "#6B7280" },
+    { id: "voyager",   label: "Voyager",   icon: "⚓", multiplier: 1.2, color: "#003B95" },
+    { id: "navigator", label: "Navigator", icon: "🗺️", multiplier: 1.5, color: "#7C3AED" },
+    { id: "admiral",   label: "Admiral",   icon: "👑", multiplier: 2.0, color: "#FF6600" },
+  ];
+  const tier       = SLIDER_TIERS.find(t => t.id === selectedTier) || SLIDER_TIERS[0];
+  const multiplier = tier.multiplier;
 
   const PRODUCTS = [
     { id: "flight", label: "Flights",            ptsStd: 5,  ptsDbl: null, doubleOk: false },
@@ -102,7 +112,7 @@ function EarningsSlider() {
       </div>
 
       {/* Standard / Double toggle */}
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
         <div style={{ display: "flex", background: "#F3F4F6", borderRadius: "10px", padding: "3px" }}>
           <button onClick={() => setUseDouble(false)}
             style={{ padding: "7px 22px", borderRadius: "8px", border: "none", background: !useDouble ? "#fff" : "transparent", color: !useDouble ? NAVY : "#9CA3AF", fontWeight: "700", fontSize: "13px", cursor: "pointer", boxShadow: !useDouble ? "0 1px 4px rgba(0,0,0,0.12)" : "none", transition: "all 0.15s" }}>
@@ -115,14 +125,36 @@ function EarningsSlider() {
         </div>
       </div>
 
+      {/* Tier selector */}
+      <div style={{ marginBottom: "20px" }}>
+        <p style={{ fontSize: "11px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.08em", textAlign: "center", margin: "0 0 8px" }}>Your Rewards Tier</p>
+        <div style={{ display: "flex", gap: "6px", justifyContent: "center", flexWrap: "wrap" }}>
+          {SLIDER_TIERS.map(t => (
+            <button key={t.id} onClick={() => setSelectedTier(t.id)}
+              style={{ padding: "6px 14px", borderRadius: "8px", border: `2px solid ${selectedTier === t.id ? t.color : "#E5E7EB"}`, background: selectedTier === t.id ? t.color + "12" : "#F9FAFB",
+                color: selectedTier === t.id ? t.color : "#6B7280", fontWeight: "700", fontSize: "12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", transition: "all 0.15s" }}>
+              <span>{t.icon}</span>
+              <span>{t.label}</span>
+              {t.multiplier > 1 && <span style={{ fontSize: "10px", background: t.color + "20", padding: "1px 5px", borderRadius: "4px" }}>{t.multiplier}×</span>}
+            </button>
+          ))}
+        </div>
+        {multiplier > 1 && (
+          <p style={{ fontSize: "11px", textAlign: "center", color: tier.color, fontWeight: "700", margin: "8px 0 0" }}>
+            {tier.icon} {tier.label} bonus: all earnings × {tier.multiplier}
+          </p>
+        )}
+      </div>
+
       {/* Product rows */}
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         {PRODUCTS.map(p => {
           const notEligible = useDouble && !p.doubleOk;
-          const rate = (useDouble && p.doubleOk) ? p.ptsDbl : p.ptsStd;
-          const pts = amount * rate;
-          const cash = (pts / 1000).toFixed(2);
-          const barPct = (pts / (10000 * 20)) * 100;
+          const baseRate = (useDouble && p.doubleOk) ? p.ptsDbl : p.ptsStd;
+          const rate     = +(baseRate * multiplier).toFixed(1);
+          const pts      = Math.round(amount * rate);
+          const cash     = (pts / 1000).toFixed(2);
+          const barPct   = (pts / (10000 * 20 * multiplier)) * 100;
 
           return (
             <div key={p.id} style={{
@@ -141,7 +173,9 @@ function EarningsSlider() {
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <p style={{ fontWeight: "700", color: notEligible ? "#6B7280" : "#111827", margin: 0, fontSize: "14px" }}>{p.label}</p>
                   <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0 }}>
-                    {notEligible ? "Not eligible for double — standard only" : `${rate} pts per $1 · ${useDouble && p.doubleOk ? "double 🔥" : "standard"}`}
+                    {notEligible
+                      ? "Not eligible for double — standard only"
+                      : `${rate} pts per $1 · ${useDouble && p.doubleOk ? "double 🔥" : "standard"}${multiplier > 1 ? ` · ${tier.label} ${multiplier}×` : ""}`}
                   </p>
                 </div>
                 <div style={{ textAlign: "right", flexShrink: 0 }}>
