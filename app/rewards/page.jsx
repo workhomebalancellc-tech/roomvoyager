@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -138,26 +140,7 @@ export default function RewardsPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
-      {/* NAV */}
-      <nav style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 24px", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 1px 8px rgba(0,0,0,0.07)" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px" }}>
-          <a href="/" style={{ fontSize: "22px", fontWeight: "800", color: NAVY, textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
-          <div style={{ display: "flex", gap: "20px", alignItems: "center", flexWrap: "wrap" }}>
-            <a href="/hotels" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Hotels</a>
-            <a href="/flights" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Flights</a>
-            <a href="/cruises" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Cruises</a>
-            <a href="/packages" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Packages</a>
-            <a href="/rewards" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "700", borderBottom: `2px solid ${ORANGE}`, paddingBottom: "2px" }}>Rewards</a>
-            <a href="/profile" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Profile</a>
-            {session ? null : (
-              <>
-                <a href="/account/signin?callbackUrl=/rewards" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "7px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
-                <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
-              </>
-            )}
-          </div>
-        </div>
-      </nav>
+      <NavBar active="rewards" />
 
       {/* HERO */}
       <div style={{ position: "relative", overflow: "hidden" }}>
@@ -652,5 +635,6 @@ export default function RewardsPage() {
         </div>
       </div>
     </div>
+    <Footer />
   );
 }

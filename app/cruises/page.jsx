@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 const NAVY       = "#003B95";
 const ORANGE     = "#FF6600";
@@ -63,7 +65,7 @@ export default function CruisesPage() {
   const [callSubmitting, setCallSubmitting] = useState(false);
   const [callError, setCallError]           = useState(null);
   const [callForm, setCallForm] = useState({ firstName: "", lastName: "", email: "", phone: "" });
-  const [menuOpen, setMenuOpen] = useState(false);
+  // menuOpen handled by shared NavBar
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
 
   const [form, setForm] = useState({
@@ -334,47 +336,7 @@ export default function CruisesPage() {
         </div>
       )}
 
-      {/* NAV */}
-      <nav style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 24px", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 1px 8px rgba(0,0,0,0.07)" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px" }}>
-          <a href="/" style={{ fontSize: "22px", fontWeight: "800", color: NAVY, textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
-
-          {isMobile ? (
-            <button onClick={() => setMenuOpen(o => !o)} style={{ background: "none", border: "none", cursor: "pointer", padding: "8px", color: NAVY }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                {menuOpen ? (<><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></>) : (<><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></>)}
-              </svg>
-            </button>
-          ) : (
-            <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
-              <a href="/hotels"   style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Hotels</a>
-              <a href="/flights"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Flights</a>
-              <a href="/cruises"  style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "700", borderBottom: `2px solid ${ORANGE}`, paddingBottom: "2px" }}>Cruises</a>
-              <a href="/packages" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Packages</a>
-              <a href="/rewards"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Rewards</a>
-              <a href="/profile"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Profile</a>
-              <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "7px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
-              <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
-            </div>
-          )}
-        </div>
-
-        {/* Mobile dropdown */}
-        {isMobile && menuOpen && (
-          <div style={{ borderTop: "1px solid #E5E7EB", padding: "16px 24px", display: "flex", flexDirection: "column", gap: "16px", background: "#fff" }}>
-            <a href="/hotels"   style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Hotels</a>
-            <a href="/flights"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Flights</a>
-            <a href="/cruises"  style={{ color: NAVY,     textDecoration: "none", fontSize: "15px", fontWeight: "700" }}>Cruises</a>
-            <a href="/packages" style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Packages</a>
-            <a href="/rewards"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Rewards</a>
-            <a href="/profile"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Profile</a>
-            <div style={{ display: "flex", gap: "10px", paddingTop: "8px", borderTop: "1px solid #E5E7EB" }}>
-              <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "8px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
-              <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
-            </div>
-          </div>
-        )}
-      </nav>
+      <NavBar active="cruises" />
 
       {/* HERO */}
       <div style={{ position: "relative", height: "320px", overflow: "hidden" }}>
@@ -452,7 +414,7 @@ export default function CruisesPage() {
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 16px" }}>Book Any Line Through Us</h2>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(3, 1fr)", gap: "12px" }}>
               {LINES.map((l, i) => (
-                <a key={i} href={l.href} target="_blank" rel="noopener noreferrer"
+                <a key={i} href={`/redirect?to=${encodeURIComponent(l.href)}&partner=${encodeURIComponent(l.name)}&product=cruise`}
                   style={{ background: "#fff", borderRadius: "12px", padding: "16px", border: "1px solid #E5E7EB", display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = NAVY}
                   onMouseLeave={e => e.currentTarget.style.borderColor = "#E5E7EB"}>
@@ -530,5 +492,6 @@ export default function CruisesPage() {
         </div>
       </div>
     </div>
+    <Footer />
   );
 }

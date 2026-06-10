@@ -4,10 +4,44 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
+
+const POPULAR_CITIES = [
+  { name: "New York", country: "USA" }, { name: "Los Angeles", country: "USA" },
+  { name: "Miami", country: "USA" }, { name: "Chicago", country: "USA" },
+  { name: "Las Vegas", country: "USA" }, { name: "Orlando", country: "USA" },
+  { name: "Dallas", country: "USA" }, { name: "Houston", country: "USA" },
+  { name: "Atlanta", country: "USA" }, { name: "Denver", country: "USA" },
+  { name: "Seattle", country: "USA" }, { name: "San Francisco", country: "USA" },
+  { name: "Boston", country: "USA" }, { name: "Phoenix", country: "USA" },
+  { name: "Washington DC", country: "USA" }, { name: "Nashville", country: "USA" },
+  { name: "Tampa", country: "USA" }, { name: "San Diego", country: "USA" },
+  { name: "Austin", country: "USA" }, { name: "New Orleans", country: "USA" },
+  { name: "Honolulu", country: "Hawaii, USA" }, { name: "Philadelphia", country: "USA" },
+  { name: "Cancún", country: "Mexico" }, { name: "Cabo San Lucas", country: "Mexico" },
+  { name: "Puerto Vallarta", country: "Mexico" }, { name: "Mexico City", country: "Mexico" },
+  { name: "Punta Cana", country: "Dominican Republic" }, { name: "Nassau", country: "Bahamas" },
+  { name: "Montego Bay", country: "Jamaica" }, { name: "San Juan", country: "Puerto Rico" },
+  { name: "Aruba", country: "Aruba" }, { name: "St Maarten", country: "Caribbean" },
+  { name: "Paris", country: "France" }, { name: "London", country: "UK" },
+  { name: "Rome", country: "Italy" }, { name: "Barcelona", country: "Spain" },
+  { name: "Amsterdam", country: "Netherlands" }, { name: "Lisbon", country: "Portugal" },
+  { name: "Madrid", country: "Spain" }, { name: "Dublin", country: "Ireland" },
+  { name: "Athens", country: "Greece" }, { name: "Prague", country: "Czech Republic" },
+  { name: "Budapest", country: "Hungary" }, { name: "Vienna", country: "Austria" },
+  { name: "Dubai", country: "UAE" }, { name: "Tokyo", country: "Japan" },
+  { name: "Bali", country: "Indonesia" }, { name: "Bangkok", country: "Thailand" },
+  { name: "Singapore", country: "Singapore" }, { name: "Sydney", country: "Australia" },
+  { name: "Toronto", country: "Canada" }, { name: "Vancouver", country: "Canada" },
+  { name: "Buenos Aires", country: "Argentina" }, { name: "Rio de Janeiro", country: "Brazil" },
+  { name: "Nairobi", country: "Kenya" }, { name: "Cape Town", country: "South Africa" },
+  { name: "Maldives", country: "Maldives" }, { name: "Reykjavik", country: "Iceland" },
+];
 
 function HotelsContent() {
   const { user } = useAuth();
@@ -17,7 +51,14 @@ function HotelsContent() {
   const [checkOut, setCheckOut] = useState("");
   const [adults, setAdults] = useState("2");
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [destSugg, setDestSugg] = useState([]);
+  const [showSugg, setShowSugg] = useState(false);
+  // menuOpen handled by shared NavBar
+
+  const today = new Date().toISOString().split("T")[0];
+  const minCheckOut = checkIn
+    ? (() => { const d = new Date(checkIn + "T12:00:00"); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; })()
+    : today;
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -25,7 +66,33 @@ function HotelsContent() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  function clearFilters() { setDestination(""); setCheckIn(""); setCheckOut(""); setAdults("2"); }
+  function clearFilters() { setDestination(""); setCheckIn(""); setCheckOut(""); setAdults("2"); setDestSugg([]); setShowSugg(false); }
+
+  function handleCheckInChange(val) {
+    setCheckIn(val);
+    if (val) {
+      const d = new Date(val + "T12:00:00");
+      d.setDate(d.getDate() + 1);
+      const next = d.toISOString().split("T")[0];
+      if (!checkOut || checkOut <= val) setCheckOut(next);
+    }
+  }
+
+  function handleDestChange(val) {
+    setDestination(val);
+    if (val.length >= 1) {
+      const lower = val.toLowerCase();
+      const matches = POPULAR_CITIES.filter(c =>
+        c.name.toLowerCase().startsWith(lower) ||
+        c.name.toLowerCase().includes(lower)
+      ).slice(0, 6);
+      setDestSugg(matches);
+      setShowSugg(matches.length > 0);
+    } else {
+      setDestSugg([]);
+      setShowSugg(false);
+    }
+  }
 
   function handleSearch(e) {
     e.preventDefault();
@@ -45,62 +112,7 @@ function HotelsContent() {
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
-      {/* NAV */}
-      <nav style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 24px", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 1px 8px rgba(0,0,0,0.07)" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px" }}>
-          <a href="/" style={{ fontSize: "22px", fontWeight: "800", color: NAVY, textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
-          {isMobile ? (
-            <button onClick={() => setMenuOpen(o => !o)} style={{ background: "none", border: "none", cursor: "pointer", padding: "8px", color: NAVY }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                {menuOpen ? (<><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></>) : (<><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></>)}
-              </svg>
-            </button>
-          ) : (
-            <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
-              <a href="/hotels"   style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "700", borderBottom: `2px solid ${ORANGE}`, paddingBottom: "2px" }}>Hotels</a>
-              <a href="/flights"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Flights</a>
-              <a href="/cruises"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Cruises</a>
-              <a href="/packages" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Packages</a>
-              <a href="/rewards"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Rewards</a>
-              <a href="/profile"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Profile</a>
-              {user ? (
-                <a href="/profile" style={{ display: "flex", alignItems: "center", gap: "8px", background: LIGHT_BLUE, padding: "7px 14px", borderRadius: "8px", textDecoration: "none" }}>
-                  {user.image ? <img src={user.image} alt="" style={{ width: "26px", height: "26px", borderRadius: "50%", objectFit: "cover" }} /> : <div style={{ width: "26px", height: "26px", borderRadius: "50%", background: ORANGE, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "800", color: "#fff" }}>{(user.name || user.email || "U")[0].toUpperCase()}</div>}
-                  <span style={{ fontSize: "14px", fontWeight: "600", color: NAVY }}>{user.name?.split(" ")[0] || "My Account"}</span>
-                </a>
-              ) : (
-                <>
-                  <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "7px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
-                  <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
-                </>
-              )}
-            </div>
-          )}
-        </div>
-        {isMobile && menuOpen && (
-          <div style={{ borderTop: "1px solid #E5E7EB", padding: "16px 24px", display: "flex", flexDirection: "column", gap: "16px", background: "#fff" }}>
-            <a href="/hotels"   style={{ color: NAVY,     textDecoration: "none", fontSize: "15px", fontWeight: "700" }}>Hotels</a>
-            <a href="/flights"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Flights</a>
-            <a href="/cruises"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Cruises</a>
-            <a href="/packages" style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Packages</a>
-            <a href="/rewards"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Rewards</a>
-            <a href="/profile"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Profile</a>
-            <div style={{ display: "flex", gap: "10px", paddingTop: "8px", borderTop: "1px solid #E5E7EB" }}>
-              {user ? (
-                <a href="/profile" style={{ display: "flex", alignItems: "center", gap: "8px", background: LIGHT_BLUE, padding: "8px 14px", borderRadius: "8px", textDecoration: "none" }}>
-                  {user.image ? <img src={user.image} alt="" style={{ width: "24px", height: "24px", borderRadius: "50%", objectFit: "cover" }} /> : <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: ORANGE, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: "800", color: "#fff" }}>{(user.name || user.email || "U")[0].toUpperCase()}</div>}
-                  <span style={{ fontSize: "14px", fontWeight: "600", color: NAVY }}>{user.name?.split(" ")[0] || "My Account"}</span>
-                </a>
-              ) : (
-                <>
-                  <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "8px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
-                  <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-      </nav>
+      <NavBar active="hotels" />
 
       {/* HERO */}
       <div style={{ position: "relative", height: "320px", overflow: "hidden" }}>
@@ -128,17 +140,36 @@ function HotelsContent() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "16px", marginBottom: "16px" }}>
             <div>
               <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Destination</label>
-              <input type="text" placeholder="City, hotel, or area" value={destination} onChange={e => setDestination(e.target.value)}
-                style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none" }} />
+              <div style={{ position: "relative" }}>
+                <input type="text" placeholder="City, hotel, or area" value={destination}
+                  onChange={e => handleDestChange(e.target.value)}
+                  onBlur={() => setTimeout(() => setShowSugg(false), 160)}
+                  onFocus={() => destination.length >= 1 && destSugg.length > 0 && setShowSugg(true)}
+                  style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none" }} />
+                {showSugg && (
+                  <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "8px", boxShadow: "0 6px 20px rgba(0,0,0,0.15)", zIndex: 200, marginTop: "3px", overflow: "hidden" }}>
+                    {destSugg.map((c, i) => (
+                      <div key={i}
+                        onMouseDown={() => { setDestination(c.name); setShowSugg(false); }}
+                        style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < destSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
+                        onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
+                        onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
+                        <span style={{ fontSize: "13px", color: "#111827", fontWeight: "600" }}>🏙️ {c.name}</span>
+                        <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{c.country}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
             <div>
               <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Check-In</label>
-              <input type="date" value={checkIn} onChange={e => setCheckIn(e.target.value)}
+              <input type="date" value={checkIn} min={today} onChange={e => handleCheckInChange(e.target.value)}
                 style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none" }} />
             </div>
             <div>
               <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Check-Out</label>
-              <input type="date" value={checkOut} onChange={e => setCheckOut(e.target.value)}
+              <input type="date" value={checkOut} min={minCheckOut} onChange={e => setCheckOut(e.target.value)}
                 style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none" }} />
             </div>
             <div>
@@ -224,8 +255,11 @@ function HotelsContent() {
 
 export default function HotelsPage() {
   return (
-    <Suspense fallback={null}>
-      <HotelsContent />
-    </Suspense>
+    <>
+      <Suspense fallback={null}>
+        <HotelsContent />
+      </Suspense>
+      <Footer />
+    </>
   );
 }

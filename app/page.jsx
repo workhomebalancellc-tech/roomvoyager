@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -32,36 +34,7 @@ export default function HomePage() {
   return (
     <div style={{ minHeight: "100vh", background: "#fff", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
-      {/* NAV */}
-      <nav style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 24px", position: "sticky", top: 0, zIndex: 100, boxShadow: "0 1px 8px rgba(0,0,0,0.07)" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px" }}>
-          <a href="/" style={{ fontSize: "22px", fontWeight: "800", color: NAVY, textDecoration: "none" }}>
-            Room<span style={{ color: ORANGE }}>Voyager</span>
-          </a>
-          <div style={{ display: "flex", gap: "20px", alignItems: "center", flexWrap: "wrap" }}>
-            <a href="/hotels"   style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Hotels</a>
-            <a href="/flights"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Flights</a>
-            <a href="/cruises"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Cruises</a>
-            <a href="/packages" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Packages</a>
-            <a href="/rewards"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Rewards</a>
-            <a href="/contact"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Contact</a>
-            {user ? (
-              <a href="/profile" style={{ display: "flex", alignItems: "center", gap: "8px", background: LIGHT_BLUE, padding: "7px 14px", borderRadius: "8px", textDecoration: "none" }}>
-                {user.image
-                  ? <img src={user.image} alt="" style={{ width: "26px", height: "26px", borderRadius: "50%", objectFit: "cover" }} />
-                  : <div style={{ width: "26px", height: "26px", borderRadius: "50%", background: ORANGE, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "800", color: "#fff" }}>{(user.name || user.email || "U")[0].toUpperCase()}</div>
-                }
-                <span style={{ fontSize: "14px", fontWeight: "600", color: NAVY }}>{user.name?.split(" ")[0] || "My Account"}</span>
-              </a>
-            ) : (
-              <>
-                <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "7px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
-                <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up Free</a>
-              </>
-            )}
-          </div>
-        </div>
-      </nav>
+      <NavBar active="home" />
 
       {/* HERO */}
       <div style={{ position: "relative", height: "580px", overflow: "hidden" }}>
@@ -237,32 +210,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* FOOTER */}
-      <footer style={{ background: "#07111F", padding: "48px 24px 24px" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "32px", marginBottom: "40px" }}>
-            <div>
-              <p style={{ color: "#fff", fontSize: "18px", fontWeight: "800", margin: "0 0 10px" }}>Room<span style={{ color: ORANGE }}>Voyager</span></p>
-              <p style={{ color: "#9CA3AF", fontSize: "13px", lineHeight: "1.65", margin: 0 }}>Your trusted travel partner. Hotels, flights, and cruises — all in one place.</p>
-            </div>
-            <div>
-              <p style={{ color: "#fff", fontSize: "12px", fontWeight: "700", margin: "0 0 12px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Travel</p>
-              {[["Hotels","/hotels"],["Flights","/flights"],["Cruises","/cruises"]].map(([n,h]) => <a key={n} href={h} style={{ display:"block", color:"#9CA3AF", fontSize:"13px", textDecoration:"none", marginBottom:"8px" }}>{n}</a>)}
-            </div>
-            <div>
-              <p style={{ color: "#fff", fontSize: "12px", fontWeight: "700", margin: "0 0 12px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Account</p>
-              {[["Sign In","/account/signin"],["Sign Up","/account/signup"],["Rewards","/rewards"],["Profile","/profile"]].map(([n,h]) => <a key={n} href={h} style={{ display:"block", color:"#9CA3AF", fontSize:"13px", textDecoration:"none", marginBottom:"8px" }}>{n}</a>)}
-            </div>
-            <div>
-              <p style={{ color: "#fff", fontSize: "12px", fontWeight: "700", margin: "0 0 12px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Company</p>
-              {[["FAQ","/faq"],["Contact","/contact"],["Privacy Policy","/privacy"],["Terms","/terms"]].map(([n,h]) => <a key={n} href={h} style={{ display:"block", color:"#9CA3AF", fontSize:"13px", textDecoration:"none", marginBottom:"8px" }}>{n}</a>)}
-            </div>
-          </div>
-          <div style={{ borderTop: "1px solid #1F2937", paddingTop: "20px", textAlign: "center" }}>
-            <p style={{ color: "#6B7280", fontSize: "12px", margin: 0 }}>© 2026 RoomVoyager Travel. All rights reserved. · Proud affiliate of Expedia, CruiseDirect &amp; more.</p>
-          </div>
-        </div>
-      </footer>
     </div>
+    <Footer />
   );
 }

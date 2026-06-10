@@ -1,0 +1,50 @@
+import { NextResponse } from "next/server";
+
+export async function POST(request) {
+  try {
+    const { partner, product, url, userEmail, userName } = await request.json();
+
+    const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
+    const AIRTABLE_BASE  = process.env.AIRTABLE_BASE_ID;
+
+    if (!AIRTABLE_TOKEN || !AIRTABLE_BASE) {
+      // Silently succeed if Airtable isn't configured — don't block the redirect
+      return NextResponse.json({ success: true, note: "Airtable not configured" });
+    }
+
+    const fields = {
+      "Partner":     partner || "Unknown",
+      "Product":     product || "Unknown",
+      "Destination URL": url || "",
+      "User Email":  userEmail || "Guest",
+      "User Name":   userName  || "",
+      "Clicked At":  new Date().toISOString(),
+      "Status":      "Clicked",
+    };
+
+    const res = await fetch(
+      `https://api.airtable.com/v0/${AIRTABLE_BASE}/Link%20Clicks`,
+      {
+        method:  "POST",
+        headers: {
+          "Authorization": `Bearer ${AIRTABLE_TOKEN}`,
+          "Content-Type":  "application/json",
+        },
+        body: JSON.stringify({ fields }),
+      }
+    );
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error("Airtable link-click error:", err);
+      // Still return success — don't block the user from continuing
+      return NextResponse.json({ success: true, note: "Airtable write failed but continuing" });
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error("link-clicks route error:", err);
+    // Never block the redirect
+    return NextResponse.json({ success: true, note: "Error caught but continuing" });
+  }
+}

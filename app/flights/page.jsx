@@ -3,6 +3,8 @@
 import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "../../contexts/AuthContext";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -175,16 +177,50 @@ const tips = [
   { icon: "🎒", title: "Travel carry-on only", desc: "Skipping checked bags saves $30–$60 each way on most budget and major carriers." },
 ];
 
+const POPULAR_CITIES_FLIGHTS = [
+  { name: "New York", country: "USA", code: "JFK" }, { name: "Los Angeles", country: "USA", code: "LAX" },
+  { name: "Miami", country: "USA", code: "MIA" }, { name: "Chicago", country: "USA", code: "ORD" },
+  { name: "Las Vegas", country: "USA", code: "LAS" }, { name: "Orlando", country: "USA", code: "MCO" },
+  { name: "Dallas", country: "USA", code: "DFW" }, { name: "Houston", country: "USA", code: "IAH" },
+  { name: "Atlanta", country: "USA", code: "ATL" }, { name: "Denver", country: "USA", code: "DEN" },
+  { name: "Seattle", country: "USA", code: "SEA" }, { name: "San Francisco", country: "USA", code: "SFO" },
+  { name: "Boston", country: "USA", code: "BOS" }, { name: "Phoenix", country: "USA", code: "PHX" },
+  { name: "Washington DC", country: "USA", code: "DCA" }, { name: "Nashville", country: "USA", code: "BNA" },
+  { name: "Tampa", country: "USA", code: "TPA" }, { name: "San Diego", country: "USA", code: "SAN" },
+  { name: "Austin", country: "USA", code: "AUS" }, { name: "Honolulu", country: "Hawaii, USA", code: "HNL" },
+  { name: "Philadelphia", country: "USA", code: "PHL" }, { name: "New Orleans", country: "USA", code: "MSY" },
+  { name: "Cancún", country: "Mexico", code: "CUN" }, { name: "Cabo San Lucas", country: "Mexico", code: "SJD" },
+  { name: "Puerto Vallarta", country: "Mexico", code: "PVR" }, { name: "Mexico City", country: "Mexico", code: "MEX" },
+  { name: "Punta Cana", country: "Dominican Republic", code: "PUJ" }, { name: "Nassau", country: "Bahamas", code: "NAS" },
+  { name: "Montego Bay", country: "Jamaica", code: "MBJ" }, { name: "San Juan", country: "Puerto Rico", code: "SJU" },
+  { name: "Aruba", country: "Aruba", code: "AUA" }, { name: "Barbados", country: "Barbados", code: "BGI" },
+  { name: "Paris", country: "France", code: "CDG" }, { name: "London", country: "UK", code: "LHR" },
+  { name: "Rome", country: "Italy", code: "FCO" }, { name: "Barcelona", country: "Spain", code: "BCN" },
+  { name: "Amsterdam", country: "Netherlands", code: "AMS" }, { name: "Lisbon", country: "Portugal", code: "LIS" },
+  { name: "Madrid", country: "Spain", code: "MAD" }, { name: "Athens", country: "Greece", code: "ATH" },
+  { name: "Prague", country: "Czech Republic", code: "PRG" }, { name: "Reykjavik", country: "Iceland", code: "KEF" },
+  { name: "Dubai", country: "UAE", code: "DXB" }, { name: "Tokyo", country: "Japan", code: "NRT" },
+  { name: "Bali", country: "Indonesia", code: "DPS" }, { name: "Bangkok", country: "Thailand", code: "BKK" },
+  { name: "Singapore", country: "Singapore", code: "SIN" }, { name: "Sydney", country: "Australia", code: "SYD" },
+  { name: "Toronto", country: "Canada", code: "YYZ" }, { name: "Vancouver", country: "Canada", code: "YVR" },
+  { name: "Maldives", country: "Maldives", code: "MLE" },
+];
+
 function FlightsContent() {
   const { user } = useAuth();
   const searchParams = useSearchParams();
-  const destination = searchParams.get("q") || "";
-  const iataCode = cityToIata(destination);
-  const iframeSrc = iataCode
-    ? `https://flights.roomvoyagertravel.com/flights/?destination_iata=${iataCode}`
-    : "https://flights.roomvoyagertravel.com";
+  const initialDest = searchParams.get("q") || "";
+  const initialIata = cityToIata(initialDest);
+  const [iframeSrc, setIframeSrc] = useState(
+    initialIata
+      ? `https://flights.roomvoyagertravel.com/flights/?destination_iata=${initialIata}`
+      : "https://flights.roomvoyagertravel.com"
+  );
+  const [citySearch, setCitySearch] = useState(initialDest);
+  const [citySugg, setCitySugg] = useState([]);
+  const [showCitySugg, setShowCitySugg] = useState(false);
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  // menuOpen handled by shared NavBar
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -192,65 +228,45 @@ function FlightsContent() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  function handleCityChange(val) {
+    setCitySearch(val);
+    if (val.length >= 1) {
+      const lower = val.toLowerCase();
+      const matches = POPULAR_CITIES_FLIGHTS.filter(c =>
+        c.name.toLowerCase().startsWith(lower) ||
+        c.name.toLowerCase().includes(lower) ||
+        c.code.toLowerCase() === lower
+      ).slice(0, 7);
+      setCitySugg(matches);
+      setShowCitySugg(matches.length > 0);
+    } else {
+      setCitySugg([]);
+      setShowCitySugg(false);
+    }
+  }
+
+  function applyCity(city) {
+    setCitySearch(city.name);
+    setShowCitySugg(false);
+    setIframeSrc(`https://flights.roomvoyagertravel.com/flights/?destination_iata=${city.code}`);
+  }
+
+  function handleCitySearch(e) {
+    e.preventDefault();
+    if (!citySearch.trim()) return;
+    const iata = cityToIata(citySearch);
+    setIframeSrc(
+      iata
+        ? `https://flights.roomvoyagertravel.com/flights/?destination_iata=${iata}`
+        : `https://flights.roomvoyagertravel.com/flights/?destination=${encodeURIComponent(citySearch)}`
+    );
+    setShowCitySugg(false);
+  }
+
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
-      {/* NAV */}
-      <nav style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 24px", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 1px 8px rgba(0,0,0,0.07)" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px" }}>
-          <a href="/" style={{ fontSize: "22px", fontWeight: "800", color: NAVY, textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
-          {isMobile ? (
-            <button onClick={() => setMenuOpen(o => !o)} style={{ background: "none", border: "none", cursor: "pointer", padding: "8px", color: NAVY }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                {menuOpen ? (<><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></>) : (<><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></>)}
-              </svg>
-            </button>
-          ) : (
-            <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
-              <a href="/hotels"   style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Hotels</a>
-              <a href="/flights"  style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "700", borderBottom: `2px solid ${ORANGE}`, paddingBottom: "2px" }}>Flights</a>
-              <a href="/cruises"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Cruises</a>
-              <a href="/packages" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Packages</a>
-              <a href="/rewards"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Rewards</a>
-              <a href="/profile"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Profile</a>
-              {user ? (
-                <a href="/profile" style={{ display: "flex", alignItems: "center", gap: "8px", background: LIGHT_BLUE, padding: "7px 14px", borderRadius: "8px", textDecoration: "none" }}>
-                  {user.image ? <img src={user.image} alt="" style={{ width: "26px", height: "26px", borderRadius: "50%", objectFit: "cover" }} /> : <div style={{ width: "26px", height: "26px", borderRadius: "50%", background: ORANGE, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "800", color: "#fff" }}>{(user.name || user.email || "U")[0].toUpperCase()}</div>}
-                  <span style={{ fontSize: "14px", fontWeight: "600", color: NAVY }}>{user.name?.split(" ")[0] || "My Account"}</span>
-                </a>
-              ) : (
-                <>
-                  <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "7px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
-                  <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
-                </>
-              )}
-            </div>
-          )}
-        </div>
-        {isMobile && menuOpen && (
-          <div style={{ borderTop: "1px solid #E5E7EB", padding: "16px 24px", display: "flex", flexDirection: "column", gap: "16px", background: "#fff" }}>
-            <a href="/hotels"   style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Hotels</a>
-            <a href="/flights"  style={{ color: NAVY,     textDecoration: "none", fontSize: "15px", fontWeight: "700" }}>Flights</a>
-            <a href="/cruises"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Cruises</a>
-            <a href="/packages" style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Packages</a>
-            <a href="/rewards"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Rewards</a>
-            <a href="/profile"  style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Profile</a>
-            <div style={{ display: "flex", gap: "10px", paddingTop: "8px", borderTop: "1px solid #E5E7EB" }}>
-              {user ? (
-                <a href="/profile" style={{ display: "flex", alignItems: "center", gap: "8px", background: LIGHT_BLUE, padding: "8px 14px", borderRadius: "8px", textDecoration: "none" }}>
-                  {user.image ? <img src={user.image} alt="" style={{ width: "24px", height: "24px", borderRadius: "50%", objectFit: "cover" }} /> : <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: ORANGE, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: "800", color: "#fff" }}>{(user.name || user.email || "U")[0].toUpperCase()}</div>}
-                  <span style={{ fontSize: "14px", fontWeight: "600", color: NAVY }}>{user.name?.split(" ")[0] || "My Account"}</span>
-                </a>
-              ) : (
-                <>
-                  <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "8px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
-                  <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-      </nav>
+      <NavBar active="flights" />
 
       {/* HERO */}
       <div style={{ position: "relative", height: "320px", overflow: "hidden" }}>
@@ -272,9 +288,47 @@ function FlightsContent() {
         </div>
       </div>
 
+      {/* CITY SEARCH BAR */}
+      <div style={{ background: NAVY, padding: "18px 24px 20px", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
+        <div style={{ maxWidth: "760px", margin: "0 auto" }}>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 10px" }}>Where are you flying?</p>
+          <form onSubmit={handleCitySearch} style={{ display: "flex", gap: "10px" }}>
+            <div style={{ flex: 1, position: "relative" }}>
+              <input
+                type="text"
+                placeholder="Type a city or destination…"
+                value={citySearch}
+                onChange={e => handleCityChange(e.target.value)}
+                onBlur={() => setTimeout(() => setShowCitySugg(false), 160)}
+                onFocus={() => citySearch.length >= 1 && citySugg.length > 0 && setShowCitySugg(true)}
+                style={{ width: "100%", padding: "11px 14px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none" }}
+              />
+              {showCitySugg && (
+                <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "8px", boxShadow: "0 6px 24px rgba(0,0,0,0.18)", zIndex: 200, marginTop: "3px", overflow: "hidden" }}>
+                  {citySugg.map((c, i) => (
+                    <div key={i}
+                      onMouseDown={() => applyCity(c)}
+                      style={{ padding: "10px 14px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < citySugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
+                      onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
+                      onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
+                      <span style={{ fontSize: "13px", color: "#111827", fontWeight: "600" }}>✈️ {c.name}</span>
+                      <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{c.country} · {c.code}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <button type="submit"
+              style={{ padding: "11px 22px", background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", fontSize: "14px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap" }}>
+              Search Flights →
+            </button>
+          </form>
+        </div>
+      </div>
+
       {/* Travelpayouts whitelabel */}
       <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB" }}>
-        <div style={{ background: NAVY, padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ background: "#001A4D", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <span style={{ color: "#fff", fontSize: "13px", fontWeight: "600" }}>✈️ Search flights</span>
           <span style={{ color: "#93C5FD", fontSize: "12px" }}>Free — no account required</span>
         </div>
@@ -375,8 +429,11 @@ function FlightsContent() {
 
 export default function FlightsPage() {
   return (
-    <Suspense fallback={<div />}>
-      <FlightsContent />
-    </Suspense>
+    <>
+      <Suspense fallback={<div />}>
+        <FlightsContent />
+      </Suspense>
+      <Footer />
+    </>
   );
 }
