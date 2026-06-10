@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+
+const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
 
 const NAVY   = "#003B95";
 const ORANGE = "#FF6600";
@@ -193,7 +196,114 @@ function ManualBookingLog() {
   );
 }
 
+function AdminLogin() {
+  const { signInWithEmail, signInWithGoogle } = useAuth();
+  const [email, setEmail]       = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError]       = useState(null);
+  const [loading, setLoading]   = useState(false);
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+    try {
+      await signInWithEmail(email, password);
+    } catch {
+      setError("Invalid email or password.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleGoogle() {
+    setError(null);
+    try {
+      await signInWithGoogle();
+    } catch {
+      setError("Google sign-in failed. Try email/password.");
+    }
+  }
+
+  return (
+    <div style={{ minHeight: "100vh", background: "#F0F4FF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+      <div style={{ background: "#fff", borderRadius: "20px", padding: "40px", width: "100%", maxWidth: "400px", boxShadow: "0 8px 40px rgba(0,59,149,0.12)", border: "1px solid #E5E7EB" }}>
+        <div style={{ textAlign: "center", marginBottom: "28px" }}>
+          <p style={{ fontSize: "22px", fontWeight: "800", color: NAVY, margin: "0 0 4px" }}>
+            Room<span style={{ color: ORANGE }}>Voyager</span>
+          </p>
+          <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>Admin access only</p>
+        </div>
+
+        <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div>
+            <label style={{ fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "4px" }}>Email</label>
+            <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
+              style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", boxSizing: "border-box", outline: "none" }} />
+          </div>
+          <div>
+            <label style={{ fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "4px" }}>Password</label>
+            <input type="password" required value={password} onChange={e => setPassword(e.target.value)}
+              style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", boxSizing: "border-box", outline: "none" }} />
+          </div>
+          {error && <p style={{ fontSize: "12px", color: "#DC2626", margin: 0, textAlign: "center" }}>{error}</p>}
+          <button type="submit" disabled={loading}
+            style={{ padding: "11px", background: loading ? "#D1D5DB" : NAVY, color: "#fff", border: "none", borderRadius: "8px", fontWeight: "700", fontSize: "14px", cursor: loading ? "default" : "pointer", marginTop: "4px" }}>
+            {loading ? "Signing in…" : "Sign In"}
+          </button>
+        </form>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "16px 0" }}>
+          <div style={{ flex: 1, height: "1px", background: "#E5E7EB" }} />
+          <span style={{ fontSize: "11px", color: "#9CA3AF" }}>or</span>
+          <div style={{ flex: 1, height: "1px", background: "#E5E7EB" }} />
+        </div>
+
+        <button onClick={handleGoogle}
+          style={{ width: "100%", padding: "11px", background: "#fff", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontWeight: "600", fontSize: "14px", cursor: "pointer", color: "#374151", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
+          onMouseEnter={e => e.currentTarget.style.borderColor = NAVY}
+          onMouseLeave={e => e.currentTarget.style.borderColor = "#D1D5DB"}>
+          <span>🔑</span> Sign in with Google
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
+  const { user, loading: authLoading, logout } = useAuth();
+
+  // Auth loading
+  if (authLoading) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#F0F4FF", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <p style={{ color: "#6B7280", fontSize: "14px" }}>Loading…</p>
+      </div>
+    );
+  }
+
+  // Not signed in
+  if (!user) return <AdminLogin />;
+
+  // Wrong account
+  if (!ALLOWED_EMAILS.includes(user.email)) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#F0F4FF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+        <div style={{ background: "#fff", borderRadius: "20px", padding: "40px", maxWidth: "380px", textAlign: "center", boxShadow: "0 8px 40px rgba(0,59,149,0.12)" }}>
+          <p style={{ fontSize: "40px", margin: "0 0 12px" }}>🔒</p>
+          <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Access Denied</p>
+          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px" }}>
+            <strong>{user.email}</strong> is not authorized to access this area.
+          </p>
+          <button onClick={logout}
+            style={{ padding: "10px 24px", background: NAVY, color: "#fff", border: "none", borderRadius: "8px", fontWeight: "700", fontSize: "13px", cursor: "pointer" }}>
+            Sign Out
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ minHeight: "100vh", background: "#F0F4FF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
@@ -207,9 +317,10 @@ export default function AdminDashboard() {
             <span style={{ color: "rgba(255,255,255,0.3)" }}>|</span>
             <span style={{ color: "#93C5FD", fontSize: "13px", fontWeight: "600" }}>Admin Dashboard</span>
           </div>
-          <div style={{ display: "flex", gap: "16px" }}>
+          <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
             <a href="/admin/calculator" style={{ color: "#93C5FD", fontSize: "13px", textDecoration: "none" }}>🧮 Calculator</a>
             <a href="/" style={{ color: "#93C5FD", fontSize: "13px", textDecoration: "none" }}>← Back to site</a>
+            <button onClick={logout} style={{ background: "rgba(255,255,255,0.12)", border: "none", color: "#fff", fontSize: "12px", fontWeight: "600", padding: "5px 12px", borderRadius: "6px", cursor: "pointer" }}>Sign Out</button>
           </div>
         </div>
       </nav>

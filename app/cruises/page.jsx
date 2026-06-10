@@ -413,7 +413,7 @@ export default function CruisesPage() {
           <section style={{ marginBottom: "48px" }}>
             <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>All major cruise lines</p>
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 16px" }}>Book Any Line Through Us</h2>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(3, 1fr)", gap: "12px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "12px" }}>
               {LINES.map((l, i) => (
                 <a key={i} href={`/redirect?to=${encodeURIComponent(l.href)}&partner=${encodeURIComponent(l.name)}&product=cruise`}
                   style={{ background: "#fff", borderRadius: "12px", padding: "16px", border: "1px solid #E5E7EB", display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}

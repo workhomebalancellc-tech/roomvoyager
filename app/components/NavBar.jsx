@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { label: "Flights",  href: "/flights"  },
   { label: "Cruises",  href: "/cruises"  },
   { label: "Packages", href: "/packages" },
+  { label: "Deals",    href: "/deals"    },
   { label: "Rewards",  href: "/rewards"  },
 ];
 

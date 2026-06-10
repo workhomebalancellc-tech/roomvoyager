@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import { cityLabel, filterCities } from "./components/cityData";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -15,15 +14,24 @@ export default function HomePage() {
   const [searchVal, setSearchVal] = useState("");
   const [citySugg, setCitySugg] = useState([]);
   const [showSugg, setShowSugg] = useState(false);
+  const [loadingSugg, setLoadingSugg] = useState(false);
+  const debounceRef = useRef(null);
   const { user } = useAuth();
 
   function handleSearchChange(val) {
     setSearchVal(val);
-    if (activeTab === "hotels") {
-      const matches = filterCities(val, 7);
-      setCitySugg(matches);
-      setShowSugg(matches.length > 0);
-    }
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (!val || val.length < 2) { setCitySugg([]); setShowSugg(false); return; }
+    setLoadingSugg(true);
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/cities?q=${encodeURIComponent(val)}`);
+        const data = await res.json();
+        setCitySugg(data);
+        setShowSugg(data.length > 0);
+      } catch { setCitySugg([]); setShowSugg(false); }
+      finally { setLoadingSugg(false); }
+    }, 300);
   }
 
   const destinations = [
@@ -85,11 +93,13 @@ export default function HomePage() {
                     onBlur={() => setTimeout(() => setShowSugg(false), 160)}
                     onFocus={() => searchVal.length >= 1 && citySugg.length > 0 && setShowSugg(true)}
                     style={{ width: "100%", padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827", boxSizing: "border-box" }} />
-                  {showSugg && activeTab === "hotels" && (
+                  {(showSugg || loadingSugg) && (
                     <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "10px", boxShadow: "0 6px 24px rgba(0,0,0,0.13)", zIndex: 200, marginTop: "4px", overflow: "hidden" }}>
-                      {citySugg.map((c, i) => (
+                      {loadingSugg && citySugg.length === 0 ? (
+                        <div style={{ padding: "10px 14px", fontSize: "13px", color: "#9CA3AF" }}>Searching…</div>
+                      ) : citySugg.map((c, i) => (
                         <div key={i}
-                          onMouseDown={() => { setSearchVal(cityLabel(c)); setShowSugg(false); }}
+                          onMouseDown={() => { setSearchVal(c.label); setShowSugg(false); }}
                           style={{ padding: "10px 14px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < citySugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
                           onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
                           onMouseLeave={e => e.currentTarget.style.background = "#fff"}>

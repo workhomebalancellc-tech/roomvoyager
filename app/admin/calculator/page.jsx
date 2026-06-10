@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "../../../contexts/AuthContext";
+
+const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -40,7 +43,7 @@ function calcRow(row) {
   return { type, amt, ptsPerDollar, pts, cash, standardPts, doublePts, useDouble };
 }
 
-export default function AdminCalculator() {
+function CalculatorContent() {
   const [rows, setRows] = useState([newRow("cruise")]);
   const [globalMode, setGlobalMode] = useState("mixed"); // "standard" | "double" | "mixed"
   const [copied, setCopied] = useState(false);
@@ -404,4 +407,34 @@ export default function AdminCalculator() {
       </div>
     </div>
   );
+}
+
+export default function AdminCalculator() {
+  const { user, loading, logout } = useAuth();
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <p style={{ color: "#6B7280", fontSize: "14px" }}>Loading…</p>
+      </div>
+    );
+  }
+
+  if (!user || !ALLOWED_EMAILS.includes(user.email)) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#F0F4FF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+        <div style={{ background: "#fff", borderRadius: "20px", padding: "40px", maxWidth: "380px", textAlign: "center", boxShadow: "0 8px 40px rgba(0,59,149,0.12)" }}>
+          <p style={{ fontSize: "40px", margin: "0 0 12px" }}>🔒</p>
+          <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Admin Access Required</p>
+          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px" }}>Please sign in with an authorized account to use the calculator.</p>
+          <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+            <a href="/admin" style={{ padding: "10px 20px", background: "#003B95", color: "#fff", borderRadius: "8px", fontWeight: "700", fontSize: "13px", textDecoration: "none" }}>Sign In →</a>
+            {user && <button onClick={logout} style={{ padding: "10px 20px", background: "#F3F4F6", color: "#374151", border: "none", borderRadius: "8px", fontWeight: "700", fontSize: "13px", cursor: "pointer" }}>Sign Out</button>}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return <CalculatorContent />;
 }
