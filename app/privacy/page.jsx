@@ -1,117 +1,145 @@
+"use client";
+
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
+
+const NAVY   = "#003B95";
+const ORANGE = "#FF6600";
+
+const sections = [
+  {
+    title: "1. Information We Collect",
+    body: "We collect information you provide when you create an account, make a booking, or contact us. This includes:",
+    list: [
+      "Name and email address",
+      "Account credentials (passwords are encrypted and never stored in plain text)",
+      "Booking preferences and travel history",
+      "Communications you send us",
+    ],
+    footer: "We also automatically collect certain technical information when you visit our site, including your IP address, browser type, and pages visited.",
+  },
+  {
+    title: "2. How We Use Your Information",
+    body: "We use the information we collect to:",
+    list: [
+      "Process bookings and provide travel services",
+      "Manage your rewards account and track points",
+      "Send booking confirmations and important account updates",
+      "Respond to your questions and support requests",
+      "Improve our website and services",
+      "Comply with legal obligations",
+    ],
+  },
+  {
+    title: "3. Sharing Your Information",
+    body: "We do not sell your personal information. We may share your information with:",
+    list: [
+      "Travel partners (Expedia, Travelpayouts, CruiseDirect) to fulfill bookings",
+      "Service providers who help us operate our website",
+      "Law enforcement when required by law",
+    ],
+  },
+  {
+    title: "4. Cookies",
+    body: "We use cookies and similar technologies to keep you signed in, remember your preferences, and understand how visitors use our site. You can control cookies through your browser settings, though disabling them may affect site functionality.",
+  },
+  {
+    title: "5. Data Security",
+    body: "We use industry-standard security measures including encrypted connections (HTTPS), hashed passwords, and secure database storage. However, no method of transmission over the internet is 100% secure.",
+  },
+  {
+    title: "6. Your Rights",
+    body: "You have the right to:",
+    list: [
+      "Access the personal information we hold about you",
+      "Request correction of inaccurate information",
+      "Request deletion of your account and data",
+      "Opt out of marketing emails at any time",
+    ],
+    contact: true,
+  },
+  {
+    title: "7. Third-Party Links",
+    body: "Our site contains links to third-party booking platforms (Expedia, Travelpayouts, CruiseDirect). These sites have their own privacy policies, and we are not responsible for their practices.",
+  },
+  {
+    title: "8. Children's Privacy",
+    body: "Our services are not directed to children under 13. We do not knowingly collect personal information from children under 13.",
+  },
+  {
+    title: "9. Changes to This Policy",
+    body: "We may update this Privacy Policy from time to time. We will notify you of significant changes by email or by posting a notice on our site.",
+  },
+  {
+    title: "10. Contact Us",
+    contactFull: true,
+  },
+];
+
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-[#991B1B] px-6 py-4 sticky top-0 z-50 shadow-lg">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <a href="/" className="text-2xl font-bold text-white">RoomVoyager</a>
-          <div className="flex gap-6">
-            <a href="/hotels" className="text-red-100 hover:text-white transition-colors">Hotels</a>
-            <a href="/flights" className="text-red-100 hover:text-white transition-colors">Flights</a>
-            <a href="/cruises" className="text-red-100 hover:text-white transition-colors">Cruises</a>
-            <a href="/contact" className="text-red-100 hover:text-white transition-colors">Contact</a>
-          </div>
-        </div>
-      </nav>
+    <>
+    <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
+      <NavBar />
 
-      <div className="bg-[#991B1B] text-white py-12 px-6">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
-          <p className="text-red-100">Last updated: June 2026</p>
+      {/* HERO */}
+      <div style={{ background: NAVY, padding: "48px 24px", borderBottom: `4px solid ${ORANGE}` }}>
+        <div style={{ maxWidth: "760px", margin: "0 auto" }}>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 10px" }}>🔒 Legal</p>
+          <h1 style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: "800", margin: "0 0 8px", lineHeight: 1.2 }}>Privacy Policy</h1>
+          <p style={{ color: "#93C5FD", fontSize: "14px", margin: 0 }}>Last updated: June 2026</p>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        <div className="bg-white rounded-2xl shadow-lg p-8 space-y-8 text-gray-700 leading-relaxed">
+      {/* CONTENT */}
+      <div style={{ maxWidth: "760px", margin: "0 auto", padding: "48px 24px 80px" }}>
+        <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "20px", padding: "40px", display: "flex", flexDirection: "column", gap: "36px" }}>
+          {sections.map((s, i) => (
+            <section key={i} style={{ borderBottom: i < sections.length - 1 ? "1px solid #F3F4F6" : "none", paddingBottom: i < sections.length - 1 ? "36px" : 0 }}>
+              <h2 style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 12px", display: "flex", alignItems: "center", gap: "10px" }}>
+                <span style={{ width: "4px", height: "20px", background: ORANGE, borderRadius: "2px", display: "inline-block", flexShrink: 0 }} />
+                {s.title}
+              </h2>
+              {s.body && <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: "1.7", margin: s.list ? "0 0 12px" : 0 }}>{s.body}</p>}
+              {s.list && (
+                <ul style={{ margin: s.contact ? "0 0 12px" : 0, paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "6px" }}>
+                  {s.list.map((item, j) => (
+                    <li key={j} style={{ fontSize: "14px", color: "#4B5563", lineHeight: "1.7" }}>{item}</li>
+                  ))}
+                </ul>
+              )}
+              {s.contact && (
+                <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: "1.7", margin: 0 }}>
+                  To exercise these rights, contact us at{" "}
+                  <a href="mailto:workhomebalancellc@gmail.com" style={{ color: NAVY, fontWeight: "600", textDecoration: "none" }}>
+                    workhomebalancellc@gmail.com
+                  </a>.
+                </p>
+              )}
+              {s.contactFull && (
+                <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: "1.7", margin: 0 }}>
+                  Questions about this Privacy Policy? Contact us at{" "}
+                  <a href="mailto:workhomebalancellc@gmail.com" style={{ color: NAVY, fontWeight: "600", textDecoration: "none" }}>
+                    workhomebalancellc@gmail.com
+                  </a>{" "}or visit our{" "}
+                  <a href="/contact" style={{ color: NAVY, fontWeight: "600", textDecoration: "none" }}>Contact page</a>.
+                </p>
+              )}
+            </section>
+          ))}
+        </div>
 
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Information We Collect</h2>
-            <p className="mb-3">We collect information you provide when you create an account, make a booking, or contact us. This includes:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Name and email address</li>
-              <li>Account credentials (passwords are encrypted and never stored in plain text)</li>
-              <li>Booking preferences and travel history</li>
-              <li>Communications you send us</li>
-            </ul>
-            <p className="mt-3">We also automatically collect certain technical information when you visit our site, including your IP address, browser type, and pages visited.</p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">2. How We Use Your Information</h2>
-            <p className="mb-3">We use the information we collect to:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Process bookings and provide travel services</li>
-              <li>Manage your rewards account and track points</li>
-              <li>Send booking confirmations and important account updates</li>
-              <li>Respond to your questions and support requests</li>
-              <li>Improve our website and services</li>
-              <li>Comply with legal obligations</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Sharing Your Information</h2>
-            <p className="mb-3">We do not sell your personal information. We may share your information with:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li><strong>Travel partners</strong> (Expedia, Travelpayouts, CruiseDirect) to fulfill bookings</li>
-              <li><strong>Service providers</strong> who help us operate our website</li>
-              <li><strong>Law enforcement</strong> when required by law</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Cookies</h2>
-            <p>We use cookies and similar technologies to keep you signed in, remember your preferences, and understand how visitors use our site. You can control cookies through your browser settings, though disabling them may affect site functionality.</p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Data Security</h2>
-            <p>We use industry-standard security measures including encrypted connections (HTTPS), hashed passwords, and secure database storage. However, no method of transmission over the internet is 100% secure.</p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Your Rights</h2>
-            <p className="mb-3">You have the right to:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Access the personal information we hold about you</li>
-              <li>Request correction of inaccurate information</li>
-              <li>Request deletion of your account and data</li>
-              <li>Opt out of marketing emails at any time</li>
-            </ul>
-            <p className="mt-3">To exercise these rights, contact us at <a href="mailto:workhomebalancellc@gmail.com" className="text-[#991B1B] hover:underline">workhomebalancellc@gmail.com</a>.</p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Third-Party Links</h2>
-            <p>Our site contains links to third-party booking platforms (Expedia, Travelpayouts, CruiseDirect). These sites have their own privacy policies, and we are not responsible for their practices.</p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Children's Privacy</h2>
-            <p>Our services are not directed to children under 13. We do not knowingly collect personal information from children under 13.</p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Changes to This Policy</h2>
-            <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by email or by posting a notice on our site.</p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Contact Us</h2>
-            <p>Questions about this Privacy Policy? Contact us at <a href="mailto:workhomebalancellc@gmail.com" className="text-[#991B1B] hover:underline">workhomebalancellc@gmail.com</a> or visit our <a href="/contact" className="text-[#991B1B] hover:underline">Contact page</a>.</p>
-          </section>
-
+        {/* CTA */}
+        <div style={{ marginTop: "32px", background: NAVY, borderRadius: "16px", padding: "32px", textAlign: "center" }}>
+          <p style={{ color: "#fff", fontSize: "18px", fontWeight: "800", margin: "0 0 8px" }}>Questions about your data?</p>
+          <p style={{ color: "#93C5FD", fontSize: "14px", margin: "0 0 20px" }}>We're transparent about how we handle your information.</p>
+          <a href="/contact" style={{ display: "inline-block", padding: "11px 28px", background: ORANGE, color: "#fff", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none" }}>
+            Contact Us →
+          </a>
         </div>
       </div>
-
-      <footer className="bg-gray-900 text-gray-400 py-8 px-6 text-center text-sm">
-        <p>© 2026 RoomVoyager. All rights reserved.</p>
-        <div className="flex gap-6 justify-center mt-3 flex-wrap">
-          <a href="/privacy" className="text-white">Privacy Policy</a>
-          <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
-          <a href="/faq" className="hover:text-white transition-colors">FAQ</a>
-          <a href="/contact" className="hover:text-white transition-colors">Contact</a>
-        </div>
-      </footer>
     </div>
+    <Footer />
+    </>
   );
 }

@@ -138,6 +138,7 @@ export default function RewardsPage() {
   }
 
   return (
+    <>
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
       <NavBar active="rewards" />
@@ -636,5 +637,6 @@ export default function RewardsPage() {
       </div>
     </div>
     <Footer />
+    </>
   );
 }

@@ -1,6 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
+
+const NAVY   = "#003B95";
+const ORANGE = "#FF6600";
+
+const CATEGORY_ICONS = {
+  "Booking": "✈️",
+  "Rewards Program": "🏆",
+  "Account": "👤",
+  "Cancellations & Refunds": "🔄",
+};
 
 const faqs = [
   {
@@ -16,7 +28,7 @@ const faqs = [
       },
       {
         q: "How do I book a cruise?",
-        a: "Visit our Cruises page to search available cruises. You can also contact our travel advisor at workhomebalancellc@gmail.com for personalized cruise recommendations and group bookings.",
+        a: "Visit our Cruises page to browse available cruise lines. You can also contact our travel advisor at workhomebalancellc@gmail.com for personalized cruise recommendations and group bookings.",
       },
       {
         q: "Are there any booking fees?",
@@ -29,11 +41,11 @@ const faqs = [
     questions: [
       {
         q: "How do I earn Rewards points?",
-        a: "You earn points on eligible bookings made through RoomVoyager. Hotel bookings earn 5 points per $1 spent. Points are credited after your stay is completed.",
+        a: "You earn 10 points per $1 on eligible bookings made through RoomVoyager. Hotels, cruises, and vacation packages also qualify for double points (20 pts/$1) during promotional periods. Points are credited after your stay is completed.",
       },
       {
         q: "How do I redeem my points?",
-        a: "Once you've accumulated enough points, visit your Rewards page and choose a reward to redeem. Cash rewards are paid out via Zelle, Cash App, or Venmo.",
+        a: "Once you've accumulated 10,000+ points ($10 value), visit your Rewards page and request a redemption. Cash rewards are paid out via Zelle, Cash App, or Venmo within 45 days.",
       },
       {
         q: "When do my points expire?",
@@ -41,7 +53,7 @@ const faqs = [
       },
       {
         q: "What are the Rewards tiers?",
-        a: "We have four tiers: Bronze (0–999 points), Silver (1,000–4,999), Gold (5,000–14,999), and Platinum (15,000+). Higher tiers earn points faster and unlock better perks.",
+        a: "We have four tiers: Explorer (0–9,999 points), Voyager (10,000–49,999), Navigator (50,000–99,999), and Admiral (100,000+). Higher tiers unlock bonus perks and priority support.",
       },
     ],
   },
@@ -83,54 +95,52 @@ const faqs = [
 
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState(null);
-
   const toggle = (key) => setOpenIndex(openIndex === key ? null : key);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-[#991B1B] px-6 py-4 sticky top-0 z-50 shadow-lg">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <a href="/" className="text-2xl font-bold text-white">RoomVoyager</a>
-          <div className="flex gap-6">
-            <a href="/hotels" className="text-red-100 hover:text-white transition-colors">Hotels</a>
-            <a href="/flights" className="text-red-100 hover:text-white transition-colors">Flights</a>
-            <a href="/cruises" className="text-red-100 hover:text-white transition-colors">Cruises</a>
-            <a href="/faq" className="text-white font-semibold border-b-2 border-white pb-1">FAQ</a>
-            <a href="/contact" className="text-red-100 hover:text-white transition-colors">Contact</a>
-          </div>
-        </div>
-      </nav>
+    <>
+    <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
+      <NavBar active="faq" />
 
-      <div className="bg-[#991B1B] text-white py-12 px-6">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold mb-2">Frequently Asked Questions</h1>
-          <p className="text-red-100">Everything you need to know about booking with RoomVoyager</p>
+      {/* HERO */}
+      <div style={{ background: NAVY, padding: "48px 24px", borderBottom: `4px solid ${ORANGE}` }}>
+        <div style={{ maxWidth: "760px", margin: "0 auto" }}>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 10px" }}>❓ Help Center</p>
+          <h1 style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: "800", margin: "0 0 8px", lineHeight: 1.2 }}>Frequently Asked Questions</h1>
+          <p style={{ color: "#93C5FD", fontSize: "14px", margin: 0 }}>Everything you need to know about booking with RoomVoyager</p>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        <div className="space-y-10">
+      {/* CONTENT */}
+      <div style={{ maxWidth: "760px", margin: "0 auto", padding: "48px 24px 80px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
           {faqs.map((section) => (
             <div key={section.category}>
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span className="w-1 h-6 bg-[#991B1B] rounded-full inline-block"></span>
-                {section.category}
-              </h2>
-              <div className="bg-white rounded-2xl shadow-sm overflow-hidden divide-y divide-gray-100">
+              {/* Category header */}
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
+                <span style={{ width: "4px", height: "22px", background: ORANGE, borderRadius: "2px", display: "inline-block", flexShrink: 0 }} />
+                <span style={{ fontSize: "16px" }}>{CATEGORY_ICONS[section.category]}</span>
+                <h2 style={{ fontSize: "17px", fontWeight: "800", color: "#111827", margin: 0 }}>{section.category}</h2>
+              </div>
+
+              {/* Accordion */}
+              <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "16px", overflow: "hidden" }}>
                 {section.questions.map((faq, i) => {
                   const key = `${section.category}-${i}`;
                   const isOpen = openIndex === key;
                   return (
-                    <div key={key}>
+                    <div key={key} style={{ borderBottom: i < section.questions.length - 1 ? "1px solid #F3F4F6" : "none" }}>
                       <button
                         onClick={() => toggle(key)}
-                        className="w-full flex justify-between items-center px-6 py-5 text-left hover:bg-gray-50 transition-colors"
+                        style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 22px", textAlign: "left", background: isOpen ? "#F8FAFF" : "#fff", border: "none", cursor: "pointer", gap: "16px" }}
                       >
-                        <span className="font-semibold text-gray-900 pr-4">{faq.q}</span>
-                        <span className="text-[#991B1B] text-xl flex-shrink-0">{isOpen ? "−" : "+"}</span>
+                        <span style={{ fontSize: "14px", fontWeight: "700", color: "#111827", lineHeight: "1.5" }}>{faq.q}</span>
+                        <span style={{ fontSize: "20px", color: isOpen ? ORANGE : "#9CA3AF", flexShrink: 0, fontWeight: "300", lineHeight: 1 }}>{isOpen ? "−" : "+"}</span>
                       </button>
                       {isOpen && (
-                        <div className="px-6 pb-5 text-gray-600 leading-relaxed">{faq.a}</div>
+                        <div style={{ padding: "0 22px 18px", fontSize: "14px", color: "#4B5563", lineHeight: "1.7" }}>
+                          {faq.a}
+                        </div>
                       )}
                     </div>
                   );
@@ -140,25 +150,17 @@ export default function FAQPage() {
           ))}
         </div>
 
-        {/* Still have questions */}
-        <div className="mt-12 bg-[#991B1B] rounded-2xl p-8 text-center text-white">
-          <h2 className="text-2xl font-bold mb-3">Still have questions?</h2>
-          <p className="text-red-100 mb-6">Our team is happy to help with anything not covered above.</p>
-          <a href="/contact" className="inline-block px-8 py-3 bg-white text-[#991B1B] font-bold rounded-xl hover:bg-gray-100 transition-colors">
-            Contact Us
+        {/* CTA */}
+        <div style={{ marginTop: "40px", background: NAVY, borderRadius: "16px", padding: "36px", textAlign: "center" }}>
+          <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: "0 0 8px" }}>Still have questions?</p>
+          <p style={{ color: "#93C5FD", fontSize: "14px", margin: "0 0 24px" }}>Our team is happy to help with anything not covered above.</p>
+          <a href="/contact" style={{ display: "inline-block", padding: "12px 32px", background: ORANGE, color: "#fff", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            Contact Us →
           </a>
         </div>
       </div>
-
-      <footer className="bg-gray-900 text-gray-400 py-8 px-6 text-center text-sm">
-        <p>© 2026 RoomVoyager. All rights reserved.</p>
-        <div className="flex gap-6 justify-center mt-3 flex-wrap">
-          <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
-          <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
-          <a href="/faq" className="text-white">FAQ</a>
-          <a href="/contact" className="hover:text-white transition-colors">Contact</a>
-        </div>
-      </footer>
     </div>
+    <Footer />
+    </>
   );
 }

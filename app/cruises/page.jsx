@@ -146,6 +146,7 @@ export default function CruisesPage() {
   const canConfirmCall = selectedDate && selectedTime && callForm.firstName && callForm.email && !callSubmitting;
 
   return (
+    <>
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
       {/* MODAL */}
@@ -493,5 +494,6 @@ export default function CruisesPage() {
       </div>
     </div>
     <Footer />
+    </>
   );
 }

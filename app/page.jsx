@@ -32,6 +32,7 @@ export default function HomePage() {
   }
 
   return (
+    <>
     <div style={{ minHeight: "100vh", background: "#fff", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
       <NavBar active="home" />
@@ -212,5 +213,6 @@ export default function HomePage() {
 
     </div>
     <Footer />
+    </>
   );
 }
