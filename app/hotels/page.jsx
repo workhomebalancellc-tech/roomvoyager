@@ -68,7 +68,8 @@ function HotelsContent() {
   function handleSearch(e) {
     e.preventDefault();
     const params = new URLSearchParams({ destination: destination || "United States", startDate: checkIn, endDate: checkOut, adults, camref: "1110l8R3Z", pubref: "hotels-page" });
-    window.open(`https://www.expedia.com/Hotel-Search?${params.toString()}`, "_blank");
+    const expediaUrl = `https://www.expedia.com/Hotel-Search?${params.toString()}`;
+    window.location.href = `/redirect?to=${encodeURIComponent(expediaUrl)}&partner=Expedia&product=hotel`;
   }
 
   const destinations = [
@@ -169,7 +170,7 @@ function HotelsContent() {
           <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 24px" }}>Trending destinations</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "14px" }}>
             {destinations.map((dest, i) => (
-              <a key={i} href={`https://www.expedia.com/Hotel-Search?destination=${dest.name}&affiliateid=1110l8R3Z`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+              <a key={i} href={`/redirect?to=${encodeURIComponent(`https://www.expedia.com/Hotel-Search?destination=${dest.name}&affiliateid=1110l8R3Z`)}&partner=Expedia&product=hotel`} style={{ textDecoration: "none" }}>
                 <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", overflow: "hidden", display: "flex", cursor: "pointer" }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,59,149,0.15)"; e.currentTarget.style.borderColor = "#93C5FD"; }}
                   onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "#E5E7EB"; }}>
