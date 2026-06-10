@@ -74,9 +74,9 @@ function EarningsSlider() {
   const [useDouble, setUseDouble] = useState(false);
 
   const PRODUCTS = [
-    { id: "hotel",  label: "Hotels",            ptsStd: 5,  ptsDbl: 10,   doubleOk: true  },
     { id: "flight", label: "Flights",            ptsStd: 5,  ptsDbl: null, doubleOk: false },
-    { id: "cruise", label: "Cruises & Packages", ptsStd: 10, ptsDbl: 20,  doubleOk: true  },
+    { id: "hotel",  label: "Hotels",             ptsStd: 5,  ptsDbl: 10,   doubleOk: true  },
+    { id: "cruise", label: "Cruises & Packages", ptsStd: 10, ptsDbl: 20,   doubleOk: true  },
   ];
 
   return (
