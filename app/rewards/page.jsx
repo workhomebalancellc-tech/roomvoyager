@@ -10,24 +10,17 @@ const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 const TIERS = [
-  { name: "Explorer", icon: "🧭", range: "0–9,999 pts", multiplier: "1x", color: "#6B7280", perks: ["10 pts per $1 on all bookings", "20 pts per $1 on hotels, cruises & packages", "Redeem from 1,000 pts ($10)", "No blackout dates"] },
+  { name: "Explorer", icon: "🧭", range: "0–9,999 pts", multiplier: "1x", color: "#6B7280", perks: ["5 pts per $1 on flights & hotels", "10 pts per $1 on cruises & packages", "Double pts on hotels, cruises & packages", "No blackout dates"] },
   { name: "Voyager", icon: "⚓", range: "10,000–49,999 pts", multiplier: "1.2x", color: NAVY, perks: ["1.2x points on all bookings", "12 pts/$1 standard · 24 pts/$1 double", "Priority email response", "Exclusive member deals"] },
   { name: "Navigator", icon: "🗺️", range: "50,000–99,999 pts", multiplier: "1.5x", color: "#7C3AED", perks: ["1.5x points on all bookings", "15 pts/$1 standard · 30 pts/$1 double", "Dedicated agent access", "Early access to promotions"] },
   { name: "Admiral", icon: "👑", range: "100,000+ pts", multiplier: "2x", color: ORANGE, perks: ["2x points on all bookings", "20 pts/$1 standard · 40 pts/$1 double", "VIP concierge service", "Best available rates guaranteed"] },
 ];
 
 const EARNING_RATES = [
-  { product: "Flights", icon: "✈️", pts: 10, double: false, note: "Standard points only — not eligible for double" },
-  { product: "Hotels", icon: "🏨", pts: 10, double: true, note: "Double points eligible · 20 pts/$1" },
-  { product: "Cruises", icon: "🚢", pts: 10, double: true, note: "Double points eligible · 20 pts/$1" },
-  { product: "Vacation Packages", icon: "🌴", pts: 10, double: true, note: "Double points eligible · 20 pts/$1" },
-];
-
-const CRUISE_EXAMPLES = [
-  { booking: "$800 cruise", standard: { pts: "8,000", cash: "$8.00" }, double: { pts: "16,000", cash: "$16.00" } },
-  { booking: "$1,500 cruise", standard: { pts: "15,000", cash: "$15.00" }, double: { pts: "30,000", cash: "$30.00" } },
-  { booking: "$2,200 cruise", standard: { pts: "22,000", cash: "$22.00" }, double: { pts: "44,000", cash: "$44.00" } },
-  { booking: "$5,000 cruise", standard: { pts: "50,000", cash: "$50.00" }, double: { pts: "100,000", cash: "$100.00" } },
+  { product: "Flights",           pts: 5,  doublePts: null, double: false, note: "Standard points only — not eligible for double" },
+  { product: "Hotels",            pts: 5,  doublePts: 10,   double: true,  note: "Double points eligible · 10 pts/$1" },
+  { product: "Cruises",           pts: 10, doublePts: 20,   double: true,  note: "Double points eligible · 20 pts/$1" },
+  { product: "Vacation Packages", pts: 10, doublePts: 20,   double: true,  note: "Double points eligible · 20 pts/$1" },
 ];
 
 const REDEMPTION = [
@@ -48,6 +41,132 @@ const PAYMENT_METHODS = [
   { id: "cashapp", label: "Cash App", emoji: "💛", placeholder: "$cashtag" },
   { id: "venmo", label: "Venmo", emoji: "💜", placeholder: "@username" },
 ];
+
+function HotelIcon({ size = 24, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 22V9L12 4L21 9V22" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M9 22V16H15V22" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill={color} fillOpacity="0.12"/>
+      <rect x="7.5" y="11" width="2.5" height="2.5" rx="0.5" fill={color}/>
+      <rect x="14" y="11" width="2.5" height="2.5" rx="0.5" fill={color}/>
+    </svg>
+  );
+}
+
+function FlightIcon({ size = 24, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
+      <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+    </svg>
+  );
+}
+
+function ShipIcon({ size = 24, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 21c-1.39 0-2.78-.47-4-1.32-2.44 1.71-5.56 1.71-8 0C6.78 20.53 5.39 21 4 21H2v2h2c1.38 0 2.7-.35 3.9-.99C9.1 22.65 10.52 23 12 23s2.9-.35 4.1-.99c1.2.64 2.52.99 3.9.99h2v-2h-2zM3.57 15h16.86l1.36-6H2.21l1.36 6zM12 3c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+    </svg>
+  );
+}
+
+function EarningsSlider() {
+  const [amount, setAmount] = useState(1500);
+  const [useDouble, setUseDouble] = useState(false);
+
+  const PRODUCTS = [
+    { id: "hotel",  label: "Hotels",            ptsStd: 5,  ptsDbl: 10,   doubleOk: true  },
+    { id: "flight", label: "Flights",            ptsStd: 5,  ptsDbl: null, doubleOk: false },
+    { id: "cruise", label: "Cruises & Packages", ptsStd: 10, ptsDbl: 20,  doubleOk: true  },
+  ];
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "16px", padding: "28px 24px 24px" }}>
+      {/* Amount display */}
+      <div style={{ textAlign: "center", marginBottom: "8px" }}>
+        <p style={{ fontSize: "11px", color: "#9CA3AF", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>Booking Amount</p>
+        <p style={{ fontSize: "56px", fontWeight: "800", color: NAVY, margin: 0, lineHeight: 1 }}>
+          ${amount.toLocaleString()}
+        </p>
+      </div>
+
+      {/* Slider */}
+      <div style={{ padding: "0 4px", marginBottom: "16px" }}>
+        <input
+          type="range" min={100} max={10000} step={50} value={amount}
+          onChange={e => setAmount(Number(e.target.value))}
+          style={{ width: "100%", accentColor: NAVY, cursor: "pointer" }}
+        />
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", color: "#9CA3AF", fontWeight: "600", marginTop: "2px" }}>
+          <span>$100</span><span>$2,500</span><span>$5,000</span><span>$7,500</span><span>$10,000</span>
+        </div>
+      </div>
+
+      {/* Standard / Double toggle */}
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+        <div style={{ display: "flex", background: "#F3F4F6", borderRadius: "10px", padding: "3px" }}>
+          <button onClick={() => setUseDouble(false)}
+            style={{ padding: "7px 22px", borderRadius: "8px", border: "none", background: !useDouble ? "#fff" : "transparent", color: !useDouble ? NAVY : "#9CA3AF", fontWeight: "700", fontSize: "13px", cursor: "pointer", boxShadow: !useDouble ? "0 1px 4px rgba(0,0,0,0.12)" : "none", transition: "all 0.15s" }}>
+            Standard
+          </button>
+          <button onClick={() => setUseDouble(true)}
+            style={{ padding: "7px 22px", borderRadius: "8px", border: "none", background: useDouble ? ORANGE : "transparent", color: useDouble ? "#fff" : "#9CA3AF", fontWeight: "700", fontSize: "13px", cursor: "pointer", transition: "all 0.15s" }}>
+            Double 🔥
+          </button>
+        </div>
+      </div>
+
+      {/* Product rows */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        {PRODUCTS.map(p => {
+          const notEligible = useDouble && !p.doubleOk;
+          const rate = (useDouble && p.doubleOk) ? p.ptsDbl : p.ptsStd;
+          const pts = amount * rate;
+          const cash = (pts / 1000).toFixed(2);
+          const barPct = (pts / (10000 * 20)) * 100;
+
+          return (
+            <div key={p.id} style={{
+              background: notEligible ? "#F9FAFB" : (useDouble && p.doubleOk ? `${ORANGE}08` : "#F8FAFF"),
+              borderRadius: "12px", padding: "16px",
+              border: `1.5px solid ${notEligible ? "#E5E7EB" : (useDouble && p.doubleOk ? `${ORANGE}40` : `${NAVY}20`)}`,
+              opacity: notEligible ? 0.65 : 1,
+              transition: "all 0.2s",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "10px" }}>
+                <div style={{ width: "42px", height: "42px", borderRadius: "10px", background: notEligible ? "#F3F4F6" : (useDouble && p.doubleOk ? `${ORANGE}15` : `${NAVY}12`), display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  {p.id === "hotel"  && <HotelIcon  size={22} color={notEligible ? "#9CA3AF" : (useDouble && p.doubleOk ? ORANGE : NAVY)} />}
+                  {p.id === "flight" && <FlightIcon size={22} color={notEligible ? "#9CA3AF" : NAVY} />}
+                  {p.id === "cruise" && <ShipIcon   size={22} color={notEligible ? "#9CA3AF" : (useDouble && p.doubleOk ? ORANGE : NAVY)} />}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{ fontWeight: "700", color: notEligible ? "#6B7280" : "#111827", margin: 0, fontSize: "14px" }}>{p.label}</p>
+                  <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0 }}>
+                    {notEligible ? "Not eligible for double — standard only" : `${rate} pts per $1 · ${useDouble && p.doubleOk ? "double 🔥" : "standard"}`}
+                  </p>
+                </div>
+                <div style={{ textAlign: "right", flexShrink: 0 }}>
+                  <p style={{ fontWeight: "800", fontSize: "26px", color: notEligible ? "#6B7280" : (useDouble && p.doubleOk ? ORANGE : NAVY), margin: 0, lineHeight: 1 }}>
+                    {pts.toLocaleString()}
+                  </p>
+                  <p style={{ fontSize: "12px", color: "#6B7280", margin: "2px 0 0" }}>
+                    pts = <strong style={{ color: notEligible ? "#9CA3AF" : "#16A34A" }}>${cash}</strong>
+                  </p>
+                </div>
+              </div>
+              <div style={{ height: "5px", background: "#E5E7EB", borderRadius: "999px", overflow: "hidden" }}>
+                <div style={{ height: "100%", width: `${Math.min(barPct, 100)}%`, background: notEligible ? "#D1D5DB" : (useDouble && p.doubleOk ? ORANGE : NAVY), borderRadius: "999px", transition: "width 0.15s ease" }} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "14px 0 0", textAlign: "center", lineHeight: 1.5 }}>
+        Cash back available 45 days after trip completion · Points calculated per $1 of booking value
+      </p>
+    </div>
+  );
+}
 
 export default function RewardsPage() {
   const { user: session } = useAuth();
@@ -232,7 +351,7 @@ export default function RewardsPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" }}>
             {[
               { step: "1", icon: "🔍", title: "Book through RoomVoyager", desc: "Search and book flights, hotels, or cruises on our site" },
-              { step: "2", icon: "⭐", title: "Earn points on your booking", desc: "10 pts per $1 on all bookings. Earn double — 20 pts/$1 — on hotels, cruises & packages" },
+              { step: "2", icon: "⭐", title: "Earn points on your booking", desc: "5 pts per $1 on flights & hotels · 10 pts per $1 on cruises & packages. Double available on hotels, cruises & packages." },
               { step: "3", icon: "⏳", title: "Wait 45 days after travel", desc: "Points become redeemable 45 days after your trip is completed — no exceptions" },
               { step: "4", icon: "💵", title: "Redeem for real cash", desc: "Cash out via Zelle, Cash App, or Venmo — no restrictions, no travel credit" },
             ].map(item => (
@@ -262,24 +381,24 @@ export default function RewardsPage() {
         <section style={{ marginBottom: "56px" }}>
           <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Points per dollar</p>
           <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Earning rates</h2>
-          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>All bookings earn 10 pts per $1. Hotels, cruises, and packages are eligible for double points — 20 pts per $1. All points are redeemable 45 days after your trip is completed.</p>
+          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>Flights and hotels earn 5 pts per $1. Cruises and packages earn 10 pts per $1. Hotels, cruises, and packages are eligible for double points. All points redeemable 45 days after trip completion.</p>
 
           {/* Standard vs Double overview */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "24px" }}>
             <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
               <p style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px" }}>Standard Points</p>
-              <p style={{ fontSize: "36px", fontWeight: "800", color: NAVY, margin: "0 0 2px", lineHeight: 1 }}>10 pts</p>
+              <p style={{ fontSize: "36px", fontWeight: "800", color: NAVY, margin: "0 0 2px", lineHeight: 1 }}>5–10 pts</p>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px" }}>per $1 spent</p>
-              <p style={{ fontSize: "12px", color: "#374151", margin: 0, lineHeight: 1.5 }}>Available on all products — flights, hotels, cruises, and packages.</p>
+              <p style={{ fontSize: "12px", color: "#374151", margin: 0, lineHeight: 1.5 }}>5 pts/$1 on flights & hotels · 10 pts/$1 on cruises & packages.</p>
             </div>
             <div style={{ background: `linear-gradient(135deg, ${NAVY}10 0%, ${ORANGE}10 100%)`, border: `2px solid ${ORANGE}`, borderRadius: "14px", padding: "20px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
                 <p style={{ fontSize: "11px", fontWeight: "700", color: ORANGE, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Double Points 🔥</p>
                 <span style={{ fontSize: "10px", fontWeight: "700", background: ORANGE, color: "#fff", padding: "2px 8px", borderRadius: "999px" }}>2x BONUS</span>
               </div>
-              <p style={{ fontSize: "36px", fontWeight: "800", color: NAVY, margin: "0 0 2px", lineHeight: 1 }}>20 pts</p>
+              <p style={{ fontSize: "36px", fontWeight: "800", color: NAVY, margin: "0 0 2px", lineHeight: 1 }}>10–20 pts</p>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px" }}>per $1 spent</p>
-              <p style={{ fontSize: "12px", color: "#374151", margin: 0, lineHeight: 1.5 }}>Available on hotels, cruises & packages. <strong style={{ color: ORANGE }}>Not available on flights.</strong></p>
+              <p style={{ fontSize: "12px", color: "#374151", margin: 0, lineHeight: 1.5 }}>10 pts/$1 on hotels · 20 pts/$1 on cruises & packages. <strong style={{ color: ORANGE }}>Not available on flights.</strong></p>
             </div>
           </div>
 
@@ -291,10 +410,15 @@ export default function RewardsPage() {
                 ) : (
                   <span style={{ position: "absolute", top: "10px", right: "10px", fontSize: "9px", fontWeight: "700", background: "#F3F4F6", color: "#6B7280", padding: "2px 6px", borderRadius: "999px" }}>standard only</span>
                 )}
-                <p style={{ fontSize: "28px", margin: "0 0 8px" }}>{item.icon}</p>
+                <div style={{ display: "flex", justifyContent: "center", margin: "0 0 8px" }}>
+                  {item.product === "Flights"           && <FlightIcon size={28} color={NAVY} />}
+                  {item.product === "Hotels"            && <HotelIcon  size={28} color={NAVY} />}
+                  {item.product === "Cruises"           && <ShipIcon   size={28} color={NAVY} />}
+                  {item.product === "Vacation Packages" && <span style={{ fontSize: "28px" }}>🌴</span>}
+                </div>
                 <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>{item.product}</p>
                 <p style={{ fontSize: "28px", fontWeight: "800", color: NAVY, margin: "0 0 0px", lineHeight: 1 }}>{item.pts}</p>
-                {item.double && <p style={{ fontSize: "11px", fontWeight: "700", color: ORANGE, margin: "0 0 4px" }}>/ 20 pts 🔥</p>}
+                {item.double && <p style={{ fontSize: "11px", fontWeight: "700", color: ORANGE, margin: "0 0 4px" }}>/ {item.doublePts} pts 🔥</p>}
                 <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "0 0 6px" }}>pts per $1</p>
                 <p style={{ fontSize: "10px", color: "#6B7280", margin: 0, lineHeight: 1.4 }}>{item.note}</p>
               </div>
@@ -313,32 +437,12 @@ export default function RewardsPage() {
           </div>
         </section>
 
-        {/* DOUBLE POINTS EXAMPLES */}
+        {/* EARNINGS SLIDER */}
         <section style={{ marginBottom: "56px" }}>
-          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Real cash back examples</p>
-          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>See what you'd earn on a cruise</h2>
-          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>Cruise bookings are eligible for double points — here's exactly how much cash back you'd receive at each booking size.</p>
-          <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", overflow: "hidden" }}>
-            <div style={{ background: NAVY, padding: "14px 20px", display: "grid", gridTemplateColumns: "2fr 1.5fr 1.5fr" }}>
-              <span style={{ fontSize: "12px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase" }}>Booking</span>
-              <span style={{ fontSize: "12px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase" }}>Standard Points</span>
-              <span style={{ fontSize: "12px", fontWeight: "700", color: "#FED7AA", textTransform: "uppercase" }}>Double Points 🔥</span>
-            </div>
-            {CRUISE_EXAMPLES.map((row, i) => (
-              <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1.5fr 1.5fr", padding: "14px 20px", borderBottom: i < CRUISE_EXAMPLES.length - 1 ? "1px solid #F3F4F6" : "none", background: i % 2 === 0 ? "#fff" : "#F8FAFF" }}>
-                <span style={{ fontSize: "14px", fontWeight: "700", color: "#111827" }}>{row.booking}</span>
-                <div>
-                  <span style={{ fontSize: "14px", fontWeight: "800", color: NAVY, display: "block" }}>{row.standard.cash}</span>
-                  <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{row.standard.pts} pts</span>
-                </div>
-                <div>
-                  <span style={{ fontSize: "14px", fontWeight: "800", color: ORANGE, display: "block" }}>{row.double.cash}</span>
-                  <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{row.double.pts} pts</span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p style={{ fontSize: "12px", color: "#9CA3AF", margin: "10px 0 0", textAlign: "center" }}>Points available 45 days after sailing. Same earning rates apply to eligible hotel and package bookings.</p>
+          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>See what you'd earn</p>
+          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Earnings calculator</h2>
+          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>Drag the slider to any booking amount and see exactly how many points — and how much cash — you'd earn across hotels, flights, and cruises.</p>
+          <EarningsSlider />
         </section>
 
         {/* TIERS */}
@@ -370,7 +474,7 @@ export default function RewardsPage() {
 
         {/* REDEMPTION SECTION */}
         <section style={{ marginBottom: "56px" }}>
-          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>10,000 points = $10 · 1 pt = $0.001</p>
+          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>10,000 POINTS = $10</p>
           <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 24px" }}>Redeem for cash</h2>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
             <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", overflow: "hidden" }}>

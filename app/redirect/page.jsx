@@ -9,10 +9,10 @@ const ORANGE     = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 const PRODUCT_META = {
-  cruise:  { icon: "🚢", label: "Cruise",           pts: 10, double: true,  color: "#003B95" },
-  hotel:   { icon: "🏨", label: "Hotel",             pts: 10, double: true,  color: "#7C3AED" },
-  flight:  { icon: "✈️", label: "Flight",            pts: 10, double: false, color: "#0EA5E9" },
-  package: { icon: "🌴", label: "Vacation Package",  pts: 10, double: true,  color: "#16A34A" },
+  cruise:  { icon: "🚢", label: "Cruise",          ptsStd: 10, ptsDbl: 20,   color: "#003B95" },
+  hotel:   { icon: "🏨", label: "Hotel",            ptsStd: 5,  ptsDbl: 10,   color: "#7C3AED" },
+  flight:  { icon: "✈️", label: "Flight",           ptsStd: 5,  ptsDbl: null, color: "#0EA5E9" },
+  package: { icon: "🌴", label: "Vacation Package", ptsStd: 10, ptsDbl: 20,   color: "#16A34A" },
 };
 
 const COUNTDOWN_SECS = 5;
@@ -27,7 +27,7 @@ function RedirectContent() {
   const amount   = parseInt(params.get("amount") || "0", 10); // optional estimated pts
 
   const meta     = PRODUCT_META[product] || PRODUCT_META.cruise;
-  const estPts   = amount ? amount * (meta.double ? 20 : 10) : null;
+  const estPts   = amount ? amount * (meta.ptsDbl ?? meta.ptsStd) : null;
 
   const [count,    setCount]    = useState(COUNTDOWN_SECS);
   const [gone,     setGone]     = useState(false);
@@ -153,9 +153,9 @@ function RedirectContent() {
                 <div>
                   <p style={{ fontSize: "13px", fontWeight: "700", color: NAVY, margin: "0 0 2px" }}>Earn rewards on this booking</p>
                   <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>
-                    {meta.double
-                      ? `Earn up to 20 pts per $1 on ${meta.label.toLowerCase()}s`
-                      : `Earn 10 pts per $1 on ${meta.label.toLowerCase()}s`}
+                    {meta.ptsDbl
+                      ? `Earn up to ${meta.ptsDbl} pts per $1 on ${meta.label.toLowerCase()}s`
+                      : `Earn ${meta.ptsStd} pts per $1 on ${meta.label.toLowerCase()}s`}
                   </p>
                 </div>
               </div>

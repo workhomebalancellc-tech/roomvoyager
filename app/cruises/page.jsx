@@ -460,8 +460,9 @@ export default function CruisesPage() {
                 🔍 Search &amp; Book Cruises
               </p>
               <div style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,59,149,0.15)", border: "1px solid #E5E7EB", width: "300px" }}>
-                <div id="cdsearch-mobile" data-redirect-server="https://www.jdoqocy.com/click-101734691-15534473?url=" />
-                <div id="cruiseSearchBox300x600-mobile" />
+                <div id="cdsearch" data-redirect-server="https://www.jdoqocy.com/click-101734691-15534473?url=" />
+                <div id="cruiseSearchBox300x600" />
+                <img src="https://www.lduhtrp.net/image-101734691-15534473" width="1" height="1" alt="" style={{ display: "block" }} />
               </div>
               <p style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "center", margin: "10px 0 0", fontFamily: "Montserrat, sans-serif" }}>
                 Powered by CruiseDirect · Best price guarantee
@@ -504,7 +505,7 @@ export default function CruisesPage() {
             <div>
               <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>🏆 RoomVoyager Rewards</p>
               <p style={{ color: "#fff", fontWeight: "800", fontSize: "17px", margin: "0 0 4px" }}>Earn 10 pts per $1 on every cruise</p>
-              <p style={{ color: "#BFDBFE", fontSize: "13px", margin: 0 }}>A $2,200 cruise = 22,000 pts = $220 cash back</p>
+              <p style={{ color: "#BFDBFE", fontSize: "13px", margin: 0 }}>Double points available · cash back paid via Zelle, Cash App, or Venmo</p>
             </div>
             <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "11px 22px", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", flexShrink: 0, boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
               Learn more →
