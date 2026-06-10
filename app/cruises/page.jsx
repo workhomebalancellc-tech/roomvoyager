@@ -482,7 +482,7 @@ export default function CruisesPage() {
                 ["💰","Exclusive group rates","Often 15–30% below public pricing"],
                 ["🛏️","Cabin upgrades","Best cabin for your budget"],
                 ["✈️","Cruise + flight bundles","One price, one contact"],
-                ["🏆","Earn 10x rewards pts","$2,200 cruise = $220 cash back"],
+                ["🏆","Earn 10x rewards pts","Double points on every cruise booking"],
               ].map(([icon, title, sub], i) => (
                 <div key={i} style={{ background: LIGHT_BLUE, borderRadius: "10px", padding: "12px" }}>
                   <p style={{ fontSize: "18px", margin: "0 0 4px" }}>{icon}</p>

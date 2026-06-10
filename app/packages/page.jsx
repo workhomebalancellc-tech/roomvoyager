@@ -42,7 +42,7 @@ const AGENT_PERKS = [
   { icon: "🔑", title: "One point of contact",      body: "Flight changes, hotel upgrades, activity questions — call us once instead of juggling 4 providers." },
   { icon: "🎁", title: "Complimentary add-ons",     body: "We negotiate room upgrades, early check-in, resort credits, and welcome amenities at no extra charge." },
   { icon: "🛡️", title: "Protected booking",        body: "If something goes wrong mid-trip, your agent is a real person who advocates for you immediately." },
-  { icon: "🏆", title: "Earn 10× rewards points",  body: "Every package earns 10 pts per $1 — that's $300 cash back on a $3,000 trip." },
+  { icon: "🏆", title: "Earn 10× rewards points",  body: "Every package earns double rewards points — redeemable for real cash after your trip." },
   { icon: "✏️", title: "Fully custom itineraries", body: "No cookie-cutter packages. We build around your dates, budget, interests, and travel style." },
 ];
 
@@ -450,7 +450,7 @@ export default function PackagesPage() {
           <div>
             <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>🏆 RoomVoyager Rewards</p>
             <p style={{ color: "#fff", fontWeight: "800", fontSize: "17px", margin: "0 0 4px" }}>Earn 10 pts per $1 on every package</p>
-            <p style={{ color: "#BFDBFE", fontSize: "13px", margin: 0 }}>A $3,000 package = 30,000 pts = $300 cash back</p>
+            <p style={{ color: "#BFDBFE", fontSize: "13px", margin: 0 }}>Double points available · cash back paid via Zelle, Cash App, or Venmo</p>
           </div>
           <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "11px 22px", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", flexShrink: 0, boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
             Learn more →
