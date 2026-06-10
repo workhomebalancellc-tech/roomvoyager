@@ -362,6 +362,27 @@ export default function CruisesPage() {
         </div>
       </div>
 
+      {/* MOBILE SECTION NAV */}
+      {isMobile && (
+        <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <div style={{ display: "flex", gap: "0", padding: "0 16px", whiteSpace: "nowrap" }}>
+            {[
+              { label: "Destinations", href: "#destinations" },
+              { label: "Cruise Lines",  href: "#cruise-lines"  },
+              { label: "Search Cruises",href: "#search"        },
+              { label: "Get a Quote",   href: "#quote"         },
+            ].map((item, i) => (
+              <a key={i} href={item.href}
+                style={{ display: "inline-block", padding: "12px 16px", fontSize: "13px", fontWeight: "600", color: NAVY, textDecoration: "none", borderBottom: "2px solid transparent", flexShrink: 0 }}
+                onMouseEnter={e => { e.currentTarget.style.borderBottomColor = ORANGE; e.currentTarget.style.color = ORANGE; }}
+                onMouseLeave={e => { e.currentTarget.style.borderBottomColor = "transparent"; e.currentTarget.style.color = NAVY; }}>
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* MAIN — responsive two column */}
       <div style={{ maxWidth: "1140px", margin: "0 auto", padding: isMobile ? "24px 16px 60px" : "48px 24px 80px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "320px 1fr", gap: "40px", alignItems: "start" }}>
 
@@ -386,7 +407,7 @@ export default function CruisesPage() {
         <div>
 
           {/* Destination Cards */}
-          <section style={{ marginBottom: "52px" }}>
+          <section id="destinations" style={{ marginBottom: "52px" }}>
             <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Where do you want to go?</p>
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>Popular Cruise Destinations</h2>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr", gap: "16px" }}>
@@ -410,7 +431,7 @@ export default function CruisesPage() {
           </section>
 
           {/* Cruise Lines */}
-          <section style={{ marginBottom: "48px" }}>
+          <section id="cruise-lines" style={{ marginBottom: "48px" }}>
             <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>All major cruise lines</p>
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 16px" }}>Book Any Line Through Us</h2>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "12px" }}>
@@ -434,7 +455,7 @@ export default function CruisesPage() {
 
           {/* Mobile widget */}
           {isMobile && (
-            <div style={{ marginBottom: "48px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div id="search" style={{ marginBottom: "48px", display: "flex", flexDirection: "column", alignItems: "center" }}>
               <p style={{ fontSize: "12px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px", textAlign: "center", fontFamily: "Montserrat, sans-serif" }}>
                 🔍 Search &amp; Book Cruises
               </p>
@@ -449,7 +470,7 @@ export default function CruisesPage() {
           )}
 
           {/* Agent CTA */}
-          <section style={{ background: "#fff", borderRadius: "20px", padding: "28px", border: "1px solid #E5E7EB", boxShadow: "0 2px 12px rgba(0,59,149,0.07)", marginBottom: "32px" }}>
+          <section id="quote" style={{ background: "#fff", borderRadius: "20px", padding: "28px", border: "1px solid #E5E7EB", boxShadow: "0 2px 12px rgba(0,59,149,0.07)", marginBottom: "32px" }}>
             <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Prefer personal service?</p>
             <h2 style={{ fontSize: "20px", fontWeight: "800", color: "#111827", margin: "0 0 6px" }}>Let Our Agent Find Your Best Deal</h2>
             <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px", lineHeight: 1.6 }}>

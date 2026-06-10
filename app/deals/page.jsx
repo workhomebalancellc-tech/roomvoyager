@@ -264,20 +264,28 @@ export default function DealsPage() {
       <NavBar active="deals" />
 
       {/* HERO */}
-      <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #0052CC 100%)`, padding: isMobile ? "40px 20px 36px" : "56px 24px 48px", textAlign: "center" }}>
-        <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>✈️ Updated Weekly</p>
-        <h1 style={{ color: "#fff", fontSize: isMobile ? "28px" : "42px", fontWeight: "800", margin: "0 0 12px", lineHeight: 1.2 }}>
-          Weekly <span style={{ color: ORANGE }}>Deals</span>
-        </h1>
-        <p style={{ color: "#BFDBFE", fontSize: isMobile ? "14px" : "16px", maxWidth: "520px", margin: "0 auto 20px", lineHeight: 1.6 }}>
-          Hand-picked travel deals on the world's most popular destinations. Earn rewards points on every booking.
-        </p>
-        <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
-          {[["🏆","Earn 10 pts per $1"],["💰","Best price guarantee"],["🤝","Free agent assistance"]].map(([icon,text],i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.85)", fontSize: "12px", fontWeight: "600" }}>
-              <span>{icon}</span><span>{text}</span>
-            </div>
-          ))}
+      <div style={{ position: "relative", height: isMobile ? "300px" : "380px", overflow: "hidden" }}>
+        <img
+          src="https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1600&h=600&fit=crop&auto=format"
+          alt="Travel planning"
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 60%" }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.60) 0%, rgba(0,15,60,0.80) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>✈️ Updated Weekly</p>
+          <h1 style={{ color: "#fff", fontSize: isMobile ? "28px" : "44px", fontWeight: "800", margin: "0 0 12px", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
+            Weekly <span style={{ color: ORANGE }}>Deals</span>
+          </h1>
+          <p style={{ color: "#BFDBFE", fontSize: isMobile ? "14px" : "16px", maxWidth: "520px", margin: "0 auto 20px", lineHeight: 1.6 }}>
+            Hand-picked travel deals on the world's most popular destinations. Earn rewards points on every booking.
+          </p>
+          <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
+            {[["🏆","Earn 10 pts per $1"],["💰","Best price guarantee"],["🤝","Free agent assistance"]].map(([icon,text],i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.85)", fontSize: "12px", fontWeight: "600" }}>
+                <span>{icon}</span><span>{text}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

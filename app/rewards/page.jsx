@@ -10,7 +10,7 @@ const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 const TIERS = [
-  { name: "Explorer", icon: "🧭", range: "0–9,999 pts", multiplier: "1x", color: "#6B7280", perks: ["10 pts per $1 on all bookings (1% cash back)", "20 pts per $1 on hotels, cruises & packages (2% back)", "Redeem from 1,000 pts ($10)", "No blackout dates"] },
+  { name: "Explorer", icon: "🧭", range: "0–9,999 pts", multiplier: "1x", color: "#6B7280", perks: ["10 pts per $1 on all bookings", "20 pts per $1 on hotels, cruises & packages", "Redeem from 1,000 pts ($10)", "No blackout dates"] },
   { name: "Voyager", icon: "⚓", range: "10,000–49,999 pts", multiplier: "1.2x", color: NAVY, perks: ["1.2x points on all bookings", "12 pts/$1 standard · 24 pts/$1 double", "Priority email response", "Exclusive member deals"] },
   { name: "Navigator", icon: "🗺️", range: "50,000–99,999 pts", multiplier: "1.5x", color: "#7C3AED", perks: ["1.5x points on all bookings", "15 pts/$1 standard · 30 pts/$1 double", "Dedicated agent access", "Early access to promotions"] },
   { name: "Admiral", icon: "👑", range: "100,000+ pts", multiplier: "2x", color: ORANGE, perks: ["2x points on all bookings", "20 pts/$1 standard · 40 pts/$1 double", "VIP concierge service", "Best available rates guaranteed"] },
@@ -151,7 +151,7 @@ export default function RewardsPage() {
           <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 12px" }}>💰 Cash Back Loyalty Program</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(28px, 5vw, 46px)", fontWeight: "800", margin: "0 0 12px", lineHeight: 1.15, textShadow: "0 2px 12px rgba(0,0,0,0.3)" }}>RoomVoyager Rewards</h1>
           <p style={{ color: "#BFDBFE", fontSize: "17px", margin: "0 0 28px", maxWidth: "520px", lineHeight: 1.6 }}>
-            Earn 1% cash back on every booking — up to 2% on hotels, cruises & packages. Paid via Zelle, Cash App, or Venmo. No blackout dates. Real money.
+            Earn cash back on every booking — double points on hotels, cruises & packages. Paid via Zelle, Cash App, or Venmo. No blackout dates. Real money.
           </p>
           {session ? (
             <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", borderRadius: "16px", padding: "20px 28px", display: "inline-flex", gap: "36px", flexWrap: "wrap", justifyContent: "center", border: "1px solid rgba(255,255,255,0.2)" }}>
@@ -198,7 +198,7 @@ export default function RewardsPage() {
       {/* TRUST BAR */}
       <div style={{ background: NAVY, padding: "14px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
-          {[["✅","Free to join"],["💵","Real cash payouts"],["🔥","Up to 2% back on cruises, hotels & packages"],["🚫","No blackout dates"],["⏰","Available 45 days post-travel"],["📲","Zelle · Cash App · Venmo"]].map(([icon,text],i) => (
+          {[["✅","Free to join"],["💵","Real cash payouts"],["🔥","Double points on cruises, hotels & packages"],["🚫","No blackout dates"],["⏰","Available 45 days post-travel"],["📲","Zelle · Cash App · Venmo"]].map(([icon,text],i) => (
             <div key={i} style={{ display:"flex", alignItems:"center", gap:"6px", fontSize:"13px", color:"#BFDBFE", fontWeight: "500" }}><span>{icon}</span><span>{text}</span></div>
           ))}
         </div>
@@ -232,7 +232,7 @@ export default function RewardsPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" }}>
             {[
               { step: "1", icon: "🔍", title: "Book through RoomVoyager", desc: "Search and book flights, hotels, or cruises on our site" },
-              { step: "2", icon: "⭐", title: "Earn points on your booking", desc: "10 pts per $1 on all bookings (1% back). Earn double — 20 pts/$1 (2% back) — on hotels, cruises & packages" },
+              { step: "2", icon: "⭐", title: "Earn points on your booking", desc: "10 pts per $1 on all bookings. Earn double — 20 pts/$1 — on hotels, cruises & packages" },
               { step: "3", icon: "⏳", title: "Wait 45 days after travel", desc: "Points become redeemable 45 days after your trip is completed — no exceptions" },
               { step: "4", icon: "💵", title: "Redeem for real cash", desc: "Cash out via Zelle, Cash App, or Venmo — no restrictions, no travel credit" },
             ].map(item => (
@@ -262,14 +262,14 @@ export default function RewardsPage() {
         <section style={{ marginBottom: "56px" }}>
           <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Points per dollar</p>
           <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Earning rates</h2>
-          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>All bookings earn 10 pts per $1 (1% cash back). Hotels, cruises, and packages are eligible for double points — 20 pts per $1 (2% cash back). All points are redeemable 45 days after your trip is completed.</p>
+          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>All bookings earn 10 pts per $1. Hotels, cruises, and packages are eligible for double points — 20 pts per $1. All points are redeemable 45 days after your trip is completed.</p>
 
           {/* Standard vs Double overview */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "24px" }}>
             <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
               <p style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px" }}>Standard Points</p>
               <p style={{ fontSize: "36px", fontWeight: "800", color: NAVY, margin: "0 0 2px", lineHeight: 1 }}>10 pts</p>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px" }}>per $1 spent = <strong>1% cash back</strong></p>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px" }}>per $1 spent</p>
               <p style={{ fontSize: "12px", color: "#374151", margin: 0, lineHeight: 1.5 }}>Available on all products — flights, hotels, cruises, and packages.</p>
             </div>
             <div style={{ background: `linear-gradient(135deg, ${NAVY}10 0%, ${ORANGE}10 100%)`, border: `2px solid ${ORANGE}`, borderRadius: "14px", padding: "20px" }}>
@@ -278,7 +278,7 @@ export default function RewardsPage() {
                 <span style={{ fontSize: "10px", fontWeight: "700", background: ORANGE, color: "#fff", padding: "2px 8px", borderRadius: "999px" }}>2x BONUS</span>
               </div>
               <p style={{ fontSize: "36px", fontWeight: "800", color: NAVY, margin: "0 0 2px", lineHeight: 1 }}>20 pts</p>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px" }}>per $1 spent = <strong>2% cash back</strong></p>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px" }}>per $1 spent</p>
               <p style={{ fontSize: "12px", color: "#374151", margin: 0, lineHeight: 1.5 }}>Available on hotels, cruises & packages. <strong style={{ color: ORANGE }}>Not available on flights.</strong></p>
             </div>
           </div>
@@ -307,7 +307,7 @@ export default function RewardsPage() {
             <div>
               <p style={{ fontWeight: "700", color: "#374151", margin: "0 0 4px", fontSize: "14px" }}>Why are flights standard points only?</p>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: 0, lineHeight: 1.6 }}>
-                Flight bookings carry a lower commission margin, which means the double-points rate (2% cash back) can't be sustained on them. To keep the rewards program healthy and make sure every payout is covered, flights earn standard points only — still a great 1% back on every dollar you spend.
+                Flight bookings carry a lower commission margin, which means the double-points rate can't be sustained on them. To keep the rewards program healthy and make sure every payout is covered, flights earn standard points only — still a great deal on every dollar you spend.
               </p>
             </div>
           </div>
@@ -321,8 +321,8 @@ export default function RewardsPage() {
           <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", overflow: "hidden" }}>
             <div style={{ background: NAVY, padding: "14px 20px", display: "grid", gridTemplateColumns: "2fr 1.5fr 1.5fr" }}>
               <span style={{ fontSize: "12px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase" }}>Booking</span>
-              <span style={{ fontSize: "12px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase" }}>Standard (1%)</span>
-              <span style={{ fontSize: "12px", fontWeight: "700", color: "#FED7AA", textTransform: "uppercase" }}>Double Points (2%) 🔥</span>
+              <span style={{ fontSize: "12px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase" }}>Standard Points</span>
+              <span style={{ fontSize: "12px", fontWeight: "700", color: "#FED7AA", textTransform: "uppercase" }}>Double Points 🔥</span>
             </div>
             {CRUISE_EXAMPLES.map((row, i) => (
               <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1.5fr 1.5fr", padding: "14px 20px", borderBottom: i < CRUISE_EXAMPLES.length - 1 ? "1px solid #F3F4F6" : "none", background: i % 2 === 0 ? "#fff" : "#F8FAFF" }}>

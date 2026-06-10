@@ -15,10 +15,7 @@ const AGENT_RATE     = 0.084;  // 8.4%
 
 const TOOLS = [
   { icon: "🧮", label: "Points Calculator",    href: "/admin/calculator", desc: "Calculate pts earned on any booking combination" },
-  { icon: "📋", label: "Airtable — Quotes",    href: "https://airtable.com", desc: "View all quote form submissions", external: true },
-  { icon: "📞", label: "Airtable — Calls",     href: "https://airtable.com", desc: "View all call schedule requests", external: true },
-  { icon: "🔗", label: "Airtable — Clicks",    href: "https://airtable.com", desc: "Track affiliate link clicks", external: true },
-  { icon: "💸", label: "Airtable — Redemptions",href: "https://airtable.com",desc: "Manage rewards cash-out requests", external: true },
+  { icon: "📊", label: "Airtable",             href: "https://airtable.com", desc: "Quotes · Call Requests · Link Clicks · Redemptions", external: true },
   { icon: "🌐", label: "Live Site",             href: "https://www.roomvoyagertravel.com", desc: "Open your live website", external: true },
 ];
 

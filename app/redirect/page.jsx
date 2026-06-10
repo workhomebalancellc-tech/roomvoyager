@@ -4,8 +4,9 @@ import { useEffect, useState, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "../../contexts/AuthContext";
 
-const NAVY   = "#003B95";
-const ORANGE = "#FF6600";
+const NAVY       = "#003B95";
+const ORANGE     = "#FF6600";
+const LIGHT_BLUE = "#EBF3FF";
 
 const PRODUCT_META = {
   cruise:  { icon: "🚢", label: "Cruise",           pts: 10, double: true,  color: "#003B95" },
@@ -153,8 +154,8 @@ function RedirectContent() {
                   <p style={{ fontSize: "13px", fontWeight: "700", color: NAVY, margin: "0 0 2px" }}>Earn rewards on this booking</p>
                   <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>
                     {meta.double
-                      ? `Earn up to 20 pts per $1 on ${meta.label.toLowerCase()}s (2% cash back)`
-                      : `Earn 10 pts per $1 on ${meta.label.toLowerCase()}s (1% cash back)`}
+                      ? `Earn up to 20 pts per $1 on ${meta.label.toLowerCase()}s`
+                      : `Earn 10 pts per $1 on ${meta.label.toLowerCase()}s`}
                   </p>
                 </div>
               </div>
@@ -212,7 +213,6 @@ function RedirectContent() {
   );
 }
 
-// Need Suspense because useSearchParams requires it in Next.js App Router
 export default function RedirectPage() {
   return (
     <Suspense fallback={
@@ -227,5 +227,3 @@ export default function RedirectPage() {
     </Suspense>
   );
 }
-
-const LIGHT_BLUE = "#EBF3FF";
