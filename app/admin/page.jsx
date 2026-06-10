@@ -19,11 +19,12 @@ const TOOLS = [
   { icon: "🌐", label: "Live Site",             href: "https://www.roomvoyagertravel.com", desc: "Open your live website", external: true },
 ];
 
+// basePts = standard pts/$1 · baseDoublePts = double pts/$1 (null = not eligible)
 const PRODUCT_TYPES = [
-  { id: "cruise",   label: "Cruise",           icon: "🚢", pts: 10, doubleOk: true  },
-  { id: "hotel",    label: "Hotel",             icon: "🏨", pts: 10, doubleOk: true  },
-  { id: "package",  label: "Vacation Package",  icon: "🌴", pts: 10, doubleOk: true  },
-  { id: "flight",   label: "Flight",            icon: "✈️", pts: 10, doubleOk: false },
+  { id: "cruise",  label: "Cruise",          icon: "🚢", basePts: 10, baseDoublePts: 20,   doubleOk: true  },
+  { id: "hotel",   label: "Hotel",            icon: "🏨", basePts: 5,  baseDoublePts: 10,   doubleOk: true  },
+  { id: "package", label: "Vacation Package", icon: "🌴", basePts: 10, baseDoublePts: 20,   doubleOk: true  },
+  { id: "flight",  label: "Flight",           icon: "✈️", basePts: 5,  baseDoublePts: null, doubleOk: false },
 ];
 
 function CommissionCalc() {
@@ -35,21 +36,25 @@ function CommissionCalc() {
   const amt   = parseFloat(amount) || 0;
   const useDouble = double && type?.doubleOk;
 
+  // Per-product pts rate
+  const ptsRate    = useDouble ? (type?.baseDoublePts ?? type?.basePts ?? 5) : (type?.basePts ?? 5);
+  const ptsCostPct = ptsRate / 1000; // e.g. 5pts → 0.5%, 10pts → 1%, 20pts → 2%
+
   // Revenue split
-  const totalComm    = amt * (type?.id === "flight" ? 0.016 : AGENT_RATE + AFFILIATE_RATE); // agent bookings get full 11.4%
   const affiliateCut = amt * AFFILIATE_RATE;
-  const agentCut     = amt * AGENT_RATE;
-  const ptsCost      = amt * (useDouble ? 0.02 : 0.01);
+  const agentCut     = amt * (type?.id === "flight" ? 0.016 : AGENT_RATE);
+  const ptsCost      = amt * ptsCostPct;
   const netAfterPts  = agentCut - ptsCost;
-  const ptsAwarded   = Math.round(amt * (useDouble ? 20 : 10));
+  const ptsAwarded   = Math.round(amt * ptsRate);
   const cashBack     = ptsAwarded / 1000;
   const profitable   = netAfterPts >= 0;
+  const ptsCostLabel = `${(ptsCostPct * 100).toFixed(1)}%`;
 
   const rows = amt > 0 ? [
     { label: "Booking value",      value: `$${amt.toFixed(2)}`,           color: "#111827" },
     { label: "Affiliate cut (3%)", value: `$${affiliateCut.toFixed(2)}`,  color: "#6B7280", note: "goes to CJ network" },
-    { label: "Agent commission (8.4%)", value: `$${agentCut.toFixed(2)}`, color: NAVY,      note: "your revenue" },
-    { label: `Points cost (${useDouble ? "2%" : "1%"})`, value: `−$${ptsCost.toFixed(2)}`, color: ORANGE, note: `${ptsAwarded.toLocaleString()} pts = $${cashBack.toFixed(2)} to customer` },
+    { label: `Agent commission (${type?.id === "flight" ? "1.6" : "8.4"}%)`, value: `$${agentCut.toFixed(2)}`, color: NAVY, note: "your revenue" },
+    { label: `Points cost (${ptsCostLabel})`, value: `−$${ptsCost.toFixed(2)}`, color: ORANGE, note: `${ptsAwarded.toLocaleString()} pts = $${cashBack.toFixed(2)} to customer` },
     { label: "Net after points",   value: `$${netAfterPts.toFixed(2)}`,   color: profitable ? GREEN : "#DC2626", bold: true },
   ] : [];
 
@@ -356,12 +361,14 @@ export default function AdminDashboard() {
           <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>📊 Program Rates At-a-Glance</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px" }}>
             {[
-              { label: "Affiliate commission",  value: "3%",         sub: "CJ network cut",           color: "#6B7280" },
-              { label: "Agent commission",       value: "8.4%",       sub: "Your revenue per booking", color: NAVY      },
-              { label: "Standard points cost",   value: "1%",         sub: "10 pts/$1 = $1/1000 pts",  color: "#374151" },
-              { label: "Double points cost",     value: "2%",         sub: "20 pts/$1 — no flights",   color: ORANGE    },
-              { label: "Min redemption",         value: "10,000 pts", sub: "= $10 cash out",           color: "#374151" },
-              { label: "Payout window",          value: "45 days",    sub: "After trip completion",    color: "#374151" },
+              { label: "Affiliate commission",        value: "3%",         sub: "CJ network cut",                            color: "#6B7280" },
+              { label: "Agent commission",             value: "8.4%",       sub: "Your revenue (flights: 1.6%)",              color: NAVY      },
+              { label: "Std pts cost — hotels/flights",value: "0.5%",       sub: "5 pts/$1 → $0.50 per $100 booked",         color: "#374151" },
+              { label: "Std pts cost — cruises/pkgs",  value: "1%",         sub: "10 pts/$1 → $1 per $100 booked",           color: "#374151" },
+              { label: "Double pts cost — hotels",     value: "1%",         sub: "10 pts/$1 · not available on flights",     color: ORANGE    },
+              { label: "Double pts cost — cruises/pkgs",value: "2%",        sub: "20 pts/$1 · not available on flights",     color: ORANGE    },
+              { label: "Min redemption",               value: "10,000 pts", sub: "= $10 cash out",                           color: "#374151" },
+              { label: "Payout window",                value: "45 days",    sub: "After trip completion",                    color: "#374151" },
             ].map((r, i) => (
               <div key={i} style={{ background: "#F8FAFF", borderRadius: "10px", padding: "12px 14px" }}>
                 <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "0 0 4px", fontWeight: "600", textTransform: "uppercase" }}>{r.label}</p>
