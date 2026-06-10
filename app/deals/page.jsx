@@ -222,12 +222,6 @@ function DealCard({ city, state, country, tag, desc, from, deal, badge, img, lin
           <p style={{ color: "#fff", fontWeight: "800", fontSize: "17px", margin: 0, textShadow: "0 1px 6px rgba(0,0,0,0.5)", lineHeight: 1.2 }}>{city}</p>
           <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "11px", margin: 0 }}>{state || country}</p>
         </div>
-
-        {/* From price */}
-        <div style={{ position: "absolute", bottom: "10px", right: "14px", textAlign: "right" }}>
-          <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "9px", margin: 0, textTransform: "uppercase", fontWeight: "700" }}>From</p>
-          <p style={{ color: "#fff", fontWeight: "800", fontSize: "18px", margin: 0, textShadow: "0 1px 6px rgba(0,0,0,0.4)" }}>{from}</p>
-        </div>
       </div>
 
       {/* Body */}
