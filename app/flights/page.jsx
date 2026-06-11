@@ -10,14 +10,14 @@ const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 const destinations = [
-  { name: "Cancún", country: "Mexico", photo: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=400&h=280&fit=crop&auto=format", tag: "🏖️ Beach" },
-  { name: "Miami", country: "Florida, USA", photo: "https://images.unsplash.com/photo-1503891450247-ee5f8ec46dc3?w=400&h=280&fit=crop&auto=format", tag: "🌆 City" },
-  { name: "Las Vegas", country: "Nevada, USA", photo: "https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=400&h=280&fit=crop&auto=format", tag: "🎰 Entertainment" },
-  { name: "Paris", country: "France", photo: "https://images.unsplash.com/photo-1431274172761-fca41d930114?w=400&h=280&fit=crop&auto=format", tag: "🗼 Romance" },
-  { name: "Orlando", country: "Florida, USA", photo: "https://images.unsplash.com/photo-1526472050800-0d8e22b0a0c8?w=400&h=280&fit=crop&auto=format", tag: "🎡 Family" },
-  { name: "London", country: "United Kingdom", photo: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=280&fit=crop&auto=format", tag: "🎭 Culture" },
-  { name: "Punta Cana", country: "Dominican Republic", photo: "https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400&h=280&fit=crop&auto=format", tag: "🌴 All-Inclusive" },
-  { name: "New York", country: "New York, USA", photo: "https://images.unsplash.com/photo-1522083165195-3424ed129620?w=400&h=280&fit=crop&auto=format", tag: "🗽 Iconic" },
+  { name: "Cancún", country: "Mexico", photo: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=400&h=280&fit=crop&auto=format", tag: "🏖️ Beach", kiwi: "cancun" },
+  { name: "Miami", country: "Florida, USA", photo: "https://images.unsplash.com/photo-1503891450247-ee5f8ec46dc3?w=400&h=280&fit=crop&auto=format", tag: "🌆 City", kiwi: "miami-florida-united-states" },
+  { name: "Las Vegas", country: "Nevada, USA", photo: "https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=400&h=280&fit=crop&auto=format", tag: "🎰 Entertainment", kiwi: "las-vegas-nevada-united-states" },
+  { name: "Paris", country: "France", photo: "https://images.unsplash.com/photo-1431274172761-fca41d930114?w=400&h=280&fit=crop&auto=format", tag: "🗼 Romance", kiwi: "paris-ile-de-france-france" },
+  { name: "Orlando", country: "Florida, USA", photo: "https://images.unsplash.com/photo-1526472050800-0d8e22b0a0c8?w=400&h=280&fit=crop&auto=format", tag: "🎡 Family", kiwi: "orlando-florida-united-states" },
+  { name: "London", country: "United Kingdom", photo: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=280&fit=crop&auto=format", tag: "🎭 Culture", kiwi: "london-england-united-kingdom" },
+  { name: "Punta Cana", country: "Dominican Republic", photo: "https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400&h=280&fit=crop&auto=format", tag: "🌴 All-Inclusive", kiwi: "punta-cana-la-altagracia-dominican-republic" },
+  { name: "New York", country: "New York, USA", photo: "https://images.unsplash.com/photo-1522083165195-3424ed129620?w=400&h=280&fit=crop&auto=format", tag: "🗽 Iconic", kiwi: "new-york-new-york-united-states" },
 ];
 
 const tips = [
@@ -33,7 +33,7 @@ function FlightsContent() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
-  const WIDGET_HTML = `<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#fff;overflow-x:hidden;}</style></head><body><script async src="https://tpwdgt.com/content?currency=usd&trs=532625&shmarker=722477&locale=en&stops=any&show_hotels=false&powered_by=true&border_radius=0&plain=true&color_button=%23003B95&color_button_text=%23ffffff&promo_id=3414&campaign_id=111" charset="utf-8"><\/script></body></html>`;
+  const WIDGET_HTML = `<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#fff;overflow-x:hidden;}</style></head><body><script async src="https://tpwdgt.com/content?currency=usd&trs=532625&shmarker=722477&locale=en&stops=any&show_hotels=false&powered_by=false&border_radius=0&plain=true&color_button=%23003B95&color_button_text=%23ffffff&promo_id=3414&campaign_id=111" charset="utf-8"><\/script></body></html>`;
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
@@ -73,9 +73,9 @@ function FlightsContent() {
       </div>
 
       {/* FLIGHT SEARCH WIDGET */}
-      <div style={{ background: "#F0F7FF", borderBottom: "1px solid #E5E7EB", padding: "48px 24px" }}>
+      <div style={{ background: "#F8FAFF", borderBottom: "1px solid #E5E7EB", padding: "32px 24px" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: "28px" }}>
+          <div style={{ textAlign: "center", marginBottom: "16px" }}>
             <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Search & Compare</p>
             <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>✈️ Find your flight</h2>
             <p style={{ color: "#6B7280", fontSize: "14px", margin: 0 }}>Compare hundreds of airlines to find the lowest fares available</p>
@@ -86,16 +86,15 @@ function FlightsContent() {
               <iframe
                 srcDoc={WIDGET_HTML}
                 title="Flight Deals Widget"
-                style={{ width: "100%", height: "320px", border: "none", display: "block" }}
+                style={{ width: "100%", height: "220px", border: "none", display: "block" }}
                 scrolling="no"
               />
             ) : (
-              <div style={{ height: "320px", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF", fontSize: "14px" }}>
+              <div style={{ height: "220px", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF", fontSize: "14px" }}>
                 Loading flight deals…
               </div>
             )}
           </div>
-          <p style={{ textAlign: "center", fontSize: "12px", color: "#9CA3AF", marginTop: "12px" }}>Showing top deals · Click any deal to book · Powered by Travelpayouts</p>
         </div>
       </div>
 
@@ -106,9 +105,10 @@ function FlightsContent() {
         <p style={{ color: "#6B7280", fontSize: "14px", margin: "0 0 28px" }}>Top spots travelers are flying to right now</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: "16px" }}>
           {destinations.map(dest => (
-            <div
+            <a
               key={dest.name}
-              style={{ borderRadius: "14px", overflow: "hidden", position: "relative", height: "180px", cursor: "pointer" }}
+              href={`/redirect?to=${encodeURIComponent(`https://www.kiwi.com/en/search/results/anywhere/${dest.kiwi}`)}&partner=Kiwi.com&product=flight`}
+              style={{ borderRadius: "14px", overflow: "hidden", position: "relative", height: "180px", cursor: "pointer", display: "block", textDecoration: "none" }}
               onMouseEnter={e => e.currentTarget.querySelector("img").style.transform = "scale(1.06)"}
               onMouseLeave={e => e.currentTarget.querySelector("img").style.transform = "scale(1)"}
             >
@@ -121,7 +121,7 @@ function FlightsContent() {
                 <p style={{ color: "#fff", fontWeight: "800", fontSize: "16px", margin: "0 0 2px", textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>{dest.name}</p>
                 <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "12px", margin: 0 }}>{dest.country}</p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
