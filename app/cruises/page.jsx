@@ -436,7 +436,9 @@ export default function CruisesPage() {
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 16px" }}>Book Any Line Through Us</h2>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "12px" }}>
               {LINES.map((l, i) => (
-                <a key={i} href={`/redirect?to=${encodeURIComponent(l.href)}&partner=${encodeURIComponent(l.name)}&product=cruise`}
+                <a key={i}
+                  href={`/redirect?to=${encodeURIComponent(l.href)}&partner=${encodeURIComponent(l.name)}&product=cruise`}
+                  target="_blank" rel="noopener noreferrer"
                   style={{ background: "#fff", borderRadius: "12px", padding: "16px", border: "1px solid #E5E7EB", display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = NAVY}
                   onMouseLeave={e => e.currentTarget.style.borderColor = "#E5E7EB"}>
