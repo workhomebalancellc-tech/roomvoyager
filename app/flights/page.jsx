@@ -75,11 +75,6 @@ function FlightsContent() {
       {/* FLIGHT SEARCH WIDGET */}
       <div style={{ background: "#F8FAFF", borderBottom: "1px solid #E5E7EB", padding: "32px 24px" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: "16px" }}>
-            <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Search & Compare</p>
-            <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>✈️ Find your flight</h2>
-            <p style={{ color: "#6B7280", fontSize: "14px", margin: 0 }}>Compare hundreds of airlines to find the lowest fares available</p>
-          </div>
 
           <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 32px rgba(0,59,149,0.10)", overflow: "hidden", border: "1px solid #E5E7EB" }}>
             {mounted ? (
