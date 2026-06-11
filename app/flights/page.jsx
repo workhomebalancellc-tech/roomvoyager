@@ -42,7 +42,7 @@ function FlightsContent() {
   const searchParams = useSearchParams();
   const [tripType, setTripType] = useState("round");
   const [from,     setFrom]     = useState(searchParams.get("from") || "");
-  const [to,       setTo]       = useState(searchParams.get("to")   || "");
+  const [to,       setTo]       = useState(searchParams.get("to") || searchParams.get("q") || "");
   const [depart,   setDepart]   = useState("");
   const [ret,      setRet]      = useState("");
   const [pax,      setPax]      = useState(1);
