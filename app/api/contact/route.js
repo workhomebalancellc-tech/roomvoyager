@@ -30,7 +30,7 @@ export async function POST(request) {
               "Subject":      subject || "",
               "Message":      message,
               "Submitted At": new Date().toISOString(),
-              "Status":       "New",
+              "Status":       "Todo",
             },
           }),
         });

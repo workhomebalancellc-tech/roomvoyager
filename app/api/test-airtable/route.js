@@ -21,7 +21,7 @@ export async function GET() {
         "Subject":      "Test Subject",
         "Message":      "Debug test entry",
         "Submitted At": new Date().toISOString(),
-        "Status":       "New",
+        "Status":       "Todo",
       },
     }),
   });
