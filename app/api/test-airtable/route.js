@@ -8,7 +8,7 @@ export async function GET() {
     return NextResponse.json({ error: "Missing env vars", key: !!AIRTABLE_KEY, base: !!AIRTABLE_BASE });
   }
 
-  const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Quotes`, {
+  const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Contact%20Messages`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${AIRTABLE_KEY}`,
@@ -16,17 +16,10 @@ export async function GET() {
     },
     body: JSON.stringify({
       fields: {
-        "First Name":   "Test",
-        "Last Name":    "User",
+        "Name":         "Test User",
         "Email":        "test@test.com",
-        "Phone":        "555-1234",
-        "Destination":  "Test Destination",
-        "Travelers":    "2",
-        "Budget":       "Flexible",
-        "Travel From":  "2026-07-01",
-        "Travel To":    "2026-07-08",
-        "Cabin":        "any",
-        "Notes":        "Debug test entry",
+        "Subject":      "Test Subject",
+        "Message":      "Debug test entry",
         "Submitted At": new Date().toISOString(),
         "Status":       "New",
       },
