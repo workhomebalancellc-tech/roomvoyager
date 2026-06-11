@@ -93,7 +93,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", padding: "14px 24px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
-          <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>
+          <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }} suppressHydrationWarning>
             © {year} RoomVoyager. We may earn affiliate commissions on bookings — at no extra cost to you.
           </p>
           <a href="/admin"

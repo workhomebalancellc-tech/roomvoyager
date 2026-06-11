@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
@@ -93,8 +93,9 @@ function FlightsContent() {
     setTo(dest.name);
     setToIata(dest.iata);
     setToFlash(true);
+    // Direct DOM assignment as belt-and-suspenders in case React hydration is still catching up
+    if (toInputRef.current) toInputRef.current.value = dest.name;
     setTimeout(() => setToFlash(false), 1800);
-    // form is directly below the cards — just scroll down a little
     setTimeout(() => toInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
   }
 
@@ -270,9 +271,7 @@ function FlightsContent() {
 export default function FlightsPage() {
   return (
     <>
-      <Suspense fallback={<div />}>
-        <FlightsContent />
-      </Suspense>
+      <FlightsContent />
       <Footer />
     </>
   );
