@@ -4,7 +4,6 @@ import { Suspense } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
-const WIDGET_HTML = `<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#fff;overflow-x:hidden;}</style></head><body><script async src="https://tpwdgt.com/content?currency=usd&trs=532625&shmarker=722477&powered_by=true&locale=en&show_header=true&limit=3&primary_color=00AE98&results_background_color=FFFFFF&form_background_color=FFFFFF&campaign_id=111&promo_id=4478" charset="utf-8"><\/script></body></html>`;
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -31,6 +30,7 @@ const tips = [
 ];
 
 function FlightsContent() {
+  const WIDGET_HTML = `<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#fff;overflow-x:hidden;}</style></head><body><script async src="https://tpwdgt.com/content?currency=usd&trs=532625&shmarker=722477&powered_by=true&locale=en&show_header=true&limit=3&primary_color=00AE98&results_background_color=FFFFFF&form_background_color=FFFFFF&campaign_id=111&promo_id=4478" charset="utf-8"><\/script></body></html>`;
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
