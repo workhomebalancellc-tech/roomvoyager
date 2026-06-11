@@ -438,7 +438,7 @@ export default function CruisesPage() {
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "12px" }}>
               {LINES.map((l, i) => (
                 <a key={i}
-                  href={`/redirect?to=${encodeURIComponent(l.href)}&partner=${encodeURIComponent(l.name)}&product=cruise`}
+                  href={l.href}
                   target="_blank" rel="noopener noreferrer"
                   style={{ background: "#fff", borderRadius: "12px", padding: "16px", border: "1px solid #E5E7EB", display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = NAVY}
