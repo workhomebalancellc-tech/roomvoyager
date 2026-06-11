@@ -15,7 +15,7 @@ const DOMESTIC = [
   },
   {
     city: "Orlando",
-    img: "https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?w=600&h=900&fit=crop&auto=format",
+    img: "https://images.unsplash.com/photo-1627035983655-0ceec61bb733?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
   },
   {
@@ -73,7 +73,7 @@ const INTERNATIONAL = [
   },
   {
     city: "Montego Bay",
-    img: "https://images.unsplash.com/photo-1599413987323-b2b8c0d7d9c8?w=600&h=900&fit=crop&auto=format",
+    img: "https://images.unsplash.com/photo-1530225029356-e301a685e6b1?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
   },
   {
