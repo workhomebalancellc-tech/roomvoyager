@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useRef } from "react";
+import { Suspense, useState, useRef, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
