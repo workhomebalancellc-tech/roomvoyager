@@ -76,6 +76,7 @@ export default function Footer() {
         <div>
           <p style={{ fontSize: "11px", fontWeight: "700", color: "#fff", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 12px" }}>Legal</p>
           {[
+            { label: "Contact Us",        href: "/contact" },
             { label: "Privacy Policy",    href: "/privacy" },
             { label: "Terms of Service",  href: "/terms"   },
             { label: "FAQ",               href: "/faq"     },
