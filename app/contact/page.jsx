@@ -11,11 +11,23 @@ export default function ContactPage() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const validEmail = (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "email") {
+      setEmailError(e.target.value && !validEmail(e.target.value) ? "Please enter a valid email address." : "");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validEmail(formData.email)) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
     setSubmitting(true);
     setError("");
     setSuccess(false);
@@ -112,8 +124,13 @@ export default function ContactPage() {
                   <div>
                     <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#374151", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Email Address *</label>
                     <input type="email" name="email" required placeholder="you@example.com" value={formData.email} onChange={handleChange}
-                      style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box" }}
-                      onFocus={e => e.target.style.borderColor = NAVY} onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
+                      style={{ width: "100%", padding: "11px 14px", border: `1.5px solid ${emailError ? "#DC2626" : "#E5E7EB"}`, borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box" }}
+                      onFocus={e => e.target.style.borderColor = emailError ? "#DC2626" : NAVY}
+                      onBlur={e => {
+                        e.target.style.borderColor = emailError ? "#DC2626" : "#E5E7EB";
+                        if (formData.email && !validEmail(formData.email)) setEmailError("Please enter a valid email address.");
+                      }} />
+                    {emailError && <p style={{ fontSize: "11px", color: "#DC2626", margin: "4px 0 0", fontWeight: "600" }}>{emailError}</p>}
                   </div>
                 </div>
 
