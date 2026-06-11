@@ -21,7 +21,7 @@ export async function GET() {
         "Email":        "test@test.com",
         "Phone":        "555-1234",
         "Destination":  "Test Destination",
-        "Travelers":    2,
+        "Travelers":    "2",
         "Budget":       "Flexible",
         "Travel From":  "2026-07-01",
         "Travel To":    "2026-07-08",

@@ -34,7 +34,7 @@ export async function POST(request) {
               "Email":        email,
               "Phone":        phone      || "",
               "Destination":  destination || "Flexible",
-              "Travelers":    parseInt(travelers) || 2,
+              "Travelers":    String(travelers || "2"),
               "Budget":       budget     || "Flexible",
               "Travel From":  travelFrom || "",
               "Travel To":    travelTo   || "",
