@@ -1,345 +1,13 @@
 "use client";
 
-import { Suspense, useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { useAuth } from "../../contexts/AuthContext";
+import { useRef, useEffect, useState } from "react";
+import { Suspense } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
-
-// City name → IATA airport code lookup
-const CITY_TO_IATA = {
-  // USA
-  "new york": "JFK", "nyc": "JFK", "new york city": "JFK",
-  "los angeles": "LAX", "la": "LAX",
-  "chicago": "ORD",
-  "miami": "MIA",
-  "las vegas": "LAS", "vegas": "LAS",
-  "orlando": "MCO",
-  "dallas": "DFW", "dfw": "DFW",
-  "houston": "IAH",
-  "atlanta": "ATL",
-  "denver": "DEN",
-  "seattle": "SEA",
-  "san francisco": "SFO", "sf": "SFO",
-  "boston": "BOS",
-  "phoenix": "PHX",
-  "washington": "DCA", "washington dc": "DCA", "dc": "DCA",
-  "nashville": "BNA",
-  "new orleans": "MSY",
-  "charlotte": "CLT",
-  "minneapolis": "MSP",
-  "detroit": "DTW",
-  "tampa": "TPA",
-  "fort lauderdale": "FLL",
-  "salt lake city": "SLC",
-  "portland": "PDX",
-  "san diego": "SAN",
-  "baltimore": "BWI",
-  "austin": "AUS",
-  "raleigh": "RDU",
-  "jacksonville": "JAX",
-  "philadelphia": "PHL",
-  "philly": "PHL",
-  "pittsburgh": "PIT",
-  "memphis": "MEM",
-  "kansas city": "MCI",
-  "st louis": "STL",
-  "saint louis": "STL",
-  "indianapolis": "IND",
-  "columbus": "CMH",
-  "cleveland": "CLE",
-  "san antonio": "SAT",
-  "albuquerque": "ABQ",
-  "tucson": "TUS",
-  "honolulu": "HNL", "hawaii": "HNL", "maui": "OGG",
-  "anchorage": "ANC", "alaska": "ANC",
-  "savannah": "SAV",
-  "richmond": "RIC",
-  "virginia beach": "ORF", "norfolk": "ORF",
-  "oklahoma city": "OKC",
-  "boise": "BOI",
-  "omaha": "OMA",
-  "buffalo": "BUF",
-  "rochester": "ROC",
-  "albany": "ALB",
-  "hartford": "BDL",
-  "providence": "PVD",
-  "burlington": "BTV",
-  "louisville": "SDF",
-  "lexington": "LEX",
-  "knoxville": "TYS",
-  "chattanooga": "CHA",
-  "little rock": "LIT",
-  "jackson": "JAN",
-  "birmingham": "BHM",
-  "montgomery": "MGM",
-  "mobile": "MOB",
-  "shreveport": "SHV",
-  "baton rouge": "BTR",
-  "greenville": "GSP",
-  "columbia": "CAE",
-  "charleston": "CHS",
-  "wilmington": "ILM",
-  "greensboro": "GSO",
-  "fayetteville": "FAY",
-  "norfolk": "ORF",
-  "des moines": "DSM",
-  "sioux falls": "FSD",
-  "rapid city": "RAP",
-  "fargo": "FAR",
-  "bismarck": "BIS",
-  "billings": "BIL",
-  "missoula": "MSO",
-  "great falls": "GTF",
-  "spokane": "GEG",
-  "eugene": "EUG",
-  "medford": "MFR",
-  "reno": "RNO",
-  "fresno": "FAT",
-  "bakersfield": "BFL",
-  "santa barbara": "SBA",
-  "san luis obispo": "SBP",
-  "palm springs": "PSP",
-  "ontario": "ONT",
-  "long beach": "LGB",
-  "burbank": "BUR",
-  "orange county": "SNA", "santa ana": "SNA",
-  "oakland": "OAK",
-  "san jose": "SJC",
-  "sacramento": "SMF",
-  "redding": "RDD",
-  "eureka": "ACV",
-  "medford": "MFR",
-  "colorado springs": "COS",
-  "durango": "DRO",
-  "grand junction": "GJT",
-  "aspen": "ASE",
-  "jackson hole": "JAC",
-  "jackson": "JAC",
-  "provo": "PVU",
-  "st george": "SGU",
-  "tucson": "TUS",
-  "flagstaff": "FLG",
-  "yuma": "YUM",
-  "el paso": "ELP",
-  "lubbock": "LBB",
-  "amarillo": "AMA",
-  "midland": "MAF",
-  "odessa": "MAF",
-  "corpus christi": "CRP",
-  "harlingen": "HRL",
-  "brownsville": "BRO",
-  "laredo": "LRD",
-  "waco": "ACT",
-  "abilene": "ABI",
-  "tyler": "TYR",
-  "wichita falls": "SPS",
-  "wichita": "ICT",
-  "tulsa": "TUL",
-  "lawton": "LAW",
-  "springfield": "SGF",
-  "joplin": "JLN",
-  "topeka": "FOE",
-  "manhattan": "MHK",
-  "lincoln": "LNK",
-  "grand island": "GRI",
-  "sioux city": "SUX",
-  "cedar rapids": "CID",
-  "davenport": "MLI", "moline": "MLI",
-  "peoria": "PIA",
-  "bloomington": "BMI",
-  "champaign": "CMI",
-  "rockford": "RFD",
-  "green bay": "GRB",
-  "madison": "MSN",
-  "milwaukee": "MKE",
-  "appleton": "ATW",
-  "duluth": "DLH",
-  "rochester mn": "RST",
-  "grand rapids": "GRR",
-  "kalamazoo": "AZO",
-  "flint": "FNT",
-  "lansing": "LAN",
-  "traverse city": "TVC",
-  "saginaw": "MBS",
-  "fort wayne": "FWA",
-  "south bend": "SBN",
-  "evansville": "EVV",
-  "terre haute": "HUF",
-  "dayton": "DAY",
-  "toledo": "TOL",
-  "akron": "CAK",
-  "youngstown": "YNG",
-  "erie": "ERI",
-  "state college": "SCE",
-  "scranton": "AVP",
-  "allentown": "ABE",
-  "harrisburg": "MDT",
-  "wilkes-barre": "AVP",
-  "reading": "RDG",
-  "atlantic city": "ACY",
-  "trenton": "TTN",
-  "manchester nh": "MHT",
-  "portland me": "PWM",
-  "bangor": "BGR",
-  "burlington vt": "BTV",
-  "key west": "EYW",
-  "fort myers": "RSW",
-  "sarasota": "SRQ",
-  "daytona beach": "DAB",
-  "gainesville": "GNV",
-  "tallahassee": "TLH",
-  "pensacola": "PNS",
-  "panama city fl": "ECP",
-  "huntsville": "HSV",
-  "tuscaloosa": "TCL",
-  "dothan": "DHN",
-  "meridian": "MEI",
-  "gulfport": "GPT",
-  "biloxi": "GPT",
-  "jonesboro": "JBR",
-  "texarkana": "TXK",
-  "monroe": "MLU",
-  "alexandria la": "AEX",
-  "lake charles": "LCH",
-  "lafayette la": "LFT",
-  "hattiesburg": "PIB",
-  "columbus ga": "CSG",
-  "macon": "MCN",
-  "augusta": "AGS",
-  "brunswick": "BQK",
-  "valdosta": "VLD",
-  "hilton head": "HHH",
-  "myrtle beach": "MYR",
-  "asheville": "AVL",
-  "tri-cities": "TRI",
-  "roanoke": "ROA",
-  "lynchburg": "LYH",
-  "charlottesville": "CHO",
-  "hagerstown": "HGR",
-  "salisbury": "SBY",
-  "ocean city": "SBY",
-  "elmira": "ELM",
-  "plattsburgh": "PBG",
-  "saranac lake": "SLK",
-  "watertown": "ART",
-  "binghamton": "BGM",
-  "ithaca": "ITH",
-  "islip": "ISP",
-  "newburgh": "SWF",
-  "key west": "EYW",
-  "marathon": "MTH",
-  "st pete": "PIE", "saint pete": "PIE",
-  "clearwater": "PIE",
-  "gainesville fl": "GNV",
-  "ocala": "OCF",
-  // Caribbean / Mexico / Central America
-  "cancun": "CUN", "cancún": "CUN",
-  "punta cana": "PUJ",
-  "montego bay": "MBJ", "jamaica": "MBJ",
-  "nassau": "NAS", "bahamas": "NAS",
-  "aruba": "AUA",
-  "barbados": "BGI",
-  "st maarten": "SXM", "saint maarten": "SXM",
-  "puerto rico": "SJU", "san juan": "SJU",
-  "havana": "HAV", "cuba": "HAV",
-  "mexico city": "MEX",
-  "cabo san lucas": "SJD", "cabo": "SJD",
-  "puerto vallarta": "PVR",
-  "costa rica": "SJO",
-  "panama city": "PTY", "panama": "PTY",
-  // South America
-  "bogota": "BOG", "colombia": "BOG",
-  "lima": "LIM", "peru": "LIM",
-  "buenos aires": "EZE", "argentina": "EZE",
-  "rio de janeiro": "GIG", "rio": "GIG",
-  "sao paulo": "GRU",
-  "brazil": "GRU",
-  // Europe
-  "london": "LHR",
-  "paris": "CDG",
-  "rome": "FCO", "italy": "FCO",
-  "barcelona": "BCN",
-  "madrid": "MAD", "spain": "MAD",
-  "amsterdam": "AMS", "netherlands": "AMS",
-  "dublin": "DUB", "ireland": "DUB",
-  "lisbon": "LIS", "portugal": "LIS",
-  "frankfurt": "FRA",
-  "munich": "MUC",
-  "berlin": "BER",
-  "zurich": "ZRH", "switzerland": "ZRH",
-  "vienna": "VIE", "austria": "VIE",
-  "brussels": "BRU", "belgium": "BRU",
-  "stockholm": "ARN", "sweden": "ARN",
-  "oslo": "OSL", "norway": "OSL",
-  "copenhagen": "CPH", "denmark": "CPH",
-  "athens": "ATH", "greece": "ATH",
-  "istanbul": "IST", "turkey": "IST",
-  "edinburgh": "EDI", "scotland": "EDI",
-  "nice": "NCE",
-  "milan": "MXP",
-  "prague": "PRG", "czech republic": "PRG",
-  "budapest": "BUD", "hungary": "BUD",
-  "warsaw": "WAW", "poland": "WAW",
-  "reykjavik": "KEF", "iceland": "KEF",
-  // Middle East / Africa
-  "dubai": "DXB",
-  "abu dhabi": "AUH",
-  "doha": "DOH", "qatar": "DOH",
-  "cairo": "CAI", "egypt": "CAI",
-  "tel aviv": "TLV", "israel": "TLV",
-  "cape town": "CPT",
-  "johannesburg": "JNB", "south africa": "JNB",
-  "nairobi": "NBO", "kenya": "NBO",
-  // Asia / Pacific
-  "tokyo": "NRT", "japan": "NRT",
-  "osaka": "KIX",
-  "beijing": "PEK", "china": "PEK",
-  "shanghai": "PVG",
-  "hong kong": "HKG",
-  "singapore": "SIN",
-  "bangkok": "BKK", "thailand": "BKK",
-  "bali": "DPS", "denpasar": "DPS",
-  "jakarta": "CGK",
-  "kuala lumpur": "KUL", "malaysia": "KUL",
-  "manila": "MNL", "philippines": "MNL",
-  "seoul": "ICN", "korea": "ICN",
-  "taipei": "TPE", "taiwan": "TPE",
-  "mumbai": "BOM",
-  "delhi": "DEL", "india": "DEL",
-  "sydney": "SYD", "australia": "SYD",
-  "melbourne": "MEL",
-  "auckland": "AKL", "new zealand": "AKL",
-  "maldives": "MLE",
-  // Canada
-  "toronto": "YYZ", "ontario": "YYZ",
-  "vancouver": "YVR",
-  "montreal": "YUL",
-  "calgary": "YYC",
-};
-
-function cityToIata(input) {
-  if (!input) return null;
-  // Strip "City, ST" format — use just the city part for lookup
-  const cityOnly = input.includes(",") ? input.split(",")[0].trim() : input.trim();
-  const key = cityOnly.toLowerCase();
-  const fullKey = input.trim().toLowerCase();
-  // Direct match on full string first, then city-only
-  if (CITY_TO_IATA[fullKey]) return CITY_TO_IATA[fullKey];
-  if (CITY_TO_IATA[key]) return CITY_TO_IATA[key];
-  // Already an IATA code (3 uppercase letters)
-  if (/^[A-Z]{3}$/.test(cityOnly)) return cityOnly.toUpperCase();
-  if (/^[a-z]{3}$/.test(key)) return key.toUpperCase();
-  // Partial match — check if any key starts with the city
-  for (const [city, code] of Object.entries(CITY_TO_IATA)) {
-    if (city.startsWith(key) || key.startsWith(city)) return code;
-  }
-  return null;
-}
 
 const destinations = [
   { name: "Cancún", country: "Mexico", photo: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=400&h=280&fit=crop&auto=format", tag: "🏖️ Beach" },
@@ -361,54 +29,19 @@ const tips = [
   { icon: "🎒", title: "Travel carry-on only", desc: "Skipping checked bags saves $30–$60 each way on most budget and major carriers." },
 ];
 
-const POPULAR_CITIES_FLIGHTS = [
-  { name: "New York", country: "USA", code: "JFK" }, { name: "Los Angeles", country: "USA", code: "LAX" },
-  { name: "Miami", country: "USA", code: "MIA" }, { name: "Chicago", country: "USA", code: "ORD" },
-  { name: "Las Vegas", country: "USA", code: "LAS" }, { name: "Orlando", country: "USA", code: "MCO" },
-  { name: "Dallas", country: "USA", code: "DFW" }, { name: "Houston", country: "USA", code: "IAH" },
-  { name: "Atlanta", country: "USA", code: "ATL" }, { name: "Denver", country: "USA", code: "DEN" },
-  { name: "Seattle", country: "USA", code: "SEA" }, { name: "San Francisco", country: "USA", code: "SFO" },
-  { name: "Boston", country: "USA", code: "BOS" }, { name: "Phoenix", country: "USA", code: "PHX" },
-  { name: "Washington DC", country: "USA", code: "DCA" }, { name: "Nashville", country: "USA", code: "BNA" },
-  { name: "Tampa", country: "USA", code: "TPA" }, { name: "San Diego", country: "USA", code: "SAN" },
-  { name: "Austin", country: "USA", code: "AUS" }, { name: "Honolulu", country: "Hawaii, USA", code: "HNL" },
-  { name: "Philadelphia", country: "USA", code: "PHL" }, { name: "New Orleans", country: "USA", code: "MSY" },
-  { name: "Cancún", country: "Mexico", code: "CUN" }, { name: "Cabo San Lucas", country: "Mexico", code: "SJD" },
-  { name: "Puerto Vallarta", country: "Mexico", code: "PVR" }, { name: "Mexico City", country: "Mexico", code: "MEX" },
-  { name: "Punta Cana", country: "Dominican Republic", code: "PUJ" }, { name: "Nassau", country: "Bahamas", code: "NAS" },
-  { name: "Montego Bay", country: "Jamaica", code: "MBJ" }, { name: "San Juan", country: "Puerto Rico", code: "SJU" },
-  { name: "Aruba", country: "Aruba", code: "AUA" }, { name: "Barbados", country: "Barbados", code: "BGI" },
-  { name: "Paris", country: "France", code: "CDG" }, { name: "London", country: "UK", code: "LHR" },
-  { name: "Rome", country: "Italy", code: "FCO" }, { name: "Barcelona", country: "Spain", code: "BCN" },
-  { name: "Amsterdam", country: "Netherlands", code: "AMS" }, { name: "Lisbon", country: "Portugal", code: "LIS" },
-  { name: "Madrid", country: "Spain", code: "MAD" }, { name: "Athens", country: "Greece", code: "ATH" },
-  { name: "Prague", country: "Czech Republic", code: "PRG" }, { name: "Reykjavik", country: "Iceland", code: "KEF" },
-  { name: "Dubai", country: "UAE", code: "DXB" }, { name: "Tokyo", country: "Japan", code: "NRT" },
-  { name: "Bali", country: "Indonesia", code: "DPS" }, { name: "Bangkok", country: "Thailand", code: "BKK" },
-  { name: "Singapore", country: "Singapore", code: "SIN" }, { name: "Sydney", country: "Australia", code: "SYD" },
-  { name: "Toronto", country: "Canada", code: "YYZ" }, { name: "Vancouver", country: "Canada", code: "YVR" },
-  { name: "Maldives", country: "Maldives", code: "MLE" },
-];
-
 function FlightsContent() {
-  const { user } = useAuth();
-  const searchParams = useSearchParams();
-  const initialDest = searchParams.get("q") || "";
-  const initialIata = cityToIata(initialDest);
-  const [iframeSrc, setIframeSrc] = useState(
-    initialIata
-      ? `https://flights.roomvoyagertravel.com/flights/?destination_iata=${initialIata}`
-      : "https://flights.roomvoyagertravel.com"
-  );
-  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
-  // menuOpen handled by shared NavBar
+  const widgetRef = useRef(null);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    if (!widgetRef.current) return;
+    widgetRef.current.innerHTML = "";
+    const script = document.createElement("script");
+    script.src =
+      "https://tpwdgt.com/content?currency=usd&trs=532625&shmarker=722477&powered_by=true&locale=en&show_header=true&limit=3&primary_color=00AE98&results_background_color=FFFFFF&form_background_color=FFFFFF&campaign_id=111&promo_id=4478";
+    script.async = true;
+    script.charset = "utf-8";
+    widgetRef.current.appendChild(script);
   }, []);
-
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
@@ -417,7 +50,11 @@ function FlightsContent() {
 
       {/* HERO */}
       <div style={{ position: "relative", height: "320px", overflow: "hidden" }}>
-        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&h=500&fit=crop&auto=format" alt="Airplane wing above clouds" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <img
+          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&h=500&fit=crop&auto=format"
+          alt="Airplane wing above clouds"
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.60) 0%, rgba(0,15,60,0.85) 100%)" }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
           <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>✈️ Powered by Travelpayouts</p>
@@ -429,24 +66,46 @@ function FlightsContent() {
       {/* TRUST BAR */}
       <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
-          {[["🔍","500+ airlines compared"],["💰","No hidden fees"],["🏆","Earn 5 pts per $1"],["🔄","Free cancellation options"],["📱","Book in under 2 minutes"]].map(([icon,text],i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#374151" }}><span>{icon}</span><span>{text}</span></div>
+          {[
+            ["🔍", "500+ airlines compared"],
+            ["💰", "No hidden fees"],
+            ["🏆", "Earn 5 pts per $1"],
+            ["🔄", "Free cancellation options"],
+            ["📱", "Book in under 2 minutes"],
+          ].map(([icon, text], i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#374151" }}>
+              <span>{icon}</span><span>{text}</span>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Travelpayouts whitelabel */}
-      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB" }}>
-        <div style={{ background: "#001A4D", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <span style={{ color: "#fff", fontSize: "13px", fontWeight: "600" }}>✈️ Search flights</span>
-          <span style={{ color: "#93C5FD", fontSize: "12px" }}>Free — no account required</span>
+      {/* FLIGHT SEARCH WIDGET */}
+      <div style={{ background: "#F0F7FF", borderBottom: "1px solid #E5E7EB", padding: "48px 24px" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "28px" }}>
+            <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Search & Compare</p>
+            <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>✈️ Find your flight</h2>
+            <p style={{ color: "#6B7280", fontSize: "14px", margin: 0 }}>Compare hundreds of airlines to find the lowest fares available</p>
+          </div>
+
+          <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 32px rgba(0,59,149,0.10)", overflow: "hidden", border: "1px solid #E5E7EB" }}>
+            {/* Widget header bar */}
+            <div style={{ background: NAVY, padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <span style={{ fontSize: "18px" }}>✈️</span>
+                <span style={{ color: "#fff", fontSize: "14px", fontWeight: "700" }}>Flight Search</span>
+              </div>
+              <span style={{ color: "#93C5FD", fontSize: "12px", fontWeight: "500" }}>Free · No account required</span>
+            </div>
+
+            {/* Widget mount point */}
+            <div
+              ref={widgetRef}
+              style={{ padding: "24px", minHeight: "200px" }}
+            />
+          </div>
         </div>
-        <iframe
-          src={iframeSrc}
-          title="Flight Search"
-          style={{ width: "100%", minHeight: "100vh", border: "none", display: "block" }}
-          allow="same-origin"
-        />
       </div>
 
       {/* POPULAR DESTINATIONS */}
@@ -456,9 +115,12 @@ function FlightsContent() {
         <p style={{ color: "#6B7280", fontSize: "14px", margin: "0 0 28px" }}>Top spots travelers are flying to right now</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: "16px" }}>
           {destinations.map(dest => (
-            <div key={dest.name} style={{ borderRadius: "14px", overflow: "hidden", position: "relative", height: "180px", cursor: "pointer" }}
+            <div
+              key={dest.name}
+              style={{ borderRadius: "14px", overflow: "hidden", position: "relative", height: "180px", cursor: "pointer" }}
               onMouseEnter={e => e.currentTarget.querySelector("img").style.transform = "scale(1.06)"}
-              onMouseLeave={e => e.currentTarget.querySelector("img").style.transform = "scale(1)"}>
+              onMouseLeave={e => e.currentTarget.querySelector("img").style.transform = "scale(1)"}
+            >
               <img src={dest.photo} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.35s ease" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.05) 60%)" }} />
               <div style={{ position: "absolute", top: "12px", left: "12px" }}>
@@ -525,11 +187,6 @@ function FlightsContent() {
             Join Rewards free →
           </a>
         </div>
-      </div>
-
-      {/* COPYRIGHT */}
-      <div style={{ background: NAVY, padding: "14px 24px", textAlign: "center" }}>
-        <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", margin: 0 }}>RoomVoyager © 2026</p>
       </div>
 
     </div>
