@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
@@ -30,7 +30,10 @@ const tips = [
 ];
 
 function FlightsContent() {
-  const WIDGET_HTML = `<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#fff;overflow-x:hidden;}</style></head><body><script async src="https://tpwdgt.com/content?currency=usd&trs=532625&shmarker=722477&powered_by=true&locale=en&show_header=true&limit=3&primary_color=00AE98&results_background_color=FFFFFF&form_background_color=FFFFFF&campaign_id=111&promo_id=4478" charset="utf-8"><\/script></body></html>`;
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
+  const WIDGET_HTML = `<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#fff;overflow-x:hidden;}</style></head><body><script async src="https://tpwdgt.com/content?currency=usd&trs=532625&shmarker=722477&locale=en&stops=any&show_hotels=false&powered_by=true&border_radius=0&plain=true&color_button=%2300A991&color_button_text=%23ffffff&promo_id=3414&campaign_id=111" charset="utf-8"><\/script></body></html>`;
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
@@ -75,17 +78,32 @@ function FlightsContent() {
           <div style={{ textAlign: "center", marginBottom: "28px" }}>
             <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Search & Compare</p>
             <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>✈️ Find your flight</h2>
-            <p style={{ color: "#6B7280", fontSize: "14px", margin: 0 }}>Compare hundreds of airlines to find the lowest fares available</p>
+            <p style={{ color: "#6B7280", fontSize: "14px", margin: "0 0 20px" }}>Browse top deals below — or click to search any route with full round-trip options</p>
+            <a
+              href="https://www.travelpayouts.com/flights/?marker=722477&locale=en&currency=usd"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: NAVY, color: "#fff", padding: "12px 28px", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(0,59,149,0.25)", marginBottom: "8px" }}
+            >
+              🔍 Search Round-Trip & One-Way Flights →
+            </a>
           </div>
 
           <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 32px rgba(0,59,149,0.10)", overflow: "hidden", border: "1px solid #E5E7EB" }}>
-            <iframe
-              srcDoc={WIDGET_HTML}
-              title="Flight Search Widget"
-              style={{ width: "100%", height: "520px", border: "none", display: "block" }}
-              scrolling="no"
-            />
+            {mounted ? (
+              <iframe
+                srcDoc={WIDGET_HTML}
+                title="Flight Deals Widget"
+                style={{ width: "100%", height: "520px", border: "none", display: "block" }}
+                scrolling="no"
+              />
+            ) : (
+              <div style={{ height: "520px", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF", fontSize: "14px" }}>
+                Loading flight deals…
+              </div>
+            )}
           </div>
+          <p style={{ textAlign: "center", fontSize: "12px", color: "#9CA3AF", marginTop: "12px" }}>Showing top deals · Click any deal to book · Powered by Travelpayouts</p>
         </div>
       </div>
 
