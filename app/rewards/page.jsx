@@ -20,7 +20,7 @@ const EARNING_RATES = [
   { product: "Flights",           pts: 5,  doublePts: null, double: false, note: "Standard points only — not eligible for double" },
   { product: "Hotels",            pts: 5,  doublePts: 10,   double: true,  note: "Double points eligible · 10 pts/$1" },
   { product: "Cruises",           pts: 10, doublePts: 20,   double: true,  note: "Double points eligible · 20 pts/$1" },
-  { product: "Vacation Packages", pts: 10, doublePts: 20,   double: true,  note: "Double points eligible · 20 pts/$1" },
+  { product: "Vacation Packages", pts: 10, doublePts: 20,   double: true,  note: "Double points eligible · 20 pts/$1", hidden: true },
 ];
 
 const REDEMPTION = [
@@ -405,7 +405,7 @@ export default function RewardsPage() {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px" }}>
-            {EARNING_RATES.map((item, i) => (
+            {EARNING_RATES.filter(item => !item.hidden).map((item, i) => (
               <div key={i} style={{ background: "#fff", border: item.double ? `2px solid ${ORANGE}30` : "1px solid #E5E7EB", borderRadius: "14px", padding: "20px", textAlign: "center", position: "relative" }}>
                 {item.double ? (
                   <span style={{ position: "absolute", top: "10px", right: "10px", fontSize: "9px", fontWeight: "700", background: ORANGE, color: "#fff", padding: "2px 6px", borderRadius: "999px" }}>2x eligible</span>
