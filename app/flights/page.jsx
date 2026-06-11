@@ -75,14 +75,8 @@ function FlightsContent() {
     setTo(dest.name);
     setToFlash(true);
     setTimeout(() => setToFlash(false), 1800);
-    // compute exact scroll position and use window.scrollTo
-    const el = document.getElementById("flight-search-form");
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 70;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
-    // also focus the To input so the user sees it
-    setTimeout(() => toInputRef.current?.focus(), 600);
+    // form is directly below the cards — just scroll down a little
+    setTimeout(() => toInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
   }
 
   return (
@@ -122,111 +116,11 @@ function FlightsContent() {
         </div>
       </div>
 
-      {/* ── CUSTOM SEARCH FORM ───────────────────────────────────────── */}
-      <div id="flight-search-form" style={{ background: NAVY, padding: "36px 24px" }}>
-        <div style={{ maxWidth: "960px", margin: "0 auto" }}>
-          <form
-            onSubmit={handleSearch}
-            style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }}
-          >
-
-            {/* Trip type toggle */}
-            <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
-              {["round", "oneway"].map(t => (
-                <button
-                  key={t} type="button"
-                  onClick={() => setTripType(t)}
-                  style={{
-                    padding: "7px 18px", borderRadius: "999px", fontSize: "13px", fontWeight: "600", cursor: "pointer", border: "none",
-                    background: tripType === t ? NAVY : "#F3F4F6",
-                    color:      tripType === t ? "#fff" : "#374151",
-                    transition: "background 0.15s",
-                  }}>
-                  {t === "round" ? "Round Trip" : "One Way"}
-                </button>
-              ))}
-            </div>
-
-            {/* Row 1 — From / To */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
-              <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>From</label>
-                <input
-                  type="text"
-                  placeholder="City or airport (e.g. New York)"
-                  value={from}
-                  onChange={e => setFrom(e.target.value)}
-                  style={inp}
-                />
-              </div>
-              <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>To</label>
-                <input
-                  ref={toInputRef}
-                  type="text"
-                  placeholder="City or airport (e.g. Cancún)"
-                  value={to}
-                  onChange={e => setTo(e.target.value)}
-                  style={{ ...inp, borderColor: toFlash ? ORANGE : "#D1D5DB", transition: "border-color 0.3s" }}
-                />
-              </div>
-            </div>
-
-            {/* Row 2 — Depart / Return / Pax / Button */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: tripType === "round" ? "1fr 1fr 120px auto" : "1fr 120px auto",
-              gap: "12px",
-              alignItems: "flex-end",
-            }}>
-              <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Depart</label>
-                <input
-                  type="date"
-                  value={depart}
-                  min={mounted ? new Date().toISOString().split("T")[0] : ""}
-                  onChange={e => handleDepartChange(e.target.value)}
-                  style={inp}
-                />
-              </div>
-              {tripType === "round" && (
-                <div>
-                  <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Return</label>
-                  <input
-                    type="date"
-                    value={ret}
-                    min={depart || (mounted ? new Date().toISOString().split("T")[0] : "")}
-                    onChange={e => setRet(e.target.value)}
-                    style={inp}
-                  />
-                </div>
-              )}
-              <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Passengers</label>
-                <select value={pax} onChange={e => setPax(Number(e.target.value))} style={{ ...inp, cursor: "pointer" }}>
-                  {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n} {n === 1 ? "Adult" : "Adults"}</option>)}
-                </select>
-              </div>
-              <button
-                type="submit"
-                style={{
-                  background: NAVY, color: "#fff", border: "none", borderRadius: "8px",
-                  padding: "10px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer",
-                  whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(0,59,149,0.3)",
-                  height: "42px", alignSelf: "flex-end",
-                }}>
-                Search ✈️
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-
       {/* ── POPULAR DESTINATIONS ─────────────────────────────────────── */}
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "56px 24px" }}>
-        <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Explore the world</p>
-        <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Popular flight destinations</h2>
-        <p style={{ color: "#6B7280", fontSize: "14px", margin: "0 0 28px" }}>Click a destination to pre-fill your search</p>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "40px 24px 32px" }}>
+        <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Where to?</p>
+        <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 6px" }}>Pick a destination to get started</h2>
+        <p style={{ color: "#6B7280", fontSize: "13px", margin: "0 0 20px" }}>Tap any card — it fills your search below automatically</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: "16px" }}>
           {destinations.map(dest => (
             <button
@@ -247,6 +141,58 @@ function FlightsContent() {
               </div>
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* ── SEARCH FORM ──────────────────────────────────────────────── */}
+      <div style={{ background: NAVY, padding: "32px 24px" }}>
+        <div style={{ maxWidth: "960px", margin: "0 auto" }}>
+          <form onSubmit={handleSearch} style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }}>
+
+            <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
+              {["round", "oneway"].map(t => (
+                <button key={t} type="button" onClick={() => setTripType(t)}
+                  style={{ padding: "7px 18px", borderRadius: "999px", fontSize: "13px", fontWeight: "600", cursor: "pointer", border: "none", background: tripType === t ? NAVY : "#F3F4F6", color: tripType === t ? "#fff" : "#374151", transition: "background 0.15s" }}>
+                  {t === "round" ? "Round Trip" : "One Way"}
+                </button>
+              ))}
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>From</label>
+                <input type="text" placeholder="City or airport (e.g. New York)" value={from} onChange={e => setFrom(e.target.value)} style={inp} />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>To</label>
+                <input ref={toInputRef} type="text" placeholder="City or airport (e.g. Cancún)" value={to} onChange={e => setTo(e.target.value)}
+                  style={{ ...inp, borderColor: toFlash ? ORANGE : "#D1D5DB", transition: "border-color 0.3s" }} />
+              </div>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: tripType === "round" ? "1fr 1fr 120px auto" : "1fr 120px auto", gap: "12px", alignItems: "flex-end" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Depart</label>
+                <input type="date" value={depart} min={mounted ? new Date().toISOString().split("T")[0] : ""} onChange={e => handleDepartChange(e.target.value)} style={inp} />
+              </div>
+              {tripType === "round" && (
+                <div>
+                  <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Return</label>
+                  <input type="date" value={ret} min={depart || (mounted ? new Date().toISOString().split("T")[0] : "")} onChange={e => setRet(e.target.value)} style={inp} />
+                </div>
+              )}
+              <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Passengers</label>
+                <select value={pax} onChange={e => setPax(Number(e.target.value))} style={{ ...inp, cursor: "pointer" }}>
+                  {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n} {n === 1 ? "Adult" : "Adults"}</option>)}
+                </select>
+              </div>
+              <button type="submit" style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(0,59,149,0.3)", height: "42px", alignSelf: "flex-end" }}>
+                Search ✈️
+              </button>
+            </div>
+
+          </form>
         </div>
       </div>
 
