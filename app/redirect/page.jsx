@@ -34,6 +34,18 @@ function RedirectContent() {
   const [logged,   setLogged]   = useState(false);
   const loggedRef = useRef(false);
 
+  // Load Expedia banner script for hotel redirects
+  useEffect(() => {
+    if (product !== "hotel") return;
+    const existing = document.querySelector(".eg-affiliate-banners-script");
+    if (existing) { existing.remove(); }
+    const s = document.createElement("script");
+    s.className = "eg-affiliate-banners-script";
+    s.src = "https://creator.expediagroup.com/products/banners/assets/eg-affiliate-banners.js";
+    document.body.appendChild(s);
+    return () => { s.remove(); };
+  }, [product]);
+
   // Log click to Airtable once
   useEffect(() => {
     if (!to || loggedRef.current) return;
@@ -98,7 +110,16 @@ function RedirectContent() {
         <a href="/" style={{ fontSize: "18px", fontWeight: "800", color: "#fff", textDecoration: "none" }}>
           Room<span style={{ color: ORANGE }}>Voyager</span>
         </a>
-        <span style={{ fontSize: "12px", color: "#93C5FD" }}>Secure redirect</span>
+        {product === "flight" ? (
+          <span style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "11px", color: "#93C5FD" }}>
+            Powered by
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Kiwi.com_logo.svg" alt="Kiwi.com" height="18" style={{ filter: "brightness(0) invert(1)", verticalAlign: "middle" }} />
+          </span>
+        ) : product === "hotel" ? (
+          <span style={{ fontSize: "11px", color: "#93C5FD" }}>Powered by <strong style={{ color: "#fff" }}>Expedia</strong></span>
+        ) : (
+          <span style={{ fontSize: "12px", color: "#93C5FD" }}>Secure redirect</span>
+        )}
       </div>
 
       {/* Card */}
@@ -202,15 +223,37 @@ function RedirectContent() {
         </div>
       </div>
 
-      {/* Sponsor banner */}
+      {/* Sponsor banner — varies by product */}
       <div style={{ padding: "12px 24px", textAlign: "center" }}>
-        <img
-          src="https://www.tqlkg.com/image-101734691-11926423"
-          width="468"
-          height="60"
-          alt="Special offer"
-          style={{ maxWidth: "100%", display: "inline-block" }}
-        />
+        {product === "flight" ? (
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/8/84/Kiwi.com_logo.svg"
+            alt="Kiwi.com"
+            height="48"
+            style={{ display: "inline-block", maxWidth: "200px" }}
+          />
+        ) : product === "hotel" ? (
+          <div
+            className="eg-affiliate-banners"
+            data-program="us-expedia"
+            data-network="pz"
+            data-layout="medium-rectangle"
+            data-image="sailing"
+            data-message="bye-bye-bucket-list-hello-adventure"
+            data-camref="1110l8R3Z"
+            data-pubref=""
+            data-link="home"
+            style={{ display: "inline-block" }}
+          />
+        ) : (
+          <img
+            src="https://www.tqlkg.com/image-101734691-11926423"
+            width="468"
+            height="60"
+            alt="Special offer"
+            style={{ maxWidth: "100%", display: "inline-block" }}
+          />
+        )}
       </div>
 
       {/* Footer */}
