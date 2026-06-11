@@ -470,7 +470,7 @@ export default function CruisesPage() {
             </div>
           )}
 
-          {/* Agent CTA */}
+          {/* Agent CTA — temporarily hidden
           <section id="quote" style={{ background: "#fff", borderRadius: "20px", padding: "28px", border: "1px solid #E5E7EB", boxShadow: "0 2px 12px rgba(0,59,149,0.07)", marginBottom: "32px" }}>
             <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Prefer personal service?</p>
             <h2 style={{ fontSize: "20px", fontWeight: "800", color: "#111827", margin: "0 0 6px" }}>Let Our Agent Find Your Best Deal</h2>
@@ -499,6 +499,7 @@ export default function CruisesPage() {
               Calls available Fri &amp; Sat · 11 AM – 2 PM EST · Email response within 24 hours
             </p>
           </section>
+          */}
 
           {/* Rewards */}
           <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #0052CC 100%)`, borderRadius: "16px", padding: "24px 28px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>

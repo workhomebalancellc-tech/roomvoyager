@@ -1,5 +1,15 @@
 "use client";
 
+import { useEffect } from "react";
+
+// Packages page hidden until Yeti signup — redirects to homepage
+export default function PackagesPage() {
+  useEffect(() => { window.location.replace("/"); }, []);
+  return null;
+}
+
+/* ── ORIGINAL PAGE BELOW — restore by removing the redirect above ──
+
 import { useState, useEffect, useRef } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -463,3 +473,5 @@ export default function PackagesPage() {
     </>
   );
 }
+
+── END OF ORIGINAL PAGE ── */

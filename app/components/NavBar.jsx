@@ -7,12 +7,12 @@ const NAVY   = "#003B95";
 const ORANGE = "#FF6600";
 
 const NAV_LINKS = [
-  { label: "Hotels",   href: "/hotels"   },
-  { label: "Flights",  href: "/flights"  },
-  { label: "Cruises",  href: "/cruises"  },
-  { label: "Packages", href: "/packages" },
-  { label: "Deals",    href: "/deals"    },
-  { label: "Rewards",  href: "/rewards"  },
+  { label: "Hotels",  href: "/hotels"  },
+  { label: "Flights", href: "/flights" },
+  { label: "Cruises", href: "/cruises" },
+  { label: "Deals",   href: "/deals"   },
+  { label: "Rewards", href: "/rewards" },
+  // { label: "Packages", href: "/packages" }, // hidden until Yeti signup
 ];
 
 export default function NavBar({ active }) {
