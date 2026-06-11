@@ -9,12 +9,12 @@ const ORANGE     = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 const DESTINATIONS = [
-  { name: "Caribbean",       desc: "Crystal waters, white sand beaches, and island hopping from Miami or Fort Lauderdale.", nights: "5–10 nights", from: "$349", photo: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=300&fit=crop&auto=format" },
-  { name: "Mediterranean",   desc: "Ancient history, stunning coastlines, and world-class cuisine across Europe.",           nights: "7–14 nights", from: "$699", photo: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&h=300&fit=crop&auto=format" },
-  { name: "Alaska",          desc: "Majestic glaciers, wildlife, and breathtaking fjords sailing from Seattle.",             nights: "7–10 nights", from: "$549", photo: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=300&fit=crop&auto=format" },
-  { name: "Bahamas",         desc: "Short getaways with turquoise water — perfect for first-time cruisers.",               nights: "3–5 nights",  from: "$249", photo: "https://images.unsplash.com/photo-1548574505-5e239809ee19?w=600&h=300&fit=crop&auto=format" },
-  { name: "Mexican Riviera", desc: "Sunny ports, rich culture, and warm Pacific waters sailing from California.",           nights: "5–7 nights",  from: "$399", photo: "https://images.unsplash.com/photo-1518638150340-f706e86654de?w=600&h=300&fit=crop&auto=format" },
-  { name: "Transatlantic",   desc: "Epic ocean crossings between the Americas and Europe — a bucket-list voyage.",          nights: "12–18 nights",from: "$899", photo: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=600&h=300&fit=crop&auto=format" },
+  { name: "Caribbean",       desc: "Crystal waters, white sand beaches, and island hopping from Miami or Fort Lauderdale.", nights: "5–10 nights", from: "$349", photo: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=300&fit=crop&auto=format", href: "https://www.anrdoezrs.net/click-101734691-15534704" },
+  { name: "Mediterranean",   desc: "Ancient history, stunning coastlines, and world-class cuisine across Europe.",           nights: "7–14 nights", from: "$699", photo: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&h=300&fit=crop&auto=format", href: "https://www.anrdoezrs.net/click-101734691-17007078" },
+  { name: "Alaska",          desc: "Majestic glaciers, wildlife, and breathtaking fjords sailing from Seattle.",             nights: "7–10 nights", from: "$549", photo: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=300&fit=crop&auto=format", href: "https://www.kqzyfj.com/click-101734691-15534019" },
+  { name: "Bahamas",         desc: "Short getaways with turquoise water — perfect for first-time cruisers.",               nights: "3–5 nights",  from: "$249", photo: "https://images.unsplash.com/photo-1548574505-5e239809ee19?w=600&h=300&fit=crop&auto=format", href: "https://www.jdoqocy.com/click-101734691-15534709" },
+  { name: "Mexican Riviera", desc: "Sunny ports, rich culture, and warm Pacific waters sailing from California.",           nights: "5–7 nights",  from: "$399", photo: "https://images.unsplash.com/photo-1518638150340-f706e86654de?w=600&h=300&fit=crop&auto=format", href: "https://www.dpbolvw.net/click-101734691-15534698" },
+  { name: "Europe",          desc: "Iconic port cities, medieval castles, and breathtaking coastal scenery across the continent.", nights: "7–14 nights", from: "$599", photo: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=600&h=300&fit=crop&auto=format", href: "https://www.tkqlhce.com/click-101734691-15534703" },
 ];
 
 const LINES = [
@@ -413,7 +413,7 @@ export default function CruisesPage() {
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>Popular Cruise Destinations</h2>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr", gap: "16px" }}>
               {DESTINATIONS.map((d, i) => (
-                <div key={i} style={{ background: "#fff", borderRadius: "14px", overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 8px rgba(0,59,149,0.06)" }}
+                <a key={i} href={d.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block", background: "#fff", borderRadius: "14px", overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 8px rgba(0,59,149,0.06)", cursor: "pointer" }}
                   onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,59,149,0.15)"}
                   onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,59,149,0.06)"}>
                   <div style={{ position: "relative", height: "110px", overflow: "hidden", background: NAVY }}>
@@ -426,7 +426,7 @@ export default function CruisesPage() {
                     <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 4px", lineHeight: 1.4 }}>{d.desc}</p>
                     <p style={{ fontSize: "11px", fontWeight: "600", color: ORANGE, margin: 0 }}>⏱ {d.nights}</p>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </section>
