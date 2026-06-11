@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
 import { Suspense } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+
+const WIDGET_HTML = `<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#fff;overflow-x:hidden;}</style></head><body><script async src="https://tpwdgt.com/content?currency=usd&trs=532625&shmarker=722477&powered_by=true&locale=en&show_header=true&limit=3&primary_color=00AE98&results_background_color=FFFFFF&form_background_color=FFFFFF&campaign_id=111&promo_id=4478" charset="utf-8"><\/script></body></html>`;
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -30,18 +31,6 @@ const tips = [
 ];
 
 function FlightsContent() {
-  const widgetRef = useRef(null);
-
-  useEffect(() => {
-    if (!widgetRef.current) return;
-    widgetRef.current.innerHTML = "";
-    const script = document.createElement("script");
-    script.src =
-      "https://tpwdgt.com/content?currency=usd&trs=532625&shmarker=722477&powered_by=true&locale=en&show_header=true&limit=3&primary_color=00AE98&results_background_color=FFFFFF&form_background_color=FFFFFF&campaign_id=111&promo_id=4478";
-    script.async = true;
-    script.charset = "utf-8";
-    widgetRef.current.appendChild(script);
-  }, []);
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
@@ -90,19 +79,11 @@ function FlightsContent() {
           </div>
 
           <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 32px rgba(0,59,149,0.10)", overflow: "hidden", border: "1px solid #E5E7EB" }}>
-            {/* Widget header bar */}
-            <div style={{ background: NAVY, padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <span style={{ fontSize: "18px" }}>✈️</span>
-                <span style={{ color: "#fff", fontSize: "14px", fontWeight: "700" }}>Flight Search</span>
-              </div>
-              <span style={{ color: "#93C5FD", fontSize: "12px", fontWeight: "500" }}>Free · No account required</span>
-            </div>
-
-            {/* Widget mount point */}
-            <div
-              ref={widgetRef}
-              style={{ padding: "24px", minHeight: "200px" }}
+            <iframe
+              srcDoc={WIDGET_HTML}
+              title="Flight Search Widget"
+              style={{ width: "100%", height: "520px", border: "none", display: "block" }}
+              scrolling="no"
             />
           </div>
         </div>
