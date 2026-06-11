@@ -44,7 +44,18 @@ function FlightsContent() {
   const [depart,   setDepart]   = useState("");
   const [ret,      setRet]      = useState("");
   const [pax,      setPax]      = useState(1);
-  const formRef = useRef(null);
+  const [toFlash,  setToFlash]  = useState(false);
+  const toInputRef = useRef(null);
+
+  function handleDepartChange(val) {
+    setDepart(val);
+    if (val) {
+      const d = new Date(val + "T12:00:00");
+      d.setDate(d.getDate() + 7);
+      const next = d.toISOString().split("T")[0];
+      if (!ret || ret <= val) setRet(next);
+    }
+  }
 
   function handleSearch(e) {
     e?.preventDefault();
@@ -59,10 +70,16 @@ function FlightsContent() {
 
   function pickDest(dest) {
     setTo(dest.name);
-    // scroll to search form — use getElementById for reliability
-    setTimeout(() => {
-      document.getElementById("flight-search-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 0);
+    setToFlash(true);
+    setTimeout(() => setToFlash(false), 1800);
+    // compute exact scroll position and use window.scrollTo
+    const el = document.getElementById("flight-search-form");
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+    // also focus the To input so the user sees it
+    setTimeout(() => toInputRef.current?.focus(), 600);
   }
 
   return (
@@ -106,7 +123,6 @@ function FlightsContent() {
       <div id="flight-search-form" style={{ background: NAVY, padding: "36px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <form
-            ref={formRef}
             onSubmit={handleSearch}
             style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }}
           >
@@ -143,11 +159,12 @@ function FlightsContent() {
               <div>
                 <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>To</label>
                 <input
+                  ref={toInputRef}
                   type="text"
                   placeholder="City or airport (e.g. Cancún)"
                   value={to}
                   onChange={e => setTo(e.target.value)}
-                  style={inp}
+                  style={{ ...inp, borderColor: toFlash ? ORANGE : "#D1D5DB", transition: "border-color 0.3s" }}
                 />
               </div>
             </div>
@@ -165,7 +182,7 @@ function FlightsContent() {
                   type="date"
                   value={depart}
                   min={new Date().toISOString().split("T")[0]}
-                  onChange={e => setDepart(e.target.value)}
+                  onChange={e => handleDepartChange(e.target.value)}
                   style={inp}
                 />
               </div>
