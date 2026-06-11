@@ -58,7 +58,13 @@ function CalculatorContent() {
   const [rows,        setRows]       = useState([newRow("cruise")]);
   const [globalMode,  setGlobalMode] = useState("mixed");
   const [copied,      setCopied]     = useState(false);
-  const [commissions, setCommissions]= useState(DEFAULT_COMMISSIONS);
+  const [commissions, setCommissions]= useState(() => {
+    try {
+      const saved = typeof window !== "undefined" && localStorage.getItem("rv_commissions");
+      return saved ? { ...DEFAULT_COMMISSIONS, ...JSON.parse(saved) } : DEFAULT_COMMISSIONS;
+    } catch { return DEFAULT_COMMISSIONS; }
+  });
+  const [savedComm, setSavedComm] = useState(false);
   const [activeTab,   setActiveTab]  = useState("calculator"); // "calculator" | "profitability"
 
   function addRow(typeId) { setRows(r => [...r, newRow(typeId || "cruise")]); }
@@ -421,7 +427,7 @@ function CalculatorContent() {
               <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>
                 Edit these to match your actual agreements. Defaults are typical industry averages.
               </p>
-              <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginBottom: "16px" }}>
                 {PRODUCT_TYPES.map(p => (
                   <div key={p.id} style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                     <label style={{ fontSize: "12px", fontWeight: "700", color: "#374151" }}>{p.icon} {p.label}</label>
@@ -434,6 +440,19 @@ function CalculatorContent() {
                     <p style={{ fontSize: "10px", color: "#9CA3AF", margin: 0 }}>default: {DEFAULT_COMMISSIONS[p.id]}%</p>
                   </div>
                 ))}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <button
+                  onClick={() => {
+                    try { localStorage.setItem("rv_commissions", JSON.stringify(commissions)); } catch {}
+                    setSavedComm(true);
+                    setTimeout(() => setSavedComm(false), 2500);
+                  }}
+                  style={{ padding: "9px 20px", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: "700", cursor: "pointer", transition: "background 0.2s",
+                    background: savedComm ? GREEN : NAVY, color: "#fff" }}>
+                  {savedComm ? "✓ Saved!" : "💾 Save as Default"}
+                </button>
+                {savedComm && <p style={{ fontSize: "12px", color: GREEN, fontWeight: "700", margin: 0 }}>Rates saved — they'll load automatically next time.</p>}
               </div>
             </div>
 
