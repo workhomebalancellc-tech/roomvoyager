@@ -90,8 +90,8 @@ const inp = {
 
 function FlightsContent() {
   const searchParams = useSearchParams();
-  const initialTo   = searchParams.get("to") || searchParams.get("q") || "";
-  const initialFrom = searchParams.get("from") || "";
+  const initialTo   = searchParams.get("to")   || "";
+  const initialFrom = searchParams.get("from") || searchParams.get("q") || "";
 
   const [tripType, setTripType] = useState("round");
   const [from,     setFrom]     = useState(initialFrom);
