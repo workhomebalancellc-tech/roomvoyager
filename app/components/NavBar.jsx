@@ -17,13 +17,12 @@ const NAV_LINKS = [
 
 export default function NavBar({ active }) {
   const { user: session } = useAuth();
-  const [isMobile, setIsMobile] = useState(() =>
-    typeof window !== "undefined" ? window.innerWidth < 768 : false
-  );
+  const [isMobile, setIsMobile] = useState(false); // always false on server — updated after mount
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     function onResize() { setIsMobile(window.innerWidth < 768); }
+    onResize(); // set correct value immediately after mount
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);

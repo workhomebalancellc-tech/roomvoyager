@@ -116,39 +116,10 @@ function FlightsContent() {
         </div>
       </div>
 
-      {/* ── POPULAR DESTINATIONS ─────────────────────────────────────── */}
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "40px 24px 32px" }}>
-        <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Where to?</p>
-        <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 6px" }}>Pick a destination to get started</h2>
-        <p style={{ color: "#6B7280", fontSize: "13px", margin: "0 0 20px" }}>Tap any card — it fills your search below automatically</p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: "16px" }}>
-          {destinations.map(dest => (
-            <button
-              key={dest.name}
-              onClick={() => pickDest(dest)}
-              style={{ borderRadius: "14px", overflow: "hidden", position: "relative", height: "180px", cursor: "pointer", display: "block", border: "none", padding: 0, textAlign: "left", width: "100%" }}
-              onMouseEnter={e => e.currentTarget.querySelector("img").style.transform = "scale(1.06)"}
-              onMouseLeave={e => e.currentTarget.querySelector("img").style.transform = "scale(1)"}
-            >
-              <img src={dest.photo} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.35s ease", display: "block" }} />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.05) 60%)" }} />
-              <div style={{ position: "absolute", top: "12px", left: "12px" }}>
-                <span style={{ background: "rgba(0,0,0,0.45)", color: "#fff", fontSize: "11px", fontWeight: "600", padding: "3px 8px", borderRadius: "999px", backdropFilter: "blur(4px)" }}>{dest.tag}</span>
-              </div>
-              <div style={{ position: "absolute", bottom: "14px", left: "14px" }}>
-                <p style={{ color: "#fff", fontWeight: "800", fontSize: "16px", margin: "0 0 2px", textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>{dest.name}</p>
-                <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "12px", margin: 0 }}>{dest.country}</p>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* ── SEARCH FORM ──────────────────────────────────────────────── */}
       <div style={{ background: NAVY, padding: "32px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <form onSubmit={handleSearch} style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }}>
-
             <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
               {["round", "oneway"].map(t => (
                 <button key={t} type="button" onClick={() => setTripType(t)}
@@ -157,7 +128,6 @@ function FlightsContent() {
                 </button>
               ))}
             </div>
-
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
               <div>
                 <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>From</label>
@@ -169,7 +139,6 @@ function FlightsContent() {
                   style={{ ...inp, borderColor: toFlash ? ORANGE : "#D1D5DB", transition: "border-color 0.3s" }} />
               </div>
             </div>
-
             <div style={{ display: "grid", gridTemplateColumns: tripType === "round" ? "1fr 1fr 120px auto" : "1fr 120px auto", gap: "12px", alignItems: "flex-end" }}>
               <div>
                 <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Depart</label>
@@ -191,8 +160,33 @@ function FlightsContent() {
                 Search ✈️
               </button>
             </div>
-
           </form>
+        </div>
+      </div>
+
+      {/* ── POPULAR DESTINATIONS ─────────────────────────────────────── */}
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "56px 24px 32px" }}>
+        <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Explore the world</p>
+        <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Popular flight destinations</h2>
+        <p style={{ color: "#6B7280", fontSize: "14px", margin: "0 0 28px" }}>Click a destination to pre-fill your search</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: "16px" }}>
+          {destinations.map(dest => (
+            <button type="button" key={dest.name} onClick={() => pickDest(dest)}
+              style={{ borderRadius: "14px", overflow: "hidden", position: "relative", height: "180px", cursor: "pointer", display: "block", border: "none", padding: 0, textAlign: "left", width: "100%" }}
+              onMouseEnter={e => e.currentTarget.querySelector("img").style.transform = "scale(1.06)"}
+              onMouseLeave={e => e.currentTarget.querySelector("img").style.transform = "scale(1)"}
+            >
+              <img src={dest.photo} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.35s ease", display: "block" }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.05) 60%)" }} />
+              <div style={{ position: "absolute", top: "12px", left: "12px" }}>
+                <span style={{ background: "rgba(0,0,0,0.45)", color: "#fff", fontSize: "11px", fontWeight: "600", padding: "3px 8px", borderRadius: "999px", backdropFilter: "blur(4px)" }}>{dest.tag}</span>
+              </div>
+              <div style={{ position: "absolute", bottom: "14px", left: "14px" }}>
+                <p style={{ color: "#fff", fontWeight: "800", fontSize: "16px", margin: "0 0 2px", textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>{dest.name}</p>
+                <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "12px", margin: 0 }}>{dest.country}</p>
+              </div>
+            </button>
+          ))}
         </div>
       </div>
 
