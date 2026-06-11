@@ -29,6 +29,56 @@ const tips = [
   { icon: "🎒", title: "Travel carry-on only",     desc: "Skipping checked bags saves $30–$60 each way on most budget and major carriers." },
 ];
 
+/* ── City → IATA lookup (resolves typed names to IATA codes) ────── */
+const CITY_TO_IATA = {
+  "cancún": "CUN", "cancun": "CUN",
+  "miami": "MIA",
+  "las vegas": "LAS",
+  "paris": "CDG",
+  "orlando": "MCO",
+  "london": "LHR",
+  "punta cana": "PUJ",
+  "new york": "JFK", "new york city": "JFK", "nyc": "JFK",
+  "atlanta": "ATL",
+  "chicago": "ORD",
+  "los angeles": "LAX", "la": "LAX",
+  "dallas": "DFW",
+  "denver": "DEN",
+  "seattle": "SEA",
+  "san francisco": "SFO",
+  "boston": "BOS",
+  "houston": "IAH",
+  "phoenix": "PHX",
+  "toronto": "YYZ",
+  "vancouver": "YVR",
+  "montreal": "YUL",
+  "mexico city": "MEX",
+  "cabo san lucas": "SJD",
+  "puerto vallarta": "PVR",
+  "rome": "FCO",
+  "amsterdam": "AMS",
+  "barcelona": "BCN",
+  "madrid": "MAD",
+  "frankfurt": "FRA",
+  "dubai": "DXB",
+  "tokyo": "NRT",
+  "bangkok": "BKK",
+  "sydney": "SYD",
+  "nassau": "NAS",
+  "montego bay": "MBJ",
+  "aruba": "AUA",
+  "phuket": "HKT",
+  "bali": "DPS",
+  "lisbon": "LIS",
+  "athens": "ATH",
+  "milan": "MXP",
+  "vienna": "VIE",
+  "prague": "PRG",
+};
+function resolveIata(cityName) {
+  return CITY_TO_IATA[cityName?.toLowerCase().trim()] || null;
+}
+
 /* ── input style helper ─────────────────────────────────────────── */
 const inp = {
   width: "100%", padding: "10px 14px",
@@ -40,16 +90,33 @@ const inp = {
 
 function FlightsContent() {
   const searchParams = useSearchParams();
+  const initialTo   = searchParams.get("to") || searchParams.get("q") || "";
+  const initialFrom = searchParams.get("from") || "";
+
   const [tripType, setTripType] = useState("round");
-  const [from,     setFrom]     = useState(searchParams.get("from") || "");
-  const [to,       setTo]       = useState(searchParams.get("to") || searchParams.get("q") || "");
+  const [from,     setFrom]     = useState(initialFrom);
+  const [to,       setTo]       = useState(initialTo);
   const [depart,   setDepart]   = useState("");
   const [ret,      setRet]      = useState("");
   const [pax,      setPax]      = useState(1);
-  const [toIata,   setToIata]   = useState("");
+  // IATA codes — seeded from URL params via lookup, updated on card click or autocomplete pick
+  const [toIata,   setToIata]   = useState(() => resolveIata(initialTo) || "");
+  const [fromIata, setFromIata] = useState(() => resolveIata(initialFrom) || "");
   const [toFlash,  setToFlash]  = useState(false);
   const [mounted,  setMounted]  = useState(false);
-  const toInputRef = useRef(null);
+
+  // Autocomplete state — From field
+  const [fromSugg,      setFromSugg]      = useState([]);
+  const [showFromSugg,  setShowFromSugg]  = useState(false);
+  const [loadingFrom,   setLoadingFrom]   = useState(false);
+  // Autocomplete state — To field
+  const [toSugg,        setToSugg]        = useState([]);
+  const [showToSugg,    setShowToSugg]    = useState(false);
+  const [loadingTo,     setLoadingTo]     = useState(false);
+
+  const toInputRef      = useRef(null);
+  const fromDebounceRef = useRef(null);
+  const toDebounceRef   = useRef(null);
 
   useEffect(() => setMounted(true), []);
 
@@ -63,21 +130,56 @@ function FlightsContent() {
     }
   }
 
+  function handleFromChange(val) {
+    setFrom(val);
+    setFromIata(resolveIata(val) || "");
+    if (fromDebounceRef.current) clearTimeout(fromDebounceRef.current);
+    if (!val || val.length < 2) { setFromSugg([]); setShowFromSugg(false); return; }
+    setLoadingFrom(true);
+    fromDebounceRef.current = setTimeout(async () => {
+      try {
+        const res  = await fetch(`/api/cities?q=${encodeURIComponent(val)}`);
+        const data = await res.json();
+        setFromSugg(data); setShowFromSugg(data.length > 0);
+      } catch { setFromSugg([]); setShowFromSugg(false); }
+      finally { setLoadingFrom(false); }
+    }, 300);
+  }
+
+  function handleToChange(val) {
+    setTo(val);
+    setToIata(resolveIata(val) || "");
+    if (toDebounceRef.current) clearTimeout(toDebounceRef.current);
+    if (!val || val.length < 2) { setToSugg([]); setShowToSugg(false); return; }
+    setLoadingTo(true);
+    toDebounceRef.current = setTimeout(async () => {
+      try {
+        const res  = await fetch(`/api/cities?q=${encodeURIComponent(val)}`);
+        const data = await res.json();
+        setToSugg(data); setShowToSugg(data.length > 0);
+      } catch { setToSugg([]); setShowToSugg(false); }
+      finally { setLoadingTo(false); }
+    }, 300);
+  }
+
   function handleSearch(e) {
     e?.preventDefault();
+    // Resolve IATA at search time — covers card clicks, URL params, and typed city names
+    const resolvedTo   = toIata   || resolveIata(to);
+    const resolvedFrom = fromIata || resolveIata(from);
     let kiwiUrl;
 
-    if (toIata) {
-      // Destination card was clicked — use Kiwi deep link with IATA code for reliable pre-fill
+    if (resolvedTo || resolvedFrom) {
+      // At least one IATA known — use deep link for reliable Kiwi pre-fill
       const params = new URLSearchParams();
-      if (from.trim()) params.set("from", from.trim());
-      params.set("to", toIata);
+      if (resolvedFrom) params.set("from", resolvedFrom);
+      if (resolvedTo)   params.set("to", resolvedTo);
       if (depart) params.set("departure", depart);
       if (tripType === "round" && ret) params.set("return", ret);
       if (pax > 1) params.set("adults", String(pax));
       kiwiUrl = `https://www.kiwi.com/deep?${params.toString()}`;
     } else {
-      // Free-text search — use slug URL format
+      // Unknown city — fall back to text search
       const f = from.trim() || "anywhere";
       const t = to.trim()   || "anywhere";
       const d = depart      || "anytime";
@@ -86,7 +188,6 @@ function FlightsContent() {
       kiwiUrl = `https://www.kiwi.com/en/search/results/${encodeURIComponent(f)}/${encodeURIComponent(t)}/${d}/${r}${paxParam}`;
     }
 
-    // Wrap in Travelpayouts affiliate tracking URL for commission
     const tpUrl = `https://c111.travelpayouts.com/click?shmarker=722477&promo_id=3791&source_type=customlink&type=click&custom_url=${encodeURIComponent(kiwiUrl)}`;
     window.open(`/redirect?to=${encodeURIComponent(tpUrl)}&partner=Kiwi.com&product=flight`, "_blank", "noopener,noreferrer");
   }
@@ -94,8 +195,8 @@ function FlightsContent() {
   function pickDest(dest) {
     setTo(dest.name);
     setToIata(dest.iata);
+    setToSugg([]); setShowToSugg(false);
     setToFlash(true);
-    // Direct DOM assignment as belt-and-suspenders in case React hydration is still catching up
     if (toInputRef.current) toInputRef.current.value = dest.name;
     setTimeout(() => setToFlash(false), 1800);
     setTimeout(() => toInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
@@ -151,14 +252,61 @@ function FlightsContent() {
               ))}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
+              {/* FROM with autocomplete */}
               <div>
                 <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>From</label>
-                <input type="text" placeholder="City or airport (e.g. New York)" value={from} onChange={e => setFrom(e.target.value)} style={inp} />
+                <div style={{ position: "relative" }}>
+                  <input type="text" placeholder="City or airport (e.g. New York)" value={from}
+                    onChange={e => handleFromChange(e.target.value)}
+                    onBlur={() => setTimeout(() => setShowFromSugg(false), 160)}
+                    onFocus={() => from.length >= 2 && fromSugg.length > 0 && setShowFromSugg(true)}
+                    style={inp} />
+                  {(showFromSugg || loadingFrom) && (
+                    <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "8px", boxShadow: "0 6px 20px rgba(0,0,0,0.15)", zIndex: 200, marginTop: "3px", overflow: "hidden" }}>
+                      {loadingFrom && fromSugg.length === 0
+                        ? <div style={{ padding: "10px 12px", fontSize: "12px", color: "#9CA3AF" }}>Searching…</div>
+                        : fromSugg.map((c, i) => (
+                          <div key={i}
+                            onMouseDown={() => { setFrom(c.label || c.name); setFromIata(resolveIata(c.name) || ""); setShowFromSugg(false); }}
+                            style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < fromSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
+                            onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
+                            onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
+                            <span style={{ fontSize: "13px", color: "#111827", fontWeight: "600" }}>{c.name}</span>
+                            <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{c.sub}</span>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  )}
+                </div>
               </div>
+              {/* TO with autocomplete */}
               <div>
                 <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>To</label>
-                <input ref={toInputRef} type="text" placeholder="City or airport (e.g. Cancún)" value={to} onChange={e => { setTo(e.target.value); setToIata(""); }}
-                  style={{ ...inp, borderColor: toFlash ? ORANGE : "#D1D5DB", transition: "border-color 0.3s" }} />
+                <div style={{ position: "relative" }}>
+                  <input ref={toInputRef} type="text" placeholder="City or airport (e.g. Cancún)" value={to}
+                    onChange={e => handleToChange(e.target.value)}
+                    onBlur={() => setTimeout(() => setShowToSugg(false), 160)}
+                    onFocus={() => to.length >= 2 && toSugg.length > 0 && setShowToSugg(true)}
+                    style={{ ...inp, borderColor: toFlash ? ORANGE : "#D1D5DB", transition: "border-color 0.3s" }} />
+                  {(showToSugg || loadingTo) && (
+                    <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "8px", boxShadow: "0 6px 20px rgba(0,0,0,0.15)", zIndex: 200, marginTop: "3px", overflow: "hidden" }}>
+                      {loadingTo && toSugg.length === 0
+                        ? <div style={{ padding: "10px 12px", fontSize: "12px", color: "#9CA3AF" }}>Searching…</div>
+                        : toSugg.map((c, i) => (
+                          <div key={i}
+                            onMouseDown={() => { setTo(c.label || c.name); setToIata(resolveIata(c.name) || ""); setShowToSugg(false); }}
+                            style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < toSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
+                            onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
+                            onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
+                            <span style={{ fontSize: "13px", color: "#111827", fontWeight: "600" }}>{c.name}</span>
+                            <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{c.sub}</span>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: tripType === "round" ? "1fr 1fr 120px auto" : "1fr 120px auto", gap: "12px", alignItems: "flex-end" }}>
