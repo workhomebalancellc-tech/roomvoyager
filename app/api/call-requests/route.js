@@ -42,6 +42,43 @@ export async function POST(request) {
       return NextResponse.json({ success: false, error: "Airtable save failed" }, { status: 500 });
     }
 
+    // 2. Send email notification via EmailJS
+    const EJ_SERVICE  = process.env.EMAILJS_SERVICE_ID;
+    const EJ_TEMPLATE = process.env.EMAILJS_TEMPLATE_ID;
+    const EJ_PUBLIC   = process.env.EMAILJS_PUBLIC_KEY;
+    const EJ_PRIVATE  = process.env.EMAILJS_PRIVATE_KEY;
+
+    if (EJ_SERVICE && EJ_TEMPLATE && EJ_PUBLIC) {
+      try {
+        await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            service_id:   EJ_SERVICE,
+            template_id:  EJ_TEMPLATE,
+            user_id:      EJ_PUBLIC,
+            ...(EJ_PRIVATE && { accessToken: EJ_PRIVATE }),
+            template_params: {
+              to_email:    "workhomebalancellc@gmail.com",
+              from_name:   `${firstName || ""} ${lastName || ""}`.trim() || "Customer",
+              from_email:  email,
+              phone:       phone || "Not provided",
+              destination: `📞 Call Request — ${date} at ${time}`,
+              travelers:   "N/A",
+              budget:      "N/A",
+              travel_from: date,
+              travel_to:   time,
+              cabin:       "N/A",
+              notes:       `Phone: ${phone || "Not provided"}`,
+              submitted_at: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }) + " EST",
+            },
+          }),
+        });
+      } catch (emailErr) {
+        console.warn("EmailJS fetch failed:", emailErr.message);
+      }
+    }
+
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Call request error:", err);
