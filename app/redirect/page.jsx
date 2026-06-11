@@ -202,6 +202,17 @@ function RedirectContent() {
         </div>
       </div>
 
+      {/* Sponsor banner */}
+      <div style={{ padding: "12px 24px", textAlign: "center" }}>
+        <img
+          src="https://www.tqlkg.com/image-101734691-11926423"
+          width="468"
+          height="60"
+          alt="Special offer"
+          style={{ maxWidth: "100%", display: "inline-block" }}
+        />
+      </div>
+
       {/* Footer */}
       <div style={{ padding: "16px 24px", textAlign: "center", borderTop: "1px solid #E5E7EB" }}>
         <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0 }}>
