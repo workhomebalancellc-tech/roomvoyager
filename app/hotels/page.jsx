@@ -205,7 +205,7 @@ function HotelsContent() {
             {[
               { icon: "💰", title: "Earn real cash back", desc: "5 points per $1 spent — redeemable for real money after your stay" },
               { icon: "🔒", title: "Secure booking", desc: "All bookings processed through Expedia's trusted platform" },
-              { icon: "📞", title: "Agent support", desc: "Need help with a group booking? Our advisor handles everything" },
+              { icon: "📞", title: "We're here to help", desc: "Questions about your booking? We'll help you find the perfect stay" },
               { icon: "🌍", title: "Massive selection", desc: "Over 1 million properties from budget to luxury worldwide" },
             ].map((item, i) => (
               <div key={i}>
@@ -217,18 +217,18 @@ function HotelsContent() {
           </div>
         </div>
 
-        {/* Group CTA with photo */}
+        {/* Newsletter CTA with photo */}
         <div style={{ position: "relative", borderRadius: "20px", overflow: "hidden" }}>
-          <img src="https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=1200&h=240&fit=crop&auto=format" alt="Group travel" style={{ width: "100%", height: "160px", objectFit: "cover" }} />
+          <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&h=240&fit=crop&auto=format" alt="Hotel deals" style={{ width: "100%", height: "160px", objectFit: "cover" }} />
           <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${NAVY}f0, rgba(0,30,80,0.5))` }} />
           <div style={{ position: "absolute", inset: 0, display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 32px", flexWrap: "wrap", gap: "16px" }}>
             <div>
-              <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#fff", margin: "0 0 4px" }}>Need a group hotel booking?</h3>
-              <p style={{ fontSize: "13px", color: "#BFDBFE", margin: 0 }}>10+ rooms? Our travel advisor negotiates group rates directly with hotels.</p>
+              <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#fff", margin: "0 0 4px" }}>Want exclusive hotel deals?</h3>
+              <p style={{ fontSize: "13px", color: "#BFDBFE", margin: 0 }}>Join our member newsletter and get early access to promotions before they go public.</p>
             </div>
-            <a href="mailto:workhomebalancellc@gmail.com?subject=Group Hotel Booking Request"
+            <a href="/rewards"
               style={{ background: ORANGE, color: "#fff", padding: "12px 24px", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", whiteSpace: "nowrap" }}>
-              Contact our agent →
+              Join RoomVoyager Rewards →
             </a>
           </div>
         </div>
