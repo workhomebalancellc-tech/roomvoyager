@@ -394,7 +394,7 @@ export default function CruisesPage() {
               🔍 Search &amp; Book Cruises
             </p>
             <div style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,59,149,0.15)", border: "1px solid #E5E7EB", width: "300px" }}>
-              <div id="cdsearch" data-redirect-server="https://www.jdoqocy.com/click-101734691-15534473?url=" />
+              <div id="cdsearch" data-redirect-server="https://www.roomvoyagertravel.com/api/cruise-redirect?to=" />
               <div id="cruiseSearchBox300x600" />
               <img src="https://www.lduhtrp.net/image-101734691-15534473" width="1" height="1" alt="" style={{ display: "block" }} />
             </div>
@@ -463,7 +463,7 @@ export default function CruisesPage() {
                 🔍 Search &amp; Book Cruises
               </p>
               <div style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,59,149,0.15)", border: "1px solid #E5E7EB", width: "300px" }}>
-                <div id="cdsearch" data-redirect-server="https://www.jdoqocy.com/click-101734691-15534473?url=" />
+                <div id="cdsearch" data-redirect-server="https://www.roomvoyagertravel.com/api/cruise-redirect?to=" />
                 <div id="cruiseSearchBox300x600" />
                 <img src="https://www.lduhtrp.net/image-101734691-15534473" width="1" height="1" alt="" style={{ display: "block" }} />
               </div>
