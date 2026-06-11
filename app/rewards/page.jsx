@@ -10,10 +10,10 @@ const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 const TIERS = [
-  { name: "Explorer", icon: "🧭", range: "0–9,999 pts", color: "#6B7280", perks: ["5 pts per $1 on flights & hotels", "10 pts per $1 on cruises & packages", "Double pts on hotels, cruises & packages", "No blackout dates"] },
-  { name: "Voyager", icon: "⚓", range: "10,000–49,999 pts", color: NAVY, perks: ["Priority email response", "Exclusive member deals", "Same flat earning rates as all members", "No blackout dates"] },
-  { name: "Navigator", icon: "🗺️", range: "50,000–99,999 pts", color: "#7C3AED", perks: ["Dedicated agent access", "Early access to promotions", "Same flat earning rates as all members", "No blackout dates"] },
-  { name: "Admiral", icon: "👑", range: "100,000+ pts", color: ORANGE, perks: ["VIP concierge service", "Best available rates guaranteed", "Same flat earning rates as all members", "No blackout dates"] },
+  { name: "Explorer", icon: "🧭", range: "0–9,999 pts", color: "#6B7280", perks: ["5 pts/$1 on flights & hotels · 10 pts/$1 on cruises & packages", "Double pts on hotels, cruises & packages", "Redeem points on our website", "No blackout dates"] },
+  { name: "Voyager", icon: "⚓", range: "10,000–49,999 pts", color: NAVY, perks: ["🎂 Birthday bonus: 500 pts", "Exclusive member deals newsletter", "Early access to promotions", "Redeem points via website or email"] },
+  { name: "Navigator", icon: "🗺️", range: "50,000–99,999 pts", color: "#7C3AED", perks: ["🎂 Birthday bonus: 500 pts", "Auto rewards payout at 50,000 pts", "Personalized trip planning consultation", "✈️ Complimentary air check-in assistance"] },
+  { name: "Admiral", icon: "👑", range: "100,000+ pts", color: ORANGE, perks: ["🎂 Birthday bonus: 500 pts", "Auto rewards payout at 25,000 pts", "VIP concierge service", "✈️ Air + 🚢 cruise check-in assistance"] },
 ];
 
 const EARNING_RATES = [
