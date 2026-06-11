@@ -44,6 +44,7 @@ function FlightsContent() {
   const [depart,   setDepart]   = useState("");
   const [ret,      setRet]      = useState("");
   const [pax,      setPax]      = useState(1);
+  const [toIata,   setToIata]   = useState("");
   const [toFlash,  setToFlash]  = useState(false);
   const [mounted,  setMounted]  = useState(false);
   const toInputRef = useRef(null);
@@ -62,17 +63,35 @@ function FlightsContent() {
 
   function handleSearch(e) {
     e?.preventDefault();
-    const f  = from.trim()  || "anywhere";
-    const t  = to.trim()    || "anywhere";
-    const d  = depart       || "anytime";
-    const r  = tripType === "round" ? (ret || "anytime") : "no-return";
-    const paxParam = pax > 1 ? `?adults=${pax}` : "";
-    const kiwiUrl  = `https://www.kiwi.com/en/search/results/${encodeURIComponent(f)}/${encodeURIComponent(t)}/${d}/${r}${paxParam}`;
-    window.open(`/redirect?to=${encodeURIComponent(kiwiUrl)}&partner=Kiwi.com&product=flight`, "_blank", "noopener,noreferrer");
+    let kiwiUrl;
+
+    if (toIata) {
+      // Destination card was clicked — use Kiwi deep link with IATA code for reliable pre-fill
+      const params = new URLSearchParams();
+      if (from.trim()) params.set("from", from.trim());
+      params.set("to", toIata);
+      if (depart) params.set("departure", depart);
+      if (tripType === "round" && ret) params.set("return", ret);
+      if (pax > 1) params.set("adults", String(pax));
+      kiwiUrl = `https://www.kiwi.com/deep?${params.toString()}`;
+    } else {
+      // Free-text search — use slug URL format
+      const f = from.trim() || "anywhere";
+      const t = to.trim()   || "anywhere";
+      const d = depart      || "anytime";
+      const r = tripType === "round" ? (ret || "anytime") : "no-return";
+      const paxParam = pax > 1 ? `?adults=${pax}` : "";
+      kiwiUrl = `https://www.kiwi.com/en/search/results/${encodeURIComponent(f)}/${encodeURIComponent(t)}/${d}/${r}${paxParam}`;
+    }
+
+    // Wrap in Travelpayouts affiliate tracking URL for commission
+    const tpUrl = `https://c111.travelpayouts.com/click?shmarker=722477&promo_id=3791&source_type=customlink&type=click&custom_url=${encodeURIComponent(kiwiUrl)}`;
+    window.open(`/redirect?to=${encodeURIComponent(tpUrl)}&partner=Kiwi.com&product=flight`, "_blank", "noopener,noreferrer");
   }
 
   function pickDest(dest) {
     setTo(dest.name);
+    setToIata(dest.iata);
     setToFlash(true);
     setTimeout(() => setToFlash(false), 1800);
     // form is directly below the cards — just scroll down a little
@@ -135,7 +154,7 @@ function FlightsContent() {
               </div>
               <div>
                 <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>To</label>
-                <input ref={toInputRef} type="text" placeholder="City or airport (e.g. Cancún)" value={to} onChange={e => setTo(e.target.value)}
+                <input ref={toInputRef} type="text" placeholder="City or airport (e.g. Cancún)" value={to} onChange={e => { setTo(e.target.value); setToIata(""); }}
                   style={{ ...inp, borderColor: toFlash ? ORANGE : "#D1D5DB", transition: "border-color 0.3s" }} />
               </div>
             </div>
