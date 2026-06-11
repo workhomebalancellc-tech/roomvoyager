@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
@@ -38,9 +39,10 @@ const inp = {
 };
 
 function FlightsContent() {
+  const searchParams = useSearchParams();
   const [tripType, setTripType] = useState("round");
-  const [from,     setFrom]     = useState("");
-  const [to,       setTo]       = useState("");
+  const [from,     setFrom]     = useState(searchParams.get("from") || "");
+  const [to,       setTo]       = useState(searchParams.get("to")   || "");
   const [depart,   setDepart]   = useState("");
   const [ret,      setRet]      = useState("");
   const [pax,      setPax]      = useState(1);
@@ -271,7 +273,9 @@ function FlightsContent() {
 export default function FlightsPage() {
   return (
     <>
-      <FlightsContent />
+      <Suspense fallback={null}>
+        <FlightsContent />
+      </Suspense>
       <Footer />
     </>
   );
