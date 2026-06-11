@@ -31,11 +31,9 @@ const tips = [
 
 function FlightsContent() {
   const [mounted, setMounted] = useState(false);
-  const [selectedDest, setSelectedDest] = useState(null);
   useEffect(() => { setMounted(true); }, []);
 
-  const destParam = selectedDest ? `&destination_iata=${selectedDest.iata}` : "";
-  const WIDGET_HTML = `<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#fff;overflow-x:hidden;}</style></head><body><script async src="https://tpwdgt.com/content?currency=usd&trs=532625&shmarker=722477&locale=en&stops=any&show_hotels=false&powered_by=false&border_radius=0&plain=true&color_button=%23003B95&color_button_text=%23ffffff&promo_id=3414&campaign_id=111${destParam}" charset="utf-8"><\/script></body></html>`;
+  const WIDGET_HTML = `<!DOCTYPE html><html><head><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#fff;overflow-x:hidden;}</style></head><body><script async src="https://tpwdgt.com/content?currency=usd&trs=532625&shmarker=722477&locale=en&stops=any&show_hotels=false&powered_by=false&border_radius=0&plain=true&color_button=%23003B95&color_button_text=%23ffffff&promo_id=3414&campaign_id=111" charset="utf-8"><\/script></body></html>`;
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
@@ -81,14 +79,13 @@ function FlightsContent() {
           <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 32px rgba(0,59,149,0.10)", overflow: "hidden", border: "1px solid #E5E7EB" }}>
             {mounted ? (
               <iframe
-                key={selectedDest?.iata || "default"}
                 srcDoc={WIDGET_HTML}
                 title="Flight Search Widget"
-                style={{ width: "100%", height: "300px", border: "none", display: "block" }}
+                style={{ width: "100%", height: "380px", border: "none", display: "block" }}
                 scrolling="no"
               />
             ) : (
-              <div style={{ height: "300px", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF", fontSize: "14px" }}>
+              <div style={{ height: "380px", display: "flex", alignItems: "center", justifyContent: "center", color: "#9CA3AF", fontSize: "14px" }}>
                 Loading flight deals…
               </div>
             )}
@@ -106,8 +103,7 @@ function FlightsContent() {
             <a
               key={dest.name}
               href={`/redirect?to=${encodeURIComponent(`https://www.kiwi.com/en/search/results/anywhere/${dest.kiwi}`)}&partner=Kiwi.com&product=flight`}
-              style={{ borderRadius: "14px", overflow: "hidden", position: "relative", height: "180px", cursor: "pointer", display: "block", textDecoration: "none", outline: selectedDest?.iata === dest.iata ? `3px solid ${ORANGE}` : "none", outlineOffset: "2px" }}
-              onClick={e => { e.preventDefault(); setSelectedDest(dest); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              style={{ borderRadius: "14px", overflow: "hidden", position: "relative", height: "180px", cursor: "pointer", display: "block", textDecoration: "none" }}
               onMouseEnter={e => e.currentTarget.querySelector("img").style.transform = "scale(1.06)"}
               onMouseLeave={e => e.currentTarget.querySelector("img").style.transform = "scale(1)"}
             >
