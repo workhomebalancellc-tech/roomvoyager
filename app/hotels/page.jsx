@@ -26,7 +26,9 @@ function HotelsContent() {
   const debounceRef = useRef(null);
   // menuOpen handled by shared NavBar
 
-  const today = new Date().toISOString().split("T")[0];
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const today = mounted ? new Date().toISOString().split("T")[0] : "";
   const minCheckOut = checkIn
     ? (() => { const d = new Date(checkIn + "T12:00:00"); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; })()
     : today;

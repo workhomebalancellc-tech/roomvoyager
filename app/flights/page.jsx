@@ -45,7 +45,10 @@ function FlightsContent() {
   const [ret,      setRet]      = useState("");
   const [pax,      setPax]      = useState(1);
   const [toFlash,  setToFlash]  = useState(false);
+  const [mounted,  setMounted]  = useState(false);
   const toInputRef = useRef(null);
+
+  useEffect(() => setMounted(true), []);
 
   function handleDepartChange(val) {
     setDepart(val);
@@ -181,7 +184,7 @@ function FlightsContent() {
                 <input
                   type="date"
                   value={depart}
-                  min={new Date().toISOString().split("T")[0]}
+                  min={mounted ? new Date().toISOString().split("T")[0] : ""}
                   onChange={e => handleDepartChange(e.target.value)}
                   style={inp}
                 />
@@ -192,7 +195,7 @@ function FlightsContent() {
                   <input
                     type="date"
                     value={ret}
-                    min={depart || new Date().toISOString().split("T")[0]}
+                    min={depart || (mounted ? new Date().toISOString().split("T")[0] : "")}
                     onChange={e => setRet(e.target.value)}
                     style={inp}
                   />
