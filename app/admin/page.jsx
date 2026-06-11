@@ -9,9 +9,19 @@ const NAVY   = "#003B95";
 const ORANGE = "#FF6600";
 const GREEN  = "#16A34A";
 
-// Commission rates
-const AFFILIATE_RATE = 0.03;   // 3%
-const AGENT_RATE     = 0.084;  // 8.4%
+// Your commission rates per product (what you actually earn from each partner)
+const COMMISSION_RATES = {
+  cruise:  3,   // % from CJ affiliates (CruiseDirect, Royal Caribbean, etc.)
+  hotel:   3,   // % from Expedia
+  package: 3,   // % from affiliate
+  flight:  3,   // % from Travelpayouts / Kiwi
+};
+const COMMISSION_SOURCE = {
+  cruise:  "via CJ affiliates",
+  hotel:   "via Expedia",
+  package: "via affiliate",
+  flight:  "via Travelpayouts / Kiwi",
+};
 
 const TOOLS = [
   { icon: "🧮", label: "Points Calculator",    href: "/admin/calculator", desc: "Calculate pts earned on any booking combination" },
@@ -28,44 +38,46 @@ const PRODUCT_TYPES = [
 ];
 
 function CommissionCalc() {
-  const [product, setProduct]   = useState("cruise");
-  const [amount,  setAmount]    = useState("");
-  const [double,  setDouble]    = useState(false);
+  const [product,  setProduct]  = useState("cruise");
+  const [amount,   setAmount]   = useState("");
+  const [double,   setDouble]   = useState(false);
+  const [commRate, setCommRate] = useState(COMMISSION_RATES["cruise"]);
 
-  const type  = PRODUCT_TYPES.find(p => p.id === product);
-  const amt   = parseFloat(amount) || 0;
+  function handleProductChange(val) {
+    setProduct(val);
+    setCommRate(COMMISSION_RATES[val]);
+    if (val === "flight") setDouble(false);
+  }
+
+  const type      = PRODUCT_TYPES.find(p => p.id === product);
+  const amt       = parseFloat(amount) || 0;
   const useDouble = double && type?.doubleOk;
+  const ptsRate   = useDouble ? (type?.baseDoublePts ?? type?.basePts ?? 5) : (type?.basePts ?? 5);
+  const ptsCostPct = ptsRate / 1000; // 5pts → 0.5%, 10pts → 1%, 20pts → 2%
 
-  // Per-product pts rate
-  const ptsRate    = useDouble ? (type?.baseDoublePts ?? type?.basePts ?? 5) : (type?.basePts ?? 5);
-  const ptsCostPct = ptsRate / 1000; // e.g. 5pts → 0.5%, 10pts → 1%, 20pts → 2%
-
-  // Revenue split
-  const affiliateCut = amt * AFFILIATE_RATE;
-  const agentCut     = amt * (type?.id === "flight" ? 0.016 : AGENT_RATE);
-  const ptsCost      = amt * ptsCostPct;
-  const netAfterPts  = agentCut - ptsCost;
-  const ptsAwarded   = Math.round(amt * ptsRate);
-  const cashBack     = ptsAwarded / 1000;
-  const profitable   = netAfterPts >= 0;
+  const commission = amt * (commRate / 100);
+  const ptsCost    = amt * ptsCostPct;
+  const netProfit  = commission - ptsCost;
+  const ptsAwarded = Math.round(amt * ptsRate);
+  const cashBack   = ptsAwarded / 1000;
+  const profitable = netProfit >= 0;
   const ptsCostLabel = `${(ptsCostPct * 100).toFixed(1)}%`;
 
   const rows = amt > 0 ? [
-    { label: "Booking value",      value: `$${amt.toFixed(2)}`,           color: "#111827" },
-    { label: "Affiliate cut (3%)", value: `$${affiliateCut.toFixed(2)}`,  color: "#6B7280", note: "goes to CJ network" },
-    { label: `Agent commission (${type?.id === "flight" ? "1.6" : "8.4"}%)`, value: `$${agentCut.toFixed(2)}`, color: NAVY, note: "your revenue" },
-    { label: `Points cost (${ptsCostLabel})`, value: `−$${ptsCost.toFixed(2)}`, color: ORANGE, note: `${ptsAwarded.toLocaleString()} pts = $${cashBack.toFixed(2)} to customer` },
-    { label: "Net after points",   value: `$${netAfterPts.toFixed(2)}`,   color: profitable ? GREEN : "#DC2626", bold: true },
+    { label: "Booking value",                         value: `$${amt.toFixed(2)}`,         color: "#111827" },
+    { label: `Your commission (${commRate}%)`,         value: `$${commission.toFixed(2)}`,  color: NAVY,  note: COMMISSION_SOURCE[product] },
+    { label: `Points cost (${ptsCostLabel})`,          value: `−$${ptsCost.toFixed(2)}`,    color: ORANGE, note: `${ptsAwarded.toLocaleString()} pts = $${cashBack.toFixed(2)} to customer` },
+    { label: "Net profit",                             value: `$${netProfit.toFixed(2)}`,   color: profitable ? GREEN : "#DC2626", bold: true },
   ] : [];
 
   return (
     <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
       <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>💰 Commission & Profitability Calculator</p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "10px", marginBottom: "14px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 80px", gap: "10px", marginBottom: "14px" }}>
         <div>
           <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "4px" }}>Product</label>
-          <select value={product} onChange={e => { setProduct(e.target.value); if (e.target.value === "flight") setDouble(false); }}
+          <select value={product} onChange={e => handleProductChange(e.target.value)}
             style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", background: "#fff" }}>
             {PRODUCT_TYPES.map(p => <option key={p.id} value={p.id}>{p.icon} {p.label}</option>)}
           </select>
@@ -82,12 +94,17 @@ function CommissionCalc() {
               style={{ flex: 1, height: "36px", borderRadius: "8px", border: `1.5px solid ${!double ? NAVY : "#E5E7EB"}`, background: !double ? "#EBF3FF" : "#fff", fontSize: "12px", fontWeight: "700", cursor: "pointer", color: !double ? NAVY : "#6B7280" }}>
               Standard
             </button>
-            <button onClick={() => { if (type?.doubleOk) setDouble(true); }}
-              disabled={!type?.doubleOk}
+            <button onClick={() => { if (type?.doubleOk) setDouble(true); }} disabled={!type?.doubleOk}
               style={{ flex: 1, height: "36px", borderRadius: "8px", border: `1.5px solid ${double ? ORANGE : "#E5E7EB"}`, background: double ? "#FFF7ED" : "#F9FAFB", fontSize: "12px", fontWeight: "700", cursor: type?.doubleOk ? "pointer" : "not-allowed", color: double ? ORANGE : "#9CA3AF", opacity: type?.doubleOk ? 1 : 0.5 }}>
               Double 🔥
             </button>
           </div>
+        </div>
+        <div>
+          <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "4px" }}>Comm %</label>
+          <input type="number" min="0" max="50" step="0.5" value={commRate}
+            onChange={e => setCommRate(parseFloat(e.target.value) || 0)}
+            style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none", textAlign: "center", fontWeight: "700" }} />
         </div>
       </div>
 
@@ -95,7 +112,7 @@ function CommissionCalc() {
         <>
           <div style={{ background: "#F8FAFF", borderRadius: "10px", overflow: "hidden", marginBottom: "10px" }}>
             {rows.map((r, i) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "9px 14px", borderBottom: i < rows.length - 1 ? "1px solid #F3F4F6" : "none", background: r.bold ? "#F0FDF4" : "transparent" }}>
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "9px 14px", borderBottom: i < rows.length - 1 ? "1px solid #F3F4F6" : "none", background: r.bold ? (profitable ? "#F0FDF4" : "#FEF2F2") : "transparent" }}>
                 <div>
                   <span style={{ fontSize: "13px", color: "#374151", fontWeight: r.bold ? "700" : "400" }}>{r.label}</span>
                   {r.note && <span style={{ fontSize: "10px", color: "#9CA3AF", marginLeft: "6px" }}>({r.note})</span>}
@@ -108,8 +125,8 @@ function CommissionCalc() {
             <span style={{ fontSize: "18px" }}>{profitable ? "✅" : "⚠️"}</span>
             <p style={{ fontSize: "12px", color: profitable ? "#15803D" : "#DC2626", fontWeight: "600", margin: 0 }}>
               {profitable
-                ? `Profitable — you keep $${netAfterPts.toFixed(2)} after rewarding the customer $${cashBack.toFixed(2)} cash back.`
-                : `Not profitable at this points level — reduce to standard points or check commission rate.`}
+                ? `You earn $${commission.toFixed(2)}, give $${cashBack.toFixed(2)} back in rewards, and keep $${netProfit.toFixed(2)}.`
+                : `Points cost exceeds your commission — switch to standard points or confirm your commission rate.`}
             </p>
           </div>
         </>
@@ -361,14 +378,16 @@ export default function AdminDashboard() {
           <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>📊 Program Rates At-a-Glance</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px" }}>
             {[
-              { label: "Affiliate commission",        value: "3%",         sub: "CJ network cut",                            color: "#6B7280" },
-              { label: "Agent commission",             value: "8.4%",       sub: "Your revenue (flights: 1.6%)",              color: NAVY      },
-              { label: "Std pts cost — hotels/flights",value: "0.5%",       sub: "5 pts/$1 → $0.50 per $100 booked",         color: "#374151" },
-              { label: "Std pts cost — cruises/pkgs",  value: "1%",         sub: "10 pts/$1 → $1 per $100 booked",           color: "#374151" },
-              { label: "Double pts cost — hotels",     value: "1%",         sub: "10 pts/$1 · not available on flights",     color: ORANGE    },
-              { label: "Double pts cost — cruises/pkgs",value: "2%",        sub: "20 pts/$1 · not available on flights",     color: ORANGE    },
-              { label: "Min redemption",               value: "10,000 pts", sub: "= $10 cash out",                           color: "#374151" },
-              { label: "Payout window",                value: "45 days",    sub: "After trip completion",                    color: "#374151" },
+              { label: "Your commission — all products", value: "3%",         sub: "Expedia · Travelpayouts/Kiwi · CJ affiliates", color: NAVY      },
+              { label: "Std pts cost — hotels/flights",  value: "0.5%",       sub: "5 pts/$1 → $0.50 per $100 booked",             color: "#374151" },
+              { label: "Std pts cost — cruises/pkgs",    value: "1%",         sub: "10 pts/$1 → $1.00 per $100 booked",            color: "#374151" },
+              { label: "Double pts cost — hotels",       value: "1%",         sub: "10 pts/$1 · not available on flights",          color: ORANGE    },
+              { label: "Double pts cost — cruises/pkgs", value: "2%",         sub: "20 pts/$1 · not available on flights",          color: ORANGE    },
+              { label: "Net margin — std (hotels/flights)", value: "2.5%",    sub: "3% commission − 0.5% pts cost",                color: GREEN     },
+              { label: "Net margin — std (cruises/pkgs)",   value: "2%",      sub: "3% commission − 1% pts cost",                  color: GREEN     },
+              { label: "Net margin — double (cruises/pkgs)",value: "1%",      sub: "3% commission − 2% pts cost",                  color: GREEN     },
+              { label: "Min redemption",                 value: "10,000 pts", sub: "= $10 cash out",                               color: "#374151" },
+              { label: "Payout window",                  value: "45 days",    sub: "After trip completion",                        color: "#374151" },
             ].map((r, i) => (
               <div key={i} style={{ background: "#F8FAFF", borderRadius: "10px", padding: "12px 14px" }}>
                 <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "0 0 4px", fontWeight: "600", textTransform: "uppercase" }}>{r.label}</p>
