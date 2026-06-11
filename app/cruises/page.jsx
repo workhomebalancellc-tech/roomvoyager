@@ -14,7 +14,7 @@ const DESTINATIONS = [
   { name: "Alaska",          desc: "Majestic glaciers, wildlife, and breathtaking fjords sailing from Seattle.",             nights: "7–10 nights", from: "$549", photo: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=300&fit=crop&auto=format" },
   { name: "Bahamas",         desc: "Short getaways with turquoise water — perfect for first-time cruisers.",               nights: "3–5 nights",  from: "$249", photo: "https://images.unsplash.com/photo-1548574505-5e239809ee19?w=600&h=300&fit=crop&auto=format" },
   { name: "Mexican Riviera", desc: "Sunny ports, rich culture, and warm Pacific waters sailing from California.",           nights: "5–7 nights",  from: "$399", photo: "https://images.unsplash.com/photo-1518638150340-f706e86654de?w=600&h=300&fit=crop&auto=format" },
-  { name: "Transatlantic",   desc: "Epic ocean crossings between the Americas and Europe — a bucket-list voyage.",          nights: "12–18 nights",from: "$899", photo: "https://images.unsplash.com/photo-1580274455191-1c62238fa1c2?w=600&h=300&fit=crop&auto=format" },
+  { name: "Transatlantic",   desc: "Epic ocean crossings between the Americas and Europe — a bucket-list voyage.",          nights: "12–18 nights",from: "$899", photo: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=600&h=300&fit=crop&auto=format" },
 ];
 
 const LINES = [

@@ -15,7 +15,7 @@ const DOMESTIC = [
   },
   {
     city: "Orlando",
-    img: "https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=600&h=900&fit=crop&auto=format",
+    img: "https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
   },
   {
@@ -35,7 +35,7 @@ const DOMESTIC = [
   },
   {
     city: "Nashville",
-    img: "https://images.unsplash.com/photo-1546191078-af1e60e54024?w=600&h=900&fit=crop&auto=format",
+    img: "https://images.unsplash.com/photo-1545093149-618ce3bcf49d?w=600&h=900&fit=crop&auto=format",
     link: "/hotels",
   },
   {
@@ -73,7 +73,7 @@ const INTERNATIONAL = [
   },
   {
     city: "Montego Bay",
-    img: "https://images.unsplash.com/photo-1594132918932-b97a4a2f01e0?w=600&h=900&fit=crop&auto=format",
+    img: "https://images.unsplash.com/photo-1599413987323-b2b8c0d7d9c8?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
   },
   {

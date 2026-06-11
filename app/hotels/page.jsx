@@ -86,7 +86,7 @@ function HotelsContent() {
     { name: "Miami", photo: "https://images.unsplash.com/photo-1503891450247-ee5f8ec46dc3?w=300&h=200&fit=crop&auto=format", country: "Florida, USA", tag: "Trending" },
     { name: "Las Vegas", photo: "https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=300&h=200&fit=crop&auto=format", country: "Nevada, USA", tag: "Best Value" },
     { name: "Paris", photo: "https://images.unsplash.com/photo-1431274172761-fca41d930114?w=300&h=200&fit=crop&auto=format", country: "France", tag: "Romantic" },
-    { name: "Orlando", photo: "https://images.unsplash.com/photo-1526472050800-0d8e22b0a0c8?w=300&h=200&fit=crop&auto=format", country: "Florida, USA", tag: "Family Pick" },
+    { name: "Orlando", photo: "https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?w=300&h=200&fit=crop&auto=format", country: "Florida, USA", tag: "Family Pick" },
     { name: "Punta Cana", photo: "https://images.unsplash.com/photo-1548574505-5e239809ee19?w=300&h=200&fit=crop&auto=format", country: "Dominican Republic", tag: "All-Inclusive" },
   ];
 
