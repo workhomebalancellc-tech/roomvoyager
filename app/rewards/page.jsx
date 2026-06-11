@@ -10,10 +10,10 @@ const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 const TIERS = [
-  { name: "Explorer", icon: "🧭", range: "0–9,999 pts", multiplier: "1x", color: "#6B7280", perks: ["5 pts per $1 on flights & hotels", "10 pts per $1 on cruises & packages", "Double pts on hotels, cruises & packages", "No blackout dates"] },
-  { name: "Voyager", icon: "⚓", range: "10,000–49,999 pts", multiplier: "1.2x", color: NAVY, perks: ["1.2x points on all bookings", "12 pts/$1 standard · 24 pts/$1 double", "Priority email response", "Exclusive member deals"] },
-  { name: "Navigator", icon: "🗺️", range: "50,000–99,999 pts", multiplier: "1.5x", color: "#7C3AED", perks: ["1.5x points on all bookings", "15 pts/$1 standard · 30 pts/$1 double", "Dedicated agent access", "Early access to promotions"] },
-  { name: "Admiral", icon: "👑", range: "100,000+ pts", multiplier: "2x", color: ORANGE, perks: ["2x points on all bookings", "20 pts/$1 standard · 40 pts/$1 double", "VIP concierge service", "Best available rates guaranteed"] },
+  { name: "Explorer", icon: "🧭", range: "0–9,999 pts", color: "#6B7280", perks: ["5 pts per $1 on flights & hotels", "10 pts per $1 on cruises & packages", "Double pts on hotels, cruises & packages", "No blackout dates"] },
+  { name: "Voyager", icon: "⚓", range: "10,000–49,999 pts", color: NAVY, perks: ["Priority email response", "Exclusive member deals", "Same flat earning rates as all members", "No blackout dates"] },
+  { name: "Navigator", icon: "🗺️", range: "50,000–99,999 pts", color: "#7C3AED", perks: ["Dedicated agent access", "Early access to promotions", "Same flat earning rates as all members", "No blackout dates"] },
+  { name: "Admiral", icon: "👑", range: "100,000+ pts", color: ORANGE, perks: ["VIP concierge service", "Best available rates guaranteed", "Same flat earning rates as all members", "No blackout dates"] },
 ];
 
 const EARNING_RATES = [
@@ -70,18 +70,8 @@ function ShipIcon({ size = 24, color = "currentColor" }) {
 }
 
 function EarningsSlider() {
-  const [amount, setAmount]         = useState(1500);
-  const [useDouble, setUseDouble]   = useState(false);
-  const [selectedTier, setSelectedTier] = useState("explorer");
-
-  const SLIDER_TIERS = [
-    { id: "explorer",  label: "Explorer",  icon: "🧭", multiplier: 1.0, color: "#6B7280" },
-    { id: "voyager",   label: "Voyager",   icon: "⚓", multiplier: 1.2, color: "#003B95" },
-    { id: "navigator", label: "Navigator", icon: "🗺️", multiplier: 1.5, color: "#7C3AED" },
-    { id: "admiral",   label: "Admiral",   icon: "👑", multiplier: 2.0, color: "#FF6600" },
-  ];
-  const tier       = SLIDER_TIERS.find(t => t.id === selectedTier) || SLIDER_TIERS[0];
-  const multiplier = tier.multiplier;
+  const [amount, setAmount]   = useState(1500);
+  const [useDouble, setUseDouble] = useState(false);
 
   const PRODUCTS = [
     { id: "flight", label: "Flights",            ptsStd: 5,  ptsDbl: null, doubleOk: false },
@@ -125,36 +115,14 @@ function EarningsSlider() {
         </div>
       </div>
 
-      {/* Tier selector */}
-      <div style={{ marginBottom: "20px" }}>
-        <p style={{ fontSize: "11px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.08em", textAlign: "center", margin: "0 0 8px" }}>Your Rewards Tier</p>
-        <div style={{ display: "flex", gap: "6px", justifyContent: "center", flexWrap: "wrap" }}>
-          {SLIDER_TIERS.map(t => (
-            <button key={t.id} onClick={() => setSelectedTier(t.id)}
-              style={{ padding: "6px 14px", borderRadius: "8px", border: `2px solid ${selectedTier === t.id ? t.color : "#E5E7EB"}`, background: selectedTier === t.id ? t.color + "12" : "#F9FAFB",
-                color: selectedTier === t.id ? t.color : "#6B7280", fontWeight: "700", fontSize: "12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", transition: "all 0.15s" }}>
-              <span>{t.icon}</span>
-              <span>{t.label}</span>
-              {t.multiplier > 1 && <span style={{ fontSize: "10px", background: t.color + "20", padding: "1px 5px", borderRadius: "4px" }}>{t.multiplier}×</span>}
-            </button>
-          ))}
-        </div>
-        {multiplier > 1 && (
-          <p style={{ fontSize: "11px", textAlign: "center", color: tier.color, fontWeight: "700", margin: "8px 0 0" }}>
-            {tier.icon} {tier.label} bonus: all earnings × {tier.multiplier}
-          </p>
-        )}
-      </div>
-
       {/* Product rows */}
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         {PRODUCTS.map(p => {
           const notEligible = useDouble && !p.doubleOk;
-          const baseRate = (useDouble && p.doubleOk) ? p.ptsDbl : p.ptsStd;
-          const rate     = +(baseRate * multiplier).toFixed(1);
-          const pts      = Math.round(amount * rate);
-          const cash     = (pts / 1000).toFixed(2);
-          const barPct   = (pts / (10000 * 20 * multiplier)) * 100;
+          const rate = (useDouble && p.doubleOk) ? p.ptsDbl : p.ptsStd;
+          const pts  = Math.round(amount * rate);
+          const cash = (pts / 1000).toFixed(2);
+          const barPct = (pts / (10000 * 20)) * 100;
 
           return (
             <div key={p.id} style={{
@@ -175,7 +143,7 @@ function EarningsSlider() {
                   <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0 }}>
                     {notEligible
                       ? "Not eligible for double — standard only"
-                      : `${rate} pts per $1 · ${useDouble && p.doubleOk ? "double 🔥" : "standard"}${multiplier > 1 ? ` · ${tier.label} ${multiplier}×` : ""}`}
+                      : `${rate} pts per $1 · ${useDouble && p.doubleOk ? "double 🔥" : "standard"}`}
                   </p>
                 </div>
                 <div style={{ textAlign: "right", flexShrink: 0 }}>
@@ -491,8 +459,7 @@ export default function RewardsPage() {
                 )}
                 <p style={{ fontSize: "32px", margin: "0 0 8px" }}>{tier.icon}</p>
                 <p style={{ fontSize: "18px", fontWeight: "800", color: tier.color, margin: "0 0 2px" }}>{tier.name}</p>
-                <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 6px" }}>{tier.range}</p>
-                <p style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 16px" }}>{tier.multiplier} <span style={{ fontSize: "13px", fontWeight: "400", color: "#6B7280" }}>multiplier</span></p>
+                <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>{tier.range}</p>
                 <div style={{ borderTop: "1px solid #F3F4F6", paddingTop: "14px" }}>
                   {tier.perks.map((perk, i) => (
                     <div key={i} style={{ display: "flex", gap: "6px", marginBottom: "6px" }}>

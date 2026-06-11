@@ -19,10 +19,10 @@ const PRODUCT_TYPES = [
 ];
 
 const TIERS = [
-  { id: "explorer",  label: "Explorer",  icon: "🧭", multiplier: 1.0, range: "0–9,999 pts",    color: "#6B7280" },
-  { id: "voyager",   label: "Voyager",   icon: "⚓", multiplier: 1.2, range: "10k–49,999 pts",  color: NAVY      },
-  { id: "navigator", label: "Navigator", icon: "🗺️", multiplier: 1.5, range: "50k–99,999 pts",  color: "#7C3AED" },
-  { id: "admiral",   label: "Admiral",   icon: "👑", multiplier: 2.0, range: "100,000+ pts",    color: ORANGE    },
+  { id: "explorer",  label: "Explorer",  icon: "🧭", range: "0–9,999 pts",    color: "#6B7280" },
+  { id: "voyager",   label: "Voyager",   icon: "⚓", range: "10k–49,999 pts",  color: NAVY      },
+  { id: "navigator", label: "Navigator", icon: "🗺️", range: "50k–99,999 pts",  color: "#7C3AED" },
+  { id: "admiral",   label: "Admiral",   icon: "👑", range: "100,000+ pts",    color: ORANGE    },
 ];
 
 // Default commission rates (edit in the Profitability tab to match your actual agreements)
@@ -42,31 +42,24 @@ function newRow(typeId = "cruise") {
   return { id: nextId++, typeId, amount: "", double: false };
 }
 
-// multiplier comes from the selected tier (1x, 1.2x, 1.5x, 2x)
-function calcRow(row, multiplier = 1) {
+function calcRow(row) {
   const type = PRODUCT_TYPES.find(p => p.id === row.typeId);
   const amt  = parseFloat(row.amount) || 0;
   const useDouble = row.double && type?.doubleEligible;
   const basePts = useDouble ? (type?.baseDoublePts ?? type?.basePts ?? 5) : (type?.basePts ?? 5);
-  const effectivePts = +(basePts * multiplier).toFixed(4); // pts per $1 after tier boost
-  const pts  = Math.round(amt * effectivePts);
+  const pts  = Math.round(amt * basePts);
   const cash = pts / 1000;
-  // Also compute what all-std and all-dbl would be at this tier for comparison
-  const standardPts = Math.round(amt * (type?.basePts ?? 5) * multiplier);
-  const doublePts   = type?.doubleEligible ? Math.round(amt * (type?.baseDoublePts ?? 10) * multiplier) : null;
-  return { type, amt, basePts, effectivePts, pts, cash, standardPts, doublePts, useDouble };
+  const standardPts = Math.round(amt * (type?.basePts ?? 5));
+  const doublePts   = type?.doubleEligible ? Math.round(amt * (type?.baseDoublePts ?? 10)) : null;
+  return { type, amt, basePts, pts, cash, standardPts, doublePts, useDouble };
 }
 
 function CalculatorContent() {
-  const [rows,           setRows]          = useState([newRow("cruise")]);
-  const [globalMode,     setGlobalMode]    = useState("mixed");
-  const [copied,         setCopied]        = useState(false);
-  const [selectedTierId, setSelectedTierId]= useState("explorer");
-  const [commissions,    setCommissions]   = useState(DEFAULT_COMMISSIONS);
-  const [activeTab,      setActiveTab]     = useState("calculator"); // "calculator" | "profitability"
-
-  const tier       = TIERS.find(t => t.id === selectedTierId) || TIERS[0];
-  const multiplier = tier.multiplier;
+  const [rows,        setRows]       = useState([newRow("cruise")]);
+  const [globalMode,  setGlobalMode] = useState("mixed");
+  const [copied,      setCopied]     = useState(false);
+  const [commissions, setCommissions]= useState(DEFAULT_COMMISSIONS);
+  const [activeTab,   setActiveTab]  = useState("calculator"); // "calculator" | "profitability"
 
   function addRow(typeId) { setRows(r => [...r, newRow(typeId || "cruise")]); }
   function removeRow(id)  { setRows(r => r.filter(row => row.id !== id)); }
@@ -92,7 +85,7 @@ function CalculatorContent() {
     }
   }
 
-  const calcs       = rows.map(row => calcRow(row, multiplier));
+  const calcs       = rows.map(row => calcRow(row));
   const totalAmt    = calcs.reduce((s, c) => s + c.amt, 0);
   const totalPts    = calcs.reduce((s, c) => s + c.pts, 0);
   const totalCash   = totalPts / 1000;
@@ -103,9 +96,8 @@ function CalculatorContent() {
     const lines = rows.map((row, i) => {
       const c    = calcs[i];
       const mode = c.useDouble ? "Double" : "Standard";
-      return `${c.type?.icon} ${c.type?.label}: $${c.amt.toFixed(2)} → ${c.pts.toLocaleString()} pts ($${c.cash.toFixed(2)} back) [${mode} · ${tier.label} ${tier.multiplier}×]`;
+      return `${c.type?.icon} ${c.type?.label}: $${c.amt.toFixed(2)} → ${c.pts.toLocaleString()} pts ($${c.cash.toFixed(2)} back) [${mode}]`;
     });
-    lines.push(`\nTier: ${tier.icon} ${tier.label} (${tier.multiplier}× multiplier)`);
     lines.push(`Total: $${totalAmt.toFixed(2)} → ${totalPts.toLocaleString()} pts = $${totalCash.toFixed(2)} cash back`);
     navigator.clipboard.writeText(lines.join("\n")).then(() => {
       setCopied(true);
@@ -114,17 +106,15 @@ function CalculatorContent() {
   }
 
   // ─── Profitability helpers ─────────────────────────────────────────────────
-  function getCell(productId, mode, tierId) {
+  function getCell(productId, mode) {
     const p = PRODUCT_TYPES.find(x => x.id === productId);
-    const t = TIERS.find(x => x.id === tierId);
-    if (!p || !t) return null;
+    if (!p) return null;
     if (mode === "double" && !p.doubleEligible) return null;
-    const base        = mode === "double" ? p.baseDoublePts : p.basePts;
-    const effectivePts= +(base * t.multiplier).toFixed(4);
-    const costPct     = +(effectivePts / 10).toFixed(3); // pts/1000*100 = pts/10
-    const commPct     = commissions[productId] ?? 10;
-    const marginPct   = +(commPct - costPct).toFixed(2);
-    return { effectivePts, costPct, commPct, marginPct };
+    const base     = mode === "double" ? p.baseDoublePts : p.basePts;
+    const costPct  = +(base / 10).toFixed(3); // pts/1000*100 = pts/10
+    const commPct  = commissions[productId] ?? 10;
+    const marginPct= +(commPct - costPct).toFixed(2);
+    return { base, costPct, commPct, marginPct };
   }
 
   // ─── JSX ──────────────────────────────────────────────────────────────────
@@ -173,60 +163,23 @@ function CalculatorContent() {
         {/* ═══════════════════════ CALCULATOR TAB ═══════════════════════ */}
         {activeTab === "calculator" && (<>
 
-          {/* TIER SELECTOR */}
-          <div style={{ background: "#fff", border: `2px solid ${tier.color}30`, borderRadius: "14px", padding: "16px 20px", marginBottom: "20px" }}>
-            <p style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 12px" }}>
-              Customer Tier — multiplies all point calculations
-            </p>
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-              {TIERS.map(t => (
-                <button key={t.id} onClick={() => setSelectedTierId(t.id)}
-                  style={{ padding: "10px 18px", borderRadius: "10px", cursor: "pointer", transition: "all 0.15s",
-                    border: `2px solid ${selectedTierId === t.id ? t.color : "#E5E7EB"}`,
-                    background: selectedTierId === t.id ? t.color + "12" : "#F9FAFB",
-                    color: selectedTierId === t.id ? t.color : "#374151",
-                    fontWeight: "700", fontSize: "13px", display: "flex", flexDirection: "column", alignItems: "center", gap: "2px" }}>
-                  <span style={{ fontSize: "20px" }}>{t.icon}</span>
-                  <span>{t.label}</span>
-                  <span style={{ fontSize: "10px", fontWeight: "600", color: "#9CA3AF" }}>{t.multiplier}× · {t.range}</span>
-                </button>
-              ))}
-            </div>
-            {multiplier > 1 && (
-              <div style={{ marginTop: "12px", display: "inline-flex", gap: "8px", alignItems: "center", padding: "8px 14px", borderRadius: "8px", border: `1px solid ${tier.color}30`, background: tier.color + "10" }}>
-                <span style={{ fontSize: "15px" }}>{tier.icon}</span>
-                <span style={{ fontSize: "13px", fontWeight: "700", color: tier.color }}>
-                  {tier.label}: all base rates × {tier.multiplier} — guests at this tier earn {tier.multiplier}× points per dollar
-                </span>
-              </div>
-            )}
-          </div>
-
           {/* RATE REFERENCE BAR */}
           <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "20px" }}>
-            {PRODUCT_TYPES.map(p => {
-              const effStd = +(p.basePts * multiplier).toFixed(1);
-              const effDbl = p.doubleEligible ? +(p.baseDoublePts * multiplier).toFixed(1) : null;
-              return (
-                <div key={p.id} style={{ background: "#fff", borderRadius: "10px", padding: "10px 16px",
-                  border: `1px solid ${p.doubleEligible ? ORANGE + "40" : "#E5E7EB"}`, display: "flex", gap: "10px", alignItems: "center" }}>
-                  <span style={{ fontSize: "18px" }}>{p.icon}</span>
-                  <div>
-                    <p style={{ fontSize: "12px", fontWeight: "700", color: "#111827", margin: 0 }}>{p.label}</p>
-                    <p style={{ fontSize: "11px", fontWeight: "600", margin: 0, color: "#374151" }}>
-                      {effStd} pts/$1 std
-                      {effDbl ? <span style={{ color: ORANGE }}> · {effDbl} dbl 🔥</span>
-                               : <span style={{ color: "#9CA3AF" }}> only</span>}
-                    </p>
-                    {multiplier > 1 && (
-                      <p style={{ fontSize: "10px", color: "#9CA3AF", margin: 0 }}>
-                        base {p.basePts}{p.doubleEligible ? `/${p.baseDoublePts}` : ""} × {multiplier}
-                      </p>
-                    )}
-                  </div>
+            {PRODUCT_TYPES.map(p => (
+              <div key={p.id} style={{ background: "#fff", borderRadius: "10px", padding: "10px 16px",
+                border: `1px solid ${p.doubleEligible ? ORANGE + "40" : "#E5E7EB"}`, display: "flex", gap: "10px", alignItems: "center" }}>
+                <span style={{ fontSize: "18px" }}>{p.icon}</span>
+                <div>
+                  <p style={{ fontSize: "12px", fontWeight: "700", color: "#111827", margin: 0 }}>{p.label}</p>
+                  <p style={{ fontSize: "11px", fontWeight: "600", margin: 0, color: "#374151" }}>
+                    {p.basePts} pts/$1 std
+                    {p.doubleEligible
+                      ? <span style={{ color: ORANGE }}> · {p.baseDoublePts} dbl 🔥</span>
+                      : <span style={{ color: "#9CA3AF" }}> only</span>}
+                  </p>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 330px", gap: "24px", alignItems: "start" }}>
@@ -311,13 +264,13 @@ function CalculatorContent() {
                               <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "0 0 1px", textTransform: "uppercase", fontWeight: "600" }}>Points</p>
                               <p style={{ fontSize: "20px", fontWeight: "800", margin: 0, lineHeight: 1, color: c.useDouble ? ORANGE : NAVY }}>{c.pts.toLocaleString()}</p>
                               <p style={{ fontSize: "10px", color: "#9CA3AF", margin: "1px 0 0" }}>
-                                {c.effectivePts.toFixed(1)} pts/$1{multiplier > 1 ? ` (${tier.multiplier}×)` : ""}
+                                {c.basePts} pts/$1
                               </p>
                             </div>
                             <div style={{ textAlign: "center" }}>
                               <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "0 0 1px", textTransform: "uppercase", fontWeight: "600" }}>Cash Back</p>
                               <p style={{ fontSize: "20px", fontWeight: "800", color: GREEN, margin: 0, lineHeight: 1 }}>${c.cash.toFixed(2)}</p>
-                              <p style={{ fontSize: "10px", color: "#9CA3AF", margin: "1px 0 0" }}>{(c.effectivePts / 10).toFixed(2)}% cost</p>
+                              <p style={{ fontSize: "10px", color: "#9CA3AF", margin: "1px 0 0" }}>{(c.basePts / 10).toFixed(2)}% cost</p>
                             </div>
                             {type?.doubleEligible && (
                               <div style={{ textAlign: "center", opacity: 0.55 }}>
@@ -374,7 +327,7 @@ function CalculatorContent() {
                         <span style={{ fontSize: "13px", fontWeight: "600", color: "#111827" }}>{c.type?.icon} {c.type?.label}</span>
                         <span style={{ fontSize: "13px", color: "#374151" }}>${c.amt.toFixed(2)}</span>
                         <span style={{ fontSize: "12px", fontWeight: "700", color: c.useDouble ? ORANGE : "#374151" }}>{c.useDouble ? "Dbl 🔥" : "Std"}</span>
-                        <span style={{ fontSize: "12px", fontWeight: "700", color: tier.color }}>{c.effectivePts.toFixed(1)}</span>
+                        <span style={{ fontSize: "12px", fontWeight: "700", color: NAVY }}>{c.basePts}</span>
                         <span style={{ fontSize: "13px", fontWeight: "700", color: NAVY }}>{c.pts.toLocaleString()}</span>
                         <span style={{ fontSize: "13px", fontWeight: "800", color: GREEN }}>${c.cash.toFixed(2)}</span>
                       </div>
@@ -395,7 +348,7 @@ function CalculatorContent() {
             <div style={{ position: "sticky", top: "24px" }}>
               <div style={{ background: "#fff", border: `2px solid ${NAVY}`, borderRadius: "16px", padding: "24px", marginBottom: "16px" }}>
                 <p style={{ fontSize: "11px", fontWeight: "700", color: NAVY, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 16px" }}>
-                  📊 Summary · {tier.icon} {tier.label} ({tier.multiplier}×)
+                  📊 Summary
                 </p>
 
                 <div style={{ marginBottom: "20px" }}>
@@ -404,7 +357,7 @@ function CalculatorContent() {
                 </div>
 
                 <div style={{ borderTop: "1px solid #F3F4F6", paddingTop: "16px", marginBottom: "16px" }}>
-                  <p style={{ fontSize: "12px", color: "#9CA3AF", fontWeight: "600", margin: "0 0 3px" }}>POINTS EARNED ({tier.label.toUpperCase()})</p>
+                  <p style={{ fontSize: "12px", color: "#9CA3AF", fontWeight: "600", margin: "0 0 3px" }}>POINTS EARNED</p>
                   <p style={{ fontSize: "30px", fontWeight: "800", color: NAVY, margin: "0 0 2px", lineHeight: 1 }}>{totalPts.toLocaleString()}</p>
                   <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>pts</p>
                 </div>
@@ -416,7 +369,7 @@ function CalculatorContent() {
 
                 {totalAmt > 0 && (
                   <div style={{ borderTop: "1px solid #F3F4F6", paddingTop: "14px" }}>
-                    <p style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", margin: "0 0 10px" }}>All Std vs All Dbl at {tier.label}</p>
+                    <p style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", margin: "0 0 10px" }}>All Standard vs All Double</p>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
                       <div style={{ background: LIGHT_BLUE, borderRadius: "8px", padding: "12px", textAlign: "center" }}>
                         <p style={{ fontSize: "10px", fontWeight: "700", color: NAVY, margin: "0 0 4px", textTransform: "uppercase" }}>All Standard</p>
@@ -430,7 +383,7 @@ function CalculatorContent() {
                       </div>
                     </div>
                     <p style={{ fontSize: "10px", color: "#9CA3AF", margin: "8px 0 0", textAlign: "center" }}>
-                      * Flights are standard-only · eligible products earn double · {tier.label} {tier.multiplier}× multiplier applied
+                      * Flights are standard-only · hotels, cruises & packages are double-eligible
                     </p>
                   </div>
                 )}
@@ -490,20 +443,14 @@ function CalculatorContent() {
               <div style={{ background: NAVY, padding: "16px 20px" }}>
                 <p style={{ color: "#fff", fontWeight: "800", fontSize: "15px", margin: "0 0 4px" }}>Profitability Matrix</p>
                 <p style={{ color: "#93C5FD", fontSize: "12px", margin: 0 }}>
-                  Net margin = your commission % − points cash-back cost % · Each column applies that tier's multiplier to base rates
+                  Net margin = your commission % − points cash-back cost % (all tiers earn the same rate)
                 </p>
               </div>
 
               {/* Column headers */}
-              <div style={{ display: "grid", gridTemplateColumns: "190px 70px repeat(4, 1fr)", background: "#F8FAFF", borderBottom: "2px solid #E5E7EB", padding: "10px 20px", gap: "8px" }}>
-                <span style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase" }}>Product</span>
-                <span style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase" }}>Mode</span>
-                {TIERS.map(t => (
-                  <div key={t.id} style={{ textAlign: "center" }}>
-                    <p style={{ fontSize: "16px", margin: 0 }}>{t.icon}</p>
-                    <p style={{ fontSize: "12px", fontWeight: "700", color: t.color, margin: 0 }}>{t.label}</p>
-                    <p style={{ fontSize: "10px", color: "#9CA3AF", margin: 0 }}>{t.multiplier}×</p>
-                  </div>
+              <div style={{ display: "grid", gridTemplateColumns: "190px 70px 1fr 1fr 1fr 1fr", background: "#F8FAFF", borderBottom: "2px solid #E5E7EB", padding: "10px 20px", gap: "8px" }}>
+                {["Product", "Mode", "Pts/$1", "Cost %", "Your Comm %", "Net Margin"].map(h => (
+                  <span key={h} style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase" }}>{h}</span>
                 ))}
               </div>
 
@@ -513,8 +460,17 @@ function CalculatorContent() {
                 return modes.map((mode, mi) => {
                   const isFirst = mi === 0;
                   const isLast  = pi === PRODUCT_TYPES.length - 1 && mi === modes.length - 1;
+                  const cell    = getCell(p.id, mode);
+                  if (!cell) return null;
+                  const { base, marginPct, costPct, commPct } = cell;
+                  const isGood  = marginPct >= 5;
+                  const isTight = marginPct >= 1 && marginPct < 5;
+                  const isLoss  = marginPct < 1;
+                  const bgColor   = isLoss ? "#FEF2F2" : isTight ? "#FFFBEB" : "#F0FDF4";
+                  const textColor = isLoss ? "#DC2626" : isTight ? "#D97706" : GREEN;
+                  const statusLabel = isLoss ? "⚠️ Loss" : isTight ? "⚡ Tight" : "✓ Good";
                   return (
-                    <div key={`${p.id}-${mode}`} style={{ display: "grid", gridTemplateColumns: "190px 70px repeat(4, 1fr)", padding: "12px 20px", gap: "8px", alignItems: "center",
+                    <div key={`${p.id}-${mode}`} style={{ display: "grid", gridTemplateColumns: "190px 70px 1fr 1fr 1fr 1fr", padding: "12px 20px", gap: "8px", alignItems: "center",
                       borderBottom: isLast ? "none" : "1px solid #F3F4F6",
                       background: pi % 2 === 0 ? "#fff" : "#FAFAFA" }}>
 
@@ -536,26 +492,16 @@ function CalculatorContent() {
                         {mode === "double" ? "Dbl 🔥" : "Std"}
                       </span>
 
-                      {TIERS.map(t => {
-                        const cell = getCell(p.id, mode, t.id);
-                        if (!cell) return <span key={t.id} style={{ textAlign: "center", color: "#D1D5DB", fontSize: "12px" }}>—</span>;
-                        const { marginPct, costPct } = cell;
-                        const isGood  = marginPct >= 5;
-                        const isTight = marginPct >= 1 && marginPct < 5;
-                        const isLoss  = marginPct < 1;
-                        const bgColor   = isLoss ? "#FEF2F2" : isTight ? "#FFFBEB" : "#F0FDF4";
-                        const textColor = isLoss ? "#DC2626" : isTight ? "#D97706" : GREEN;
-                        const statusLabel = isLoss ? "⚠️ Loss" : isTight ? "⚡ Tight" : "✓ Good";
-                        return (
-                          <div key={t.id} style={{ textAlign: "center", background: bgColor, borderRadius: "8px", padding: "8px 4px" }}>
-                            <p style={{ fontSize: "15px", fontWeight: "800", color: textColor, margin: 0, lineHeight: 1 }}>
-                              {marginPct >= 0 ? "+" : ""}{marginPct.toFixed(1)}%
-                            </p>
-                            <p style={{ fontSize: "9px", color: "#9CA3AF", margin: "2px 0 0" }}>{costPct.toFixed(2)}% cost</p>
-                            <p style={{ fontSize: "9px", fontWeight: "700", color: textColor, margin: "1px 0 0" }}>{statusLabel}</p>
-                          </div>
-                        );
-                      })}
+                      <span style={{ fontSize: "13px", fontWeight: "700", color: NAVY }}>{base}</span>
+                      <span style={{ fontSize: "13px", color: "#374151" }}>{costPct.toFixed(2)}%</span>
+                      <span style={{ fontSize: "13px", color: "#374151" }}>{commPct}%</span>
+
+                      <div style={{ background: bgColor, borderRadius: "8px", padding: "8px 4px", textAlign: "center" }}>
+                        <p style={{ fontSize: "15px", fontWeight: "800", color: textColor, margin: 0, lineHeight: 1 }}>
+                          {marginPct >= 0 ? "+" : ""}{marginPct.toFixed(1)}%
+                        </p>
+                        <p style={{ fontSize: "9px", fontWeight: "700", color: textColor, margin: "2px 0 0" }}>{statusLabel}</p>
+                      </div>
                     </div>
                   );
                 });
@@ -581,7 +527,7 @@ function CalculatorContent() {
               ))}
               <div style={{ display: "flex", alignItems: "center", background: "#fff", border: "1px solid #E5E7EB", borderRadius: "8px", padding: "8px 14px" }}>
                 <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>
-                  <strong>Formula:</strong> Net margin = commission % − (pts/$1 × tier multiplier ÷ 10)
+                  <strong>Formula:</strong> Net margin = commission % − (pts/$1 ÷ 10)
                 </p>
               </div>
             </div>
@@ -591,9 +537,9 @@ function CalculatorContent() {
               <p style={{ fontSize: "14px", fontWeight: "700", color: "#1E40AF", margin: "0 0 10px" }}>💡 Key Takeaways</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                 {[
-                  `Cruises & Packages remain profitable at every tier and mode — even Admiral + Double earns ${(commissions.cruise - (20 * 2 / 10)).toFixed(1)}% margin with your current ${commissions.cruise}% commission.`,
-                  `Hotels are healthy across all tiers — standard and double.`,
-                  `Flights are the tightest margin at ${commissions.flight}% commission. Admiral tier (2×) brings cost to 1%, leaving only ${(commissions.flight - 1).toFixed(1)}% margin — thin but positive.`,
+                  `Cruises earn ${commissions.cruise}% commission. Standard pts cost ${(5/10).toFixed(1)}% → net ${(commissions.cruise - 0.5).toFixed(1)}%. Double pts cost ${(10/10).toFixed(1)}% → net ${(commissions.cruise - 1).toFixed(1)}%.`,
+                  `Hotels & flights earn ${commissions.hotel}% commission. Standard pts cost ${(5/10).toFixed(1)}% → net ${(commissions.hotel - 0.5).toFixed(1)}%. Double pts cost ${(10/10).toFixed(1)}% → net ${(commissions.hotel - 1).toFixed(1)}%.`,
+                  "All tiers earn at the same flat rate — tiers are prestige levels, not multipliers.",
                   "Update your commission rates above to see how your actual agreements change these numbers.",
                 ].map((text, i) => (
                   <div key={i} style={{ display: "flex", gap: "10px" }}>
