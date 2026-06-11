@@ -54,12 +54,15 @@ function FlightsContent() {
     const r  = tripType === "round" ? (ret || "anytime") : "no-return";
     const paxParam = pax > 1 ? `?adults=${pax}` : "";
     const kiwiUrl  = `https://www.kiwi.com/en/search/results/${encodeURIComponent(f)}/${encodeURIComponent(t)}/${d}/${r}${paxParam}`;
-    window.location.href = `/redirect?to=${encodeURIComponent(kiwiUrl)}&partner=Kiwi.com&product=flight`;
+    window.open(`/redirect?to=${encodeURIComponent(kiwiUrl)}&partner=Kiwi.com&product=flight`, "_blank", "noopener,noreferrer");
   }
 
   function pickDest(dest) {
     setTo(dest.name);
-    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    // scroll to search form — use getElementById for reliability
+    setTimeout(() => {
+      document.getElementById("flight-search-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
   }
 
   return (
@@ -100,7 +103,7 @@ function FlightsContent() {
       </div>
 
       {/* ── CUSTOM SEARCH FORM ───────────────────────────────────────── */}
-      <div style={{ background: NAVY, padding: "36px 24px" }}>
+      <div id="flight-search-form" style={{ background: NAVY, padding: "36px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <form
             ref={formRef}

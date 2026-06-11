@@ -69,7 +69,14 @@ function HotelsContent() {
     e.preventDefault();
     const params = new URLSearchParams({ destination: destination || "United States", startDate: checkIn, endDate: checkOut, adults, camref: "1110l8R3Z", pubref: "hotels-page" });
     const expediaUrl = `https://www.expedia.com/Hotel-Search?${params.toString()}`;
-    window.location.href = `/redirect?to=${encodeURIComponent(expediaUrl)}&partner=Expedia&product=hotel`;
+    window.open(`/redirect?to=${encodeURIComponent(expediaUrl)}&partner=Expedia&product=hotel`, "_blank", "noopener,noreferrer");
+  }
+
+  function pickHotelDest(name) {
+    setDestination(name);
+    setTimeout(() => {
+      document.getElementById("hotel-search-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
   }
 
   const destinations = [
@@ -107,7 +114,7 @@ function HotelsContent() {
       </div>
 
       {/* SEARCH */}
-      <div style={{ background: NAVY, padding: "24px 24px 28px" }}>
+      <div id="hotel-search-form" style={{ background: NAVY, padding: "24px 24px 28px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "16px", marginBottom: "16px" }}>
             <div>
@@ -170,8 +177,9 @@ function HotelsContent() {
           <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 24px" }}>Trending destinations</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "14px" }}>
             {destinations.map((dest, i) => (
-              <a key={i} href={`/redirect?to=${encodeURIComponent(`https://www.expedia.com/Hotel-Search?destination=${dest.name}&affiliateid=1110l8R3Z`)}&partner=Expedia&product=hotel`} style={{ textDecoration: "none" }}>
-                <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", overflow: "hidden", display: "flex", cursor: "pointer" }}
+              <button key={i} onClick={() => pickHotelDest(dest.name)}
+                style={{ background: "none", border: "none", padding: 0, textAlign: "left", cursor: "pointer", width: "100%" }}>
+                <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", overflow: "hidden", display: "flex" }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,59,149,0.15)"; e.currentTarget.style.borderColor = "#93C5FD"; }}
                   onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "#E5E7EB"; }}>
                   <div style={{ width: "80px", height: "72px", flexShrink: 0 }}>
@@ -183,7 +191,7 @@ function HotelsContent() {
                     <span style={{ fontSize: "10px", fontWeight: "600", background: LIGHT_BLUE, color: NAVY, padding: "2px 8px", borderRadius: "999px" }}>{dest.tag}</span>
                   </div>
                 </div>
-              </a>
+              </button>
             ))}
           </div>
         </div>
