@@ -453,6 +453,27 @@ export default function RewardsPage() {
             </div>
           </div>
 
+          {/* Redeem button — always visible */}
+          <div style={{ marginTop: "24px", textAlign: "center" }}>
+            {session ? (
+              canRedeem ? (
+                <button onClick={() => { setRedeemSubmitted(false); redeemRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
+                  style={{ background: ORANGE, color: "#fff", padding: "14px 36px", borderRadius: "12px", fontSize: "16px", fontWeight: "700", border: "none", cursor: "pointer", boxShadow: "0 4px 18px rgba(255,102,0,0.35)" }}>
+                  🎉 Redeem Cash →
+                </button>
+              ) : (
+                <div style={{ display: "inline-block", background: LIGHT_BLUE, borderRadius: "12px", padding: "14px 28px" }}>
+                  <p style={{ color: NAVY, fontWeight: "700", fontSize: "15px", margin: "0 0 4px" }}>You have {userPoints.toLocaleString()} pts</p>
+                  <p style={{ color: "#6B7280", fontSize: "13px", margin: 0 }}>{(10000 - userPoints).toLocaleString()} more points until you can redeem ($10 minimum)</p>
+                </div>
+              )
+            ) : (
+              <a href="/account/signup" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 36px", borderRadius: "12px", fontSize: "16px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 18px rgba(255,102,0,0.35)" }}>
+                Join Free to Start Redeeming →
+              </a>
+            )}
+          </div>
+
           {/* Redeem form — shown when signed in and eligible */}
           {session && canRedeem && (
             <div ref={redeemRef} style={{ marginTop: "24px", background: "#fff", border: `2px solid ${ORANGE}`, borderRadius: "16px", padding: "28px" }}>
