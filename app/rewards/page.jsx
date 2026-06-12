@@ -229,14 +229,18 @@ export default function RewardsPage() {
 
   const currentTier = getCurrentTier();
 
+  const [redeemError, setRedeemError] = useState("");
+  const [redeemLoading, setRedeemLoading] = useState(false);
+
   async function handleRedeemSubmit(e) {
     e.preventDefault();
     const method = PAYMENT_METHODS.find(m => m.id === redeemMethod);
     const cashOut = (redeemAmount / 1000).toFixed(2);
+    setRedeemLoading(true);
+    setRedeemError("");
 
-    // Log to Airtable tracker (non-blocking — email still fires even if this fails)
     try {
-      await fetch('/api/redemptions', {
+      const res = await fetch('/api/redemptions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -248,15 +252,13 @@ export default function RewardsPage() {
           paymentHandle:  redeemHandle,
         })
       });
+      if (!res.ok) throw new Error('Submission failed');
+      setRedeemSubmitted(true);
     } catch (err) {
-      console.error('Failed to log redemption to tracker:', err);
+      setRedeemError("Something went wrong. Please email us at roomvoyager@protonmail.com to request your redemption.");
+    } finally {
+      setRedeemLoading(false);
     }
-
-    // Send email to owner
-    const subject = `Rewards Redemption Request — ${redeemAmount.toLocaleString()} pts ($${cashOut})`;
-    const body = `Hi Alyse,\n\nI would like to redeem my RoomVoyager Rewards points.\n\nAccount: ${session?.email}\nName: ${session?.name || "N/A"}\nPoints to redeem: ${redeemAmount.toLocaleString()}\nCash value: $${cashOut}\nPayment method: ${method?.label}\nSend to: ${redeemHandle}\n\nPlease process within 2 business days. Thank you!`;
-    window.location.href = `mailto:workhomebalancellc@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setRedeemSubmitted(true);
   }
 
   return (
@@ -529,11 +531,16 @@ export default function RewardsPage() {
                       value={redeemHandle} onChange={e => setRedeemHandle(e.target.value)}
                       style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
                   </div>
-                  <button type="submit"
-                    style={{ width: "100%", background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "14px", fontSize: "15px", fontWeight: "700", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.3)" }}>
-                    💵 Redeem
+                  {redeemError && (
+                    <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", color: "#DC2626", padding: "12px", borderRadius: "8px", fontSize: "13px", marginBottom: "12px" }}>
+                      {redeemError}
+                    </div>
+                  )}
+                  <button type="submit" disabled={redeemLoading}
+                    style={{ width: "100%", background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "14px", fontSize: "15px", fontWeight: "700", cursor: redeemLoading ? "not-allowed" : "pointer", opacity: redeemLoading ? 0.7 : 1, boxShadow: "0 4px 14px rgba(255,102,0,0.3)" }}>
+                    {redeemLoading ? "Submitting..." : "💵 Redeem"}
                   </button>
-                  <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "10px 0 0" }}>Opens your email client · Processed within 2 business days · Standard (free) transfers only</p>
+                  <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "10px 0 0" }}>Processed within 2 business days · Standard (free) transfers only</p>
                 </form>
               )}
             </div>
