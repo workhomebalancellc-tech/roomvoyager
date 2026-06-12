@@ -245,6 +245,7 @@ export default function RewardsPage() {
     setRedeemError("");
 
     try {
+      // Submit redemption request
       const res = await fetch('/api/redemptions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -258,8 +259,20 @@ export default function RewardsPage() {
         })
       });
       if (!res.ok) throw new Error('Submission failed');
-      // Deduct points from Firestore
-      await deductPoints(session.uid, redeemAmount);
+
+      // Deduct points via server-side API (bypasses CSP)
+      if (session?.email) {
+        await fetch('/api/admin/firestore', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'deductPoints',
+            email:  session.email,
+            amount: redeemAmount,
+          }),
+        });
+      }
+
       const newPoints = Math.max(0, userPoints - redeemAmount);
       setUserPoints(newPoints);
       setRedeemSubmitted(true);
