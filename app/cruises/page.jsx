@@ -4,6 +4,14 @@ import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import FloatingChat from "../components/FloatingChat";
+import { useAuth } from "../../contexts/AuthContext";
+
+// Appends ?sid=USER_UID to affiliate URLs so CJ postbacks can identify the user
+function tagLink(url, uid) {
+  if (!uid) return url;
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}sid=${uid}`;
+}
 
 const NAVY       = "#003B95";
 const ORANGE     = "#FF6600";
@@ -55,6 +63,8 @@ const inputStyle = { width: "100%", padding: "9px 12px", border: "1.5px solid #D
 const labelStyle = { fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "4px" };
 
 export default function CruisesPage() {
+  const { user } = useAuth();
+  const uid = user?.uid || null;
   const [showModal, setShowModal]       = useState(false);
   const [mode, setMode]                 = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -394,7 +404,7 @@ export default function CruisesPage() {
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>Popular Cruise Destinations</h2>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr", gap: "16px" }}>
               {DESTINATIONS.map((d, i) => (
-                <a key={i} href={d.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block", background: "#fff", borderRadius: "14px", overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 8px rgba(0,59,149,0.06)", cursor: "pointer" }}
+                <a key={i} href={tagLink(d.href, uid)} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block", background: "#fff", borderRadius: "14px", overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 8px rgba(0,59,149,0.06)", cursor: "pointer" }}
                   onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,59,149,0.15)"}
                   onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,59,149,0.06)"}>
                   <div style={{ position: "relative", height: "110px", overflow: "hidden", background: NAVY }}>
@@ -419,7 +429,7 @@ export default function CruisesPage() {
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "12px" }}>
               {LINES.map((l, i) => (
                 <a key={i}
-                  href={l.href}
+                  href={tagLink(l.href, uid)}
                   target="_blank" rel="noopener noreferrer"
                   style={{ background: "#fff", borderRadius: "12px", padding: "16px", border: "1px solid #E5E7EB", display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = NAVY}
