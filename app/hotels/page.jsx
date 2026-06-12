@@ -172,7 +172,6 @@ function HotelsContent() {
 
       {/* MAIN */}
       <div style={{ maxWidth: "960px", margin: "0 auto", padding: "48px 24px 80px" }}>
-        <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "0 0 16px" }}>Impact-Site-Verification: undefined</p>
 
         {/* Trending Destinations */}
         <div style={{ marginBottom: "56px" }}>
