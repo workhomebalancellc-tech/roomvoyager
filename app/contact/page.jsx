@@ -1,10 +1,106 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
+
+const FAQS = [
+  { q: ["how do i earn points", "earn points", "how points work", "points"], a: "You earn 5 pts per $1 on hotels and flights, and 10 pts per $1 on cruises and vacation packages. Double points are available on hotels, cruises, and packages." },
+  { q: ["redeem points", "how to redeem", "cash out", "withdraw"], a: "You can redeem points once you hit 1,000. We pay out via Zelle, Cash App, or Venmo. 10,000 pts = $10, 25,000 pts = $25, 50,000 pts = $50, 100,000 pts = $100." },
+  { q: ["tiers", "tier", "explorer", "voyager", "navigator", "admiral", "levels"], a: "We have 4 tiers: Explorer (0–9,999 pts), Voyager (10,000–49,999), Navigator (50,000–99,999), and Admiral (100,000+). Higher tiers unlock better perks and auto payouts." },
+  { q: ["cancel", "cancellation", "refund"], a: "Cancellation policies vary by provider (hotel, airline, or cruise line). Most hotels booked through RoomVoyager offer free cancellation options — check the listing details before booking." },
+  { q: ["how to book", "book a cruise", "book a hotel", "book flights", "booking"], a: "Browse our Hotels, Flights, or Cruises pages, choose your option, and you'll be directed to our trusted partner to complete the booking securely. Points are credited after your trip." },
+  { q: ["contact", "email", "phone", "reach you", "support"], a: "You can email us at roomvoyager@protonmail.com or use the contact form on this page. We respond within 24 hours on business days." },
+  { q: ["group", "group booking", "group rate"], a: "We offer special group rates for cruises, hotels, and packages. Use the contact form and select 'Group Booking' as your subject, or email us directly." },
+  { q: ["referral", "refer a friend", "referrals"], a: "Yes! Refer a friend and both of you earn bonus points: 200 pts for flights, 350 pts for hotels, and 500 pts for cruises or packages — credited after their first booking." },
+  { q: ["sign up", "create account", "join", "register", "free"], a: "Creating an account is free — no credit card required. Sign up at roomvoyager.com/account/signup to start earning points right away." },
+  { q: ["birthday", "birthday bonus"], a: "Voyager, Navigator, and Admiral members receive a 500-point birthday bonus automatically credited to your account." },
+];
+
+function getBotReply(input) {
+  const lower = input.toLowerCase();
+  for (const faq of FAQS) {
+    if (faq.q.some(k => lower.includes(k))) return faq.a;
+  }
+  return "I'm not sure about that one! Please use the contact form below or email us at roomvoyager@protonmail.com and our team will get back to you within 24 hours.";
+}
+
+function ChatBot() {
+  const [messages, setMessages] = useState([
+    { from: "bot", text: "Hi! I'm the RoomVoyager assistant. Ask me anything about our rewards program, bookings, or account — or type 'contact' to reach the team." }
+  ]);
+  const [input, setInput] = useState("");
+  const bottomRef = useRef(null);
+
+  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+
+  function send() {
+    const trimmed = input.trim();
+    if (!trimmed) return;
+    const userMsg = { from: "user", text: trimmed };
+    const botMsg  = { from: "bot",  text: getBotReply(trimmed) };
+    setMessages(prev => [...prev, userMsg, botMsg]);
+    setInput("");
+  }
+
+  return (
+    <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", overflow: "hidden", marginBottom: "80px" }}>
+      <div style={{ background: NAVY, padding: "20px 28px", display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ width: "36px", height: "36px", background: ORANGE, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>💬</div>
+        <div>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 2px" }}>FAQ Assistant</p>
+          <p style={{ color: "#fff", fontSize: "16px", fontWeight: "800", margin: 0 }}>Ask us anything</p>
+        </div>
+      </div>
+
+      {/* Suggestion chips */}
+      <div style={{ padding: "14px 20px 0", display: "flex", gap: "8px", flexWrap: "wrap" }}>
+        {["How do I earn points?", "How do I redeem?", "Tell me about tiers", "Group bookings"].map((q, i) => (
+          <button key={i} onClick={() => { setInput(q); setTimeout(() => { const trimmed = q.trim(); setMessages(prev => [...prev, { from: "user", text: trimmed }, { from: "bot", text: getBotReply(trimmed) }]); setInput(""); }, 0); }}
+            style={{ background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "999px", padding: "6px 14px", fontSize: "12px", fontWeight: "600", cursor: "pointer" }}>
+            {q}
+          </button>
+        ))}
+      </div>
+
+      {/* Messages */}
+      <div style={{ padding: "16px 20px", height: "260px", overflowY: "auto", display: "flex", flexDirection: "column", gap: "12px" }}>
+        {messages.map((m, i) => (
+          <div key={i} style={{ display: "flex", justifyContent: m.from === "user" ? "flex-end" : "flex-start" }}>
+            <div style={{
+              maxWidth: "80%", padding: "10px 14px", borderRadius: m.from === "user" ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
+              background: m.from === "user" ? NAVY : LIGHT_BLUE,
+              color: m.from === "user" ? "#fff" : "#111827",
+              fontSize: "14px", lineHeight: 1.55,
+            }}>{m.text}</div>
+          </div>
+        ))}
+        <div ref={bottomRef} />
+      </div>
+
+      {/* Input */}
+      <div style={{ borderTop: "1px solid #E5E7EB", padding: "14px 20px", display: "flex", gap: "10px" }}>
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && send()}
+          placeholder="Ask a question..."
+          style={{ flex: 1, padding: "10px 14px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box" }}
+          onFocus={e => e.target.style.borderColor = NAVY}
+          onBlur={e => e.target.style.borderColor = "#E5E7EB"}
+        />
+        <button onClick={send}
+          style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "10px 20px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>
+          Send
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
@@ -45,24 +141,10 @@ export default function ContactPage() {
   };
 
   return (
+    <>
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
-      {/* NAV */}
-      <nav style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 24px", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 1px 8px rgba(0,0,0,0.07)" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px" }}>
-          <a href="/" style={{ fontSize: "22px", fontWeight: "800", color: NAVY, textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
-          <div style={{ display: "flex", gap: "20px", alignItems: "center", flexWrap: "wrap" }}>
-            <a href="/hotels" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Hotels</a>
-            <a href="/flights" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Flights</a>
-            <a href="/cruises" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Cruises</a>
-            <a href="/rewards" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Rewards</a>
-            <a href="/profile" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Profile</a>
-            <a href="/contact" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "700", borderBottom: `2px solid ${ORANGE}`, paddingBottom: "2px" }}>Contact</a>
-            <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "7px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
-            <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
-          </div>
-        </div>
-      </nav>
+      <NavBar active="contact" />
 
       {/* HERO */}
       <div style={{ position: "relative", height: "280px", overflow: "hidden" }}>
@@ -77,9 +159,9 @@ export default function ContactPage() {
 
       {/* CONTACT CARDS */}
       <div style={{ maxWidth: "960px", margin: "0 auto", padding: "48px 24px 0" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "40px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px", marginBottom: "40px" }}>
           {[
-            { icon: "✉️", title: "Email Us", lines: ["workhomebalancellc@gmail.com"] },
+            { icon: "✉️", title: "Email Us", lines: ["roomvoyager@protonmail.com"] },
             { icon: "📞", title: "Call Us", lines: ["1-800-VOYAGER", "Mon–Fri 9am–6pm EST"] },
             { icon: "💬", title: "Live Chat", lines: ["Available on site", "Under 5 min response"] },
             { icon: "🚢", title: "Group Bookings", lines: ["Cruises, hotels & more", "Special group rates"] },
@@ -91,6 +173,9 @@ export default function ContactPage() {
             </div>
           ))}
         </div>
+
+        {/* CHATBOT */}
+        <ChatBot />
 
         {/* FORM */}
         <div style={{ maxWidth: "680px", margin: "0 auto 80px" }}>
@@ -158,11 +243,8 @@ export default function ContactPage() {
         </div>
       </div>
 
-      {/* COPYRIGHT */}
-      <div style={{ background: NAVY, padding: "14px 24px", textAlign: "center" }}>
-        <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", margin: 0 }}>RoomVoyager © 2026</p>
-      </div>
-
     </div>
+    <Footer />
+    </>
   );
 }

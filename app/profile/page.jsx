@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -92,28 +94,10 @@ export default function ProfilePage() {
     { id: "rewards",    label: "Rewards",     icon: "🏆" },
   ];
 
-  const Nav = () => (
-    <nav style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 24px", position: "sticky", top: 0, zIndex: 50, boxShadow: "0 1px 8px rgba(0,0,0,0.07)", fontFamily: "system-ui, -apple-system, sans-serif" }}>
-      <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px" }}>
-        <a href="/" style={{ fontSize: "22px", fontWeight: "800", color: NAVY, textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
-        <div style={{ display: "flex", gap: "20px", alignItems: "center", flexWrap: "wrap" }}>
-          <a href="/hotels"  style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Hotels</a>
-          <a href="/flights" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Flights</a>
-          <a href="/cruises" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Cruises</a>
-          <a href="/rewards" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Rewards</a>
-          <a href="/profile" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "700", borderBottom: `2px solid ${ORANGE}`, paddingBottom: "2px" }}>Profile</a>
-          {!user && <>
-            <a href="/account/signin" style={{ color: NAVY, textDecoration: "none", fontSize: "14px", fontWeight: "600", padding: "7px 16px", border: `1.5px solid ${NAVY}`, borderRadius: "8px" }}>Sign In</a>
-            <a href="/account/signup" style={{ background: ORANGE, color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "700", padding: "8px 18px", borderRadius: "8px" }}>Sign Up</a>
-          </>}
-        </div>
-      </div>
-    </nav>
-  );
 
   if (loading) return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
-      <Nav />
+      <NavBar active="profile" />
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "80px" }}>
         <div style={{ width: "40px", height: "40px", border: `3px solid ${LIGHT_BLUE}`, borderTopColor: NAVY, borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
       </div>
@@ -122,7 +106,7 @@ export default function ProfilePage() {
 
   if (!user) return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
-      <Nav />
+      <NavBar active="profile" />
       <div style={{ maxWidth: "480px", margin: "80px auto", padding: "0 24px", textAlign: "center" }}>
         <div style={{ fontSize: "56px", marginBottom: "20px" }}>🔒</div>
         <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 10px" }}>Sign in to view your profile</h2>
@@ -138,8 +122,9 @@ export default function ProfilePage() {
   const filteredBookings = bookingFilter === "all" ? bookings : bookings.filter(b => b.type === bookingFilter || b.status === bookingFilter);
 
   return (
+    <>
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
-      <Nav />
+      <NavBar active="profile" />
 
       {/* HERO */}
       <div style={{ background: NAVY, padding: "36px 24px 80px" }}>
@@ -598,5 +583,7 @@ export default function ProfilePage() {
 
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

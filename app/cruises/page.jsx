@@ -363,25 +363,8 @@ export default function CruisesPage() {
         </div>
       </div>
 
-      {/* MOBILE SECTION NAV */}
-      {isMobile && (
-        <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
-          <div style={{ display: "flex", gap: "0", padding: "0 16px", whiteSpace: "nowrap" }}>
-            {[
-              { label: "Destinations", href: "#destinations" },
-              { label: "Cruise Lines",  href: "#cruise-lines"  },
-              { label: "Search Cruises",href: "#search"        },
-              { label: "Get a Quote",   href: "#quote"         },
-            ].map((item, i) => (
-              <a key={i} href={item.href}
-                style={{ display: "inline-block", padding: "12px 16px", fontSize: "13px", fontWeight: "600", color: NAVY, textDecoration: "none", borderBottom: "2px solid transparent", flexShrink: 0 }}
-                onMouseEnter={e => { e.currentTarget.style.borderBottomColor = ORANGE; e.currentTarget.style.color = ORANGE; }}
-                onMouseLeave={e => { e.currentTarget.style.borderBottomColor = "transparent"; e.currentTarget.style.color = NAVY; }}>
-                {item.label}
-              </a>
-            ))}
-          </div>
-        </div>
+      {/* MOBILE SECTION NAV removed */}
+      {false && (
       )}
 
       {/* MAIN — responsive two column */}

@@ -723,20 +723,16 @@ export default function RewardsPage() {
         </section>
 
         {/* CTA */}
-        <div style={{ position: "relative", borderRadius: "20px", overflow: "hidden" }}>
-          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&h=240&fit=crop&auto=format" alt="Start earning" style={{ width: "100%", height: "200px", objectFit: "cover" }} />
-          <div style={{ position: "absolute", inset: 0, background: `${NAVY}e8` }} />
-          <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "0 24px" }}>
-            <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#fff", margin: "0 0 8px" }}>Ready to start earning?</h2>
-            <p style={{ color: "#BFDBFE", fontSize: "15px", margin: "0 0 24px" }}>Join free — no credit card required. Start earning on your first booking.</p>
-            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
-              <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
-                Join Rewards free →
-              </a>
-              <a href="/hotels" style={{ background: "rgba(255,255,255,0.15)", color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "600", textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)" }}>
-                Browse hotels
-              </a>
-            </div>
+        <div style={{ background: NAVY, borderRadius: "20px", padding: "48px 24px", textAlign: "center" }}>
+          <h2 style={{ fontSize: "clamp(20px, 4vw, 26px)", fontWeight: "800", color: "#fff", margin: "0 0 10px" }}>Ready to start earning?</h2>
+          <p style={{ color: "#BFDBFE", fontSize: "15px", margin: "0 0 28px", lineHeight: 1.6 }}>Join free — no credit card required. Start earning on your first booking.</p>
+          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
+            <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
+              Join Rewards free →
+            </a>
+            <a href="/hotels" style={{ background: "rgba(255,255,255,0.15)", color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "600", textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)" }}>
+              Browse hotels
+            </a>
           </div>
         </div>
       </div>

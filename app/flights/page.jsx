@@ -309,7 +309,7 @@ function FlightsContent() {
                 </div>
               </div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: tripType === "round" ? "1fr 1fr 120px auto" : "1fr 120px auto", gap: "12px", alignItems: "flex-end" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "12px", alignItems: "flex-end" }}>
               <div>
                 <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Depart</label>
                 <input type="date" value={depart} min={mounted ? new Date().toISOString().split("T")[0] : ""} onChange={e => handleDepartChange(e.target.value)} style={inp} />
@@ -326,7 +326,7 @@ function FlightsContent() {
                   {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n} {n === 1 ? "Adult" : "Adults"}</option>)}
                 </select>
               </div>
-              <button type="submit" style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(0,59,149,0.3)", height: "42px", alignSelf: "flex-end" }}>
+              <button type="submit" style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(0,59,149,0.3)", height: "42px", alignSelf: "flex-end", width: "100%" }}>
                 Search ✈️
               </button>
             </div>
@@ -388,7 +388,6 @@ function FlightsContent() {
             { icon: "🏆", title: "Earn real cash back",       desc: "5 Rewards points per $1 on flights — redeem for real money via Zelle, Cash App, or Venmo." },
             { icon: "🔍", title: "500+ airlines compared",    desc: "We search major carriers, budget airlines, and everything in between to find the best price." },
             { icon: "✈️+🏨", title: "Bundle & save",         desc: "Add a hotel or cruise to your flight and unlock package pricing not available separately." },
-            { icon: "📞", title: "Agent support",             desc: "Need help booking a complex itinerary? Our travel advisor handles it at no extra cost." },
           ].map((item, i) => (
             <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "24px" }}>
               <div style={{ fontSize: "32px", marginBottom: "12px" }}>{item.icon}</div>
