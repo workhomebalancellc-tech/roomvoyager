@@ -111,7 +111,10 @@ function RedirectContent() {
             </svg>
           </span>
         ) : product === "hotel" ? (
-          <span style={{ fontSize: "11px", color: "#93C5FD" }}>Powered by <strong style={{ color: "#fff" }}>Expedia</strong></span>
+          <span style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "11px", color: "#93C5FD" }}>
+            Powered by
+            <img src="https://logo.clearbit.com/expedia.com" alt="Expedia" height="18" style={{ filter: "brightness(0) invert(1)", verticalAlign: "middle" }} />
+          </span>
         ) : (
           <span style={{ fontSize: "12px", color: "#93C5FD" }}>Secure redirect</span>
         )}
@@ -230,7 +233,7 @@ function RedirectContent() {
           </svg>
         ) : product === "hotel" ? (
           <img
-            src="/expedia-logo.svg"
+            src="https://logo.clearbit.com/expedia.com"
             alt="Expedia"
             height="48"
             style={{ display: "inline-block", maxWidth: "200px" }}
