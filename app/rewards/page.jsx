@@ -193,7 +193,10 @@ export default function RewardsPage() {
 
   useEffect(() => {
     if (session?.uid) {
-      getUserPoints(session.uid).then(pts => setUserPoints(pts)).catch(() => {});
+      fetch(`/api/user/points?uid=${session.uid}`)
+        .then(r => r.json())
+        .then(d => setUserPoints(d.points || 0))
+        .catch(() => {});
     }
 
     const saved = localStorage.getItem("rv_autopay");

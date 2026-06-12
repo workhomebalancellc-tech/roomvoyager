@@ -22,8 +22,17 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
-        // Ensure Firestore user doc exists (no-op if already created)
-        initUserDoc(firebaseUser.uid, firebaseUser.displayName, firebaseUser.email).catch(() => {});
+        // Ensure Firestore user doc exists via server-side API (bypasses CSP)
+        fetch("/api/admin/firestore", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "initUser",
+            uid: firebaseUser.uid,
+            name: firebaseUser.displayName || "",
+            email: firebaseUser.email || "",
+          }),
+        }).catch(() => {});
         // Map Firebase user to a consistent shape used across the app
         setUser({
           name: firebaseUser.displayName,
