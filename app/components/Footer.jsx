@@ -98,7 +98,7 @@ export default function Footer() {
             © {year} RoomVoyager. We may earn affiliate commissions on bookings — at no extra cost to you.
           </p>
           <a href="/admin"
-            style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", textDecoration: "none", padding: "3px 8px", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "4px" }}
+            style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", textDecoration: "none", padding: "3px 8px", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "4px", marginRight: "72px" }}
             onMouseEnter={e => e.target.style.color = "rgba(255,255,255,0.6)"}
             onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.25)"}>
             ⚙ Admin

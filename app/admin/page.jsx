@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import { addPoints, deductPoints, setPoints, getUserPoints } from "../../lib/points";
 
@@ -293,25 +293,54 @@ function AdminLogin() {
 }
 
 function AwardPoints() {
-  const [email, setEmail]       = useState("");
-  const [found, setFound]       = useState(null); // { uid, name, email, points }
-  const [amount, setAmount]     = useState("");
-  const [action, setAction]     = useState("add"); // add | deduct | set
-  const [status, setStatus]     = useState("");
-  const [loading, setLoading]   = useState(false);
+  const [email, setEmail]         = useState("");
+  const [found, setFound]         = useState(null); // { uid, name, email, points }
+  const [notFound, setNotFound]   = useState(false);
+  const [amount, setAmount]       = useState("");
+  const [action, setAction]       = useState("add"); // add | deduct | set
+  const [status, setStatus]       = useState("");
+  const [loading, setLoading]     = useState(false);
 
   async function lookupUser() {
-    setStatus(""); setFound(null);
+    setStatus(""); setFound(null); setNotFound(false);
     setLoading(true);
     try {
       const q = query(collection(db, "users"), where("email", "==", email.trim().toLowerCase()));
       const snap = await getDocs(q);
-      if (snap.empty) { setStatus("❌ No account found for that email."); setLoading(false); return; }
+      if (snap.empty) {
+        setNotFound(true);
+        setLoading(false);
+        return;
+      }
       const docSnap = snap.docs[0];
       const data = docSnap.data();
       setFound({ uid: docSnap.id, name: data.name, email: data.email, points: data.points || 0 });
     } catch (e) {
       setStatus("❌ Error looking up user: " + e.message);
+    }
+    setLoading(false);
+  }
+
+  async function createMember() {
+    setLoading(true); setStatus("");
+    try {
+      // Generate a manual uid based on email (for members who haven't signed in yet)
+      const manualUid = "manual_" + email.trim().toLowerCase().replace(/[^a-z0-9]/g, "_");
+      const ref = doc(db, "users", manualUid);
+      await setDoc(ref, {
+        name:           "",
+        email:          email.trim().toLowerCase(),
+        points:         0,
+        lifetimePoints: 0,
+        createdAt:      serverTimestamp(),
+        updatedAt:      serverTimestamp(),
+        source:         "admin_created",
+      });
+      setFound({ uid: manualUid, name: "", email: email.trim().toLowerCase(), points: 0 });
+      setNotFound(false);
+      setStatus("✅ Member record created. You can now adjust their points.");
+    } catch (e) {
+      setStatus("❌ Error creating member: " + e.message);
     }
     setLoading(false);
   }
@@ -350,6 +379,20 @@ function AwardPoints() {
           {loading ? "..." : "Look up"}
         </button>
       </div>
+
+      {/* Not found — offer to create */}
+      {notFound && (
+        <div style={{ background: "#FEF2F2", borderRadius: "10px", padding: "14px", marginBottom: "14px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+          <div>
+            <p style={{ fontSize: "13px", fontWeight: "700", color: "#DC2626", margin: "0 0 2px" }}>No account found for that email.</p>
+            <p style={{ fontSize: "11px", color: "#6B7280", margin: 0 }}>They may not have signed in yet. Create a record and set their points now.</p>
+          </div>
+          <button onClick={createMember} disabled={loading}
+            style={{ whiteSpace: "nowrap", background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "9px 14px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
+            {loading ? "..." : "Create Member"}
+          </button>
+        </div>
+      )}
 
       {/* Found user */}
       {found && (
