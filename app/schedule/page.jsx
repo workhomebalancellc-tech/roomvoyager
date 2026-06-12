@@ -39,7 +39,7 @@ Preferred Time: ${selectedTime} EST
 
 Details / Notes:
 ${form.details || "None provided"}`;
-    window.location.href = `mailto:workhomebalancellc@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:roomvoyager@protonmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSubmitted(true);
   };
 

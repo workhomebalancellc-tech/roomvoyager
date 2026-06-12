@@ -26,7 +26,7 @@ export default function Footer() {
           </p>
           <div style={{ display: "flex", gap: "10px", marginTop: "14px", flexWrap: "wrap" }}>
             {[
-              { label: "Email us", href: "mailto:workhomebalancellc@gmail.com" },
+              { label: "Email us", href: "mailto:roomvoyager@protonmail.com" },
             ].map(l => (
               <a key={l.label} href={l.href}
                 style={{ fontSize: "12px", color: "#93C5FD", textDecoration: "none", padding: "4px 10px", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "6px" }}>

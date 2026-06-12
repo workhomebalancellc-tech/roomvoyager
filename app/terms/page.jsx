@@ -111,8 +111,8 @@ export default function TermsPage() {
               {s.contact && (
                 <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: "1.7", margin: 0 }}>
                   Questions about these Terms? Contact us at{" "}
-                  <a href="mailto:workhomebalancellc@gmail.com" style={{ color: NAVY, fontWeight: "600", textDecoration: "none" }}>
-                    workhomebalancellc@gmail.com
+                  <a href="mailto:roomvoyager@protonmail.com" style={{ color: NAVY, fontWeight: "600", textDecoration: "none" }}>
+                    roomvoyager@protonmail.com
                   </a>.
                 </p>
               )}

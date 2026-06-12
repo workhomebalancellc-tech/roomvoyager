@@ -28,7 +28,7 @@ const faqs = [
       },
       {
         q: "How do I book a cruise?",
-        a: "Visit our Cruises page to browse available cruise lines. You can also contact our travel advisor at workhomebalancellc@gmail.com for personalized cruise recommendations and group bookings.",
+        a: "Visit our Cruises page to browse available cruise lines. You can also contact our travel advisor at roomvoyager@protonmail.com for personalized cruise recommendations and group bookings.",
       },
       {
         q: "Are there any booking fees?",
@@ -70,7 +70,7 @@ const faqs = [
       },
       {
         q: "How do I delete my account?",
-        a: "Email us at workhomebalancellc@gmail.com and we'll delete your account and associated data within 30 days.",
+        a: "Email us at roomvoyager@protonmail.com and we'll delete your account and associated data within 30 days.",
       },
     ],
   },
