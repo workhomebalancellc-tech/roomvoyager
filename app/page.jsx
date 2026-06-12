@@ -200,8 +200,8 @@ export default function HomePage() {
                 </div>
                 <div style={{ padding: "22px" }}>
                   <p style={{ color: "#4B5563", fontSize: "14px", lineHeight: "1.65", margin: "0 0 16px" }}>{card.body}</p>
-                  <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "18px" }}>
-                    {card.tags.map((t, j) => <span key={j} style={{ background: card.tagBg, color: card.tagColor, fontSize: "11px", fontWeight: "600", padding: "3px 10px", borderRadius: "999px" }}>{t}</span>)}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "6px", marginBottom: "18px" }}>
+                    {card.tags.map((t, j) => <span key={j} style={{ flex: 1, textAlign: "center", background: card.tagBg, color: card.tagColor, fontSize: "11px", fontWeight: "600", padding: "5px 6px", borderRadius: "999px", whiteSpace: "nowrap" }}>{t}</span>)}
                   </div>
                   <a href={card.href} style={{ display: "block", background: card.btnColor, color: "#fff", textAlign: "center", padding: "12px", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none" }}>
                     {card.btnText}
