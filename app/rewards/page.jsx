@@ -275,7 +275,7 @@ export default function RewardsPage() {
             Earn cash back on every booking — double points on hotels, cruises & packages. Paid via Zelle, Cash App, or Venmo. No blackout dates. Real money.
           </p>
           {session ? (
-            <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", borderRadius: "16px", padding: "20px 28px", display: "inline-flex", gap: "36px", flexWrap: "wrap", justifyContent: "center", border: "1px solid rgba(255,255,255,0.2)" }}>
+            <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", borderRadius: "16px", padding: "24px 32px", display: "flex", gap: "28px", flexWrap: "wrap", justifyContent: "center", border: "1px solid rgba(255,255,255,0.2)", width: "100%", maxWidth: "640px", boxSizing: "border-box" }}>
               {session.name && (
                 <div>
                   <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Welcome back</p>

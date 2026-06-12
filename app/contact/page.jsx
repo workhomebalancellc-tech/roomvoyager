@@ -31,7 +31,7 @@ function getBotReply(input) {
 
 function ChatBot() {
   const [messages, setMessages] = useState([
-    { from: "bot", text: "Hi! I'm the RoomVoyager assistant. Ask me anything about our rewards program, bookings, or account — or type 'contact' to reach the team." }
+    { from: "bot", text: "Hi! I'm Compass, your RoomVoyager assistant. Ask me anything about rewards, bookings, or your account — or type 'contact' to reach the team." }
   ]);
   const [input, setInput] = useState("");
   const bottomRef = useRef(null);
@@ -52,8 +52,8 @@ function ChatBot() {
       <div style={{ background: NAVY, padding: "20px 28px", display: "flex", alignItems: "center", gap: "12px" }}>
         <div style={{ width: "36px", height: "36px", background: ORANGE, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>💬</div>
         <div>
-          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 2px" }}>FAQ Assistant</p>
-          <p style={{ color: "#fff", fontSize: "16px", fontWeight: "800", margin: 0 }}>Ask us anything</p>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 2px" }}>RoomVoyager Assistant</p>
+          <p style={{ color: "#fff", fontSize: "16px", fontWeight: "800", margin: 0 }}>Compass</p>
         </div>
       </div>
 

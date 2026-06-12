@@ -33,7 +33,7 @@ function getBotReply(input) {
 function FloatingChat() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { from: "bot", text: "Hi! Ask me anything about RoomVoyager — rewards, bookings, or account help." }
+    { from: "bot", text: "Hi! I'm Compass, your RoomVoyager assistant. Ask me anything about rewards, bookings, or your account." }
   ]);
   const [input, setInput] = useState("");
   const bottomRef = useRef(null);
@@ -56,8 +56,8 @@ function FloatingChat() {
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <div style={{ width: "30px", height: "30px", background: ORANGE, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "15px", flexShrink: 0 }}>💬</div>
               <div>
-                <p style={{ color: "#93C5FD", fontSize: "10px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>RoomVoyager</p>
-                <p style={{ color: "#fff", fontSize: "14px", fontWeight: "800", margin: 0 }}>FAQ Assistant</p>
+                <p style={{ color: "#93C5FD", fontSize: "10px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>RoomVoyager Assistant</p>
+                <p style={{ color: "#fff", fontSize: "14px", fontWeight: "800", margin: 0 }}>Compass</p>
               </div>
             </div>
             <button onClick={() => setOpen(false)} style={{ background: "none", border: "none", color: "#93C5FD", fontSize: "20px", cursor: "pointer", lineHeight: 1, padding: "0 2px" }}>×</button>
