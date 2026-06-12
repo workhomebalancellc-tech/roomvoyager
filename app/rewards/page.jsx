@@ -327,24 +327,6 @@ export default function RewardsPage() {
 
       <div style={{ maxWidth: "960px", margin: "0 auto", padding: "48px 24px 80px" }}>
 
-        {/* VIDEO SECTION */}
-        <section style={{ marginBottom: "56px" }}>
-          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>See how it works</p>
-          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Watch: RoomVoyager Rewards explained</h2>
-          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 20px" }}>Everything you need to know about earning, waiting, and cashing out — in under 3 minutes.</p>
-          <div style={{ position: "relative", background: NAVY, borderRadius: "16px", overflow: "hidden", aspectRatio: "16/9", maxHeight: "480px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            {/* Replace the src below with your YouTube embed URL, e.g.: https://www.youtube.com/embed/YOUR_VIDEO_ID */}
-            {/* <iframe width="100%" height="100%" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="RoomVoyager Rewards" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} /> */}
-            <div style={{ textAlign: "center", padding: "40px 24px" }}>
-              <div style={{ width: "72px", height: "72px", background: ORANGE, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 8px 24px rgba(255,102,0,0.4)" }}>
-                <span style={{ fontSize: "28px", marginLeft: "4px" }}>▶</span>
-              </div>
-              <p style={{ color: "#fff", fontSize: "18px", fontWeight: "700", margin: "0 0 8px" }}>How RoomVoyager Rewards Works</p>
-              <p style={{ color: "#93C5FD", fontSize: "13px", margin: "0 0 16px" }}>Video coming soon — check back after launch!</p>
-              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "11px", margin: 0 }}>To add your video: replace the placeholder in rewards/page.jsx with your YouTube embed URL</p>
-            </div>
-          </div>
-        </section>
 
         {/* HOW IT WORKS — updated with 45-day rule */}
         <section style={{ marginBottom: "56px" }}>

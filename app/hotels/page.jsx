@@ -221,13 +221,13 @@ function HotelsContent() {
         <div style={{ position: "relative", borderRadius: "20px", overflow: "hidden" }}>
           <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&h=240&fit=crop&auto=format" alt="Hotel deals" style={{ width: "100%", height: "160px", objectFit: "cover" }} />
           <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${NAVY}f0, rgba(0,30,80,0.5))` }} />
-          <div style={{ position: "absolute", inset: 0, display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 32px", flexWrap: "wrap", gap: "16px" }}>
+          <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "16px 24px", gap: "12px" }}>
             <div>
               <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#fff", margin: "0 0 4px" }}>Want exclusive hotel deals?</h3>
               <p style={{ fontSize: "13px", color: "#BFDBFE", margin: 0 }}>Join our member newsletter and get early access to promotions before they go public.</p>
             </div>
             <a href="/rewards"
-              style={{ background: ORANGE, color: "#fff", padding: "12px 24px", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", whiteSpace: "nowrap" }}>
+              style={{ background: ORANGE, color: "#fff", padding: "12px 24px", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none" }}>
               Join RoomVoyager Rewards →
             </a>
           </div>
