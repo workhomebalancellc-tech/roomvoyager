@@ -340,7 +340,8 @@ function AwardPoints() {
       setNotFound(false);
       setStatus("✅ Member record created. You can now adjust their points.");
     } catch (e) {
-      setStatus("❌ Error creating member: " + e.message);
+      console.error("createMember error:", e);
+      setStatus("❌ " + (e?.message || "Permission denied. Check Firestore rules or sign in to the rewards page first."));
     }
     setLoading(false);
   }
