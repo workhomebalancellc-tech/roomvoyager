@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { collection, query, where, getDocs, doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../lib/firebase";
-import { addPoints, deductPoints, setPoints, getUserPoints } from "../../lib/points";
+// Points management now goes through /api/admin/firestore (server-side, bypasses CSP/extensions)
 
 const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
 
@@ -293,55 +291,46 @@ function AdminLogin() {
 }
 
 function AwardPoints() {
-  const [email, setEmail]         = useState("");
-  const [found, setFound]         = useState(null); // { uid, name, email, points }
-  const [notFound, setNotFound]   = useState(false);
-  const [amount, setAmount]       = useState("");
-  const [action, setAction]       = useState("add"); // add | deduct | set
-  const [status, setStatus]       = useState("");
-  const [loading, setLoading]     = useState(false);
+  const [email, setEmail]       = useState("");
+  const [found, setFound]       = useState(null);
+  const [notFound, setNotFound] = useState(false);
+  const [amount, setAmount]     = useState("");
+  const [action, setAction]     = useState("add");
+  const [status, setStatus]     = useState("");
+  const [loading, setLoading]   = useState(false);
+
+  async function callApi(body) {
+    const res = await fetch("/api/admin/firestore", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    return { ok: res.ok, data: await res.json() };
+  }
 
   async function lookupUser() {
     setStatus(""); setFound(null); setNotFound(false);
     setLoading(true);
-    try {
-      const q = query(collection(db, "users"), where("email", "==", email.trim().toLowerCase()));
-      const snap = await getDocs(q);
-      if (snap.empty) {
-        setNotFound(true);
-        setLoading(false);
-        return;
-      }
-      const docSnap = snap.docs[0];
-      const data = docSnap.data();
-      setFound({ uid: docSnap.id, name: data.name, email: data.email, points: data.points || 0 });
-    } catch (e) {
-      setStatus("❌ Error looking up user: " + e.message);
+    const { ok, data } = await callApi({ action: "lookup", email });
+    if (ok) {
+      setFound({ uid: data.uid, name: data.name, email: data.email, points: data.points || 0 });
+    } else if (data.error === "not_found") {
+      setNotFound(true);
+    } else {
+      setStatus("❌ Error: " + data.error);
     }
     setLoading(false);
   }
 
   async function createMember() {
     setLoading(true); setStatus("");
-    try {
-      // Generate a manual uid based on email (for members who haven't signed in yet)
-      const manualUid = "manual_" + email.trim().toLowerCase().replace(/[^a-z0-9]/g, "_");
-      const ref = doc(db, "users", manualUid);
-      await setDoc(ref, {
-        name:           "",
-        email:          email.trim().toLowerCase(),
-        points:         0,
-        lifetimePoints: 0,
-        createdAt:      serverTimestamp(),
-        updatedAt:      serverTimestamp(),
-        source:         "admin_created",
-      });
-      setFound({ uid: manualUid, name: "", email: email.trim().toLowerCase(), points: 0 });
+    const { ok, data } = await callApi({ action: "create", email });
+    if (ok) {
+      setFound({ uid: data.uid, name: data.name || "", email: data.email, points: data.points || 0 });
       setNotFound(false);
       setStatus("✅ Member record created. You can now adjust their points.");
-    } catch (e) {
-      console.error("createMember error:", e);
-      setStatus("❌ " + (e?.message || "Permission denied. Check Firestore rules or sign in to the rewards page first."));
+    } else {
+      setStatus("❌ Error: " + data.error);
     }
     setLoading(false);
   }
@@ -351,16 +340,14 @@ function AwardPoints() {
     const pts = parseInt(amount, 10);
     if (isNaN(pts) || pts <= 0) { setStatus("❌ Enter a valid number of points."); return; }
     setLoading(true); setStatus("");
-    try {
-      if (action === "add")    await addPoints(found.uid, pts);
-      if (action === "deduct") await deductPoints(found.uid, pts);
-      if (action === "set")    await setPoints(found.uid, pts);
-      const updated = await getUserPoints(found.uid);
-      setFound(prev => ({ ...prev, points: updated }));
-      setStatus(`✅ Done! ${found.name || found.email} now has ${updated.toLocaleString()} pts.`);
+    const actionMap = { add: "addPoints", deduct: "deductPoints", set: "setPoints" };
+    const { ok, data } = await callApi({ action: actionMap[action], email: found.email, amount: pts });
+    if (ok) {
+      setFound(prev => ({ ...prev, points: data.points }));
+      setStatus(`✅ Done! ${found.name || found.email} now has ${data.points.toLocaleString()} pts.`);
       setAmount("");
-    } catch (e) {
-      setStatus("❌ " + e.message);
+    } else {
+      setStatus("❌ " + data.error);
     }
     setLoading(false);
   }
