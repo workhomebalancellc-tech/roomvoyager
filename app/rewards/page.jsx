@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import FloatingChat from "../components/FloatingChat";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -562,6 +563,7 @@ export default function RewardsPage() {
         </div>
       </div>
     </div>
+    <FloatingChat />
     <Footer />
     </>
   );

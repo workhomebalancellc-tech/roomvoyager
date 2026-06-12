@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import FloatingChat from "../components/FloatingChat";
 
 const NAVY       = "#003B95";
 const ORANGE     = "#FF6600";
@@ -423,6 +424,7 @@ export default function FlightsPage() {
       <Suspense fallback={null}>
         <FlightsContent />
       </Suspense>
+      <FloatingChat />
       <Footer />
     </>
   );

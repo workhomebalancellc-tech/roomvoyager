@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import FloatingChat from "../components/FloatingChat";
 
 const NAVY   = "#003B95";
 const ORANGE = "#FF6600";
@@ -260,6 +261,7 @@ export default function DealsPage() {
 
       </div>
     </div>
+    <FloatingChat />
     <Footer />
     </>
   );
