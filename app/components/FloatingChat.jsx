@@ -129,7 +129,13 @@ const KB = [
     id: "cruises",
     triggers: ["cruise deals", "cruise booking", "search cruises", "find cruises", "cruise lines", "cruises page", "book a cruise", "cruise itinerary"],
     answer: "Our Cruises page features Royal Caribbean, Celebrity, Cunard, Virgin Voyages, and more across the Caribbean, Mediterranean, Alaska, and beyond. Earn 10 pts per $1 — double pts eligible!",
-    follow: ["earn", "double", "group"],
+    follow: ["earn", "double", "group", "popup"],
+  },
+  {
+    id: "popup",
+    triggers: ["pop up", "popup", "pop-up", "pop up blocker", "popup blocker", "can't see cruise", "cannot see cruise", "cruise not loading", "cruise search not showing", "cruise page not working", "cruise search missing", "cruise search blank", "disable pop up", "allow pop up"],
+    answer: "The cruise search opens in a pop-up window. If you don't see it, your browser's pop-up blocker is preventing it from loading.\n\nTo fix it:\n1. Look for a blocked pop-up icon 🚫 in your browser's address bar\n2. Click it and select 'Always allow pop-ups from this site'\n3. Refresh the page\n\nThis applies to Chrome, Safari, Firefox, and Edge.",
+    follow: ["cruises", "book", "contact"],
   },
   {
     id: "packages",

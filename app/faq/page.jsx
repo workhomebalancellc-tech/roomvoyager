@@ -31,6 +31,10 @@ const faqs = [
         a: "Visit our Cruises page to browse available cruise lines. You can also contact our travel advisor at roomvoyager@protonmail.com for personalized cruise recommendations and group bookings.",
       },
       {
+        q: "I can't see the cruise search on the Cruises page — what do I do?",
+        a: "The cruise search opens in a pop-up window. If you don't see it, your browser's pop-up blocker is likely preventing it from loading. Disable your pop-up blocker for our site (look for a blocked pop-up icon in your browser's address bar and click 'Always allow') and then refresh the page.",
+      },
+      {
         q: "Are there any booking fees?",
         a: "No — RoomVoyager charges no booking fees. We earn a commission from our travel partners, which does not affect the price you pay.",
       },
