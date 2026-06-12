@@ -9,9 +9,13 @@ export async function GET(req) {
 
     const snap = await adminDb.collection("users").doc(uid).get();
     if (snap.exists) {
-      return Response.json({ points: snap.data().points || 0 });
+      const data = snap.data();
+      return Response.json({
+        points:         data.points         || 0,
+        lifetimePoints: data.lifetimePoints || 0,
+      });
     }
-    return Response.json({ points: 0 });
+    return Response.json({ points: 0, lifetimePoints: 0 });
   } catch (e) {
     console.error("user/points error:", e);
     return Response.json({ points: 0 });

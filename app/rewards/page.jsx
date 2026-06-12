@@ -174,7 +174,8 @@ function EarningsSlider() {
 
 export default function RewardsPage() {
   const { user: session } = useAuth();
-  const [userPoints, setUserPoints] = useState(0);
+  const [userPoints, setUserPoints]           = useState(0);
+  const [lifetimePoints, setLifetimePoints]   = useState(0);
   const cashValue = (userPoints / 1000).toFixed(2);
   const canRedeem = userPoints >= 10000;
 
@@ -195,7 +196,10 @@ export default function RewardsPage() {
     if (session?.uid) {
       fetch(`/api/user/points?uid=${session.uid}`)
         .then(r => r.json())
-        .then(d => setUserPoints(d.points || 0))
+        .then(d => {
+          setUserPoints(d.points || 0);
+          setLifetimePoints(d.lifetimePoints || 0);
+        })
         .catch(() => {});
     }
 
@@ -226,9 +230,9 @@ export default function RewardsPage() {
   }
 
   function getCurrentTier() {
-    if (userPoints >= 100000) return TIERS[3];
-    if (userPoints >= 50000) return TIERS[2];
-    if (userPoints >= 10000) return TIERS[1];
+    if (lifetimePoints >= 100000) return TIERS[3];
+    if (lifetimePoints >= 50000)  return TIERS[2];
+    if (lifetimePoints >= 10000)  return TIERS[1];
     return TIERS[0];
   }
 
@@ -314,6 +318,10 @@ export default function RewardsPage() {
               <div>
                 <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Cash Value</p>
                 <p style={{ color: "#fff", fontSize: "32px", fontWeight: "800", margin: 0 }}>${cashValue}</p>
+              </div>
+              <div>
+                <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Lifetime Earned</p>
+                <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: 0 }}>{lifetimePoints.toLocaleString()} pts</p>
               </div>
               <div>
                 <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Your Tier</p>
