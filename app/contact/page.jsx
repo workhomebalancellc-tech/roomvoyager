@@ -31,7 +31,7 @@ function getBotReply(input) {
 
 function ChatBot() {
   const [messages, setMessages] = useState([
-    { from: "bot", text: "Hi! I'm Compass, your RoomVoyager assistant. Ask me anything about rewards, bookings, or your account — or type 'contact' to reach the team." }
+    { from: "bot", text: "Hi! I'm Compass, your RoomVoyager assistant. Ask me anything about rewards, bookings, or your account. Type 'contact' anytime to reach our team." }
   ]);
   const [input, setInput] = useState("");
   const bottomRef = useRef(null);
