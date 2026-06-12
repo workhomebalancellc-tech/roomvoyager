@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -17,6 +17,13 @@ export default function HomePage() {
   const [loadingSugg, setLoadingSugg] = useState(false);
   const debounceRef = useRef(null);
   const { user } = useAuth();
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   function handleSearchChange(val) {
     setSearchVal(val);
@@ -133,9 +140,18 @@ export default function HomePage() {
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 8px" }}>Explore the world</p>
           <h2 style={{ fontSize: "30px", fontWeight: "800", color: "#111827", margin: "0 0 32px" }}>Popular destinations</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "20px" }}>
+          <div style={isMobile ? {
+            display: "flex", gap: "14px", overflowX: "auto", paddingBottom: "8px",
+            scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch",
+          } : {
+            display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "20px",
+          }}>
             {destinations.map((dest, i) => (
-              <a key={i} href={dest.href} style={{ textDecoration: "none", display: "block", borderRadius: "16px", overflow: "hidden", position: "relative", height: "210px", boxShadow: "0 4px 20px rgba(0,0,0,0.12)" }}>
+              <a key={i} href={dest.href} style={{
+                textDecoration: "none", display: "block", borderRadius: "16px", overflow: "hidden",
+                position: "relative", height: "210px", boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
+                ...(isMobile ? { flexShrink: 0, width: "200px", scrollSnapAlign: "start" } : {}),
+              }}>
                 <img src={dest.photo} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.1) 60%)" }} />
                 <div style={{ position: "absolute", bottom: "16px", left: "16px" }}>
