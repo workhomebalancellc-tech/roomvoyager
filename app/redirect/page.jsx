@@ -113,7 +113,7 @@ function RedirectContent() {
         {product === "flight" ? (
           <span style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "11px", color: "#93C5FD" }}>
             Powered by
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Kiwi.com_logo.svg" alt="Kiwi.com" height="18" style={{ filter: "brightness(0) invert(1)", verticalAlign: "middle" }} />
+            <img src="/kiwi-logo.svg" alt="Kiwi.com" height="18" style={{ filter: "brightness(0) invert(1)", verticalAlign: "middle" }} />
           </span>
         ) : product === "hotel" ? (
           <span style={{ fontSize: "11px", color: "#93C5FD" }}>Powered by <strong style={{ color: "#fff" }}>Expedia</strong></span>
@@ -227,7 +227,7 @@ function RedirectContent() {
       <div style={{ padding: "12px 24px", textAlign: "center" }}>
         {product === "flight" ? (
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/8/84/Kiwi.com_logo.svg"
+            src="/kiwi-logo.svg"
             alt="Kiwi.com"
             height="48"
             style={{ display: "inline-block", maxWidth: "200px" }}
