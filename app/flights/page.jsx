@@ -383,13 +383,13 @@ function FlightsContent() {
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "56px 24px" }}>
         <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Why RoomVoyager</p>
         <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 28px" }}>More than just a flight search</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "20px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
           {[
             { icon: "🏆", title: "Earn real cash back",       desc: "5 Rewards points per $1 on flights — redeem for real money via Zelle, Cash App, or Venmo." },
             { icon: "🔍", title: "500+ airlines compared",    desc: "We search major carriers, budget airlines, and everything in between to find the best price." },
             { icon: "✈️+🏨", title: "Bundle & save",         desc: "Add a hotel or cruise to your flight and unlock package pricing not available separately." },
           ].map((item, i) => (
-            <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "24px" }}>
+            <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "24px", flex: "1 1 220px", maxWidth: "320px" }}>
               <div style={{ fontSize: "32px", marginBottom: "12px" }}>{item.icon}</div>
               <p style={{ fontSize: "15px", fontWeight: "700", color: "#111827", margin: "0 0 8px" }}>{item.title}</p>
               <p style={{ fontSize: "13px", color: "#6B7280", margin: 0, lineHeight: 1.6 }}>{item.desc}</p>
