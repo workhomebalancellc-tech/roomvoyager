@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../lib/firebase";
+import { addPoints, deductPoints, setPoints, getUserPoints } from "../../lib/points";
 
 const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
 
@@ -289,6 +292,100 @@ function AdminLogin() {
   );
 }
 
+function AwardPoints() {
+  const [email, setEmail]       = useState("");
+  const [found, setFound]       = useState(null); // { uid, name, email, points }
+  const [amount, setAmount]     = useState("");
+  const [action, setAction]     = useState("add"); // add | deduct | set
+  const [status, setStatus]     = useState("");
+  const [loading, setLoading]   = useState(false);
+
+  async function lookupUser() {
+    setStatus(""); setFound(null);
+    setLoading(true);
+    try {
+      const q = query(collection(db, "users"), where("email", "==", email.trim().toLowerCase()));
+      const snap = await getDocs(q);
+      if (snap.empty) { setStatus("❌ No account found for that email."); setLoading(false); return; }
+      const docSnap = snap.docs[0];
+      const data = docSnap.data();
+      setFound({ uid: docSnap.id, name: data.name, email: data.email, points: data.points || 0 });
+    } catch (e) {
+      setStatus("❌ Error looking up user: " + e.message);
+    }
+    setLoading(false);
+  }
+
+  async function applyPoints() {
+    if (!found || !amount) return;
+    const pts = parseInt(amount, 10);
+    if (isNaN(pts) || pts <= 0) { setStatus("❌ Enter a valid number of points."); return; }
+    setLoading(true); setStatus("");
+    try {
+      if (action === "add")    await addPoints(found.uid, pts);
+      if (action === "deduct") await deductPoints(found.uid, pts);
+      if (action === "set")    await setPoints(found.uid, pts);
+      const updated = await getUserPoints(found.uid);
+      setFound(prev => ({ ...prev, points: updated }));
+      setStatus(`✅ Done! ${found.name || found.email} now has ${updated.toLocaleString()} pts.`);
+      setAmount("");
+    } catch (e) {
+      setStatus("❌ " + e.message);
+    }
+    setLoading(false);
+  }
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>🎯 Award / Adjust Points</p>
+      <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 16px" }}>Look up a member by email and add, deduct, or set their balance.</p>
+
+      {/* Email lookup */}
+      <div style={{ display: "flex", gap: "8px", marginBottom: "14px" }}>
+        <input value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && lookupUser()}
+          placeholder="member@email.com"
+          style={{ flex: 1, padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", outline: "none" }} />
+        <button onClick={lookupUser} disabled={loading || !email}
+          style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "9px 16px", fontSize: "13px", fontWeight: "700", cursor: "pointer" }}>
+          {loading ? "..." : "Look up"}
+        </button>
+      </div>
+
+      {/* Found user */}
+      {found && (
+        <div style={{ background: "#F0F4FF", borderRadius: "10px", padding: "14px", marginBottom: "14px" }}>
+          <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 2px", fontSize: "13px" }}>{found.name || "—"} · {found.email}</p>
+          <p style={{ fontSize: "20px", fontWeight: "800", color: NAVY, margin: 0 }}>{found.points.toLocaleString()} pts</p>
+        </div>
+      )}
+
+      {/* Action */}
+      {found && (
+        <>
+          <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
+            {[["add","➕ Add"],["deduct","➖ Deduct"],["set","🔧 Set to"]].map(([val, label]) => (
+              <button key={val} onClick={() => setAction(val)}
+                style={{ flex: 1, padding: "7px", border: `2px solid ${action === val ? ORANGE : "#E5E7EB"}`, background: action === val ? "#FFF7ED" : "#fff", borderRadius: "8px", fontSize: "12px", fontWeight: "700", color: action === val ? ORANGE : "#374151", cursor: "pointer" }}>
+                {label}
+              </button>
+            ))}
+          </div>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="Points"
+              style={{ flex: 1, padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", outline: "none" }} />
+            <button onClick={applyPoints} disabled={loading || !amount}
+              style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", padding: "9px 20px", fontSize: "13px", fontWeight: "700", cursor: "pointer" }}>
+              {loading ? "..." : "Apply"}
+            </button>
+          </div>
+        </>
+      )}
+
+      {status && <p style={{ fontSize: "13px", marginTop: "12px", fontWeight: "600", color: status.startsWith("✅") ? GREEN : "#DC2626" }}>{status}</p>}
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   const { user, loading: authLoading, logout } = useAuth();
 
@@ -371,6 +468,11 @@ export default function AdminDashboard() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "20px" }}>
           <CommissionCalc />
           <ManualBookingLog />
+        </div>
+
+        {/* POINTS MANAGEMENT */}
+        <div style={{ marginBottom: "20px" }}>
+          <AwardPoints />
         </div>
 
         {/* RATES REFERENCE */}

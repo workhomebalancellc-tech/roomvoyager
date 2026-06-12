@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { getUserPoints, deductPoints } from "../../lib/points";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import FloatingChat from "../components/FloatingChat";
@@ -191,8 +192,9 @@ export default function RewardsPage() {
   const [autoPaySaved, setAutoPaySaved] = useState(false);
 
   useEffect(() => {
-    const pts = localStorage.getItem("rv_points");
-    if (pts) setUserPoints(parseInt(pts, 10) || 0);
+    if (session?.uid) {
+      getUserPoints(session.uid).then(pts => setUserPoints(pts)).catch(() => {});
+    }
 
     const saved = localStorage.getItem("rv_autopay");
     if (saved) {
@@ -203,7 +205,7 @@ export default function RewardsPage() {
         setAutoPayHandle(p.handle || "");
       } catch {}
     }
-  }, []);
+  }, [session?.uid]);
 
   function saveAutoPay(enabled) {
     const pref = { enabled, method: autoPayMethod, handle: autoPayHandle };
@@ -253,9 +255,9 @@ export default function RewardsPage() {
         })
       });
       if (!res.ok) throw new Error('Submission failed');
-      // Deduct redeemed points from local balance
+      // Deduct points from Firestore
+      await deductPoints(session.uid, redeemAmount);
       const newPoints = Math.max(0, userPoints - redeemAmount);
-      localStorage.setItem("rv_points", String(newPoints));
       setUserPoints(newPoints);
       setRedeemSubmitted(true);
     } catch (err) {

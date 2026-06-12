@@ -11,6 +11,7 @@ import {
   signOut as firebaseSignOut,
 } from "firebase/auth";
 import { auth } from "../lib/firebase";
+import { initUserDoc } from "../lib/points";
 
 const AuthContext = createContext({});
 
@@ -21,6 +22,8 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
+        // Ensure Firestore user doc exists (no-op if already created)
+        initUserDoc(firebaseUser.uid, firebaseUser.displayName, firebaseUser.email).catch(() => {});
         // Map Firebase user to a consistent shape used across the app
         setUser({
           name: firebaseUser.displayName,
