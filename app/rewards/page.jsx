@@ -327,6 +327,23 @@ export default function RewardsPage() {
 
       <div style={{ maxWidth: "960px", margin: "0 auto", padding: "48px 24px 80px" }}>
 
+        {/* VIDEO SECTION */}
+        <section style={{ marginBottom: "56px" }}>
+          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>See how it works</p>
+          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Watch: RoomVoyager Rewards explained</h2>
+          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 20px" }}>Everything you need to know about earning, waiting, and cashing out.</p>
+          <div style={{ position: "relative", background: NAVY, borderRadius: "16px", overflow: "hidden", aspectRatio: "16/9", maxHeight: "480px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {/* Replace the src below with your YouTube embed URL: https://www.youtube.com/embed/YOUR_VIDEO_ID */}
+            {/* <iframe width="100%" height="100%" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="RoomVoyager Rewards" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} /> */}
+            <div style={{ textAlign: "center", padding: "40px 24px" }}>
+              <div style={{ width: "72px", height: "72px", background: ORANGE, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 8px 24px rgba(255,102,0,0.4)" }}>
+                <span style={{ fontSize: "28px", marginLeft: "4px" }}>▶</span>
+              </div>
+              <p style={{ color: "#fff", fontSize: "18px", fontWeight: "700", margin: "0 0 8px" }}>How RoomVoyager Rewards Works</p>
+              <p style={{ color: "#93C5FD", fontSize: "13px", margin: 0 }}>Video coming soon — check back after launch!</p>
+            </div>
+          </div>
+        </section>
 
         {/* HOW IT WORKS — updated with 45-day rule */}
         <section style={{ marginBottom: "56px" }}>
@@ -361,65 +378,6 @@ export default function RewardsPage() {
           </div>
         </section>
 
-        {/* EARNING RATES */}
-        <section style={{ marginBottom: "56px" }}>
-          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Points per dollar</p>
-          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Earning rates</h2>
-          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>Flights and hotels earn 5 pts per $1. Cruises and packages earn 10 pts per $1. Hotels, cruises, and packages are eligible for double points. All points redeemable 45 days after trip completion.</p>
-
-          {/* Standard vs Double overview */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "24px" }}>
-            <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
-              <p style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px" }}>Standard Points</p>
-              <p style={{ fontSize: "36px", fontWeight: "800", color: NAVY, margin: "0 0 2px", lineHeight: 1 }}>5–10 pts</p>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px" }}>per $1 spent</p>
-              <p style={{ fontSize: "12px", color: "#374151", margin: 0, lineHeight: 1.5 }}>5 pts/$1 on flights & hotels · 10 pts/$1 on cruises & packages.</p>
-            </div>
-            <div style={{ background: `linear-gradient(135deg, ${NAVY}10 0%, ${ORANGE}10 100%)`, border: `2px solid ${ORANGE}`, borderRadius: "14px", padding: "20px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
-                <p style={{ fontSize: "11px", fontWeight: "700", color: ORANGE, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Double Points 🔥</p>
-                <span style={{ fontSize: "10px", fontWeight: "700", background: ORANGE, color: "#fff", padding: "2px 8px", borderRadius: "999px" }}>2x BONUS</span>
-              </div>
-              <p style={{ fontSize: "36px", fontWeight: "800", color: NAVY, margin: "0 0 2px", lineHeight: 1 }}>10–20 pts</p>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px" }}>per $1 spent</p>
-              <p style={{ fontSize: "12px", color: "#374151", margin: 0, lineHeight: 1.5 }}>10 pts/$1 on hotels · 20 pts/$1 on cruises & packages. <strong style={{ color: ORANGE }}>Not available on flights.</strong></p>
-            </div>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px" }}>
-            {EARNING_RATES.filter(item => !item.hidden).map((item, i) => (
-              <div key={i} style={{ background: "#fff", border: item.double ? `2px solid ${ORANGE}30` : "1px solid #E5E7EB", borderRadius: "14px", padding: "20px", textAlign: "center", position: "relative" }}>
-                {item.double ? (
-                  <span style={{ position: "absolute", top: "10px", right: "10px", fontSize: "9px", fontWeight: "700", background: ORANGE, color: "#fff", padding: "2px 6px", borderRadius: "999px" }}>2x eligible</span>
-                ) : (
-                  <span style={{ position: "absolute", top: "10px", right: "10px", fontSize: "9px", fontWeight: "700", background: "#F3F4F6", color: "#6B7280", padding: "2px 6px", borderRadius: "999px" }}>standard only</span>
-                )}
-                <div style={{ display: "flex", justifyContent: "center", margin: "0 0 8px" }}>
-                  {item.product === "Flights"           && <FlightIcon size={28} color={NAVY} />}
-                  {item.product === "Hotels"            && <HotelIcon  size={28} color={NAVY} />}
-                  {item.product === "Cruises"           && <ShipIcon   size={28} color={NAVY} />}
-                  {item.product === "Vacation Packages" && <span style={{ fontSize: "28px" }}>🌴</span>}
-                </div>
-                <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>{item.product}</p>
-                <p style={{ fontSize: "28px", fontWeight: "800", color: NAVY, margin: "0 0 0px", lineHeight: 1 }}>{item.pts}</p>
-                {item.double && <p style={{ fontSize: "11px", fontWeight: "700", color: ORANGE, margin: "0 0 4px" }}>/ {item.doublePts} pts 🔥</p>}
-                <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "0 0 6px" }}>pts per $1</p>
-                <p style={{ fontSize: "10px", color: "#6B7280", margin: 0, lineHeight: 1.4 }}>{item.note}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Flights exclusion callout */}
-          <div style={{ marginTop: "16px", background: "#F9FAFB", border: "1.5px solid #E5E7EB", borderRadius: "12px", padding: "16px 20px", display: "flex", gap: "12px", alignItems: "flex-start" }}>
-            <span style={{ fontSize: "20px", flexShrink: 0 }}>✈️</span>
-            <div>
-              <p style={{ fontWeight: "700", color: "#374151", margin: "0 0 4px", fontSize: "14px" }}>Why are flights standard points only?</p>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: 0, lineHeight: 1.6 }}>
-                Flight bookings carry a lower commission margin, which means the double-points rate can't be sustained on them. To keep the rewards program healthy and make sure every payout is covered, flights earn standard points only — still a great deal on every dollar you spend.
-              </p>
-            </div>
-          </div>
-        </section>
 
         {/* EARNINGS SLIDER */}
         <section style={{ marginBottom: "56px" }}>
@@ -559,59 +517,6 @@ export default function RewardsPage() {
             </div>
           )}
 
-          {/* AUTO-PAY TOGGLE */}
-          {session && (
-            <div style={{ marginTop: "20px", background: "#fff", border: "1px solid #E5E7EB", borderRadius: "16px", padding: "20px 24px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: autoPayEnabled ? "20px" : "0" }}>
-                <div>
-                  <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 3px", fontSize: "14px" }}>⚡ Auto-Payment</p>
-                  <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>
-                    Automatically send a redemption request the moment your 45-day hold clears.
-                  </p>
-                </div>
-                {/* Toggle switch */}
-                <button type="button" onClick={() => saveAutoPay(!autoPayEnabled)}
-                  style={{ flexShrink: 0, marginLeft: "16px", width: "52px", height: "28px", borderRadius: "999px", border: "none", cursor: "pointer", background: autoPayEnabled ? ORANGE : "#D1D5DB", position: "relative", transition: "background 0.2s" }}>
-                  <span style={{ position: "absolute", top: "3px", left: autoPayEnabled ? "27px" : "3px", width: "22px", height: "22px", borderRadius: "50%", background: "#fff", transition: "left 0.2s", boxShadow: "0 1px 4px rgba(0,0,0,0.2)" }} />
-                </button>
-              </div>
-
-              {autoPayEnabled && (
-                <div>
-                  <p style={{ fontSize: "12px", color: "#374151", margin: "0 0 12px", padding: "10px 12px", background: "#FFF7ED", borderRadius: "8px", lineHeight: 1.5 }}>
-                    💡 When enabled, we'll pre-fill your payment details below. You'll still receive an email to review before anything is sent.
-                  </p>
-                  <div style={{ marginBottom: "12px" }}>
-                    <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "8px" }}>Preferred payment method</label>
-                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                      {PAYMENT_METHODS.map(m => (
-                        <button type="button" key={m.id} onClick={() => setAutoPayMethod(m.id)}
-                          style={{ padding: "8px 14px", borderRadius: "8px", border: `2px solid ${autoPayMethod === m.id ? ORANGE : "#E5E7EB"}`, background: autoPayMethod === m.id ? "#FFF7ED" : "#fff", fontWeight: "700", fontSize: "12px", cursor: "pointer", color: autoPayMethod === m.id ? ORANGE : "#374151" }}>
-                          {m.emoji} {m.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div style={{ marginBottom: "14px" }}>
-                    <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>
-                      {PAYMENT_METHODS.find(m => m.id === autoPayMethod)?.label} — {PAYMENT_METHODS.find(m => m.id === autoPayMethod)?.placeholder}
-                    </label>
-                    <input type="text"
-                      placeholder={PAYMENT_METHODS.find(m => m.id === autoPayMethod)?.placeholder}
-                      value={autoPayHandle} onChange={e => setAutoPayHandle(e.target.value)}
-                      style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
-                  </div>
-                  <button type="button" onClick={saveAutoPaySettings}
-                    style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", fontWeight: "700", cursor: "pointer" }}>
-                    {autoPaySaved ? "✓ Saved!" : "Save auto-pay settings"}
-                  </button>
-                </div>
-              )}
-              {autoPaySaved && !autoPayEnabled && (
-                <p style={{ fontSize: "12px", color: "#16A34A", fontWeight: "600", margin: "8px 0 0" }}>✓ Auto-pay turned off.</p>
-              )}
-            </div>
-          )}
 
           {/* Not signed in nudge */}
           {!session && (
@@ -628,79 +533,17 @@ export default function RewardsPage() {
           )}
         </section>
 
-        {/* REFERRALS */}
+        {/* REFERRALS — simplified */}
         <section style={{ marginBottom: "56px" }}>
-          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Both of you earn</p>
-          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Refer a friend, earn rewards</h2>
-          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>When a friend books through your referral, you both earn bonus points — no cap in Year 1.</p>
-          <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", overflow: "hidden", marginBottom: "16px" }}>
-            <div style={{ background: NAVY, padding: "14px 20px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>
-              {["Friend Books","You Earn","Friend Earns"].map(h => (
-                <span key={h} style={{ fontSize: "12px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase" }}>{h}</span>
-              ))}
+          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 16px" }}>Refer a friend, both earn</h2>
+          <div style={{ background: LIGHT_BLUE, borderRadius: "14px", padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
+            <div>
+              <p style={{ fontWeight: "700", color: NAVY, margin: "0 0 4px" }}>200–500 bonus points for you and your friend</p>
+              <p style={{ fontSize: "13px", color: "#374151", margin: 0 }}>Flights: 200 pts · Hotels: 350 pts · Cruises & packages: 500 pts. Referral codes coming soon.</p>
             </div>
-            {REFERRAL.map((row, i) => (
-              <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", padding: "14px 20px", borderBottom: i < REFERRAL.length - 1 ? "1px solid #F3F4F6" : "none", background: i % 2 === 0 ? "#fff" : "#F8FAFF" }}>
-                <span style={{ fontSize: "14px", fontWeight: "600", color: "#111827" }}>{row.product}</span>
-                <span style={{ fontSize: "14px", color: NAVY, fontWeight: "700" }}>{row.referrer}</span>
-                <span style={{ fontSize: "14px", color: "#374151" }}>{row.friend}</span>
-              </div>
-            ))}
-          </div>
-          {session ? (
-            <div style={{ background: LIGHT_BLUE, borderRadius: "12px", padding: "20px" }}>
-              <p style={{ fontWeight: "700", color: NAVY, margin: "0 0 6px" }}>Your referral link</p>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>Referral codes are coming soon — check back after launch!</p>
-            </div>
-          ) : (
-            <div style={{ background: LIGHT_BLUE, borderRadius: "12px", padding: "20px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
-              <p style={{ color: NAVY, fontWeight: "700", margin: 0 }}>Sign up to get your referral code</p>
-              <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "10px 20px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", textDecoration: "none" }}>
-                Join free →
-              </a>
-            </div>
-          )}
-        </section>
-
-        {/* KEY POLICIES */}
-        <section style={{ marginBottom: "56px" }}>
-          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 24px" }}>Program rules & policies</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "12px" }}>
-            {[
-              { icon: "⏰", title: "45-day hold", desc: "All points are redeemable 45 days after your trip is completed, not at time of booking." },
-              { icon: "📅", title: "Points activation", desc: "Points post to your account after trip completion. Your profile tracks the countdown." },
-              { icon: "🔄", title: "Expiration", desc: "Points expire after 3 years of inactivity. Any booking, referral, or redemption resets the clock." },
-              { icon: "❌", title: "Cancellations", desc: "Points are voided if travel is not completed. Partial trips earn points for completed segments." },
-              { icon: "🏆", title: "Tier status", desc: "Tiers are based on lifetime points — never reset for inactivity." },
-              { icon: "👥", title: "Group bookings", desc: "Lead passenger account earns all points for group bookings." },
-            ].map((item, i) => (
-              <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "16px", display: "flex", gap: "12px" }}>
-                <span style={{ fontSize: "20px", flexShrink: 0 }}>{item.icon}</span>
-                <div>
-                  <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>{item.title}</p>
-                  <p style={{ fontSize: "12px", color: "#6B7280", margin: 0, lineHeight: 1.5 }}>{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section style={{ marginBottom: "56px" }}>
-          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 24px" }}>Common questions</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            {[
-              { q: "When do my points become redeemable?", a: "Points become available 45 days after your trip is completed. Your profile page shows a live countdown for each trip." },
-              { q: "Is there a limit to how many points I can earn?", a: "No earning cap. Earn as much as you travel. 10 pts per $1 on all bookings — 20 pts per $1 on hotels, cruises & packages." },
-              { q: "Can I combine points with another member?", a: "Points gifting is not available at this time. Points are tied to the booking account." },
-              { q: "How long does redemption take?", a: "Redemptions are processed within 2 business days via Zelle, Cash App, or Venmo — standard (free) transfers only." },
-              { q: "What if my trip is delayed or rescheduled?", a: "The 45-day clock starts from your actual travel completion date, not the originally booked date." },
-            ].map((item, i) => (
-              <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "18px 20px" }}>
-                <p style={{ fontSize: "14px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>Q: {item.q}</p>
-                <p style={{ fontSize: "13px", color: "#6B7280", margin: 0, lineHeight: 1.5 }}>A: {item.a}</p>
-              </div>
-            ))}
+            <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "10px 20px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", textDecoration: "none", flexShrink: 0 }}>
+              Join free →
+            </a>
           </div>
         </section>
 
