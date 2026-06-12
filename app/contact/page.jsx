@@ -163,7 +163,6 @@ export default function ContactPage() {
           {[
             { icon: "✉️", title: "Email Us", lines: ["roomvoyager@protonmail.com"] },
             { icon: "📞", title: "Call Us", lines: ["1-800-VOYAGER", "Mon–Fri 9am–6pm EST"] },
-            { icon: "🚢", title: "Group Bookings", lines: ["Cruises, hotels & more", "Special group rates"] },
           ].map((card, i) => (
             <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "16px" }}>
               <div style={{ width: "36px", height: "36px", background: LIGHT_BLUE, borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", marginBottom: "10px" }}>{card.icon}</div>
