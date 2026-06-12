@@ -45,7 +45,7 @@ const faqs = [
     questions: [
       {
         q: "How do I earn Rewards points?",
-        a: "You earn 10 points per $1 on eligible bookings made through RoomVoyager. Hotels, cruises, and vacation packages also qualify for double points (20 pts/$1) during promotional periods. Points are credited after your stay is completed.",
+        a: "You earn points on every booking made through RoomVoyager — 5 pts per $1 on flights and hotels, 10 pts per $1 on cruises and packages (double points available on hotels, cruises, and packages). Points may take up to 7 days to appear in your account after your booking is confirmed in our system. If you don't see them after 7 days, contact us at roomvoyager@protonmail.com.",
       },
       {
         q: "How do I redeem my points?",

@@ -385,7 +385,7 @@ export default function RewardsPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" }}>
             {[
               { step: "1", icon: "🔍", title: "Book through RoomVoyager", desc: "Search and book flights, hotels, or cruises on our site" },
-              { step: "2", icon: "⭐", title: "Earn points on your booking", desc: "5 pts per $1 on flights & hotels · 10 pts per $1 on cruises & packages. Double available on hotels, cruises & packages." },
+              { step: "2", icon: "⭐", title: "Earn points on your booking", desc: "5 pts per $1 on flights & hotels · 10 pts per $1 on cruises & packages. Double available on hotels, cruises & packages. Points may take up to 7 days to appear after your booking is confirmed in our system." },
               { step: "3", icon: "⏳", title: "Wait 45 days after travel", desc: "Points become redeemable 45 days after your trip is completed — no exceptions" },
               { step: "4", icon: "💵", title: "Redeem for real cash", desc: "Cash out via Zelle, Cash App, or Venmo — no restrictions, no travel credit" },
             ].map(item => (

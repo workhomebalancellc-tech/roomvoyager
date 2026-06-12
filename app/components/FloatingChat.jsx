@@ -14,7 +14,7 @@ const KB = [
   {
     id: "earn",
     triggers: ["earn points", "how do i earn", "how points work", "earning points", "earn cash back", "cash back", "how do points work", "get points", "accumulate points", "points per dollar", "pts per dollar", "points work"],
-    answer: "You earn points on every booking:\n• ✈️ Flights: 5 pts per $1\n• 🏨 Hotels: 5 pts per $1 (double pts available!)\n• 🚢 Cruises: 10 pts per $1 (double pts available!)\n• 🌴 Packages: 10 pts per $1 (double pts available!)\n\nPoints post within 7 days of your trip completing.",
+    answer: "You earn points on every booking:\n• ✈️ Flights: 5 pts per $1\n• 🏨 Hotels: 5 pts per $1 (double pts available!)\n• 🚢 Cruises: 10 pts per $1 (double pts available!)\n• 🌴 Packages: 10 pts per $1 (double pts available!)\n\nPoints may take up to 7 days to appear after your booking is confirmed in our system. If you don't see them after 7 days, contact us and we'll look into it.",
     follow: ["double points", "redeem", "tiers"],
   },
   {
@@ -62,7 +62,7 @@ const KB = [
   {
     id: "posting",
     triggers: ["when do points post", "points credited", "how long points", "pending points", "points post", "when will i get my points", "points take", "points show up"],
-    answer: "Points are credited within 7 days of your trip completing (check-out date for hotels, return date for flights/cruises). If it's been longer than 7 days, contact us and we'll look into it.",
+    answer: "Points may take up to 7 days to appear after your booking is confirmed in our system — due to affiliate tracking timelines on our end. If it's been longer than 7 days after booking, email us at roomvoyager@protonmail.com and we'll look into it manually.",
     follow: ["earn", "redeem"],
   },
   {

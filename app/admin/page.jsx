@@ -138,77 +138,201 @@ function CommissionCalc() {
   );
 }
 
+// Points per $1 per product (standard / double)
+const PTS_RATES = {
+  cruise:  { std: 10, dbl: 20 },
+  hotel:   { std: 5,  dbl: 10 },
+  package: { std: 10, dbl: 20 },
+  flight:  { std: 5,  dbl: null },
+};
+
 function ManualBookingLog() {
-  const [form, setForm]       = useState({ guestEmail: "", product: "cruise", amount: "", notes: "" });
-  const [submitting, set$]    = useState(false);
-  const [done,       setDone] = useState(false);
+  const [form, setForm] = useState({ guestEmail: "", product: "cruise", amount: "", double: false, notes: "" });
+  const [preview, setPreview]     = useState(null);  // { pts, cash, memberName }
+  const [looking, setLooking]     = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [result, setResult]       = useState(null);  // { ok, pts, name, error }
+  const [memberNotFound, setMemberNotFound] = useState(false);
+
+  const rates  = PTS_RATES[form.product] || PTS_RATES.cruise;
+  const canDbl = !!rates.dbl;
+  const rate   = (form.double && canDbl) ? rates.dbl : rates.std;
+  const amt    = parseFloat(form.amount) || 0;
+  const pts    = Math.round(amt * rate);
+  const cash   = (pts / 1000).toFixed(2);
+
+  async function lookupMember() {
+    if (!form.guestEmail) return;
+    setLooking(true); setPreview(null); setMemberNotFound(false);
+    const res  = await fetch("/api/admin/firestore", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "lookup", email: form.guestEmail }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setPreview({ memberName: data.name || data.email, currentPts: data.points });
+    } else {
+      setMemberNotFound(true);
+    }
+    setLooking(false);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    set$(true);
+    if (!pts || pts <= 0) return;
+    setSubmitting(true); setResult(null);
+
     try {
+      // 1. Award points server-side
+      const ptRes = await fetch("/api/admin/firestore", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "addPoints", email: form.guestEmail, amount: pts }),
+      });
+      const ptData = await ptRes.json();
+      if (!ptRes.ok) throw new Error(ptData.error || "Points award failed");
+
+      // 2. Log to Airtable
       await fetch("/api/link-clicks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          partner:    "Manual log",
-          product:    form.product,
-          url:        "",
-          userEmail:  form.guestEmail,
-          userName:   `Manual — $${form.amount} ${form.product}${form.notes ? ` — ${form.notes}` : ""}`,
+          partner:   "Manual booking",
+          product:   form.product,
+          url:       "",
+          userEmail: form.guestEmail,
+          userName:  `${preview?.memberName || form.guestEmail} — $${form.amount} ${form.product} — ${pts.toLocaleString()} pts awarded${form.notes ? ` — ${form.notes}` : ""}`,
         }),
       });
-      setDone(true);
-      setForm({ guestEmail: "", product: "cruise", amount: "", notes: "" });
-      setTimeout(() => setDone(false), 3000);
+
+      // 3. Email customer
+      await fetch("/api/booking-points-notify", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email:      form.guestEmail,
+          name:       preview?.memberName || "",
+          product:    PRODUCT_TYPES.find(p => p.id === form.product)?.label || form.product,
+          amount:     form.amount,
+          pts,
+          cash,
+          newBalance: ptData.points,
+          notes:      form.notes,
+        }),
+      });
+
+      setResult({ ok: true, pts, name: preview?.memberName || form.guestEmail, newBalance: ptData.points });
+      setForm({ guestEmail: "", product: "cruise", amount: "", double: false, notes: "" });
+      setPreview(null);
     } catch (err) {
-      console.error(err);
-    } finally {
-      set$(false);
+      setResult({ ok: false, error: err.message });
     }
+    setSubmitting(false);
   }
 
   return (
     <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
-      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>📝 Manual Booking Log</p>
-      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 14px" }}>Log a booking that happened outside the website (phone call, email) to track it in Airtable.</p>
-      {done ? (
-        <div style={{ textAlign: "center", padding: "20px", background: "#F0FDF4", borderRadius: "10px" }}>
-          <p style={{ fontSize: "24px", margin: "0 0 8px" }}>✅</p>
-          <p style={{ fontSize: "13px", fontWeight: "700", color: "#15803D", margin: 0 }}>Logged to Airtable!</p>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>📝 Log Booking & Award Points</p>
+      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>Enter a booking to auto-calculate points, credit the member, log to Airtable, and email the customer.</p>
+
+      {result?.ok ? (
+        <div style={{ textAlign: "center", padding: "24px", background: "#F0FDF4", borderRadius: "12px" }}>
+          <p style={{ fontSize: "28px", margin: "0 0 8px" }}>🎉</p>
+          <p style={{ fontSize: "15px", fontWeight: "800", color: "#15803D", margin: "0 0 4px" }}>{result.pts.toLocaleString()} pts awarded to {result.name}</p>
+          <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 12px" }}>New balance: {result.newBalance.toLocaleString()} pts · Email sent · Logged to Airtable</p>
+          <button onClick={() => setResult(null)} style={{ padding: "8px 20px", background: NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "13px", fontWeight: "700", cursor: "pointer" }}>
+            Log another →
+          </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+
+          {/* Email + lookup */}
+          <div>
+            <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Member Email</label>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <input required type="email" placeholder="guest@example.com" value={form.guestEmail}
+                onChange={e => { setForm(f => ({ ...f, guestEmail: e.target.value })); setPreview(null); setMemberNotFound(false); }}
+                style={{ flex: 1, padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", outline: "none" }} />
+              <button type="button" onClick={lookupMember} disabled={looking || !form.guestEmail}
+                style={{ padding: "8px 14px", background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
+                {looking ? "…" : "Look up"}
+              </button>
+            </div>
+            {preview && (
+              <div style={{ marginTop: "6px", padding: "8px 12px", background: "#F0FDF4", borderRadius: "8px", fontSize: "12px", color: "#15803D", fontWeight: "600" }}>
+                ✓ {preview.memberName} · {preview.currentPts.toLocaleString()} pts current balance
+              </div>
+            )}
+            {memberNotFound && (
+              <p style={{ marginTop: "6px", fontSize: "12px", color: "#DC2626", fontWeight: "600" }}>
+                ⚠️ No account found. Points will create a new member record.
+              </p>
+            )}
+          </div>
+
+          {/* Product + Double */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
             <div>
-              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Guest Email</label>
-              <input required type="email" placeholder="guest@example.com" value={form.guestEmail}
-                onChange={e => setForm(f => ({ ...f, guestEmail: e.target.value }))}
-                style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none" }} />
-            </div>
-            <div>
               <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Product</label>
-              <select value={form.product} onChange={e => setForm(f => ({ ...f, product: e.target.value }))}
+              <select value={form.product} onChange={e => setForm(f => ({ ...f, product: e.target.value, double: false }))}
                 style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", background: "#fff" }}>
                 {PRODUCT_TYPES.map(p => <option key={p.id} value={p.id}>{p.icon} {p.label}</option>)}
               </select>
             </div>
+            <div>
+              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Points Mode</label>
+              <div style={{ display: "flex", gap: "6px", height: "36px", alignItems: "center" }}>
+                <button type="button" onClick={() => setForm(f => ({ ...f, double: false }))}
+                  style={{ flex: 1, height: "36px", borderRadius: "8px", border: `1.5px solid ${!form.double ? NAVY : "#E5E7EB"}`, background: !form.double ? "#EBF3FF" : "#fff", fontSize: "12px", fontWeight: "700", cursor: "pointer", color: !form.double ? NAVY : "#6B7280" }}>
+                  Standard
+                </button>
+                <button type="button" onClick={() => { if (canDbl) setForm(f => ({ ...f, double: true })); }} disabled={!canDbl}
+                  style={{ flex: 1, height: "36px", borderRadius: "8px", border: `1.5px solid ${form.double ? ORANGE : "#E5E7EB"}`, background: form.double ? "#FFF7ED" : "#F9FAFB", fontSize: "12px", fontWeight: "700", cursor: canDbl ? "pointer" : "not-allowed", color: form.double ? ORANGE : "#9CA3AF", opacity: canDbl ? 1 : 0.5 }}>
+                  Double 🔥
+                </button>
+              </div>
+            </div>
           </div>
+
+          {/* Amount */}
           <div>
             <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Booking Amount ($)</label>
-            <input type="number" min="0" placeholder="0.00" value={form.amount}
+            <input required type="number" min="1" step="0.01" placeholder="0.00" value={form.amount}
               onChange={e => setForm(f => ({ ...f, amount: e.target.value }))}
               style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none" }} />
           </div>
+
+          {/* Points preview */}
+          {amt > 0 && (
+            <div style={{ background: "#F0F4FF", borderRadius: "10px", padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div>
+                <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 2px", fontWeight: "600" }}>POINTS TO AWARD</p>
+                <p style={{ fontSize: "22px", fontWeight: "800", color: NAVY, margin: 0 }}>{pts.toLocaleString()} pts</p>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 2px", fontWeight: "600" }}>CASH VALUE</p>
+                <p style={{ fontSize: "22px", fontWeight: "800", color: GREEN, margin: 0 }}>${cash}</p>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 2px", fontWeight: "600" }}>RATE</p>
+                <p style={{ fontSize: "14px", fontWeight: "700", color: form.double ? ORANGE : "#374151", margin: 0 }}>{rate} pts/$1 {form.double ? "🔥" : ""}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Notes */}
           <div>
             <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Notes (optional)</label>
             <input type="text" placeholder="e.g. Royal Caribbean 7-night, booked via phone" value={form.notes}
               onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
               style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none" }} />
           </div>
-          <button type="submit" disabled={submitting}
-            style={{ padding: "10px", background: submitting ? "#D1D5DB" : NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "13px", fontWeight: "700", cursor: submitting ? "default" : "pointer" }}>
-            {submitting ? "Logging…" : "Log Booking →"}
+
+          {result?.ok === false && (
+            <p style={{ fontSize: "12px", color: "#DC2626", fontWeight: "600", margin: 0 }}>❌ {result.error}</p>
+          )}
+
+          <button type="submit" disabled={submitting || !pts}
+            style={{ padding: "11px", background: submitting ? "#D1D5DB" : ORANGE, color: "#fff", border: "none", borderRadius: "8px", fontSize: "13px", fontWeight: "700", cursor: submitting ? "default" : "pointer" }}>
+            {submitting ? "Processing…" : `Award ${pts > 0 ? pts.toLocaleString() + " pts" : "Points"} & Notify Customer →`}
           </button>
         </form>
       )}
