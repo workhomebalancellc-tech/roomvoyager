@@ -425,9 +425,12 @@ export default function RewardsPage() {
           <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Lifetime points</p>
           <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 24px" }}>Membership tiers</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" }}>
-            {TIERS.map(tier => (
-              <div key={tier.name} style={{ background: "#fff", border: `2px solid ${session && currentTier.name === tier.name ? tier.color : "#E5E7EB"}`, borderRadius: "14px", padding: "20px", position: "relative" }}>
-                {session && currentTier.name === tier.name && (
+            {TIERS.map(tier => {
+              // Tier is always determined by lifetimePoints — redeeming cash never changes your tier
+              const isCurrentTier = session && currentTier.name === tier.name;
+              return (
+              <div key={tier.name} style={{ background: "#fff", border: `2px solid ${isCurrentTier ? tier.color : "#E5E7EB"}`, borderRadius: "14px", padding: "20px", position: "relative" }}>
+                {isCurrentTier && (
                   <span style={{ position: "absolute", top: "12px", right: "12px", fontSize: "10px", fontWeight: "700", background: tier.color, color: "#fff", padding: "2px 8px", borderRadius: "999px" }}>YOUR TIER</span>
                 )}
                 <p style={{ fontSize: "32px", margin: "0 0 8px" }}>{tier.icon}</p>
@@ -442,7 +445,8 @@ export default function RewardsPage() {
                   ))}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
