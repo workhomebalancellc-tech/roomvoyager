@@ -59,7 +59,7 @@ export async function POST(request) {
             user_id:     EJ_PUBLIC,
             ...(EJ_PRIVATE && { accessToken: EJ_PRIVATE }),
             template_params: {
-              to_email:     'roomvoyager@protonmail.com',
+              to_email:     'workhomebalancellc@gmail.com',
               from_name:    name || 'Unknown',
               from_email:   email || '',
               phone:        'N/A',
