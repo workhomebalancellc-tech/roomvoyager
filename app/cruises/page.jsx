@@ -363,9 +363,6 @@ export default function CruisesPage() {
         </div>
       </div>
 
-      {/* MOBILE SECTION NAV removed */}
-      {false && (
-      )}
 
       {/* MAIN — responsive two column */}
       <div style={{ maxWidth: "1140px", margin: "0 auto", padding: isMobile ? "24px 16px 60px" : "48px 24px 80px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "320px 1fr", gap: "40px", alignItems: "start" }}>
