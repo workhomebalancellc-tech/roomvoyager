@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "RoomVoyager — Hotels, Flights & Cruises",
   description: "Book hotels, flights, and cruises with RoomVoyager. Earn rewards on every booking.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
