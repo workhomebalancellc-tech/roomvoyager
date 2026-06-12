@@ -206,7 +206,7 @@ function HotelsContent() {
             {[
               { icon: "💰", title: "Earn real cash back", desc: "5 points per $1 spent — redeemable for real money after your stay" },
               { icon: "🔒", title: "Secure booking", desc: "All bookings processed through Expedia's trusted platform" },
-              { icon: "📞", title: "We're here to help", desc: "Questions about your booking? We'll help you find the perfect stay" },
+              // { icon: "📞", title: "We're here to help", desc: "Questions about your booking? We'll help you find the perfect stay" },
               { icon: "🌍", title: "Massive selection", desc: "Over 1 million properties from budget to luxury worldwide" },
             ].map((item, i) => (
               <div key={i}>
