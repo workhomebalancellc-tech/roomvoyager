@@ -133,7 +133,7 @@ const KB = [
   },
   {
     id: "popup",
-    triggers: ["pop up", "popup", "pop-up", "pop up blocker", "popup blocker", "can't see cruise", "cannot see cruise", "cruise not loading", "cruise search not showing", "cruise page not working", "cruise search missing", "cruise search blank", "disable pop up", "allow pop up"],
+    triggers: ["pop up", "popup", "pop-up", "pop up blocker", "popup blocker", "can't see anything", "cannot see anything", "can't see anything on the cruises", "nothing on the cruise", "nothing showing", "blank cruise", "can't see cruise", "cannot see cruise", "cruise not loading", "cruise not showing", "cruise search not showing", "cruise page not working", "cruise search missing", "cruise search blank", "disable pop up", "allow pop up", "page is blank", "cruise page blank", "cruises page blank", "cruises page empty", "nothing on cruises"],
     answer: "The cruise search opens in a pop-up window. If you don't see it, your browser's pop-up blocker is preventing it from loading.\n\nTo fix it:\n1. Look for a blocked pop-up icon 🚫 in your browser's address bar\n2. Click it and select 'Always allow pop-ups from this site'\n3. Refresh the page\n\nThis applies to Chrome, Safari, Firefox, and Edge.",
     follow: ["cruises", "book", "contact"],
   },
@@ -206,8 +206,15 @@ function getBotReply(input, lastTopic) {
     }
   }
 
+  // Boost popup entry if user says they can't see / nothing showing on cruises
+  const cantSeeCruise = /(can'?t|cannot|not|nothing|blank|empty|missing|broken).{0,20}(see|view|find|show|load|work|display).{0,20}cruise|(cruise).{0,20}(can'?t|cannot|not|nothing|blank|empty|missing|broken).{0,20}(see|view|find|show|load|work|display)/.test(lower);
+
   // Score all KB entries
-  const scored = KB.map(entry => ({ entry, score: scoreEntry(entry, lower, normalized) }))
+  const scored = KB.map(entry => {
+    let s = scoreEntry(entry, lower, normalized);
+    if (cantSeeCruise && entry.id === "popup") s += 50;
+    return { entry, score: s };
+  })
     .filter(x => x.score > 0)
     .sort((a, b) => b.score - a.score);
 
