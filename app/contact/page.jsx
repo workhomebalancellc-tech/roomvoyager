@@ -10,7 +10,7 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const FAQS = [
   { q: ["how do i earn points", "earn points", "how points work", "points"], a: "You earn 5 pts per $1 on hotels and flights, and 10 pts per $1 on cruises and vacation packages. Double points are available on hotels, cruises, and packages." },
-  { q: ["redeem points", "how to redeem", "cash out", "withdraw"], a: "You can redeem points once you hit 1,000. We pay out via Zelle, Cash App, or Venmo. 10,000 pts = $10, 25,000 pts = $25, 50,000 pts = $50, 100,000 pts = $100." },
+  { q: ["redeem points", "how to redeem", "cash out", "withdraw"], a: "You can redeem once you hit 10,000 points ($10 minimum). We pay out via Zelle, Cash App, or Venmo. 10,000 pts = $10, 25,000 pts = $25, 50,000 pts = $50, 100,000 pts = $100." },
   { q: ["tiers", "tier", "explorer", "voyager", "navigator", "admiral", "levels"], a: "We have 4 tiers: Explorer (0–9,999 pts), Voyager (10,000–49,999), Navigator (50,000–99,999), and Admiral (100,000+). Higher tiers unlock better perks and auto payouts." },
   { q: ["cancel", "cancellation", "refund"], a: "Cancellation policies vary by provider (hotel, airline, or cruise line). Most hotels booked through RoomVoyager offer free cancellation options — check the listing details before booking." },
   { q: ["how to book", "book a cruise", "book a hotel", "book flights", "booking"], a: "Browse our Hotels, Flights, or Cruises pages, choose your option, and you'll be directed to our trusted partner to complete the booking securely. Points are credited after your trip." },

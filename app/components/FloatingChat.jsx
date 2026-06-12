@@ -26,13 +26,13 @@ const KB = [
   {
     id: "redeem",
     triggers: ["redeem points", "how to redeem", "cash out", "withdraw", "get paid", "payout", "pay out", "claim points", "use points", "spend points", "how do i redeem", "request payout", "redemption"],
-    answer: "Redeem anytime once you hit 1,000 pts ($1 min). Payouts go via Zelle, Cash App, or Venmo:\n• 10,000 pts = $10\n• 25,000 pts = $25\n• 50,000 pts = $50\n• 100,000 pts = $100\n\nRequest a redemption from your profile or the Rewards page.",
+    answer: "Redeem once you hit 10,000 points ($10 minimum). Payouts go via Zelle, Cash App, or Venmo:\n• 10,000 pts = $10\n• 25,000 pts = $25\n• 50,000 pts = $50\n• 100,000 pts = $100\n\nRequest a redemption from your profile or the Rewards page.",
     follow: ["auto payout", "payment methods", "tiers"],
   },
   {
     id: "minimum",
-    triggers: ["minimum redeem", "minimum points", "minimum redemption", "how many points to redeem", "least points", "starting points", "redeem minimum", "1000 points", "lowest redemption"],
-    answer: "The minimum redemption is 1,000 points (=$1). Most members wait until 10,000+ pts to get better value — like a $10 payout.",
+    triggers: ["minimum redeem", "minimum points", "minimum redemption", "how many points to redeem", "least points", "starting points", "redeem minimum", "10000 points", "lowest redemption"],
+    answer: "The minimum redemption is 10,000 points = $10. You can redeem via Zelle, Cash App, or Venmo once you hit that threshold.",
     follow: ["redeem", "earn"],
   },
   {
