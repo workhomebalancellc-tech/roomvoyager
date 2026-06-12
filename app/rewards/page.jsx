@@ -253,6 +253,10 @@ export default function RewardsPage() {
         })
       });
       if (!res.ok) throw new Error('Submission failed');
+      // Deduct redeemed points from local balance
+      const newPoints = Math.max(0, userPoints - redeemAmount);
+      localStorage.setItem("rv_points", String(newPoints));
+      setUserPoints(newPoints);
       setRedeemSubmitted(true);
     } catch (err) {
       setRedeemError("Something went wrong. Please email us at roomvoyager@protonmail.com to request your redemption.");
