@@ -17,7 +17,7 @@ const destinations = [
   { name: "Paris",        country: "France",              photo: "https://images.unsplash.com/photo-1431274172761-fca41d930114?w=400&h=280&fit=crop&auto=format", tag: "🗼 Romance",         iata: "CDG", kiwi: "paris-ile-de-france-france" },
   { name: "Orlando",      country: "Florida, USA",        photo: "https://images.unsplash.com/photo-1627035983655-0ceec61bb733?w=400&h=280&fit=crop&auto=format", tag: "🎡 Family",          iata: "MCO", kiwi: "orlando-florida-united-states" },
   { name: "London",       country: "United Kingdom",      photo: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=280&fit=crop&auto=format", tag: "🎭 Culture",         iata: "LHR", kiwi: "london-england-united-kingdom" },
-  { name: "Punta Cana",   country: "Dominican Republic",  photo: "https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400&h=280&fit=crop&auto=format", tag: "🌴 All-Inclusive",   iata: "PUJ", kiwi: "punta-cana-la-altagracia-dominican-republic" },
+  { name: "Punta Cana",   country: "Dominican Republic",  photo: "https://images.unsplash.com/photo-1612865547334-09cb8cb455da?w=400&h=280&fit=crop&auto=format", tag: "🌴 All-Inclusive",   iata: "PUJ", kiwi: "punta-cana-la-altagracia-dominican-republic" },
   { name: "New York",     country: "New York, USA",       photo: "https://images.unsplash.com/photo-1522083165195-3424ed129620?w=400&h=280&fit=crop&auto=format", tag: "🗽 Iconic",          iata: "JFK", kiwi: "new-york-new-york-united-states" },
 ];
 
@@ -30,54 +30,58 @@ const tips = [
   { icon: "🎒", title: "Travel carry-on only",     desc: "Skipping checked bags saves $30–$60 each way on most budget and major carriers." },
 ];
 
-/* ── City → IATA lookup (resolves typed names to IATA codes) ────── */
-const CITY_TO_IATA = {
-  "cancún": "CUN", "cancun": "CUN",
-  "miami": "MIA",
-  "las vegas": "LAS",
-  "paris": "CDG",
-  "orlando": "MCO",
-  "london": "LHR",
-  "punta cana": "PUJ",
-  "new york": "JFK", "new york city": "JFK", "nyc": "JFK",
-  "atlanta": "ATL",
-  "chicago": "ORD",
-  "los angeles": "LAX", "la": "LAX",
-  "dallas": "DFW",
-  "denver": "DEN",
-  "seattle": "SEA",
-  "san francisco": "SFO",
-  "boston": "BOS",
-  "houston": "IAH",
-  "phoenix": "PHX",
-  "toronto": "YYZ",
-  "vancouver": "YVR",
-  "montreal": "YUL",
-  "mexico city": "MEX",
-  "cabo san lucas": "SJD",
-  "puerto vallarta": "PVR",
-  "rome": "FCO",
-  "amsterdam": "AMS",
-  "barcelona": "BCN",
-  "madrid": "MAD",
-  "frankfurt": "FRA",
-  "dubai": "DXB",
-  "tokyo": "NRT",
-  "bangkok": "BKK",
-  "sydney": "SYD",
-  "nassau": "NAS",
-  "montego bay": "MBJ",
-  "aruba": "AUA",
-  "phuket": "HKT",
-  "bali": "DPS",
-  "lisbon": "LIS",
-  "athens": "ATH",
-  "milan": "MXP",
-  "vienna": "VIE",
-  "prague": "PRG",
+/* ── City → Kiwi slug lookup ─────────────────────────────────── */
+const CITY_TO_KIWI = {
+  "cancún": "cancun-quintana-roo-mexico", "cancun": "cancun-quintana-roo-mexico",
+  "miami": "miami-florida-united-states",
+  "las vegas": "las-vegas-nevada-united-states",
+  "paris": "paris-ile-de-france-france",
+  "orlando": "orlando-florida-united-states",
+  "london": "london-england-united-kingdom",
+  "punta cana": "punta-cana-la-altagracia-dominican-republic",
+  "new york": "new-york-new-york-united-states", "new york city": "new-york-new-york-united-states", "nyc": "new-york-new-york-united-states",
+  "atlanta": "atlanta-georgia-united-states",
+  "chicago": "chicago-illinois-united-states",
+  "los angeles": "los-angeles-california-united-states", "la": "los-angeles-california-united-states",
+  "dallas": "dallas-texas-united-states",
+  "denver": "denver-colorado-united-states",
+  "seattle": "seattle-washington-united-states",
+  "san francisco": "san-francisco-california-united-states",
+  "boston": "boston-massachusetts-united-states",
+  "houston": "houston-texas-united-states",
+  "phoenix": "phoenix-arizona-united-states",
+  "toronto": "toronto-ontario-canada",
+  "vancouver": "vancouver-british-columbia-canada",
+  "montreal": "montreal-quebec-canada",
+  "mexico city": "mexico-city-mexico-city-mexico",
+  "cabo san lucas": "cabo-san-lucas-baja-california-sur-mexico",
+  "puerto vallarta": "puerto-vallarta-jalisco-mexico",
+  "rome": "rome-lazio-italy",
+  "amsterdam": "amsterdam-north-holland-netherlands",
+  "barcelona": "barcelona-catalonia-spain",
+  "madrid": "madrid-community-of-madrid-spain",
+  "frankfurt": "frankfurt-hesse-germany",
+  "dubai": "dubai-dubai-united-arab-emirates",
+  "tokyo": "tokyo-tokyo-japan",
+  "bangkok": "bangkok-bangkok-thailand",
+  "sydney": "sydney-new-south-wales-australia",
+  "nassau": "nassau-new-providence-bahamas",
+  "montego bay": "montego-bay-saint-james-jamaica",
+  "aruba": "oranjestad-aruba-aruba",
+  "phuket": "phuket-phuket-thailand",
+  "bali": "denpasar-bali-indonesia",
+  "lisbon": "lisbon-lisbon-portugal",
+  "athens": "athens-attica-greece",
+  "milan": "milan-lombardy-italy",
+  "vienna": "vienna-vienna-austria",
+  "prague": "prague-capital-city-of-prague-czech-republic",
 };
-function resolveIata(cityName) {
-  return CITY_TO_IATA[cityName?.toLowerCase().trim()] || null;
+function resolveKiwi(cityName) {
+  return CITY_TO_KIWI[cityName?.toLowerCase().trim()] || null;
+}
+function toKiwiSlug(name) {
+  if (!name?.trim()) return null;
+  return name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
 /* ── input style helper ─────────────────────────────────────────── */
@@ -101,8 +105,8 @@ function FlightsContent() {
   const [ret,      setRet]      = useState("");
   const [pax,      setPax]      = useState(1);
   // IATA codes — seeded from URL params via lookup, updated on card click or autocomplete pick
-  const [toIata,   setToIata]   = useState(() => resolveIata(initialTo) || "");
-  const [fromIata, setFromIata] = useState(() => resolveIata(initialFrom) || "");
+  const [toKiwi,   setToKiwi]   = useState(() => resolveKiwi(initialTo) || "");
+  const [fromKiwi, setFromKiwi] = useState(() => resolveKiwi(initialFrom) || "");
   const [toFlash,  setToFlash]  = useState(false);
   const [mounted,  setMounted]  = useState(false);
 
@@ -133,7 +137,7 @@ function FlightsContent() {
 
   function handleFromChange(val) {
     setFrom(val);
-    setFromIata(resolveIata(val) || "");
+    setFromKiwi(resolveKiwi(val) || "");
     if (fromDebounceRef.current) clearTimeout(fromDebounceRef.current);
     if (!val || val.length < 2) { setFromSugg([]); setShowFromSugg(false); return; }
     setLoadingFrom(true);
@@ -149,7 +153,7 @@ function FlightsContent() {
 
   function handleToChange(val) {
     setTo(val);
-    setToIata(resolveIata(val) || "");
+    setToKiwi(resolveKiwi(val) || "");
     if (toDebounceRef.current) clearTimeout(toDebounceRef.current);
     if (!val || val.length < 2) { setToSugg([]); setShowToSugg(false); return; }
     setLoadingTo(true);
@@ -165,37 +169,19 @@ function FlightsContent() {
 
   function handleSearch(e) {
     e?.preventDefault();
-    // Resolve IATA at search time — covers card clicks, URL params, and typed city names
-    const resolvedTo   = toIata   || resolveIata(to);
-    const resolvedFrom = fromIata || resolveIata(from);
-    let kiwiUrl;
-
-    if (resolvedTo || resolvedFrom) {
-      // At least one IATA known — use deep link for reliable Kiwi pre-fill
-      const params = new URLSearchParams();
-      if (resolvedFrom) params.set("from", resolvedFrom);
-      if (resolvedTo)   params.set("to", resolvedTo);
-      if (depart) params.set("departure", depart);
-      if (tripType === "round" && ret) params.set("return", ret);
-      if (pax > 1) params.set("adults", String(pax));
-      kiwiUrl = `https://www.kiwi.com/deep?${params.toString()}`;
-    } else {
-      // Unknown city — fall back to text search
-      const f = from.trim() || "anywhere";
-      const t = to.trim()   || "anywhere";
-      const d = depart      || "anytime";
-      const r = tripType === "round" ? (ret || "anytime") : "no-return";
-      const paxParam = pax > 1 ? `?adults=${pax}` : "";
-      kiwiUrl = `https://www.kiwi.com/en/search/results/${encodeURIComponent(f)}/${encodeURIComponent(t)}/${d}/${r}${paxParam}`;
-    }
-
+    const slugFrom = fromKiwi || resolveKiwi(from) || toKiwiSlug(from) || "anywhere";
+    const slugTo   = toKiwi   || resolveKiwi(to)   || toKiwiSlug(to)   || "anywhere";
+    const d = depart || "anytime";
+    const r = tripType === "round" ? (ret || "anytime") : "no-return";
+    const paxParam = pax > 1 ? `?adults=${pax}` : "";
+    const kiwiUrl = `https://www.kiwi.com/en/search/results/${slugFrom}/${slugTo}/${d}/${r}${paxParam}`;
     const tpUrl = `https://c111.travelpayouts.com/click?shmarker=722477&promo_id=3791&source_type=customlink&type=click&custom_url=${encodeURIComponent(kiwiUrl)}`;
     window.open(`/redirect?to=${encodeURIComponent(tpUrl)}&partner=Kiwi.com&product=flight`, "_blank", "noopener,noreferrer");
   }
 
   function pickDest(dest) {
     setTo(dest.name);
-    setToIata(dest.iata);
+    setToKiwi(dest.kiwi || resolveKiwi(dest.name) || "");
     setToSugg([]); setShowToSugg(false);
     setToFlash(true);
     if (toInputRef.current) toInputRef.current.value = dest.name;
@@ -268,7 +254,7 @@ function FlightsContent() {
                         ? <div style={{ padding: "10px 12px", fontSize: "12px", color: "#9CA3AF" }}>Searching…</div>
                         : fromSugg.map((c, i) => (
                           <div key={i}
-                            onMouseDown={() => { setFrom(c.label || c.name); setFromIata(resolveIata(c.name) || ""); setShowFromSugg(false); }}
+                            onMouseDown={() => { setFrom(c.label || c.name); setFromKiwi(resolveKiwi(c.name) || toKiwiSlug(c.name) || ""); setShowFromSugg(false); }}
                             style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < fromSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
                             onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
                             onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
@@ -296,7 +282,7 @@ function FlightsContent() {
                         ? <div style={{ padding: "10px 12px", fontSize: "12px", color: "#9CA3AF" }}>Searching…</div>
                         : toSugg.map((c, i) => (
                           <div key={i}
-                            onMouseDown={() => { setTo(c.label || c.name); setToIata(resolveIata(c.name) || ""); setShowToSugg(false); }}
+                            onMouseDown={() => { setTo(c.label || c.name); setToKiwi(resolveKiwi(c.name) || toKiwiSlug(c.name) || ""); setShowToSugg(false); }}
                             style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < toSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
                             onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
                             onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
@@ -388,7 +374,7 @@ function FlightsContent() {
           {[
             { icon: "🏆", title: "Earn real cash back",       desc: "5 Rewards points per $1 on flights — redeem for real money via Zelle, Cash App, or Venmo." },
             { icon: "🔍", title: "500+ airlines compared",    desc: "We search major carriers, budget airlines, and everything in between to find the best price." },
-            { icon: "✈️+🏨", title: "Bundle & save",         desc: "Add a hotel or cruise to your flight and unlock package pricing not available separately." },
+            // { icon: "✈️+🏨", title: "Bundle & save", desc: "Add a hotel or cruise to your flight and unlock package pricing not available separately." },
           ].map((item, i) => (
             <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "24px", flex: "1 1 220px", maxWidth: "320px" }}>
               <div style={{ fontSize: "32px", marginBottom: "12px" }}>{item.icon}</div>

@@ -21,7 +21,7 @@ export default function NavBar({ active }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    function onResize() { setIsMobile(window.innerWidth < 768); }
+    function onResize() { setIsMobile(window.innerWidth < 1024); }
     onResize(); // set correct value immediately after mount
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
