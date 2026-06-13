@@ -24,11 +24,11 @@ const faqs = [
       },
       {
         q: "Can I book flights directly on RoomVoyager?",
-        a: "Yes! Our Flights page is powered by Kiwi.com. You can search and book flights directly from the page.",
+        a: "Yes! You can start your flight search right on our Flights page — Kiwi.com will handle the rest, including checkout and your booking confirmation.",
       },
       {
         q: "How do I book a cruise?",
-        a: "Visit our Cruises page to browse available cruise lines. You can also contact us at roomvoyager@protonmail.com for personalized cruise recommendations and group bookings.",
+        a: "Visit our Cruises page and use the CruiseDirect search widget to find your perfect sailing, or click on any of the cruise line photos to continue shopping on their page. You can also contact us at roomvoyager@protonmail.com for personalized recommendations and group bookings.",
       },
       {
         q: "I can't see the cruise search on the Cruises page — what do I do?",
@@ -49,7 +49,7 @@ const faqs = [
       },
       {
         q: "What is the difference between Pending, Redeemable, and Lifetime points?",
-        a: "Pending points are earned when a booking is logged but not yet confirmed — they show up in your account but cannot be redeemed yet. Once your booking is verified (typically within 7 days), they convert to Redeemable points, which are available for cash redemption. Lifetime points is your all-time total of every point ever earned, including ones already redeemed — it's used to determine your rewards tier.",
+        a: "Pending points are earned when a booking is logged but not yet confirmed — they show up in your account but cannot be redeemed yet. Once your travel is completed, points become Redeemable 45 days after your trip ends. Lifetime points is your all-time total of every point ever earned, including ones already redeemed — it's used to determine your rewards tier.",
       },
       {
         q: "How do I redeem my points?",
@@ -57,7 +57,7 @@ const faqs = [
       },
       {
         q: "When do my points expire?",
-        a: "Points are valid for 24 months from the date they are earned. Making a new booking resets the expiration clock.",
+        a: "Points are valid for 36 months (3 years) from the date they are earned. Making a new booking resets the expiration clock.",
       },
       {
         q: "What are the Rewards tiers?",
@@ -82,7 +82,7 @@ const faqs = [
       },
       {
         q: "How do I delete my account?",
-        a: "Email us at roomvoyager@protonmail.com and we'll delete your account and associated data within 30 days.",
+        a: "You can delete your account directly from your profile page. Go to your Profile, scroll to the bottom of the Overview tab, and click 'Delete My Account.' You'll be asked to type DELETE to confirm. This permanently removes your account, bookings, and all rewards points and cannot be undone.",
       },
     ],
   },
