@@ -27,6 +27,7 @@ const COMMISSION_SOURCE = {
 
 const TOOLS = [
   { icon: "🧮", label: "Points Calculator",    href: "/admin/calculator", desc: "Calculate pts earned on any booking combination" },
+  { icon: "📖", label: "Staff Manual",          href: "/RoomVoyager-Admin-Manual.docx", desc: "VA operations guide — download & share", external: true },
   { icon: "📊", label: "Airtable",             href: "https://airtable.com", desc: "Quotes · Call Requests · Link Clicks · Redemptions", external: true },
   { icon: "🌐", label: "Live Site",             href: "https://www.roomvoyagertravel.com", desc: "Open your live website", external: true },
   { icon: "💳", label: "Virtual Card",          href: "https://privacy.com", desc: "Create a virtual card for demo bookings", external: true },

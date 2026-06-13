@@ -39,7 +39,8 @@ async function getRecipients(audience = "all", manualEmails = []) {
 
   const addUser = (d) => {
     const email = (d.email || "").toLowerCase();
-    if (email && !seen.has(email)) {
+    // Respect opt-out flag set by unsubscribe endpoint
+    if (email && !seen.has(email) && !d.emailOptOut) {
       seen.set(email, { email, name: d.displayName || d.name || "" });
     }
   };
@@ -111,8 +112,11 @@ async function sendEmail({ to, name, subject, htmlBody, textBody }) {
 
 // ── Build branded HTML email ──────────────────────────────────────────────────
 
-function buildHtml({ name, subject, body }) {
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.roomvoyagertravel.com";
+
+function buildHtml({ name, subject, body, email }) {
   const greeting = name ? `Hi ${name},` : "Hi there,";
+  const unsubLink = `${SITE_URL}/api/unsubscribe?email=${encodeURIComponent(email)}`;
   return `
 <!DOCTYPE html>
 <html>
@@ -155,6 +159,9 @@ function buildHtml({ name, subject, body }) {
               You're receiving this because you signed up for RoomVoyager Rewards.
               Questions? Reply to this email.
             </p>
+            <p style="color:#9CA3AF;font-size:11px;margin:8px 0 0;">
+              <a href="${unsubLink}" style="color:#9CA3AF;">Unsubscribe</a>
+            </p>
           </td>
         </tr>
 
@@ -196,7 +203,7 @@ export async function POST(req) {
         to:       r.email,
         name:     r.name,
         subject,
-        htmlBody: buildHtml({ name: r.name, subject, body: messageBody }),
+        htmlBody: buildHtml({ name: r.name, subject, body: messageBody, email: r.email }),
         textBody: `${r.name ? `Hi ${r.name},\n\n` : ""}${messageBody}\n\nBook now at roomvoyagertravel.com`,
       });
       sent++;

@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // ── Users ─────────────────────────────────────────────────────────────────
+    // Users can read their own profile. All writes go through server-side
+    // Admin SDK (bypasses these rules) so client writes are blocked.
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+      allow write: if false;
+    }
+
+    // ── Bookings ──────────────────────────────────────────────────────────────
+    // Users can read their own bookings. Writes are server-side only.
+    match /bookings/{bookingId} {
+      allow read: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow write: if false;
+    }
+
+    // ── Newsletter Subscribers ────────────────────────────────────────────────
+    // Anyone can subscribe (create). Reads and edits are server-side only.
+    match /subscribers/{docId} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+
+    // ── Promo Settings ────────────────────────────────────────────────────────
+    // Public read so the promo banner can load without auth.
+    // Writes are server-side only (admin panel → Next.js API → Admin SDK).
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ── Click Tracking ────────────────────────────────────────────────────────
+    // Written server-side via API routes. No client access needed.
+    match /hotel_clicks/{docId} {
+      allow read, write: if false;
+    }
+    match /flight_clicks/{docId} {
+      allow read, write: if false;
+    }
+
+    // ── Email Blast Logs ──────────────────────────────────────────────────────
+    // Admin-only, server-side only.
+    match /email_blasts/{docId} {
+      allow read, write: if false;
+    }
+
+    // ── Redemptions ───────────────────────────────────────────────────────────
+    // Users can create a redemption request. They can read their own.
+    // Writes beyond create are server-side only.
+    match /redemptions/{docId} {
+      allow create: if isSignedIn() && request.resource.data.uid == request.auth.uid;
+      allow read: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // ── Deny everything else ──────────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

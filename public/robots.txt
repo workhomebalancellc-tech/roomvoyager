@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin
+Disallow: /api/
+Disallow: /profile
+
+Sitemap: https://www.roomvoyagertravel.com/sitemap.xml
