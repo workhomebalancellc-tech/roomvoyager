@@ -341,6 +341,99 @@ function ManualBookingLog() {
   );
 }
 
+// ── Admin Control Toggles ─────────────────────────────────────────────────────
+function AdminToggles() {
+  const [bookingTracking, setBookingTracking] = useState(true);   // true = Auto
+  const [doublePointsOn,  setDoublePointsOn]  = useState(false);
+  const [promoEndDate,    setPromoEndDate]    = useState("");
+  const [promoEndTime,    setPromoEndTime]    = useState("");
+
+  const toggleStyle = (active, color) => ({
+    width: "52px", height: "28px", borderRadius: "14px",
+    border: "none", cursor: "pointer",
+    background: active ? color : "#D1D5DB",
+    position: "relative", flexShrink: 0,
+  });
+  const knobStyle = (active) => ({
+    position: "absolute", top: "3px",
+    left: active ? "27px" : "3px",
+    width: "22px", height: "22px", borderRadius: "50%",
+    background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.25)",
+    display: "block", transition: "left 0.15s",
+  });
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 18px" }}>🎛️ Booking Controls</p>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+
+        {/* ── Booking Tracking Toggle ── */}
+        <div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
+            <div>
+              <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 2px" }}>Booking Tracking</p>
+              <p style={{ fontSize: "11px", color: "#6B7280", margin: 0 }}>Auto logs bookings immediately · Manual requires your review</p>
+            </div>
+            <button onClick={() => setBookingTracking(v => !v)} style={toggleStyle(bookingTracking, GREEN)}>
+              <span style={knobStyle(bookingTracking)} />
+            </button>
+          </div>
+          <div style={{ display: "flex", gap: "6px", marginBottom: "8px" }}>
+            <button onClick={() => setBookingTracking(true)}
+              style={{ flex: 1, padding: "6px", borderRadius: "8px", border: `1.5px solid ${bookingTracking ? GREEN : "#E5E7EB"}`, background: bookingTracking ? "#F0FDF4" : "#fff", fontSize: "12px", fontWeight: "700", cursor: "pointer", color: bookingTracking ? GREEN : "#6B7280" }}>
+              Auto
+            </button>
+            <button onClick={() => setBookingTracking(false)}
+              style={{ flex: 1, padding: "6px", borderRadius: "8px", border: `1.5px solid ${!bookingTracking ? ORANGE : "#E5E7EB"}`, background: !bookingTracking ? "#FFF7ED" : "#fff", fontSize: "12px", fontWeight: "700", cursor: "pointer", color: !bookingTracking ? ORANGE : "#6B7280" }}>
+              Manual
+            </button>
+          </div>
+          <div style={{ padding: "8px 12px", borderRadius: "8px", background: bookingTracking ? "#F0FDF4" : "#FFF7ED", fontSize: "11px", fontWeight: "600", color: bookingTracking ? "#15803D" : ORANGE }}>
+            {bookingTracking ? "✅ Auto — bookings log automatically on submission" : "⏸️ Manual — you must review and log each booking"}
+          </div>
+        </div>
+
+        {/* ── Double Points Promo Toggle ── */}
+        <div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
+            <div>
+              <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 2px" }}>🔥 Double Points Promotion</p>
+              <p style={{ fontSize: "11px", color: "#6B7280", margin: 0 }}>When on, all eligible bookings earn 2× points</p>
+            </div>
+            <button onClick={() => setDoublePointsOn(v => !v)} style={toggleStyle(doublePointsOn, ORANGE)}>
+              <span style={knobStyle(doublePointsOn)} />
+            </button>
+          </div>
+
+          {doublePointsOn && (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginBottom: "8px" }}>
+              <div>
+                <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Promo End Date</label>
+                <input type="date" value={promoEndDate} onChange={e => setPromoEndDate(e.target.value)}
+                  style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", boxSizing: "border-box", outline: "none" }} />
+              </div>
+              <div>
+                <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Promo End Time</label>
+                <input type="time" value={promoEndTime} onChange={e => setPromoEndTime(e.target.value)}
+                  style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", boxSizing: "border-box", outline: "none" }} />
+              </div>
+            </div>
+          )}
+
+          <div style={{ padding: "8px 12px", borderRadius: "8px", background: doublePointsOn ? "#FFF7ED" : "#F9FAFB", fontSize: "11px", fontWeight: "600", color: doublePointsOn ? ORANGE : "#9CA3AF" }}>
+            {doublePointsOn
+              ? `🔥 Double points active${promoEndDate ? ` · Ends ${promoEndDate}${promoEndTime ? ` at ${promoEndTime}` : ""}` : " · No end date set"}`
+              : "Standard points rates in effect"}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 // ── Create Booking for Customer ──────────────────────────────────────────────
 function AdminCreateBooking({ adminEmail }) {
 
@@ -805,6 +898,11 @@ export default function AdminDashboard() {
         <div style={{ marginBottom: "28px" }}>
           <h1 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 4px" }}>⚙️ Admin Dashboard</h1>
           <p style={{ fontSize: "14px", color: "#6B7280", margin: 0 }}>RoomVoyager back office — tools, calculators, and quick links</p>
+        </div>
+
+        {/* CONTROL TOGGLES */}
+        <div style={{ marginBottom: "20px" }}>
+          <AdminToggles />
         </div>
 
         {/* QUICK LINKS */}

@@ -124,11 +124,18 @@ export default function ProfilePage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          action:  "review_request",
-          uid:     user.uid,
-          email:   user.email,
-          name:    user.name || user.email,
-          message: details,
+          action:      "review_request",
+          uid:         user.uid,
+          email:       user.email,
+          name:        user.name || user.email,
+          message:     details,
+          product:     reviewForm.product,
+          dateBooked:  reviewForm.dateBooked,
+          destination: reviewForm.destination,
+          nights:      reviewForm.nights,
+          amount:      reviewForm.amount,
+          reference:   reviewForm.reference,
+          comment:     reviewForm.comment,
         }),
       });
       setReviewSent(true);
