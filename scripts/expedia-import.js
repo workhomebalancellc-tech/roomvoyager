@@ -40,15 +40,31 @@ async function run() {
     timeout: 30000,
   });
 
-  // Fill login form
-  console.log("→ Logging in...");
+  // Step 1 — enter email
+  console.log("→ Entering email...");
   await page.fill('input[type="email"], input[name="email"], input[id*="email"]', EXPEDIA_EMAIL);
+
+  // Click Next/Continue to advance to password screen
+  await page.click(
+    'button[type="submit"], button:has-text("Next"), button:has-text("Continue"), button:has-text("Sign in"), button:has-text("Log in")'
+  );
+
+  // Wait for password field to appear (two-step login)
+  console.log("→ Waiting for password field...");
+  await page.waitForSelector(
+    'input[type="password"], input[name="password"], input[id*="password"]',
+    { timeout: 15000 }
+  );
+
+  // Step 2 — enter password and submit
+  console.log("→ Entering password...");
   await page.fill('input[type="password"], input[name="password"], input[id*="password"]', EXPEDIA_PASSWORD);
-  await page.click('button[type="submit"], button:has-text("Sign in"), button:has-text("Log in")');
+  await page.click(
+    'button[type="submit"], button:has-text("Sign in"), button:has-text("Log in"), button:has-text("Continue")'
+  );
 
   // Wait for dashboard
   await page.waitForURL("**/app/**", { timeout: 30000 }).catch(async () => {
-    // Sometimes redirects to a different URL — just wait for nav
     await page.waitForNavigation({ timeout: 30000 });
   });
   console.log("→ Logged in. Current URL:", page.url());
