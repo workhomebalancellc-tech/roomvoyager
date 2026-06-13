@@ -262,10 +262,6 @@ export default function FloatingChat() {
       label: "🔄 Cancellations & Refunds",
       items: ["Cancel booking", "Get a refund"],
     },
-    {
-      label: "💰 Rewards",
-      items: ["How do I redeem?", "Minimum redemption", "Auto payout", "Payment methods"],
-    },
   ];
 
   function send(text) {
