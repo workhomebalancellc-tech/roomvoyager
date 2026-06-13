@@ -145,6 +145,8 @@ function DealTile({ city, img, dealOfWeek, link }) {
   );
 }
 
+const sortDeals = (list) => [...list].sort((a, b) => (b.dealOfWeek ? 1 : 0) - (a.dealOfWeek ? 1 : 0));
+
 export default function DealsPage() {
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth < 768 : false
