@@ -90,11 +90,9 @@ function DealTile({ city, img, dealOfWeek }) {
 
   return (
     <div style={{ flexShrink: 0 }}>
-      {dealOfWeek && (
-        <p style={{ color: ORANGE, fontWeight: "800", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 5px", textAlign: "center" }}>
-          🔥 Deal of the Week
-        </p>
-      )}
+      <p style={{ fontWeight: "800", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 5px", textAlign: "center", color: dealOfWeek ? ORANGE : "transparent", userSelect: "none" }}>
+        🔥 Deal of the Week
+      </p>
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -108,7 +106,7 @@ function DealTile({ city, img, dealOfWeek }) {
           ? "0 10px 28px rgba(0,0,0,0.28)"
           : "0 3px 10px rgba(0,0,0,0.14)",
         transition: "box-shadow 0.25s",
-        border: dealOfWeek ? `3px solid ${ORANGE}` : "none",
+        border: dealOfWeek ? `3px solid ${ORANGE}` : "3px solid transparent",
       }}
     >
       <img
