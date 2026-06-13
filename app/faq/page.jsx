@@ -24,7 +24,7 @@ const faqs = [
       },
       {
         q: "Can I book flights directly on RoomVoyager?",
-        a: "Yes! Our Flights page uses a Travelpayouts white-label search engine. You can search and book flights directly from the page.",
+        a: "Yes! Our Flights page is powered by Kiwi.com. You can search and book flights directly from the page.",
       },
       {
         q: "How do I book a cruise?",
@@ -95,7 +95,7 @@ const faqs = [
       },
       {
         q: "How do I cancel a booking?",
-        a: "Log in to the booking platform (Expedia, Travelpayouts, etc.) where you completed your reservation to manage cancellations. You can also contact us and we'll help guide you through the process.",
+        a: "Log in to the booking platform (Expedia, Kiwi.com, etc.) where you completed your reservation to manage cancellations. You can also contact us and we'll help guide you through the process.",
       },
       {
         q: "Will I lose my Rewards points if I cancel?",
