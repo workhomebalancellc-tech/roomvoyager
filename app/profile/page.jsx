@@ -47,6 +47,33 @@ export default function ProfilePage() {
   /* ── admin-created bookings (Firestore) ── */
   const [firestoreBookings, setFirestoreBookings] = useState([]);
 
+  /* ── name editing ── */
+  const [editingName, setEditingName] = useState(false);
+  const [nameInput,   setNameInput]   = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [nameSaving,  setNameSaving]  = useState(false);
+  const [nameMsg,     setNameMsg]     = useState("");
+
+  useEffect(() => { setDisplayName(user?.name || ""); }, [user?.name]);
+
+  async function saveName() {
+    if (!nameInput.trim() || !user?.uid) return;
+    setNameSaving(true); setNameMsg("");
+    const res = await fetch("/api/user/profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ uid: user.uid, name: nameInput.trim() }),
+    });
+    if (res.ok) {
+      setDisplayName(nameInput.trim());
+      setEditingName(false);
+      setNameMsg("✓ Name updated");
+    } else {
+      setNameMsg("❌ Could not save — try again.");
+    }
+    setNameSaving(false);
+  }
+
   /* ── review request ── */
   const EMPTY_REVIEW = { product: "", dateBooked: "", nights: "", destination: "", amount: "", reference: "", comment: "" };
   const [reviewOpen, setReviewOpen]       = useState(false);
@@ -282,15 +309,53 @@ export default function ProfilePage() {
             {/* Account details */}
             <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", padding: "28px" }}>
               <p style={{ fontSize: "11px", fontWeight: "700", color: ORANGE, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 16px" }}>Account Details</p>
-              {[{ icon: "✉️", label: "Email", value: user.email }, { icon: "👤", label: "Name", value: user.name || "Not provided" }].map((row, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: "14px", padding: "12px 14px", background: LIGHT_BLUE, borderRadius: "12px", marginBottom: "10px" }}>
-                  <span style={{ fontSize: "20px" }}>{row.icon}</span>
-                  <div>
-                    <p style={{ fontSize: "10px", fontWeight: "700", color: NAVY, margin: "0 0 2px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{row.label}</p>
-                    <p style={{ fontSize: "14px", color: "#111827", margin: 0 }}>{row.value}</p>
+
+              {/* Email — read only */}
+              <div style={{ display: "flex", alignItems: "center", gap: "14px", padding: "12px 14px", background: LIGHT_BLUE, borderRadius: "12px", marginBottom: "10px" }}>
+                <span style={{ fontSize: "20px" }}>✉️</span>
+                <div>
+                  <p style={{ fontSize: "10px", fontWeight: "700", color: NAVY, margin: "0 0 2px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Email</p>
+                  <p style={{ fontSize: "14px", color: "#111827", margin: 0 }}>{user.email}</p>
+                </div>
+              </div>
+
+              {/* Name — editable */}
+              <div style={{ padding: "12px 14px", background: LIGHT_BLUE, borderRadius: "12px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                  <span style={{ fontSize: "20px" }}>👤</span>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ fontSize: "10px", fontWeight: "700", color: NAVY, margin: "0 0 2px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Name</p>
+                    {editingName ? (
+                      <div style={{ display: "flex", gap: "8px", alignItems: "center", marginTop: "4px" }}>
+                        <input
+                          autoFocus
+                          value={nameInput}
+                          onChange={e => setNameInput(e.target.value)}
+                          onKeyDown={e => { if (e.key === "Enter") saveName(); if (e.key === "Escape") setEditingName(false); }}
+                          style={{ flex: 1, padding: "6px 10px", border: `1.5px solid ${NAVY}`, borderRadius: "8px", fontSize: "14px", outline: "none" }}
+                        />
+                        <button onClick={saveName} disabled={nameSaving || !nameInput.trim()}
+                          style={{ padding: "6px 14px", background: nameSaving ? "#D1D5DB" : NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
+                          {nameSaving ? "…" : "Save"}
+                        </button>
+                        <button onClick={() => setEditingName(false)}
+                          style={{ padding: "6px 10px", background: "transparent", color: "#6B7280", border: "1px solid #D1D5DB", borderRadius: "8px", fontSize: "12px", cursor: "pointer" }}>
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        <p style={{ fontSize: "14px", color: "#111827", margin: 0 }}>{displayName || "Not provided"}</p>
+                        <button onClick={() => { setNameInput(displayName); setEditingName(true); setNameMsg(""); }}
+                          style={{ padding: "3px 10px", background: "#fff", color: NAVY, border: `1px solid ${NAVY}`, borderRadius: "6px", fontSize: "11px", fontWeight: "600", cursor: "pointer" }}>
+                          ✏️ Edit
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
-              ))}
+                {nameMsg && <p style={{ fontSize: "11px", color: nameMsg.startsWith("✓") ? "#15803D" : "#DC2626", margin: "8px 0 0 34px", fontWeight: "600" }}>{nameMsg}</p>}
+              </div>
             </div>
 
             {/* Quick links */}
