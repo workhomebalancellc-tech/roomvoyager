@@ -28,7 +28,7 @@ const faqs = [
       },
       {
         q: "How do I book a cruise?",
-        a: "Visit our Cruises page and use the CruiseDirect search widget to find your perfect sailing, or click on any of the cruise line photos to continue shopping on their page. You can also contact us at roomvoyager@protonmail.com for personalized recommendations and group bookings.",
+        a: "Visit our Cruises page and use the CruiseDirect search widget to find your perfect sailing, or click on any of the cruise line photos to continue shopping on their page.",
       },
       {
         q: "I can't see the cruise search on the Cruises page — what do I do?",
