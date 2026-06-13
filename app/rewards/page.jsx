@@ -618,18 +618,19 @@ export default function RewardsPage() {
 
         {/* CTA */}
         <div style={{ position: "relative", overflow: "hidden", borderRadius: "20px" }}>
-          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&h=220&fit=crop&auto=format" alt="Airplane wing" style={{ width: "100%", height: "180px", objectFit: "cover", borderRadius: "20px" }} />
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&h=220&fit=crop&auto=format" alt="Airplane wing" style={{ width: "100%", height: isMobile ? "260px" : "180px", objectFit: "cover", display: "block" }} />
           <div style={{ position: "absolute", inset: 0, background: `${NAVY}e0`, borderRadius: "20px" }} />
-          <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "0 40px", gap: "12px" }}>
+          <div style={{ position: "absolute", inset: 0, display: "flex", justifyContent: isMobile ? "center" : "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: "20px", padding: isMobile ? "28px 24px 32px" : "0 40px" }}>
             <div>
-              <h2 style={{ fontSize: "20px", fontWeight: "800", color: "#fff", margin: "0 0 6px" }}>Ready to start earning?</h2>
-              <p style={{ color: "#BFDBFE", fontSize: "14px", margin: 0 }}>Join free — no credit card required. Start earning on your first booking.</p>
+              <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>🏆 RoomVoyager Rewards</p>
+              <p style={{ color: "#fff", fontWeight: "800", fontSize: "20px", margin: "0 0 6px" }}>Ready to start earning?</p>
+              <p style={{ color: "#BFDBFE", fontSize: "13px", margin: 0 }}>Join free — no credit card required. Start earning on your first booking.</p>
             </div>
-            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
-              <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "12px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.4)", whiteSpace: "nowrap" }}>
+            <div style={{ display: "flex", gap: "12px", flexShrink: 0, alignSelf: isMobile ? "stretch" : "auto" }}>
+              <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: isMobile ? "14px 0" : "11px 22px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.4)", whiteSpace: "nowrap", flex: isMobile ? 1 : "none", textAlign: "center" }}>
                 Join Rewards free →
               </a>
-              <a href="/hotels" style={{ background: "rgba(255,255,255,0.15)", color: "#fff", padding: "12px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "600", textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)", whiteSpace: "nowrap" }}>
+              <a href="/hotels" style={{ background: "rgba(255,255,255,0.15)", color: "#fff", padding: isMobile ? "14px 0" : "11px 22px", borderRadius: "10px", fontSize: "15px", fontWeight: "600", textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)", whiteSpace: "nowrap", flex: isMobile ? 1 : "none", textAlign: "center" }}>
                 Browse hotels
               </a>
             </div>

@@ -244,7 +244,7 @@ export default function ProfilePage() {
 
             {/* 45-day countdown — one card per booking with an end date */}
             {(() => {
-              const countdownBookings = firestoreBookings.filter(b => b.endDate);
+              const countdownBookings = firestoreBookings.filter(b => b.endDate && b.status !== "cancelled");
               if (countdownBookings.length === 0) return (
                 <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", overflow: "hidden" }}>
                   <div style={{ background: NAVY, padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
