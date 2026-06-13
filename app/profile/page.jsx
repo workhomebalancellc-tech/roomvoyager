@@ -517,7 +517,7 @@ export default function ProfilePage() {
             {/* Filter chips */}
             {allBookings.length > 0 && (
               <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
-                {[["all", "All"], ["upcoming", "🗓️ Upcoming"], ["completed", "✅ Completed"], ["flight", "✈️ Flights"], ["hotel", "🏨 Hotels"], ["cruise", "🚢 Cruises"]].map(([val, label]) => (
+                {[["all", "All"], ["upcoming", "🗓️ Upcoming"], ["completed", "✅ Completed"], ["cancelled", "❌ Cancelled"], ["flight", "✈️ Flights"], ["hotel", "🏨 Hotels"], ["cruise", "🚢 Cruises"]].map(([val, label]) => (
                   <button key={val} onClick={() => setBookingFilter(val)}
                     style={{ padding: "6px 14px", borderRadius: "999px", border: `1.5px solid ${bookingFilter === val ? NAVY : "#E5E7EB"}`, background: bookingFilter === val ? NAVY : "#fff", color: bookingFilter === val ? "#fff" : "#374151", fontSize: "12px", fontWeight: "600", cursor: "pointer" }}>
                     {label}
