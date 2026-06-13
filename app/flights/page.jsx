@@ -76,8 +76,40 @@ const CITY_TO_KIWI = {
   "vienna": "vienna-vienna-austria",
   "prague": "prague-capital-city-of-prague-czech-republic",
 };
+// US state abbreviation → full name (for building Kiwi slugs)
+const ABBR_TO_STATE = {
+  AL:"alabama",AK:"alaska",AZ:"arizona",AR:"arkansas",CA:"california",
+  CO:"colorado",CT:"connecticut",DE:"delaware",FL:"florida",GA:"georgia",
+  HI:"hawaii",ID:"idaho",IL:"illinois",IN:"indiana",IA:"iowa",KS:"kansas",
+  KY:"kentucky",LA:"louisiana",ME:"maine",MD:"maryland",MA:"massachusetts",
+  MI:"michigan",MN:"minnesota",MS:"mississippi",MO:"missouri",MT:"montana",
+  NE:"nebraska",NV:"nevada",NH:"new-hampshire",NJ:"new-jersey",NM:"new-mexico",
+  NY:"new-york",NC:"north-carolina",ND:"north-dakota",OH:"ohio",OK:"oklahoma",
+  OR:"oregon",PA:"pennsylvania",RI:"rhode-island",SC:"south-carolina",
+  SD:"south-dakota",TN:"tennessee",TX:"texas",UT:"utah",VT:"vermont",
+  VA:"virginia",WA:"washington",WV:"west-virginia",WI:"wisconsin",WY:"wyoming",
+  DC:"district-of-columbia",PR:"puerto-rico",
+};
 function resolveKiwi(cityName) {
-  return CITY_TO_KIWI[cityName?.toLowerCase().trim()] || null;
+  if (!cityName) return null;
+  // Try full string first, then just the city part before any comma
+  const full = CITY_TO_KIWI[cityName.toLowerCase().trim()];
+  if (full) return full;
+  const cityOnly = cityName.split(",")[0].trim().toLowerCase();
+  return CITY_TO_KIWI[cityOnly] || null;
+}
+// Build a Kiwi slug from an autocomplete suggestion {name, sub} where sub is "GA" or "France"
+function buildKiwiSlugFromSugg(name, sub) {
+  if (!name) return null;
+  const city = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  if (!sub) return city;
+  const subTrimmed = sub.trim();
+  // US state abbreviation → "city-state-united-states"
+  const stateFull = ABBR_TO_STATE[subTrimmed.toUpperCase()];
+  if (stateFull) return `${city}-${stateFull}-united-states`;
+  // International — "city-country"
+  const countrySlug = subTrimmed.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  return `${city}-${countrySlug}`;
 }
 function toKiwiSlug(name) {
   if (!name?.trim()) return null;
@@ -176,7 +208,7 @@ function FlightsContent() {
 
   function handleSearch(e) {
     e?.preventDefault();
-    const slugFrom = fromKiwi || resolveKiwi(from) || toKiwiSlug(from) || "anywhere";
+    const slugFrom = fromKiwi || resolveKiwi(from) || toKiwiSlug(from.split(",")[0].trim()) || "anywhere";
     const slugTo   = toKiwi   || resolveKiwi(to)   || toKiwiSlug(to)   || "anywhere";
     const d = depart || "anytime";
     const r = tripType === "round" ? (ret || "anytime") : "no-return";
@@ -261,7 +293,7 @@ function FlightsContent() {
                         ? <div style={{ padding: "10px 12px", fontSize: "12px", color: "#9CA3AF" }}>Searching…</div>
                         : fromSugg.map((c, i) => (
                           <div key={i}
-                            onMouseDown={() => { setFrom(c.label || c.name); setFromKiwi(resolveKiwi(c.name) || toKiwiSlug(c.name) || ""); setShowFromSugg(false); }}
+                            onMouseDown={() => { setFrom(c.label || c.name); setFromKiwi(resolveKiwi(c.name) || buildKiwiSlugFromSugg(c.name, c.sub) || ""); setShowFromSugg(false); }}
                             style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < fromSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
                             onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
                             onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
