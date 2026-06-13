@@ -196,7 +196,7 @@ export default function DealsPage() {
             Hand-picked travel deals on the world's most popular destinations. Earn rewards points on every booking.
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
-            {[["💰","Best price guarantee"],["🤝","Free agent assistance"],["🏆","Earn rewards points"]].map(([icon,text],i) => (
+            {[["💰","Best price guarantee"],["🏆","Earn rewards points"]].map(([icon,text],i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.85)", fontSize: "12px", fontWeight: "600" }}>
                 <span>{icon}</span><span>{text}</span>
               </div>
