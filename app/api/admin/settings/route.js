@@ -27,9 +27,17 @@ export async function POST(req) {
   return Response.json({ ok: true });
 }
 
-// ── Exported helper — call from other API routes ──────────────────────────────
+// ── Exported helpers — call from other API routes ────────────────────────────
+
 // Returns true if double-points promo is on AND current time is within the window
 export async function isPromoActive() {
+  return isPromoActiveAt(new Date());
+}
+
+// Returns true if a given date falls within the stored promo window.
+// Uses the booking date — NOT the current time — so imports run after
+// a promo ends still correctly award double points for bookings made during it.
+export async function isPromoActiveAt(date) {
   try {
     const doc = await adminDb.collection("settings").doc("promo").get();
     if (!doc.exists) return false;
@@ -37,16 +45,16 @@ export async function isPromoActive() {
     const { doublePointsOn, promoStartDate, promoStartTime, promoEndDate, promoEndTime } = doc.data();
     if (!doublePointsOn) return false;
 
-    const now = new Date();
+    const check = date instanceof Date ? date : new Date(date);
 
     if (promoStartDate) {
       const start = new Date(`${promoStartDate}T${promoStartTime || "00:00"}:00`);
-      if (now < start) return false;
+      if (check < start) return false;
     }
 
     if (promoEndDate) {
       const end = new Date(`${promoEndDate}T${promoEndTime || "23:59"}:00`);
-      if (now > end) return false;
+      if (check > end) return false;
     }
 
     return true;

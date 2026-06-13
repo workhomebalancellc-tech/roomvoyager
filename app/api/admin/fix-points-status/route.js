@@ -46,8 +46,12 @@ export async function POST(req) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const dryRun = body.dryRun === true; // pass dryRun: true to preview without changing anything
-  const snap   = await adminDb.collection("bookings").get();
+  const dryRun    = body.dryRun === true; // pass dryRun: true to preview without changing anything
+  const filterUid = body.uid || null;   // optional: limit scan to one user's bookings
+
+  let query = adminDb.collection("bookings");
+  if (filterUid) query = query.where("uid", "==", filterUid);
+  const snap = await query.get();
 
   const fixed   = [];
   const skipped = [];

@@ -711,10 +711,29 @@ function AdminCreateBooking({ adminEmail }) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
-// ── Email Blast ───────────────────────────────────────────────────────────────
+// ── Fix Points Status ─────────────────────────────────────────────────────────
 function FixPointsStatus({ adminEmail }) {
-  const [loading, setLoading] = useState(false);
-  const [result,  setResult]  = useState(null);
+  const [loading,     setLoading]     = useState(false);
+  const [result,      setResult]      = useState(null);
+  const [emailFilter, setEmailFilter] = useState("");
+  const [lookupUid,   setLookupUid]   = useState(null);
+  const [looking,     setLooking]     = useState(false);
+  const [lookupErr,   setLookupErr]   = useState("");
+
+  async function lookupEmail() {
+    if (!emailFilter.trim()) return;
+    setLooking(true); setLookupUid(null); setLookupErr(""); setResult(null);
+    try {
+      const res  = await fetch("/api/admin/firestore", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "lookup", email: emailFilter.trim() }),
+      });
+      const data = await res.json();
+      if (res.ok) setLookupUid(data.uid);
+      else setLookupErr("No account found for that email.");
+    } catch (e) { setLookupErr(e.message); }
+    setLooking(false);
+  }
 
   async function run(dryRun) {
     setLoading(true);
@@ -723,25 +742,61 @@ function FixPointsStatus({ adminEmail }) {
       const res  = await fetch("/api/admin/fix-points-status", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ adminEmail, dryRun }),
+        body: JSON.stringify({ adminEmail, dryRun, uid: lookupUid || undefined }),
       });
       setResult(await res.json());
     } catch (e) { setResult({ error: e.message }); }
     setLoading(false);
   }
 
+  function reset() {
+    setResult(null);
+    setEmailFilter("");
+    setLookupUid(null);
+    setLookupErr("");
+  }
+
   return (
     <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
-      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>🔧 Fix Points Status</p>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
+        <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: 0 }}>🔧 Fix Points Status</p>
+        {(result || lookupUid || emailFilter) && (
+          <button onClick={reset} style={{ padding: "4px 12px", borderRadius: "7px", border: "1px solid #E5E7EB", fontSize: "11px", fontWeight: "600", cursor: "pointer", background: "#F9FAFB", color: "#6B7280" }}>
+            ↺ Reset
+          </button>
+        )}
+      </div>
       <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 14px" }}>
-        Scans all bookings and moves points to the correct bucket — pending (future release date) or redeemable (past release date).
-        Run <strong>Preview</strong> first to see what would change.
+        Scans bookings and moves points to the correct bucket — pending (future release date) or redeemable (past release date).
+        Filter by email to check one account, or leave blank to scan all.
       </p>
+
+      {/* Email lookup */}
+      <div style={{ marginBottom: "14px" }}>
+        <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "4px" }}>
+          Filter by member email <span style={{ fontWeight: "400" }}>(optional — leave blank to scan everyone)</span>
+        </label>
+        <div style={{ display: "flex", gap: "8px" }}>
+          <input
+            type="email"
+            placeholder="member@example.com"
+            value={emailFilter}
+            onChange={e => { setEmailFilter(e.target.value); setLookupUid(null); setLookupErr(""); }}
+            style={{ flex: 1, padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", outline: "none" }}
+          />
+          <button onClick={lookupEmail} disabled={looking || !emailFilter.trim()} style={{ padding: "8px 14px", background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
+            {looking ? "…" : "Look up"}
+          </button>
+        </div>
+        {lookupUid && <p style={{ marginTop: "6px", fontSize: "12px", color: "#15803D", fontWeight: "600" }}>✓ Account found — scan will be limited to this member</p>}
+        {lookupErr && <p style={{ marginTop: "6px", fontSize: "12px", color: "#DC2626", fontWeight: "600" }}>{lookupErr}</p>}
+      </div>
+
       <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-        <button onClick={() => run(true)} disabled={loading} style={{ padding: "9px 20px", borderRadius: "9px", border: "1px solid #D1D5DB", fontSize: "13px", fontWeight: "700", cursor: "pointer", background: "#F9FAFB", color: "#374151" }}>
+        <button onClick={() => run(true)} disabled={loading || (!!emailFilter.trim() && !lookupUid)} style={{ padding: "9px 20px", borderRadius: "9px", border: "1px solid #D1D5DB", fontSize: "13px", fontWeight: "700", cursor: "pointer", background: "#F9FAFB", color: "#374151" }}>
           {loading ? "Scanning…" : "🔍 Preview"}
         </button>
-        <button onClick={() => { if (window.confirm("This will move points between pending/redeemable buckets for all affected bookings. Continue?")) run(false); }} disabled={loading} style={{ padding: "9px 20px", borderRadius: "9px", border: "none", fontSize: "13px", fontWeight: "700", cursor: "pointer", background: NAVY, color: "#fff" }}>
+        <button onClick={() => { if (window.confirm("This will move points between pending/redeemable buckets for affected bookings. Continue?")) run(false); }} disabled={loading || (!!emailFilter.trim() && !lookupUid)} style={{ padding: "9px 20px", borderRadius: "9px", border: "none", fontSize: "13px", fontWeight: "700", cursor: "pointer", background: NAVY, color: "#fff" }}>
           {loading ? "Fixing…" : "✅ Fix Now"}
         </button>
       </div>

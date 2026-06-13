@@ -12,6 +12,7 @@
 
 import { adminDb } from "../../../../lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
+import { isPromoActiveAt } from "../settings/route";
 
 export const dynamic = "force-dynamic";
 
@@ -93,7 +94,7 @@ async function matchFlightClick(booking) {
 
 // ── Award points to a user ───────────────────────────────────────────────────
 
-async function awardPoints(uid, pts, reason, bookingRef, returnDate) {
+async function awardPoints(uid, pts, reason, bookingRef, returnDate, isDouble = false, rate = PTS_PER_DOLLAR) {
   const releaseDate = getReleaseDate(returnDate);
   const pending     = isPending(releaseDate);
   const userRef     = adminDb.collection("users").doc(uid);
@@ -124,6 +125,8 @@ async function awardPoints(uid, pts, reason, bookingRef, returnDate) {
       product:      "flight",
       pts,
       points:       pts,
+      rate,
+      double:       isDouble,
       reason,
       bookingRef,
       returnDate:   returnDate || "",
@@ -226,7 +229,9 @@ export async function POST(req) {
       continue;
     }
 
-    const pts = Math.round(booking.commissionUSD * PTS_PER_DOLLAR);
+    const isDouble = await isPromoActiveAt(new Date(booking.date));
+    const rate     = isDouble ? PTS_PER_DOLLAR * 2 : PTS_PER_DOLLAR;
+    const pts      = Math.round(booking.commissionUSD * rate);
     if (pts < 1) {
       skipped.push({ ref: booking.ref, reason: "commission_too_small", commissionUSD: booking.commissionUSD });
       continue;
@@ -238,7 +243,9 @@ export async function POST(req) {
         pts,
         `Flight ${click.from || "?"} → ${click.to || "?"} via Kiwi.com`,
         booking.ref,
-        click.ret  // return date from flight_click (e.g. "2026-07-15" or "no-return")
+        click.ret,  // return date from flight_click (e.g. "2026-07-15" or "no-return")
+        isDouble,
+        rate
       );
 
       // Mark the click as matched
@@ -255,6 +262,8 @@ export async function POST(req) {
         from:   click.from,
         to:     click.to,
         pts,
+        rate,
+        double: isDouble,
         commissionUSD: booking.commissionUSD,
         ref:    booking.ref,
       });

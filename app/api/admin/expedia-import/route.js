@@ -23,6 +23,7 @@
 
 import { adminDb } from "../../../../lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
+import { isPromoActiveAt } from "../settings/route";
 
 // Auth helpers — accepts either admin email OR the server automation secret
 function isAuthorized(body) {
@@ -148,8 +149,10 @@ export async function POST(req) {
       }
 
       // Take best match
-      const best = matches[0];
-      const pts  = Math.round(bookingAmount * PTS_PER_DOLLAR);
+      const best        = matches[0];
+      const isDouble    = await isPromoActiveAt(new Date(bookedDate));
+      const rate        = isDouble ? PTS_PER_DOLLAR * 2 : PTS_PER_DOLLAR;
+      const pts         = Math.round(bookingAmount * rate);
       const releaseDate = getReleaseDate(endDate);
       const pending     = isPending(releaseDate);
 
@@ -166,7 +169,7 @@ export async function POST(req) {
         startDate, endDate, reference: bookingRef,
         notes: `Expedia: ${product}${company ? ` · ${company}` : ""}`,
         status: tripStatus === "COMPLETED" ? "completed" : "upcoming",
-        pts, rate: PTS_PER_DOLLAR, source: "expedia_auto_import",
+        pts, rate, double: isDouble, source: "expedia_auto_import",
         pointsStatus: pending ? "pending" : "redeemable",
         pendingPoints: pending ? pts : 0,
         releaseDate:   releaseDate || "",
@@ -319,7 +322,9 @@ export async function POST(req) {
       return Response.json({ error: "Already imported", alreadyImported: true }, { status: 409 });
     }
 
-    const pts = row.pts || Math.round((row.bookingAmount || 0) * PTS_PER_DOLLAR);
+    const isDouble    = await isPromoActiveAt(new Date(row.bookedDate || Date.now()));
+    const rate        = isDouble ? PTS_PER_DOLLAR * 2 : PTS_PER_DOLLAR;
+    const pts         = row.pts || Math.round((row.bookingAmount || 0) * rate);
     const releaseDate = getReleaseDate(row.endDate);
     const pending     = isPending(releaseDate);
 
@@ -343,7 +348,8 @@ export async function POST(req) {
       notes:        `Expedia: ${row.product}${row.company ? ` · ${row.company}` : ""}`,
       status:       row.tripStatus === "COMPLETED" ? "completed" : "upcoming",
       pts,
-      rate:         PTS_PER_DOLLAR,
+      rate,
+      double:       isDouble,
       source:       "expedia_import",
       pointsStatus: pending ? "pending" : "redeemable",
       pendingPoints: pending ? pts : 0,
