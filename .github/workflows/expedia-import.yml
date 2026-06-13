@@ -29,8 +29,7 @@ jobs:
 
       - name: Run Expedia import
         env:
-          EXPEDIA_EMAIL:          ${{ secrets.EXPEDIA_EMAIL }}
-          EXPEDIA_PASSWORD:       ${{ secrets.EXPEDIA_PASSWORD }}
+          EXPEDIA_COOKIES:        ${{ secrets.EXPEDIA_COOKIES }}
           IMPORT_API_URL:         ${{ secrets.IMPORT_API_URL }}
           EXPEDIA_IMPORT_SECRET:  ${{ secrets.EXPEDIA_IMPORT_SECRET }}
         run: node scripts/expedia-import.js

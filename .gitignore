@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Expedia session cookies — never commit
+scripts/expedia-cookies.json
+tmp-downloads/

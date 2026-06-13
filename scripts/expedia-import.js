@@ -15,13 +15,20 @@ const { chromium } = require("playwright");
 const fs = require("fs");
 const path = require("path");
 
-const EXPEDIA_EMAIL         = process.env.EXPEDIA_EMAIL;
-const EXPEDIA_PASSWORD      = process.env.EXPEDIA_PASSWORD;
+const EXPEDIA_COOKIES       = process.env.EXPEDIA_COOKIES;       // JSON array of cookies
 const IMPORT_API_URL        = process.env.IMPORT_API_URL || "https://www.roomvoyagertravel.com";
 const EXPEDIA_IMPORT_SECRET = process.env.EXPEDIA_IMPORT_SECRET;
 
-if (!EXPEDIA_EMAIL || !EXPEDIA_PASSWORD || !EXPEDIA_IMPORT_SECRET) {
-  console.error("Missing required env vars: EXPEDIA_EMAIL, EXPEDIA_PASSWORD, EXPEDIA_IMPORT_SECRET");
+if (!EXPEDIA_COOKIES || !EXPEDIA_IMPORT_SECRET) {
+  console.error("Missing required env vars: EXPEDIA_COOKIES, EXPEDIA_IMPORT_SECRET");
+  process.exit(1);
+}
+
+let parsedCookies;
+try {
+  parsedCookies = JSON.parse(EXPEDIA_COOKIES);
+} catch {
+  console.error("EXPEDIA_COOKIES is not valid JSON");
   process.exit(1);
 }
 
@@ -49,45 +56,10 @@ async function run() {
   });
   const page = await context.newPage();
 
-  console.log("→ Navigating to Expedia Creator sign-in...");
-  await page.goto("https://creator.expediagroup.com/signin?creator-type=creator", {
-    waitUntil: "networkidle",
-    timeout: 30000,
-  });
-
-  // Step 1 — enter email
-  console.log("→ Entering email...");
-  await page.fill('input[type="email"], input[name="email"], input[id*="email"]', EXPEDIA_EMAIL);
-
-  // Click Next/Continue to advance to password screen
-  await page.click(
-    'button[type="submit"], button:has-text("Next"), button:has-text("Continue"), button:has-text("Sign in"), button:has-text("Log in")'
-  );
-
-  // Wait for password field to appear (two-step login)
-  console.log("→ Waiting for password field...");
-  await page.waitForSelector(
-    'input[type="password"], input[name="password"], input[id*="password"]',
-    { timeout: 15000 }
-  );
-
-  // Step 2 — enter password and submit via Enter key (more reliable than button click)
-  console.log("→ Entering password...");
-  const pwField = await page.locator('input[type="password"], input[name="password"], input[id*="password"]').first();
-  await pwField.fill(EXPEDIA_PASSWORD);
-  await pwField.press("Enter");
-
-  // Wait for URL to leave the password/signin page
-  console.log("→ Waiting for post-login redirect...");
-  await page.waitForFunction(
-    () => !window.location.href.includes("/password") && !window.location.href.includes("/signin"),
-    { timeout: 30000 }
-  ).catch(async () => {
-    console.log("  Still on auth page after 30s, URL:", page.url());
-    await page.screenshot({ path: path.join(DOWNLOAD_DIR, "login-state.png") });
-    console.log("  Screenshot saved to login-state.png");
-  });
-  console.log("→ Post-login URL:", page.url());
+  // Inject saved session cookies — skips login entirely
+  console.log(`→ Injecting ${parsedCookies.length} session cookies...`);
+  await context.addCookies(parsedCookies);
+  console.log("→ Cookies injected.");
 
   // Navigate to performance page
   console.log("→ Navigating to performance page...");
