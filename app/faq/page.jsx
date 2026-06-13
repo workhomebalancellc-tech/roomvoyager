@@ -65,6 +65,10 @@ const faqs = [
     category: "Account",
     questions: [
       {
+        q: "I'm not receiving emails from RoomVoyager. What should I do?",
+        a: "First, check your spam or junk folder — our emails sometimes land there. If you find them, mark them as 'Not Spam' so future emails go to your inbox. If you still don't see anything, contact us at roomvoyager@protonmail.com.",
+      },
+      {
         q: "How do I create an account?",
         a: "Click 'Sign Up' in the navigation. You can sign up with your Google account or with an email and password.",
       },

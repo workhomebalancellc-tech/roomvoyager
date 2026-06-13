@@ -28,9 +28,16 @@ export default function LasVegasDealsPage() {
           </div>
         </div>
 
-        {/* DEALS CONTENT */}
-        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "56px 24px 80px" }}>
-          {/* Deals go here */}
+        {/* COMING SOON */}
+        <div style={{ maxWidth: "600px", margin: "0 auto", padding: "80px 24px", textAlign: "center" }}>
+          <div style={{ fontSize: "56px", marginBottom: "24px" }}>🎰</div>
+          <h2 style={{ fontSize: "28px", fontWeight: "800", color: "#111827", margin: "0 0 12px" }}>Deals Coming Soon</h2>
+          <p style={{ fontSize: "15px", color: "#6B7280", lineHeight: "1.7", margin: "0 0 32px" }}>
+            We're curating the best Las Vegas hotel and package deals just for you. Check back soon — or get notified when they drop!
+          </p>
+          <a href="/contact" style={{ display: "inline-block", padding: "12px 32px", background: NAVY, color: "#fff", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none" }}>
+            Notify Me →
+          </a>
         </div>
 
       </div>
