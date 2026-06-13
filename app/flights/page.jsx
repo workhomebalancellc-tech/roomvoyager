@@ -67,6 +67,8 @@ const CITY_TO_KIWI = {
   "tokyo": "tokyo-tokyo-japan",
   "bangkok": "bangkok-bangkok-thailand",
   "sydney": "sydney-new-south-wales-australia",
+  "st petersburg": "saint-petersburg-florida-united-states", "st. petersburg": "saint-petersburg-florida-united-states", "saint petersburg": "saint-petersburg-florida-united-states", "pie": "saint-petersburg-florida-united-states",
+  "tampa": "tampa-florida-united-states",
   "nassau": "nassau-new-providence-bahamas",
   "montego bay": "montego-bay-saint-james-jamaica",
   "aruba": "oranjestad-aruba-aruba",
