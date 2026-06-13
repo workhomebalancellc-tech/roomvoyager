@@ -6,9 +6,10 @@ import { useAuth } from "../../contexts/AuthContext";
 
 const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
 
-const NAVY   = "#003B95";
-const ORANGE = "#FF6600";
-const GREEN  = "#16A34A";
+const NAVY       = "#003B95";
+const ORANGE     = "#FF6600";
+const GREEN      = "#16A34A";
+const LIGHT_BLUE = "#EBF3FF";
 
 // Your commission rates per product (what you actually earn from each partner)
 const COMMISSION_RATES = {
@@ -341,9 +342,7 @@ function ManualBookingLog() {
 }
 
 // ── Create Booking for Customer ──────────────────────────────────────────────
-function AdminCreateBooking() {
-  const { user } = useAuth();
-  const LIGHT_BLUE = "#EBF3FF";
+function AdminCreateBooking({ adminEmail }) {
 
   const [form, setForm] = useState({
     guestEmail: "", product: "cruise", amount: "", destination: "",
@@ -386,7 +385,7 @@ function AdminCreateBooking() {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action:     "create",
-          adminEmail: user.email,
+          adminEmail: adminEmail,
           uid:        preview.uid,
           email:      form.guestEmail,
           ...form,
@@ -831,7 +830,7 @@ export default function AdminDashboard() {
 
         {/* BOOKING CREATION */}
         <div style={{ marginBottom: "20px" }}>
-          <AdminCreateBooking />
+          <AdminCreateBooking adminEmail={user.email} />
         </div>
 
         {/* POINTS MANAGEMENT */}
