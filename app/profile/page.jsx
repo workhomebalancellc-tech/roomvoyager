@@ -53,10 +53,12 @@ export default function ProfilePage() {
   const [firestoreBookings, setFirestoreBookings] = useState([]);
 
   /* ── review request ── */
-  const [reviewOpen, setReviewOpen]   = useState(false);
-  const [reviewMsg, setReviewMsg]     = useState("");
-  const [reviewSent, setReviewSent]   = useState(false);
+  const EMPTY_REVIEW = { product: "", dateBooked: "", nights: "", destination: "", amount: "", reference: "", comment: "" };
+  const [reviewOpen, setReviewOpen]       = useState(false);
+  const [reviewForm, setReviewForm]       = useState(EMPTY_REVIEW);
+  const [reviewSent, setReviewSent]       = useState(false);
   const [reviewLoading, setReviewLoading] = useState(false);
+  const showNights = ["cruise", "hotel", "package"].includes(reviewForm.product);
 
   useEffect(() => {
     const d = localStorage.getItem("rv_trip_date");
@@ -107,6 +109,16 @@ export default function ProfilePage() {
   async function submitReviewRequest(e) {
     e.preventDefault();
     setReviewLoading(true);
+    const { product, dateBooked, nights, destination, amount, reference, comment } = reviewForm;
+    const details = [
+      product     && `Product: ${product}`,
+      dateBooked  && `Date booked: ${dateBooked}`,
+      destination && `Destination: ${destination}`,
+      nights      && `Nights: ${nights}`,
+      amount      && `Approx. amount: $${amount}`,
+      reference   && `Confirmation #: ${reference}`,
+      comment     && `Notes: ${comment}`,
+    ].filter(Boolean).join("\n");
     try {
       await fetch("/api/admin/bookings", {
         method: "POST",
@@ -116,7 +128,7 @@ export default function ProfilePage() {
           uid:     user.uid,
           email:   user.email,
           name:    user.name || user.email,
-          message: reviewMsg,
+          message: details,
         }),
       });
       setReviewSent(true);
@@ -343,7 +355,7 @@ export default function ProfilePage() {
                 <p style={{ fontSize: "11px", fontWeight: "700", color: ORANGE, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 2px" }}>🗂️ Travel History</p>
                 <h2 style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: 0 }}>My Bookings</h2>
               </div>
-              <button onClick={() => { setReviewOpen(true); setReviewSent(false); setReviewMsg(""); }}
+              <button onClick={() => { setReviewOpen(true); setReviewSent(false); setReviewForm(EMPTY_REVIEW); }}
                 style={{ background: "#FFF7ED", color: ORANGE, border: `1.5px solid #FDDCCA`, borderRadius: "10px", padding: "10px 18px", fontSize: "13px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
                 📋 Request Booking Review
               </button>
@@ -368,21 +380,75 @@ export default function ProfilePage() {
                       </div>
                       <button onClick={() => setReviewOpen(false)} style={{ background: "none", border: "none", fontSize: "20px", cursor: "pointer", color: "#9CA3AF" }}>×</button>
                     </div>
-                    <form onSubmit={submitReviewRequest}>
-                      <div style={{ marginBottom: "12px" }}>
-                        <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Your email (pre-filled)</label>
-                        <input type="email" value={user.email} readOnly
-                          style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", background: "#F9FAFB", color: "#6B7280", boxSizing: "border-box" }} />
+                    <form onSubmit={submitReviewRequest} style={{ display: "flex", flexDirection: "column", gap: "13px" }}>
+
+                      {/* Row 1: Product + Date Booked */}
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                        <div>
+                          <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Type of booking <span style={{ color: ORANGE }}>*</span></label>
+                          <select required value={reviewForm.product} onChange={e => setReviewForm(f => ({ ...f, product: e.target.value, nights: "" }))}
+                            style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", background: "#fff", outline: "none", boxSizing: "border-box" }}>
+                            <option value="">Select…</option>
+                            <option value="Cruise">🚢 Cruise</option>
+                            <option value="Hotel">🏨 Hotel</option>
+                            <option value="Flight">✈️ Flight</option>
+                            <option value="Vacation Package">🌴 Vacation Package</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Date booked <span style={{ color: ORANGE }}>*</span></label>
+                          <input required type="date" value={reviewForm.dateBooked} max={new Date().toISOString().split("T")[0]}
+                            onChange={e => setReviewForm(f => ({ ...f, dateBooked: e.target.value }))}
+                            style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
+                        </div>
                       </div>
-                      <div style={{ marginBottom: "16px" }}>
-                        <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Tell us about your booking <span style={{ color: ORANGE }}>*</span></label>
-                        <textarea required rows={3} placeholder={`e.g. I booked a 7-night Caribbean cruise through your link on June 5. The booking total was around $2,400. I haven't seen it appear in my account yet.`}
-                          value={reviewMsg} onChange={e => setReviewMsg(e.target.value)}
+
+                      {/* Row 2: Destination + Nights (conditional) */}
+                      <div style={{ display: "grid", gridTemplateColumns: showNights ? "1fr 120px" : "1fr", gap: "12px" }}>
+                        <div>
+                          <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Destination <span style={{ color: ORANGE }}>*</span></label>
+                          <input required type="text" placeholder="e.g. Caribbean, Cancún, Paris" value={reviewForm.destination}
+                            onChange={e => setReviewForm(f => ({ ...f, destination: e.target.value }))}
+                            style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
+                        </div>
+                        {showNights && (
+                          <div>
+                            <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Nights</label>
+                            <input type="number" min="1" max="365" placeholder="e.g. 7" value={reviewForm.nights}
+                              onChange={e => setReviewForm(f => ({ ...f, nights: e.target.value }))}
+                              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Row 3: Amount + Confirmation # */}
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                        <div>
+                          <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Approx. booking amount ($)</label>
+                          <input type="number" min="0" placeholder="e.g. 2400" value={reviewForm.amount}
+                            onChange={e => setReviewForm(f => ({ ...f, amount: e.target.value }))}
+                            style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
+                        </div>
+                        <div>
+                          <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Confirmation / Booking #</label>
+                          <input type="text" placeholder="e.g. RC-7829341" value={reviewForm.reference}
+                            onChange={e => setReviewForm(f => ({ ...f, reference: e.target.value }))}
+                            style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
+                        </div>
+                      </div>
+
+                      {/* Comment (optional) */}
+                      <div>
+                        <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Additional comments <span style={{ color: "#9CA3AF", fontWeight: "400" }}>(optional)</span></label>
+                        <textarea rows={2} placeholder="Anything else we should know…"
+                          value={reviewForm.comment} onChange={e => setReviewForm(f => ({ ...f, comment: e.target.value }))}
                           style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", outline: "none", boxSizing: "border-box", resize: "vertical", fontFamily: "inherit" }} />
                       </div>
-                      <div style={{ background: LIGHT_BLUE, borderRadius: "10px", padding: "10px 14px", marginBottom: "16px", fontSize: "12px", color: "#374151" }}>
-                        💡 <strong>Tip:</strong> Include the booking date, destination, and approximate amount if possible. We'll verify it and add your points within 1–2 business days.
+
+                      <div style={{ background: LIGHT_BLUE, borderRadius: "10px", padding: "10px 14px", fontSize: "12px", color: "#374151" }}>
+                        💡 We'll verify your booking and add your points within 1–2 business days.
                       </div>
+
                       <div style={{ display: "flex", gap: "10px" }}>
                         <button type="submit" disabled={reviewLoading}
                           style={{ flex: 1, background: reviewLoading ? "#D1D5DB" : ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px", fontSize: "14px", fontWeight: "700", cursor: reviewLoading ? "default" : "pointer" }}>
@@ -418,7 +484,7 @@ export default function ProfilePage() {
                 <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 6px", fontSize: "16px" }}>No bookings on file yet</p>
                 <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 8px" }}>Booked a trip through RoomVoyager? Your booking confirmation and points will appear here once verified.</p>
                 <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px" }}>If it's been more than 7 days and you don't see your booking, request a review below.</p>
-                <button onClick={() => { setReviewOpen(true); setReviewSent(false); setReviewMsg(""); }}
+                <button onClick={() => { setReviewOpen(true); setReviewSent(false); setReviewForm(EMPTY_REVIEW); }}
                   style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "11px 24px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>
                   📋 Request Booking Review
                 </button>
@@ -583,7 +649,7 @@ export default function ProfilePage() {
               <div>
                 <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 4px", fontSize: "14px" }}>Don't see your booking points?</p>
                 <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px" }}>Bookings booked through RoomVoyager are verified and added within a few business days. If it's been more than 7 days, request a review.</p>
-                <button onClick={() => { setActiveTab("bookings"); setReviewOpen(true); setReviewSent(false); setReviewMsg(""); }}
+                <button onClick={() => { setActiveTab("bookings"); setReviewOpen(true); setReviewSent(false); setReviewForm(EMPTY_REVIEW); }}
                   style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", padding: "8px 16px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
                   📋 Request Booking Review →
                 </button>
