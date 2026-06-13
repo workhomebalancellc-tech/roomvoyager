@@ -96,30 +96,43 @@ export async function POST(req) {
     // 2. Log to Airtable — "Booking Review Requests" table
     const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
     const AIRTABLE_BASE  = process.env.AIRTABLE_BASE_ID;
-    if (AIRTABLE_TOKEN && AIRTABLE_BASE) {
-      await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Booking%20Review%20Requests`, {
-        method:  "POST",
-        headers: {
-          Authorization:  `Bearer ${AIRTABLE_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fields: {
-            "Name":            name || email,
-            "Email":           email,
-            "User UID":        uid  || "",
-            "Product Type":    product     || "",
-            "Date Booked":     dateBooked  || "",
-            "Destination":     destination || "",
-            "Nights":          nights ? Number(nights) : undefined,
-            "Approx. Amount":  amount ? Number(amount) : undefined,
-            "Confirmation #":  reference   || "",
-            "Comments":        comment     || "",
-            "Status":          "Pending",
-            "Submitted At":    new Date().toISOString(),
-          },
-        }),
-      }).catch(e => console.warn("Airtable error:", e));
+    if (!AIRTABLE_TOKEN || !AIRTABLE_BASE) {
+      console.warn("Airtable env vars missing — skipping Booking Review Requests log");
+    } else {
+      const fields = {
+        "Name":           name || email,
+        "Email":          email,
+        "User UID":       uid  || "",
+        "Product Type":   product     || "",
+        "Destination":    destination || "",
+        "Confirmation #": reference   || "",
+        "Comments":       comment     || "",
+        "Status":         "Pending",
+        // Date fields must be YYYY-MM-DD for Airtable
+        "Submitted At":   new Date().toISOString().split("T")[0],
+      };
+      // Only include date if it looks like YYYY-MM-DD (from date input)
+      if (dateBooked) fields["Date Booked"] = dateBooked;
+      // Only include numbers if they have values — Airtable rejects empty number fields
+      if (nights)     fields["Nights"]         = Number(nights);
+      if (amount)     fields["Approx. Amount"] = Number(amount);
+
+      try {
+        const atRes = await fetch(
+          `https://api.airtable.com/v0/${AIRTABLE_BASE}/Booking%20Review%20Requests`,
+          {
+            method:  "POST",
+            headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}`, "Content-Type": "application/json" },
+            body: JSON.stringify({ fields }),
+          }
+        );
+        if (!atRes.ok) {
+          const errText = await atRes.text();
+          console.error("Airtable Booking Review error:", atRes.status, errText);
+        }
+      } catch (e) {
+        console.error("Airtable fetch failed:", e);
+      }
     }
 
     return Response.json({ ok: true });
