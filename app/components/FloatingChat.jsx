@@ -240,10 +240,33 @@ export default function FloatingChat() {
   ]);
   const [input, setInput] = useState("");
   const [lastTopic, setLastTopic] = useState(null);
-  const [suggestions, setSuggestions] = useState(null); // null = show FAQ categories; array = show follow-up chips
+  const [activeCategory, setActiveCategory] = useState(null); // null = show top-level headings
   const bottomRef = useRef(null);
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+
+  const FAQ_CATEGORIES = [
+    {
+      label: "✈️ Booking",
+      items: ["How do I book?", "Book a hotel", "Book flights", "Book a cruise", "Vacation package", "Group booking"],
+    },
+    {
+      label: "🏆 Rewards Program",
+      items: ["How do I earn points?", "Double points", "How long do points take?", "Do points expire?", "No blackout dates"],
+    },
+    {
+      label: "👤 Account",
+      items: ["Sign up", "Contact us", "Payment methods", "Tell me about tiers", "Birthday bonus", "Referral"],
+    },
+    {
+      label: "🔄 Cancellations & Refunds",
+      items: ["Cancel booking", "Get a refund"],
+    },
+    {
+      label: "💰 Rewards",
+      items: ["How do I redeem?", "Minimum redemption", "Auto payout", "Payment methods"],
+    },
+  ];
 
   function send(text) {
     const trimmed = (text || input).trim();
@@ -251,35 +274,9 @@ export default function FloatingChat() {
     const reply = getBotReply(trimmed, lastTopic);
     setMessages(prev => [...prev, { from: "user", text: trimmed }, { from: "bot", text: reply.text }]);
     setInput("");
+    setActiveCategory(null); // reset to top level after a question is asked
     if (reply.topic) setLastTopic(reply.topic);
-    // Update suggestion chips to follow-ups from this answer
-    if (reply.follow?.length) {
-      const chips = reply.follow.slice(0, 3).map(id => {
-        const entry = KB.find(e => e.id === id);
-        return entry ? entry.triggers[0] : null;
-      }).filter(Boolean);
-      setSuggestions(chips.map(c => c.charAt(0).toUpperCase() + c.slice(1)));
-    }
   }
-
-  const FAQ_CATEGORIES = [
-    {
-      label: "🏆 Rewards & Points",
-      items: ["How do I earn points?", "How do I redeem?", "Double points", "Do points expire?"],
-    },
-    {
-      label: "🎖️ Membership",
-      items: ["Tell me about tiers", "Birthday bonus", "Sign up"],
-    },
-    {
-      label: "✈️ Bookings",
-      items: ["How do I book?", "Cancel booking", "Group booking", "Vacation package"],
-    },
-    {
-      label: "📞 Support",
-      items: ["Contact us", "How long do points take?", "Payment methods"],
-    },
-  ];
 
   return (
     <div style={{ position: "fixed", bottom: "24px", right: "24px", zIndex: 9999 }}>
@@ -314,33 +311,39 @@ export default function FloatingChat() {
             <div ref={bottomRef} />
           </div>
 
-          {/* FAQ categories or dynamic follow-up chips */}
-          {suggestions === null ? (
-            <div style={{ padding: "0 12px 10px", overflowY: "auto", maxHeight: "160px" }}>
-              {FAQ_CATEGORIES.map((cat, ci) => (
-                <div key={ci} style={{ marginBottom: "8px" }}>
-                  <p style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 4px" }}>{cat.label}</p>
-                  <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
-                    {cat.items.map((q, qi) => (
-                      <button key={qi} onClick={() => send(q)}
-                        style={{ background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "999px", padding: "4px 10px", fontSize: "11px", fontWeight: "600", cursor: "pointer", marginBottom: "3px" }}>
-                        {q}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div style={{ padding: "0 12px 8px", display: "flex", gap: "6px", flexWrap: "wrap" }}>
-              {suggestions.map((q, i) => (
-                <button key={i} onClick={() => send(q)}
-                  style={{ background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "999px", padding: "5px 12px", fontSize: "11px", fontWeight: "600", cursor: "pointer" }}>
-                  {q}
+          {/* Two-level FAQ: top-level headings → sub-questions */}
+          <div style={{ borderTop: "1px solid #F3F4F6", padding: "10px 12px", maxHeight: "160px", overflowY: "auto" }}>
+            {activeCategory === null ? (
+              // Level 1 — category headings
+              <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                <p style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 4px" }}>Browse topics</p>
+                {FAQ_CATEGORIES.map((cat, i) => (
+                  <button key={i} onClick={() => setActiveCategory(i)}
+                    style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", padding: "8px 12px", background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "10px", fontSize: "12px", fontWeight: "700", cursor: "pointer", textAlign: "left" }}>
+                    {cat.label}
+                    <span style={{ color: "#9CA3AF", fontSize: "14px" }}>›</span>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              // Level 2 — sub-questions
+              <div>
+                <button onClick={() => setActiveCategory(null)}
+                  style={{ display: "flex", alignItems: "center", gap: "4px", background: "none", border: "none", color: "#6B7280", fontSize: "11px", fontWeight: "600", cursor: "pointer", padding: "0 0 8px", marginBottom: "4px" }}>
+                  ‹ Back
                 </button>
-              ))}
-            </div>
-          )}
+                <p style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 6px" }}>{FAQ_CATEGORIES[activeCategory].label}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+                  {FAQ_CATEGORIES[activeCategory].items.map((q, qi) => (
+                    <button key={qi} onClick={() => send(q)}
+                      style={{ background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "999px", padding: "5px 11px", fontSize: "11px", fontWeight: "600", cursor: "pointer" }}>
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Input */}
           <div style={{ borderTop: "1px solid #E5E7EB", padding: "10px 14px", display: "flex", gap: "8px" }}>
