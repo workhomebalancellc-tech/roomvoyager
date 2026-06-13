@@ -240,7 +240,7 @@ export default function FloatingChat() {
   ]);
   const [input, setInput] = useState("");
   const [lastTopic, setLastTopic] = useState(null);
-  const [suggestions, setSuggestions] = useState(["How do I earn points?", "How do I redeem?", "Tell me about tiers"]);
+  const [suggestions, setSuggestions] = useState(null); // null = show FAQ categories; array = show follow-up chips
   const bottomRef = useRef(null);
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
@@ -258,10 +258,28 @@ export default function FloatingChat() {
         const entry = KB.find(e => e.id === id);
         return entry ? entry.triggers[0] : null;
       }).filter(Boolean);
-      // Capitalize first letter for display
       setSuggestions(chips.map(c => c.charAt(0).toUpperCase() + c.slice(1)));
     }
   }
+
+  const FAQ_CATEGORIES = [
+    {
+      label: "🏆 Rewards & Points",
+      items: ["How do I earn points?", "How do I redeem?", "Double points", "Do points expire?"],
+    },
+    {
+      label: "🎖️ Membership",
+      items: ["Tell me about tiers", "Birthday bonus", "Sign up"],
+    },
+    {
+      label: "✈️ Bookings",
+      items: ["How do I book?", "Cancel booking", "Group booking", "Vacation package"],
+    },
+    {
+      label: "📞 Support",
+      items: ["Contact us", "How long do points take?", "Payment methods"],
+    },
+  ];
 
   return (
     <div style={{ position: "fixed", bottom: "24px", right: "24px", zIndex: 9999 }}>
@@ -280,7 +298,7 @@ export default function FloatingChat() {
           </div>
 
           {/* Messages */}
-          <div style={{ padding: "14px 16px", height: "230px", overflowY: "auto", display: "flex", flexDirection: "column", gap: "10px" }}>
+          <div style={{ padding: "14px 16px", height: "200px", overflowY: "auto", display: "flex", flexDirection: "column", gap: "10px" }}>
             {messages.map((m, i) => (
               <div key={i} style={{ display: "flex", justifyContent: m.from === "user" ? "flex-end" : "flex-start" }}>
                 <div style={{
@@ -296,15 +314,33 @@ export default function FloatingChat() {
             <div ref={bottomRef} />
           </div>
 
-          {/* Dynamic suggestion chips */}
-          <div style={{ padding: "0 12px 8px", display: "flex", gap: "6px", flexWrap: "wrap" }}>
-            {suggestions.map((q, i) => (
-              <button key={i} onClick={() => send(q)}
-                style={{ background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "999px", padding: "5px 12px", fontSize: "11px", fontWeight: "600", cursor: "pointer" }}>
-                {q}
-              </button>
-            ))}
-          </div>
+          {/* FAQ categories or dynamic follow-up chips */}
+          {suggestions === null ? (
+            <div style={{ padding: "0 12px 10px", overflowY: "auto", maxHeight: "160px" }}>
+              {FAQ_CATEGORIES.map((cat, ci) => (
+                <div key={ci} style={{ marginBottom: "8px" }}>
+                  <p style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 4px" }}>{cat.label}</p>
+                  <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
+                    {cat.items.map((q, qi) => (
+                      <button key={qi} onClick={() => send(q)}
+                        style={{ background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "999px", padding: "4px 10px", fontSize: "11px", fontWeight: "600", cursor: "pointer", marginBottom: "3px" }}>
+                        {q}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{ padding: "0 12px 8px", display: "flex", gap: "6px", flexWrap: "wrap" }}>
+              {suggestions.map((q, i) => (
+                <button key={i} onClick={() => send(q)}
+                  style={{ background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "999px", padding: "5px 12px", fontSize: "11px", fontWeight: "600", cursor: "pointer" }}>
+                  {q}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Input */}
           <div style={{ borderTop: "1px solid #E5E7EB", padding: "10px 14px", display: "flex", gap: "8px" }}>
