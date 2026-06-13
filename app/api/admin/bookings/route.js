@@ -166,6 +166,39 @@ export async function POST(req) {
     return Response.json({ ok: true });
   }
 
+  if (action === "cancel") {
+    // Admin cancels a booking — marks it cancelled and deducts points
+    const { adminEmail, bookingId } = body;
+    if (!ALLOWED_EMAILS.includes(adminEmail)) {
+      return Response.json({ error: "Not authorized" }, { status: 403 });
+    }
+    if (!bookingId) return Response.json({ error: "bookingId required" }, { status: 400 });
+
+    const bookingSnap = await adminDb.collection("bookings").doc(bookingId).get();
+    if (!bookingSnap.exists) return Response.json({ error: "Booking not found" }, { status: 404 });
+
+    const bData = bookingSnap.data();
+    // Don't double-cancel
+    if (bData.status === "cancelled") return Response.json({ ok: true, alreadyCancelled: true });
+
+    // Mark booking cancelled
+    await adminDb.collection("bookings").doc(bookingId).update({
+      status: "cancelled",
+      cancelledAt: FieldValue.serverTimestamp(),
+    });
+
+    // Deduct points if they were awarded
+    const ptsToDeduct = bData.pts || 0;
+    if (ptsToDeduct > 0 && bData.uid) {
+      await adminDb.collection("users").doc(bData.uid).update({
+        points: FieldValue.increment(-ptsToDeduct),
+        updatedAt: FieldValue.serverTimestamp(),
+      }).catch(() => {});
+    }
+
+    return Response.json({ ok: true, ptsDeducted: ptsToDeduct });
+  }
+
   if (action === "delete") {
     const { adminEmail, bookingId } = body;
     if (!ALLOWED_EMAILS.includes(adminEmail)) {

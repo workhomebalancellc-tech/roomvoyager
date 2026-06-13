@@ -716,8 +716,9 @@ function ManageBookings({ adminEmail }) {
   const [email,    setEmail]    = useState("");
   const [bookings, setBookings] = useState([]);
   const [loading,  setLoading]  = useState(false);
-  const [deleting, setDeleting] = useState(null); // bookingId being deleted
-  const [msg,      setMsg]      = useState("");
+  const [deleting,   setDeleting]   = useState(null); // bookingId being deleted
+  const [cancelling, setCancelling] = useState(null); // bookingId being cancelled
+  const [msg,        setMsg]        = useState("");
 
   async function lookup() {
     if (!email) return;
@@ -736,6 +737,17 @@ function ManageBookings({ adminEmail }) {
     setBookings(bData.bookings || []);
     if ((bData.bookings || []).length === 0) setMsg("No bookings on file for this customer.");
     setLoading(false);
+  }
+
+  async function cancelBooking(bookingId, pts) {
+    if (!window.confirm(`Cancel this booking? This will deduct ${pts?.toLocaleString() || 0} pts from the customer.`)) return;
+    setCancelling(bookingId);
+    await fetch("/api/admin/bookings", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "cancel", adminEmail, bookingId }),
+    });
+    setBookings(prev => prev.map(b => b.id === bookingId ? { ...b, status: "cancelled" } : b));
+    setCancelling(null);
   }
 
   async function deleteBooking(bookingId) {
@@ -783,6 +795,12 @@ function ManageBookings({ adminEmail }) {
                   {fmtDate(b.startDate)}{b.endDate ? ` → ${fmtDate(b.endDate)}` : ""} · {b.pts?.toLocaleString() || 0} pts · Ref: {b.reference || "—"} · <span style={{ color: b.status === "completed" ? GREEN : NAVY }}>{b.status}</span>
                 </p>
               </div>
+              {b.status !== "cancelled" && (
+                <button onClick={() => cancelBooking(b.id, b.pts)} disabled={cancelling === b.id}
+                  style={{ padding: "6px 12px", background: "#FFF7ED", color: "#D97706", border: "1px solid #FDE68A", borderRadius: "8px", fontSize: "11px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap" }}>
+                  {cancelling === b.id ? "…" : "❌ Cancel"}
+                </button>
+              )}
               <button onClick={() => deleteBooking(b.id)} disabled={deleting === b.id}
                 style={{ padding: "6px 12px", background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA", borderRadius: "8px", fontSize: "11px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap" }}>
                 {deleting === b.id ? "…" : "🗑️ Delete"}

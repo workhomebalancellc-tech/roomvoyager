@@ -496,15 +496,19 @@ export default function CruisesPage() {
           */}
 
           {/* Rewards */}
-          <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #0052CC 100%)`, borderRadius: "16px", padding: isMobile ? "28px 24px 32px" : "24px 28px", display: "flex", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: "20px" }}>
-            <div>
-              <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>🏆 RoomVoyager Rewards</p>
-              <p style={{ color: "#fff", fontWeight: "800", fontSize: isMobile ? "20px" : "17px", margin: "0 0 6px" }}>Earn 10 pts per $1 on every cruise</p>
-              <p style={{ color: "#BFDBFE", fontSize: "13px", margin: 0, lineHeight: 1.5 }}>Double points available · cash back paid via Zelle, Cash App, or Venmo</p>
+          <div style={{ position: "relative", overflow: "hidden", borderRadius: "20px" }}>
+            <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1400&h=220&fit=crop&auto=format" alt="Cruise ship" style={{ width: "100%", height: isMobile ? "260px" : "180px", objectFit: "cover", display: "block" }} />
+            <div style={{ position: "absolute", inset: 0, background: `${NAVY}e0`, borderRadius: "20px" }} />
+            <div style={{ position: "absolute", inset: 0, display: "flex", justifyContent: isMobile ? "center" : "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: "20px", padding: isMobile ? "28px 24px 32px" : "0 40px" }}>
+              <div>
+                <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>🏆 RoomVoyager Rewards</p>
+                <p style={{ color: "#fff", fontWeight: "800", fontSize: "20px", margin: "0 0 6px" }}>Earn rewards on every cruise you book</p>
+                <p style={{ color: "#BFDBFE", fontSize: "13px", margin: 0, lineHeight: 1.5 }}>10 pts per $1 · Double points available · Cash back via Zelle, Cash App, or Venmo</p>
+              </div>
+              <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: isMobile ? "14px 28px" : "11px 22px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", flexShrink: 0, boxShadow: "0 4px 14px rgba(255,102,0,0.4)", alignSelf: isMobile ? "stretch" : "auto", textAlign: "center", whiteSpace: "nowrap" }}>
+                Learn more →
+              </a>
             </div>
-            <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: isMobile ? "14px 28px" : "11px 22px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", flexShrink: 0, boxShadow: "0 4px 14px rgba(255,102,0,0.4)", alignSelf: isMobile ? "stretch" : "auto", textAlign: "center" }}>
-              Learn more →
-            </a>
           </div>
 
         </div>

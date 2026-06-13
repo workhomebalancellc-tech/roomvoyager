@@ -546,7 +546,7 @@ export default function ProfilePage() {
                 const typeId = b.type || b.product || "flight";
                 const btype  = BOOKING_TYPES.find(t => t.id === typeId) || BOOKING_TYPES[0];
                 const days   = b.status === "completed" ? calcCountdown(b.endDate) : null;
-                const pts    = b.amount ? Math.round(parseFloat(b.amount) * (b.pts ? 1 : btype.pts)) : b.pts || null;
+                const pts    = (b.pts != null) ? b.pts : (b.amount ? Math.round(parseFloat(b.amount) * btype.pts) : null);
                 const isOpen = expandedBooking === b.id;
                 const isAdmin = b._source === "admin";
 
@@ -614,20 +614,30 @@ export default function ProfilePage() {
                           </div>
                         )}
 
+                        {/* Cancellation notice */}
+                        {b.status === "cancelled" && pts !== null && (
+                          <div style={{ background: "#FFF1F1", border: "1px solid #FECACA", borderRadius: "12px", padding: "12px 16px", marginBottom: "16px" }}>
+                            <p style={{ fontSize: "13px", fontWeight: "700", color: "#991B1B", margin: "0 0 4px" }}>❌ Booking Cancelled</p>
+                            <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>{pts.toLocaleString()} points from this booking have been removed from your balance. If you believe this is an error, please <a href="/contact" style={{ color: NAVY, fontWeight: "600" }}>contact us</a>.</p>
+                          </div>
+                        )}
+
                         {/* Notes */}
                         {b.notes && <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px", fontStyle: "italic" }}>📝 {b.notes}</p>}
 
                         {/* Points estimate */}
                         {pts !== null && (
                           <div style={{ display: "flex", gap: "16px", marginBottom: "16px", flexWrap: "wrap" }}>
-                            <div style={{ background: LIGHT_BLUE, borderRadius: "10px", padding: "10px 16px" }}>
-                              <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 2px" }}>Points</p>
-                              <p style={{ fontSize: "16px", fontWeight: "800", color: NAVY, margin: 0 }}>{pts.toLocaleString()}</p>
+                            <div style={{ background: b.status === "cancelled" ? "#F3F4F6" : LIGHT_BLUE, borderRadius: "10px", padding: "10px 16px" }}>
+                              <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 2px" }}>Points {b.status === "cancelled" ? "(removed)" : ""}</p>
+                              <p style={{ fontSize: "16px", fontWeight: "800", color: b.status === "cancelled" ? "#9CA3AF" : NAVY, margin: 0, textDecoration: b.status === "cancelled" ? "line-through" : "none" }}>{pts.toLocaleString()}</p>
                             </div>
-                            <div style={{ background: "#FFF7ED", borderRadius: "10px", padding: "10px 16px" }}>
-                              <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 2px" }}>Cash value</p>
-                              <p style={{ fontSize: "16px", fontWeight: "800", color: ORANGE, margin: 0 }}>${(pts / 1000).toFixed(2)}</p>
-                            </div>
+                            {b.status !== "cancelled" && (
+                              <div style={{ background: "#FFF7ED", borderRadius: "10px", padding: "10px 16px" }}>
+                                <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 2px" }}>Cash value</p>
+                                <p style={{ fontSize: "16px", fontWeight: "800", color: ORANGE, margin: 0 }}>${(pts / 1000).toFixed(2)}</p>
+                              </div>
+                            )}
                           </div>
                         )}
 
