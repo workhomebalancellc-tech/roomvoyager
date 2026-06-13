@@ -344,9 +344,11 @@ function ManualBookingLog() {
 // ── Admin Control Toggles ─────────────────────────────────────────────────────
 function AdminToggles() {
   const [bookingTracking, setBookingTracking] = useState(true);   // true = Auto
-  const [doublePointsOn,  setDoublePointsOn]  = useState(false);
-  const [promoEndDate,    setPromoEndDate]    = useState("");
-  const [promoEndTime,    setPromoEndTime]    = useState("");
+  const [doublePointsOn,    setDoublePointsOn]    = useState(false);
+  const [promoStartDate,    setPromoStartDate]    = useState("");
+  const [promoStartTime,    setPromoStartTime]    = useState("");
+  const [promoEndDate,      setPromoEndDate]      = useState("");
+  const [promoEndTime,      setPromoEndTime]      = useState("");
 
   const toggleStyle = (active, color) => ({
     width: "52px", height: "28px", borderRadius: "14px",
@@ -409,12 +411,22 @@ function AdminToggles() {
           {doublePointsOn && (
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginBottom: "8px" }}>
               <div>
-                <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Promo End Date</label>
+                <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Start Date</label>
+                <input type="date" value={promoStartDate} onChange={e => setPromoStartDate(e.target.value)}
+                  style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", boxSizing: "border-box", outline: "none" }} />
+              </div>
+              <div>
+                <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Start Time</label>
+                <input type="time" value={promoStartTime} onChange={e => setPromoStartTime(e.target.value)}
+                  style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", boxSizing: "border-box", outline: "none" }} />
+              </div>
+              <div>
+                <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>End Date</label>
                 <input type="date" value={promoEndDate} onChange={e => setPromoEndDate(e.target.value)}
                   style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", boxSizing: "border-box", outline: "none" }} />
               </div>
               <div>
-                <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Promo End Time</label>
+                <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>End Time</label>
                 <input type="time" value={promoEndTime} onChange={e => setPromoEndTime(e.target.value)}
                   style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", boxSizing: "border-box", outline: "none" }} />
               </div>
@@ -423,7 +435,7 @@ function AdminToggles() {
 
           <div style={{ padding: "8px 12px", borderRadius: "8px", background: doublePointsOn ? "#FFF7ED" : "#F9FAFB", fontSize: "11px", fontWeight: "600", color: doublePointsOn ? ORANGE : "#9CA3AF" }}>
             {doublePointsOn
-              ? `🔥 Double points active${promoEndDate ? ` · Ends ${promoEndDate}${promoEndTime ? ` at ${promoEndTime}` : ""}` : " · No end date set"}`
+              ? `🔥 Double points active${promoStartDate ? ` · Starts ${promoStartDate}${promoStartTime ? ` at ${promoStartTime}` : ""}` : ""}${promoEndDate ? ` · Ends ${promoEndDate}${promoEndTime ? ` at ${promoEndTime}` : ""}` : " · No end date set"}`
               : "Standard points rates in effect"}
           </div>
         </div>
