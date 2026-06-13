@@ -57,6 +57,12 @@ export async function POST(req) {
     const pts = b.pts || b.points || 0;
     if (!pts || !b.uid) { skipped.push({ id: doc.id, reason: "no pts or uid" }); continue; }
 
+    // Skip cancelled bookings — their points have already been removed
+    if (b.status === "cancelled" || b.pointsStatus === "cancelled") {
+      skipped.push({ id: doc.id, reason: "cancelled", destination: b.destination });
+      continue;
+    }
+
     // Determine what the release date should be
     const endDate    = b.endDate || b.returnDate || b.checkOut || "";
     const releaseDate = b.releaseDate || getReleaseDate(endDate);
