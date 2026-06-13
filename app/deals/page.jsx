@@ -216,7 +216,7 @@ export default function DealsPage() {
 
           {isMobile ? (
             <div style={mobileStrip}>
-              {DOMESTIC.map((d, i) => (
+              {sortDeals(DOMESTIC).map((d, i) => (
                 <div key={i} style={mobileTileWrap}>
                   <DealTile {...d} />
                 </div>
@@ -224,7 +224,7 @@ export default function DealsPage() {
             </div>
           ) : (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "12px" }}>
-              {DOMESTIC.map((d, i) => (
+              {sortDeals(DOMESTIC).map((d, i) => (
                 <DealTile key={i} {...d} />
               ))}
             </div>
@@ -240,7 +240,7 @@ export default function DealsPage() {
 
           {isMobile ? (
             <div style={mobileStrip}>
-              {INTERNATIONAL.map((d, i) => (
+              {sortDeals(INTERNATIONAL).map((d, i) => (
                 <div key={i} style={mobileTileWrap}>
                   <DealTile {...d} />
                 </div>
@@ -248,7 +248,7 @@ export default function DealsPage() {
             </div>
           ) : (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "12px" }}>
-              {INTERNATIONAL.map((d, i) => (
+              {sortDeals(INTERNATIONAL).map((d, i) => (
                 <DealTile key={i} {...d} />
               ))}
             </div>
