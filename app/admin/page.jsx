@@ -711,6 +711,184 @@ function AdminCreateBooking({ adminEmail }) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ── Expedia CSV Import ────────────────────────────────────────────────────────
+function ExpediaImport({ adminEmail }) {
+  const [csvText,   setCsvText]   = useState("");
+  const [rows,      setRows]      = useState([]);
+  const [loading,   setLoading]   = useState(false);
+  const [msg,       setMsg]       = useState("");
+  const [awarding,  setAwarding]  = useState(null); // dedupKey being awarded
+  // Per-row selected user (uid) — key = dedupKey
+  const [selected,  setSelected]  = useState({});
+
+  function handleFile(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => setCsvText(ev.target.result);
+    reader.readAsText(file);
+  }
+
+  async function parseCSV() {
+    if (!csvText.trim()) { setMsg("Please upload a CSV file first."); return; }
+    setLoading(true); setMsg(""); setRows([]);
+    const res  = await fetch("/api/admin/expedia-import", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ adminEmail, csvText }),
+    });
+    const data = await res.json();
+    if (!res.ok) { setMsg("Error: " + (data.error || "Unknown")); setLoading(false); return; }
+    setRows(data.rows || []);
+    if ((data.rows || []).length === 0) setMsg("No lodging bookings found in this CSV.");
+    setLoading(false);
+  }
+
+  async function awardRow(row) {
+    const uid = selected[row.dedupKey];
+    if (!uid) { setMsg("Select a user for this row first."); return; }
+    // Find the click record for context
+    const click = row.matchingClicks.find(c => c.uid === uid);
+    setAwarding(row.dedupKey);
+    const res = await fetch("/api/admin/expedia-import", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        adminEmail, action: "award",
+        row,
+        uid,
+        email:   click?.email || uid,
+        name:    click?.name  || "",
+        clickId: click?.clickId || null,
+      }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setRows(prev => prev.map(r => r.dedupKey === row.dedupKey ? { ...r, alreadyImported: true } : r));
+      setMsg(`✓ ${row.pts?.toLocaleString()} pts awarded to ${click?.email || uid}`);
+    } else {
+      setMsg("Error: " + (data.error || "Unknown"));
+    }
+    setAwarding(null);
+  }
+
+  const pendingRows = rows.filter(r => !r.alreadyImported);
+  const doneRows    = rows.filter(r =>  r.alreadyImported);
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>📥 Expedia Bookings Import</p>
+      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>
+        Download your bookings CSV from{" "}
+        <a href="https://creator.expediagroup.com/app/performance" target="_blank" rel="noopener noreferrer"
+          style={{ color: NAVY, fontWeight: "600" }}>Expedia Creator → Performance</a>
+        , then upload it here. Only Lodging rows are processed (flights are skipped).
+      </p>
+
+      <div style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "14px", flexWrap: "wrap" }}>
+        <input type="file" accept=".csv" onChange={handleFile}
+          style={{ fontSize: "12px", color: "#374151" }} />
+        <button onClick={parseCSV} disabled={loading || !csvText.trim()}
+          style={{ padding: "8px 16px", background: NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", opacity: loading || !csvText.trim() ? 0.6 : 1 }}>
+          {loading ? "Parsing…" : "Parse CSV"}
+        </button>
+        {rows.length > 0 && (
+          <span style={{ fontSize: "11px", color: "#6B7280" }}>
+            {pendingRows.length} pending · {doneRows.length} already imported
+          </span>
+        )}
+      </div>
+
+      {msg && (
+        <p style={{ fontSize: "12px", color: msg.startsWith("✓") ? GREEN : "#DC2626", margin: "0 0 12px", fontWeight: "600" }}>{msg}</p>
+      )}
+
+      {pendingRows.length > 0 && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          {pendingRows.map(row => (
+            <div key={row.dedupKey} style={{ border: "1px solid #E5E7EB", borderRadius: "10px", padding: "14px", background: "#F9FAFB" }}>
+              {/* Booking info */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px", flexWrap: "wrap", gap: "8px" }}>
+                <div>
+                  <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 3px" }}>
+                    🏨 {row.product}
+                  </p>
+                  <p style={{ fontSize: "11px", color: "#6B7280", margin: 0 }}>
+                    {row.destinationCity}{row.country ? ` · ${row.country}` : ""} · {row.startDate}{row.endDate ? ` → ${row.endDate}` : ""} · {row.travelers} guest{row.travelers !== 1 ? "s" : ""}
+                  </p>
+                  <p style={{ fontSize: "11px", color: "#6B7280", margin: "2px 0 0" }}>
+                    Booked: {row.bookedDate?.split(" ")[0]} · Status: <strong>{row.tripStatus}</strong>
+                  </p>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <p style={{ fontSize: "14px", fontWeight: "800", color: NAVY, margin: 0 }}>${row.bookingAmount?.toFixed(2)}</p>
+                  <p style={{ fontSize: "11px", color: "#6B7280", margin: "2px 0" }}>Commission: ${row.commission?.toFixed(2)}</p>
+                  <p style={{ fontSize: "12px", fontWeight: "700", color: ORANGE, margin: 0 }}>{row.pts?.toLocaleString()} pts to award</p>
+                </div>
+              </div>
+
+              {/* User match */}
+              <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "8px", padding: "10px" }}>
+                {row.matchingClicks.length > 0 ? (
+                  <>
+                    <p style={{ fontSize: "11px", fontWeight: "700", color: "#374151", margin: "0 0 8px" }}>
+                      🔍 {row.matchingClicks.length} matching user click{row.matchingClicks.length !== 1 ? "s" : ""} found:
+                    </p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                      {row.matchingClicks.map(c => (
+                        <label key={c.uid} style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
+                          <input type="radio" name={row.dedupKey} value={c.uid}
+                            checked={selected[row.dedupKey] === c.uid}
+                            onChange={() => setSelected(s => ({ ...s, [row.dedupKey]: c.uid }))} />
+                          <span style={{ fontSize: "12px", color: "#111827" }}>
+                            <strong>{c.name || c.email}</strong>
+                            {c.name ? ` · ${c.email}` : ""}
+                            {c.destination ? ` · searched "${c.destination}"` : ""}
+                            <span style={{ color: "#9CA3AF", marginLeft: "6px" }}>{c.clickedAt?.split("T")[0]}</span>
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "0 0 8px", fontStyle: "italic" }}>
+                    ⚠️ No matching user click found within 72 hours. Enter user email manually:
+                  </p>
+                )}
+
+                {/* Manual UID fallback */}
+                {row.matchingClicks.length === 0 && (
+                  <input type="text" placeholder="User UID (from admin panel)"
+                    value={selected[row.dedupKey] || ""}
+                    onChange={e => setSelected(s => ({ ...s, [row.dedupKey]: e.target.value }))}
+                    style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #E5E7EB", borderRadius: "7px", fontSize: "12px", boxSizing: "border-box", outline: "none" }} />
+                )}
+              </div>
+
+              <div style={{ marginTop: "10px", display: "flex", justifyContent: "flex-end" }}>
+                <button onClick={() => awardRow(row)} disabled={!selected[row.dedupKey] || awarding === row.dedupKey}
+                  style={{ padding: "8px 20px", background: selected[row.dedupKey] ? ORANGE : "#D1D5DB", color: "#fff", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: selected[row.dedupKey] ? "pointer" : "not-allowed" }}>
+                  {awarding === row.dedupKey ? "Awarding…" : `Award ${row.pts?.toLocaleString()} pts →`}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {doneRows.length > 0 && (
+        <div style={{ marginTop: "12px", padding: "10px 14px", background: "#F0FDF4", borderRadius: "8px" }}>
+          <p style={{ fontSize: "11px", fontWeight: "700", color: "#15803D", margin: "0 0 4px" }}>✓ Already imported ({doneRows.length}):</p>
+          {doneRows.map(r => (
+            <p key={r.dedupKey} style={{ fontSize: "11px", color: "#374151", margin: "2px 0" }}>
+              {r.product} · {r.destinationCity} · {r.bookedDate?.split(" ")[0]}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 // ── Manage / Delete Bookings ──────────────────────────────────────────────────
 function ManageBookings({ adminEmail }) {
   const [email,    setEmail]    = useState("");
@@ -1112,6 +1290,11 @@ export default function AdminDashboard() {
         {/* MANAGE BOOKINGS */}
         <div style={{ marginBottom: "20px" }}>
           <ManageBookings adminEmail={user.email} />
+        </div>
+
+        {/* EXPEDIA CSV IMPORT */}
+        <div style={{ marginBottom: "20px" }}>
+          <ExpediaImport adminEmail={user.email} />
         </div>
 
         {/* POINTS MANAGEMENT */}
