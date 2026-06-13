@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/cj-commissions",
+      "schedule": "0 8 * * *"
+    }
+  ]
+}
