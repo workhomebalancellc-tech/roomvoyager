@@ -174,6 +174,30 @@ export default function ProfilePage() {
 
   const handleSignOut = async () => { await logout(); window.location.href = "/"; };
 
+  /* ── delete account ── */
+  const [deleteOpen,    setDeleteOpen]    = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState("");
+  const [deleting,      setDeleting]      = useState(false);
+  const [deleteError,   setDeleteError]   = useState("");
+
+  async function handleDeleteAccount() {
+    if (deleteConfirm !== "DELETE") return;
+    setDeleting(true); setDeleteError("");
+    try {
+      const res = await fetch("/api/user/delete-account", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid: user.uid }),
+      });
+      if (!res.ok) throw new Error("Server error");
+      await logout();
+      window.location.href = "/?deleted=1";
+    } catch {
+      setDeleteError("Something went wrong. Please contact us at roomvoyager@protonmail.com.");
+      setDeleting(false);
+    }
+  }
+
   const TABS = [
     { id: "overview",   label: "Overview",    icon: "👤" },
     { id: "bookings",   label: "My Bookings", icon: "🗂️" },
@@ -442,6 +466,47 @@ export default function ProfilePage() {
                 🚪 Sign Out
               </button>
             </div>
+
+            {/* Delete account */}
+            <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", padding: "20px 28px" }}>
+              <p style={{ fontSize: "11px", fontWeight: "700", color: "#DC2626", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 8px" }}>Danger Zone</p>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px" }}>Permanently delete your account and all associated data including bookings, points, and profile information. This cannot be undone.</p>
+              <button onClick={() => { setDeleteOpen(true); setDeleteConfirm(""); setDeleteError(""); }}
+                style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "12px", background: "#FFF1F1", color: "#DC2626", border: "1.5px solid #FECACA", borderRadius: "10px", fontWeight: "700", fontSize: "14px", cursor: "pointer" }}>
+                🗑️ Delete My Account
+              </button>
+            </div>
+
+            {/* Delete confirmation modal */}
+            {deleteOpen && (
+              <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+                <div style={{ background: "#fff", borderRadius: "20px", padding: "32px", maxWidth: "420px", width: "100%", boxShadow: "0 20px 60px rgba(0,0,0,0.3)" }}>
+                  <p style={{ fontSize: "32px", margin: "0 0 12px", textAlign: "center" }}>⚠️</p>
+                  <h2 style={{ fontSize: "20px", fontWeight: "800", color: "#111827", margin: "0 0 8px", textAlign: "center" }}>Delete your account?</h2>
+                  <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px", textAlign: "center", lineHeight: "1.6" }}>
+                    This will permanently delete your account, all bookings, and your rewards points. <strong>This cannot be undone.</strong>
+                  </p>
+                  <p style={{ fontSize: "13px", fontWeight: "600", color: "#374151", margin: "0 0 8px" }}>Type <strong>DELETE</strong> to confirm:</p>
+                  <input
+                    value={deleteConfirm}
+                    onChange={e => setDeleteConfirm(e.target.value)}
+                    placeholder="DELETE"
+                    style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #FECACA", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box", marginBottom: "16px", fontFamily: "monospace", letterSpacing: "0.08em" }}
+                  />
+                  {deleteError && <p style={{ fontSize: "12px", color: "#DC2626", margin: "-8px 0 12px", fontWeight: "600" }}>{deleteError}</p>}
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <button onClick={() => setDeleteOpen(false)}
+                      style={{ flex: 1, background: "#F3F4F6", color: "#374151", border: "none", borderRadius: "10px", padding: "12px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>
+                      Cancel
+                    </button>
+                    <button onClick={handleDeleteAccount} disabled={deleteConfirm !== "DELETE" || deleting}
+                      style={{ flex: 1, background: deleteConfirm === "DELETE" && !deleting ? "#DC2626" : "#D1D5DB", color: "#fff", border: "none", borderRadius: "10px", padding: "12px", fontSize: "14px", fontWeight: "700", cursor: deleteConfirm === "DELETE" && !deleting ? "pointer" : "default" }}>
+                      {deleting ? "Deleting…" : "Delete Account"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 

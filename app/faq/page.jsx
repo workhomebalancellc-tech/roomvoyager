@@ -28,7 +28,7 @@ const faqs = [
       },
       {
         q: "How do I book a cruise?",
-        a: "Visit our Cruises page to browse available cruise lines. You can also contact our travel advisor at roomvoyager@protonmail.com for personalized cruise recommendations and group bookings.",
+        a: "Visit our Cruises page to browse available cruise lines. You can also contact us at roomvoyager@protonmail.com for personalized cruise recommendations and group bookings.",
       },
       {
         q: "I can't see the cruise search on the Cruises page — what do I do?",
@@ -46,6 +46,10 @@ const faqs = [
       {
         q: "How do I earn Rewards points?",
         a: "You earn points on every booking made through RoomVoyager — 5 pts per $1 on flights and hotels, 10 pts per $1 on cruises and packages (double points available on hotels, cruises, and packages). Points may take up to 7 days to appear in your account after your booking is confirmed in our system. If you don't see them after 7 days, contact us at roomvoyager@protonmail.com.",
+      },
+      {
+        q: "What is the difference between Pending, Redeemable, and Lifetime points?",
+        a: "Pending points are earned when a booking is logged but not yet confirmed — they show up in your account but cannot be redeemed yet. Once your booking is verified (typically within 7 days), they convert to Redeemable points, which are available for cash redemption. Lifetime points is your all-time total of every point ever earned, including ones already redeemed — it's used to determine your rewards tier.",
       },
       {
         q: "How do I redeem my points?",
