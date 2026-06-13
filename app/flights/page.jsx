@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import FloatingChat from "../components/FloatingChat";
+import { useAuth } from "../../contexts/AuthContext";
 
 const NAVY       = "#003B95";
 const ORANGE     = "#FF6600";
@@ -151,6 +152,7 @@ function FlightsContent() {
   const [showToSugg,    setShowToSugg]    = useState(false);
   const [loadingTo,     setLoadingTo]     = useState(false);
 
+  const { user } = useAuth();
   const toInputRef      = useRef(null);
   const fromDebounceRef = useRef(null);
   const toDebounceRef   = useRef(null);
@@ -216,6 +218,27 @@ function FlightsContent() {
     const kiwiUrl = `https://www.kiwi.com/en/search/results/${slugFrom}/${slugTo}/${d}/${r}${paxParam}`;
     const tpUrl = `https://c111.travelpayouts.com/click?shmarker=722477&promo_id=3791&source_type=customlink&type=click&custom_url=${encodeURIComponent(kiwiUrl)}`;
     const dest = `/redirect?to=${encodeURIComponent(tpUrl)}&partner=Kiwi.com&product=flight`;
+
+    // Fire-and-forget: log this search click for logged-in users
+    if (user?.uid) {
+      fetch("/api/track/flight-click", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uid:      user.uid,
+          email:    user.email    || "",
+          name:     user.displayName || "",
+          from,
+          to,
+          fromKiwi: slugFrom,
+          toKiwi:   slugTo,
+          depart:   d,
+          ret:      r,
+          pax,
+        }),
+      }).catch(() => {}); // never block navigation
+    }
+
     window.location.href = dest;
   }
 

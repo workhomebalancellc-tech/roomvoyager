@@ -47,6 +47,10 @@ export default function ProfilePage() {
   /* ── admin-created bookings (Firestore) ── */
   const [firestoreBookings, setFirestoreBookings] = useState([]);
 
+  /* ── points balances ── */
+  const [redeemablePoints, setRedeemablePoints] = useState(0);
+  const [pendingPoints,    setPendingPoints]    = useState(0);
+
   /* ── name editing ── */
   const [editingName, setEditingName] = useState(false);
   const [nameInput,   setNameInput]   = useState("");
@@ -94,6 +98,13 @@ export default function ProfilePage() {
       .then(r => r.json())
       .then(data => {
         if (data.bookings) setFirestoreBookings(data.bookings);
+      })
+      .catch(() => {});
+    fetch(`/api/user/points?uid=${user.uid}`)
+      .then(r => r.json())
+      .then(d => {
+        setRedeemablePoints(d.points || 0);
+        setPendingPoints(d.pendingPoints || 0);
       })
       .catch(() => {});
   }, [user?.uid]);
@@ -305,6 +316,43 @@ export default function ProfilePage() {
                 );
               });
             })()}
+
+            {/* Points balance card */}
+            <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", overflow: "hidden" }}>
+              <div style={{ background: NAVY, padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div>
+                  <p style={{ color: "#93C5FD", fontSize: "10px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 2px" }}>🏆 Points Balance</p>
+                  <p style={{ color: "#fff", fontSize: "15px", fontWeight: "700", margin: 0 }}>RoomVoyager Rewards</p>
+                </div>
+                <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "7px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", textDecoration: "none" }}>
+                  {redeemablePoints >= 10000 ? "Redeem now →" : "View Rewards →"}
+                </a>
+              </div>
+              <div style={{ padding: "20px 24px", display: "flex", gap: "16px", flexWrap: "wrap" }}>
+                <div style={{ flex: 1, minWidth: "120px", background: LIGHT_BLUE, borderRadius: "12px", padding: "14px 18px", textAlign: "center" }}>
+                  <p style={{ fontSize: "28px", fontWeight: "800", color: NAVY, margin: "0 0 2px" }}>{redeemablePoints.toLocaleString()}</p>
+                  <p style={{ fontSize: "11px", fontWeight: "700", color: "#374151", margin: 0 }}>Redeemable pts</p>
+                  <p style={{ fontSize: "11px", color: "#6B7280", margin: "2px 0 0" }}>${(redeemablePoints / 1000).toFixed(2)} value</p>
+                </div>
+                {pendingPoints > 0 && (
+                  <div style={{ flex: 1, minWidth: "120px", background: "#FFF7ED", border: "1px solid #FED7AA", borderRadius: "12px", padding: "14px 18px", textAlign: "center" }}>
+                    <p style={{ fontSize: "28px", fontWeight: "800", color: "#B45309", margin: "0 0 2px" }}>{pendingPoints.toLocaleString()}</p>
+                    <p style={{ fontSize: "11px", fontWeight: "700", color: "#92400E", margin: 0 }}>⏳ Pending pts</p>
+                    <p style={{ fontSize: "11px", color: "#6B7280", margin: "2px 0 0" }}>Available 45 days after trip</p>
+                  </div>
+                )}
+                {redeemablePoints < 10000 && (
+                  <div style={{ width: "100%", marginTop: "4px" }}>
+                    <div style={{ background: "#E5E7EB", borderRadius: "999px", height: "6px", overflow: "hidden" }}>
+                      <div style={{ background: `linear-gradient(to right, ${NAVY}, ${ORANGE})`, height: "100%", borderRadius: "999px", width: `${Math.min(100, (redeemablePoints / 10000) * 100)}%`, transition: "width 0.5s" }} />
+                    </div>
+                    <p style={{ fontSize: "11px", color: "#6B7280", margin: "5px 0 0", textAlign: "center" }}>
+                      {(10000 - redeemablePoints).toLocaleString()} more pts until $10 minimum
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
 
             {/* Account details */}
             <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", padding: "28px" }}>
@@ -581,7 +629,14 @@ export default function ProfilePage() {
                         </p>
                       </div>
                       <div style={{ textAlign: "right", flexShrink: 0 }}>
-                        {pts !== null && <p style={{ fontSize: "14px", fontWeight: "700", color: NAVY, margin: "0 0 2px" }}>{pts.toLocaleString()} pts</p>}
+                        {pts !== null && (
+                          <p style={{ fontSize: "14px", fontWeight: "700", color: b.pointsStatus === "pending" ? "#B45309" : NAVY, margin: "0 0 2px" }}>
+                            {pts.toLocaleString()} {b.pointsStatus === "pending" ? "⏳" : ""} pts
+                          </p>
+                        )}
+                        {b.pointsStatus === "pending" && b.releaseDate && (
+                          <p style={{ fontSize: "10px", color: "#B45309", margin: "0 0 2px", fontWeight: "600" }}>available {b.releaseDate}</p>
+                        )}
                         {b.amount && <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0 }}>${parseFloat(b.amount).toLocaleString()}</p>}
                         <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "2px 0 0" }}>{isOpen ? "▲" : "▼"}</p>
                       </div>

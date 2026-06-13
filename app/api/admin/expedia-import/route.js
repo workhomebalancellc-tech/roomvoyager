@@ -40,6 +40,21 @@ const PTS_PER_DOLLAR = 5;
 // How many hours before/after booking date to look for a matching click
 const MATCH_WINDOW_HOURS = 72;
 
+// ── Points release helpers ────────────────────────────────────────────────────
+// Points are pending until 45 days after checkout. Returns the release date ISO string.
+function getReleaseDate(endDateStr) {
+  if (!endDateStr) return null;
+  const d = new Date(endDateStr + "T12:00:00Z");
+  if (isNaN(d)) return null;
+  d.setDate(d.getDate() + 45);
+  return d.toISOString().split("T")[0];
+}
+
+function isPending(releaseDateStr) {
+  if (!releaseDateStr) return true; // no end date → stay pending to be safe
+  return new Date(releaseDateStr + "T00:00:00Z") > new Date();
+}
+
 export const dynamic = "force-dynamic";
 
 // ── Simple CSV parser (handles quoted fields with commas) ──────────────────────
@@ -135,12 +150,14 @@ export async function POST(req) {
       // Take best match
       const best = matches[0];
       const pts  = Math.round(bookingAmount * PTS_PER_DOLLAR);
+      const releaseDate = getReleaseDate(endDate);
+      const pending     = isPending(releaseDate);
 
-      await adminDb.collection("users").doc(best.uid).update({
-        points:         FieldValue.increment(pts),
-        lifetimePoints: FieldValue.increment(pts),
-        updatedAt:      FieldValue.serverTimestamp(),
-      }).catch(() => {});
+      // Award pending or redeemable points based on 45-day window
+      const pointsUpdate = pending
+        ? { pendingPoints: FieldValue.increment(pts), lifetimePoints: FieldValue.increment(pts), updatedAt: FieldValue.serverTimestamp() }
+        : { points: FieldValue.increment(pts),        lifetimePoints: FieldValue.increment(pts), updatedAt: FieldValue.serverTimestamp() };
+      await adminDb.collection("users").doc(best.uid).update(pointsUpdate).catch(() => {});
 
       const bookingRef = `EXP-${Date.now().toString(36).toUpperCase()}`;
       await adminDb.collection("bookings").add({
@@ -150,6 +167,9 @@ export async function POST(req) {
         notes: `Expedia: ${product}${company ? ` · ${company}` : ""}`,
         status: tripStatus === "COMPLETED" ? "completed" : "upcoming",
         pts, rate: PTS_PER_DOLLAR, source: "expedia_auto_import",
+        pointsStatus: pending ? "pending" : "redeemable",
+        pendingPoints: pending ? pts : 0,
+        releaseDate:   releaseDate || "",
         createdAt: FieldValue.serverTimestamp(),
       });
 
@@ -167,13 +187,18 @@ export async function POST(req) {
       // Notify customer
       const siteUrl = process.env.NEXTAUTH_URL || "https://www.roomvoyagertravel.com";
       const userSnap = await adminDb.collection("users").doc(best.uid).get().catch(() => null);
-      const newBalance = userSnap?.data()?.points || pts;
+      const snap = userSnap?.data() || {};
+      const newBalance = snap.points || 0;
+      const pendingNote = pending && releaseDate
+        ? `\n\nNote: your ${pts.toLocaleString()} points are pending until 45 days after your checkout (${releaseDate}). They'll automatically move to your redeemable balance on that date.`
+        : "";
       await fetch(`${siteUrl}/api/booking-points-notify`, {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: best.email, name: best.name || "", product: "Hotel",
           amount: bookingAmount.toFixed(2), pts, cash: (pts / 1000).toFixed(2),
-          newBalance, notes: product,
+          newBalance, notes: product + (pending ? ` (points pending until ${releaseDate})` : "") + pendingNote,
+          pending, releaseDate,
         }),
       }).catch(() => {});
 
@@ -295,31 +320,35 @@ export async function POST(req) {
     }
 
     const pts = row.pts || Math.round((row.bookingAmount || 0) * PTS_PER_DOLLAR);
+    const releaseDate = getReleaseDate(row.endDate);
+    const pending     = isPending(releaseDate);
 
-    // Award points to user
-    await adminDb.collection("users").doc(uid).update({
-      points:         FieldValue.increment(pts),
-      lifetimePoints: FieldValue.increment(pts),
-      updatedAt:      FieldValue.serverTimestamp(),
-    }).catch(() => {});
+    // Award pending or redeemable points
+    const pointsUpdate = pending
+      ? { pendingPoints: FieldValue.increment(pts), lifetimePoints: FieldValue.increment(pts), updatedAt: FieldValue.serverTimestamp() }
+      : { points: FieldValue.increment(pts),        lifetimePoints: FieldValue.increment(pts), updatedAt: FieldValue.serverTimestamp() };
+    await adminDb.collection("users").doc(uid).update(pointsUpdate).catch(() => {});
 
     // Create booking record
     const bookingRef = `EXP-${Date.now().toString(36).toUpperCase()}`;
     await adminDb.collection("bookings").add({
       uid,
       email,
-      product:     "hotel",
-      amount:      row.bookingAmount || 0,
-      destination: row.destinationCity || row.product || "",
-      startDate:   row.startDate || "",
-      endDate:     row.endDate   || "",
-      reference:   bookingRef,
-      notes:       `Expedia: ${row.product}${row.company ? ` · ${row.company}` : ""}`,
-      status:      row.tripStatus === "COMPLETED" ? "completed" : "upcoming",
+      product:      "hotel",
+      amount:       row.bookingAmount || 0,
+      destination:  row.destinationCity || row.product || "",
+      startDate:    row.startDate || "",
+      endDate:      row.endDate   || "",
+      reference:    bookingRef,
+      notes:        `Expedia: ${row.product}${row.company ? ` · ${row.company}` : ""}`,
+      status:       row.tripStatus === "COMPLETED" ? "completed" : "upcoming",
       pts,
-      rate:        PTS_PER_DOLLAR,
-      source:      "expedia_import",
-      createdAt:   FieldValue.serverTimestamp(),
+      rate:         PTS_PER_DOLLAR,
+      source:       "expedia_import",
+      pointsStatus: pending ? "pending" : "redeemable",
+      pendingPoints: pending ? pts : 0,
+      releaseDate:  releaseDate || "",
+      createdAt:    FieldValue.serverTimestamp(),
     });
 
     // Log the import

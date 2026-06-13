@@ -1,0 +1,36 @@
+name: Release Pending Points
+
+on:
+  schedule:
+    # Runs every day at 7:00 AM UTC (3 AM ET) — after both import jobs have run
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Release pending points
+        run: |
+          echo "→ Calling release-pending-points API..."
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "${{ secrets.IMPORT_API_URL }}/api/admin/release-pending-points" \
+            -H "Content-Type: application/json" \
+            -H "x-admin-secret: ${{ secrets.EXPEDIA_IMPORT_SECRET }}" \
+            -d '{}')
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | head -n-1)
+
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "❌ Release failed with status $HTTP_CODE"
+            exit 1
+          fi
+
+          COUNT=$(echo "$BODY" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('count',0))" 2>/dev/null || echo "?")
+          echo "✅ Released points for $COUNT booking(s)"

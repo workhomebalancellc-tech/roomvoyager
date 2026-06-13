@@ -175,7 +175,8 @@ function EarningsSlider() {
 export default function RewardsPage() {
   const { user: session } = useAuth();
   const [isMobile, setIsMobile] = useState(false);
-  const [userPoints, setUserPoints]           = useState(0);
+  const [userPoints, setUserPoints]           = useState(0);  // redeemable only
+  const [pendingPoints, setPendingPoints]     = useState(0);  // locked, not yet redeemable
   const [lifetimePoints, setLifetimePoints]   = useState(0);
   const cashValue = (userPoints / 1000).toFixed(2);
   const canRedeem = userPoints >= 10000;
@@ -206,6 +207,7 @@ export default function RewardsPage() {
         .then(r => r.json())
         .then(d => {
           setUserPoints(d.points || 0);
+          setPendingPoints(d.pendingPoints || 0);
           setLifetimePoints(d.lifetimePoints || 0);
         })
         .catch(() => {});
@@ -507,14 +509,29 @@ export default function RewardsPage() {
           <div style={{ marginTop: "24px", textAlign: "center" }}>
             {session ? (
               canRedeem ? (
-                <button onClick={() => { setRedeemSubmitted(false); redeemRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
-                  style={{ background: ORANGE, color: "#fff", padding: "14px 36px", borderRadius: "12px", fontSize: "16px", fontWeight: "700", border: "none", cursor: "pointer", boxShadow: "0 4px 18px rgba(255,102,0,0.35)" }}>
-                  🎉 Redeem Cash →
-                </button>
+                <div>
+                  <button onClick={() => { setRedeemSubmitted(false); redeemRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
+                    style={{ background: ORANGE, color: "#fff", padding: "14px 36px", borderRadius: "12px", fontSize: "16px", fontWeight: "700", border: "none", cursor: "pointer", boxShadow: "0 4px 18px rgba(255,102,0,0.35)" }}>
+                    🎉 Redeem Cash →
+                  </button>
+                  {pendingPoints > 0 && (
+                    <p style={{ fontSize: "12px", color: "#6B7280", marginTop: "10px" }}>
+                      + {pendingPoints.toLocaleString()} pts pending (available after 45-day wait period)
+                    </p>
+                  )}
+                </div>
               ) : (
                 <div style={{ display: "inline-block", background: LIGHT_BLUE, borderRadius: "12px", padding: "14px 28px" }}>
-                  <p style={{ color: NAVY, fontWeight: "700", fontSize: "15px", margin: "0 0 4px" }}>You have {userPoints.toLocaleString()} pts</p>
-                  <p style={{ color: "#6B7280", fontSize: "13px", margin: 0 }}>{(10000 - userPoints).toLocaleString()} more points until you can redeem ($10 minimum)</p>
+                  <p style={{ color: NAVY, fontWeight: "700", fontSize: "15px", margin: "0 0 4px" }}>
+                    {userPoints.toLocaleString()} redeemable pts
+                    {pendingPoints > 0 && <span style={{ color: "#6B7280", fontWeight: "400", fontSize: "13px" }}> · {pendingPoints.toLocaleString()} pending</span>}
+                  </p>
+                  <p style={{ color: "#6B7280", fontSize: "13px", margin: 0 }}>{(10000 - userPoints).toLocaleString()} more redeemable points until you can redeem ($10 minimum)</p>
+                  {pendingPoints > 0 && (
+                    <p style={{ color: "#B45309", fontSize: "12px", margin: "6px 0 0", fontWeight: "600" }}>
+                      ⏳ {pendingPoints.toLocaleString()} pts are pending — available 45 days after your trip ends
+                    </p>
+                  )}
                 </div>
               )
             ) : (

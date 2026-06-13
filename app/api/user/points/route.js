@@ -12,10 +12,11 @@ export async function GET(req) {
       const data = snap.data();
       return Response.json({
         points:         data.points         || 0,
+        pendingPoints:  data.pendingPoints  || 0,
         lifetimePoints: data.lifetimePoints || 0,
       });
     }
-    return Response.json({ points: 0, lifetimePoints: 0 });
+    return Response.json({ points: 0, pendingPoints: 0, lifetimePoints: 0 });
   } catch (e) {
     console.error("user/points error:", e);
     return Response.json({ points: 0 });

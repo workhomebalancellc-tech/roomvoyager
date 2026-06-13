@@ -1,0 +1,42 @@
+name: Travelpayouts Daily Import
+
+on:
+  schedule:
+    # Runs every day at 9:00 AM UTC (5 AM ET / 2 AM PT)
+    - cron: "0 9 * * *"
+  workflow_dispatch:
+    # Also allows manual trigger from GitHub Actions tab
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Trigger Travelpayouts import
+        run: |
+          echo "→ Calling Travelpayouts import API..."
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "${{ secrets.IMPORT_API_URL }}/api/admin/travelpayouts-import" \
+            -H "Content-Type: application/json" \
+            -H "x-admin-secret: ${{ secrets.EXPEDIA_IMPORT_SECRET }}" \
+            -d '{}')
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | head -n-1)
+
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "❌ Import failed with status $HTTP_CODE"
+            exit 1
+          fi
+
+          echo "✅ Import complete"
+
+          # Parse and display summary
+          AWARDED=$(echo "$BODY" | python3 -c "import sys,json; d=json.load(sys.stdin); print(len(d.get('awarded',[])))" 2>/dev/null || echo "?")
+          SKIPPED=$(echo "$BODY" | python3 -c "import sys,json; d=json.load(sys.stdin); print(len(d.get('skipped',[])))" 2>/dev/null || echo "?")
+          echo "   Awarded: $AWARDED booking(s)"
+          echo "   Skipped: $SKIPPED"

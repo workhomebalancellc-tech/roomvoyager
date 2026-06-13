@@ -712,6 +712,80 @@ function AdminCreateBooking({ adminEmail }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Expedia CSV Import ────────────────────────────────────────────────────────
+/* ── Travelpayouts Flight Import ──────────────────────────────────────────── */
+function TravelpayoutsImport() {
+  const [loading, setLoading] = useState(false);
+  const [result,  setResult]  = useState(null);
+  const [dateFrom, setDateFrom] = useState(() => {
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    return d.toISOString().split("T")[0];
+  });
+  const [dateTo, setDateTo] = useState(() => new Date().toISOString().split("T")[0]);
+
+  async function runImport() {
+    setLoading(true); setResult(null);
+    const res  = await fetch("/api/admin/travelpayouts-import", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dateFrom, dateTo }),
+    });
+    const data = await res.json();
+    setResult({ ok: res.ok, ...data });
+    setLoading(false);
+  }
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>✈️ Travelpayouts / Kiwi.com Import</p>
+      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>Fetch flight bookings from Travelpayouts and award points. The daily cron runs this automatically at 5 AM ET.</p>
+
+      <div style={{ display: "flex", gap: "10px", marginBottom: "12px", flexWrap: "wrap", alignItems: "flex-end" }}>
+        <div>
+          <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#6B7280", marginBottom: "4px" }}>Date From</label>
+          <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)}
+            style={{ padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px" }} />
+        </div>
+        <div>
+          <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#6B7280", marginBottom: "4px" }}>Date To</label>
+          <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)}
+            style={{ padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px" }} />
+        </div>
+        <button onClick={runImport} disabled={loading}
+          style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "9px 18px", fontSize: "13px", fontWeight: "700", cursor: loading ? "default" : "pointer", opacity: loading ? 0.7 : 1 }}>
+          {loading ? "Running…" : "Run Import Now"}
+        </button>
+      </div>
+
+      {result && (
+        <div style={{ background: result.ok ? "#F0FDF4" : "#FEF2F2", border: `1px solid ${result.ok ? "#86EFAC" : "#FECACA"}`, borderRadius: "8px", padding: "12px", fontSize: "12px" }}>
+          {result.ok ? (
+            <>
+              <p style={{ fontWeight: "700", color: "#166534", margin: "0 0 6px" }}>
+                ✅ Import complete — {result.bookingsFound ?? 0} booking(s) found
+              </p>
+              <p style={{ color: "#374151", margin: "0 0 4px" }}>Awarded: {result.awarded?.length ?? 0} · Skipped: {result.skipped?.length ?? 0}</p>
+              {result.awarded?.length > 0 && result.awarded.map((a, i) => (
+                <p key={i} style={{ color: "#166534", margin: "2px 0", fontFamily: "monospace" }}>
+                  → {a.email} · {a.from} → {a.to} · {a.pts} pts (${a.commissionUSD?.toFixed(2)})
+                </p>
+              ))}
+              {result.skipped?.length > 0 && result.skipped.map((s, i) => (
+                <p key={i} style={{ color: "#B45309", margin: "2px 0", fontFamily: "monospace" }}>
+                  ⚠ {s.ref} — {s.reason}
+                </p>
+              ))}
+            </>
+          ) : (
+            <p style={{ color: "#991B1B", margin: 0 }}>❌ {result.error || "Import failed"}</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Expedia Import ────────────────────────────────────────────────────────── */
 function ExpediaImport({ adminEmail }) {
   const [csvText,   setCsvText]   = useState("");
   const [rows,      setRows]      = useState([]);
@@ -1300,6 +1374,11 @@ export default function AdminDashboard() {
         {/* EXPEDIA CSV IMPORT */}
         <div style={{ marginBottom: "20px" }}>
           <ExpediaImport adminEmail={user.email} />
+        </div>
+
+        {/* TRAVELPAYOUTS FLIGHT IMPORT */}
+        <div style={{ marginBottom: "20px" }}>
+          <TravelpayoutsImport adminEmail={user.email} />
         </div>
 
         {/* RATES REFERENCE */}
