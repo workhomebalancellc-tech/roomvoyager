@@ -712,20 +712,33 @@ function AdminCreateBooking({ adminEmail }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Email Blast ───────────────────────────────────────────────────────────────
+const AUDIENCE_OPTIONS = [
+  { val: "all",         label: "Everyone",          desc: "All registered users + newsletter subscribers" },
+  { val: "users",       label: "Registered users",  desc: "Anyone with a RoomVoyager account" },
+  { val: "subscribers", label: "Newsletter only",   desc: "Newsletter opt-ins who haven't made an account" },
+  { val: "customers",   label: "Customers",         desc: "Users who have at least one booking on file" },
+  { val: "points",      label: "Has points",        desc: "Users with redeemable points > 0" },
+  { val: "manual",      label: "Manual list",       desc: "Type specific email addresses" },
+];
+
 function SendBlast({ adminEmail }) {
-  const [subject,     setSubject]     = useState("🔥 Deals of the Week — Double Points Are Live!");
-  const [messageBody, setMessageBody] = useState(
+  const [subject,      setSubject]      = useState("🔥 Deals of the Week — Double Points Are Live!");
+  const [messageBody,  setMessageBody]  = useState(
     "Great news — we just turned on Double Points for all hotel and cruise bookings!\n\n" +
     "For a limited time, earn 2× rewards on every stay and sailing you book through RoomVoyager. " +
     "That means faster cash back and more money back in your pocket.\n\n" +
     "Don't miss out — double points won't last long!"
   );
-  const [audience,    setAudience]    = useState("all");
-  const [count,       setCount]       = useState(null);
-  const [loading,     setLoading]     = useState(false);
-  const [result,      setResult]      = useState(null);
+  const [audience,     setAudience]     = useState("all");
+  const [manualInput,  setManualInput]  = useState("");
+  const [count,        setCount]        = useState(null);
+  const [loading,      setLoading]      = useState(false);
+  const [result,       setResult]       = useState(null);
+
+  const manualEmails = manualInput.split(/[\n,]+/).map(e => e.trim()).filter(Boolean);
 
   async function loadCount() {
+    if (audience === "manual") { setCount(manualEmails.length); return; }
     try {
       const res  = await fetch(`/api/admin/send-blast?adminEmail=${encodeURIComponent(adminEmail)}&audience=${audience}`);
       const data = await res.json();
@@ -734,14 +747,17 @@ function SendBlast({ adminEmail }) {
   }
 
   async function handleSend() {
-    if (!window.confirm(`Send to ${count ?? "all"} recipients?`)) return;
+    const recipientLabel = audience === "manual"
+      ? `${manualEmails.length} manual email(s)`
+      : `${count ?? "?"} recipients`;
+    if (!window.confirm(`Send to ${recipientLabel}?`)) return;
     setLoading(true);
     setResult(null);
     try {
-      const res  = await fetch("/api/admin/send-blast", {
+      const res = await fetch("/api/admin/send-blast", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ adminEmail, subject, messageBody, audience }),
+        body: JSON.stringify({ adminEmail, subject, messageBody, audience, manualEmails }),
       });
       setResult(await res.json());
     } catch (e) {
@@ -750,24 +766,50 @@ function SendBlast({ adminEmail }) {
     setLoading(false);
   }
 
+  const selectedOption = AUDIENCE_OPTIONS.find(o => o.val === audience);
+
   return (
     <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
       <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 16px" }}>✉️ Send Email Blast</p>
 
-      {/* Audience */}
-      <div style={{ marginBottom: "14px" }}>
-        <label style={{ fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "6px" }}>Audience</label>
-        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-          {[["all","Everyone"],["users","Registered users"],["subscribers","Newsletter only"]].map(([val, label]) => (
+      {/* Audience picker */}
+      <div style={{ marginBottom: "16px" }}>
+        <label style={{ fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "8px" }}>Who are you sending to?</label>
+        <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "8px" }}>
+          {AUDIENCE_OPTIONS.map(({ val, label }) => (
             <button key={val} onClick={() => { setAudience(val); setCount(null); }} style={{ padding: "6px 14px", borderRadius: "8px", border: "1px solid", fontSize: "12px", fontWeight: "600", cursor: "pointer", background: audience === val ? NAVY : "#F9FAFB", color: audience === val ? "#fff" : "#374151", borderColor: audience === val ? NAVY : "#D1D5DB" }}>
               {label}
             </button>
           ))}
-          <button onClick={loadCount} style={{ padding: "6px 14px", borderRadius: "8px", border: "1px solid #D1D5DB", fontSize: "12px", fontWeight: "600", cursor: "pointer", background: "#F9FAFB", color: "#374151" }}>
+        </div>
+        {selectedOption && (
+          <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 8px" }}>{selectedOption.desc}</p>
+        )}
+        {audience !== "manual" && (
+          <button onClick={loadCount} style={{ padding: "5px 12px", borderRadius: "7px", border: "1px solid #D1D5DB", fontSize: "11px", fontWeight: "600", cursor: "pointer", background: "#F9FAFB", color: "#374151" }}>
             {count !== null ? `👥 ${count} recipients` : "Preview count"}
           </button>
-        </div>
+        )}
       </div>
+
+      {/* Manual email list */}
+      {audience === "manual" && (
+        <div style={{ marginBottom: "14px" }}>
+          <label style={{ fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "6px" }}>
+            Email addresses <span style={{ fontWeight: "400", color: "#9CA3AF" }}>(one per line, or comma-separated)</span>
+          </label>
+          <textarea
+            value={manualInput}
+            onChange={e => { setManualInput(e.target.value); setCount(null); }}
+            placeholder={"john@example.com\njane@example.com"}
+            rows={4}
+            style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid #D1D5DB", fontSize: "13px", boxSizing: "border-box", resize: "vertical", outline: "none", lineHeight: 1.6, fontFamily: "monospace" }}
+          />
+          {manualEmails.length > 0 && (
+            <p style={{ fontSize: "11px", color: "#6B7280", margin: "4px 0 0" }}>👥 {manualEmails.length} address{manualEmails.length !== 1 ? "es" : ""} entered</p>
+          )}
+        </div>
+      )}
 
       {/* Subject */}
       <div style={{ marginBottom: "12px" }}>
@@ -781,7 +823,7 @@ function SendBlast({ adminEmail }) {
         <textarea value={messageBody} onChange={e => setMessageBody(e.target.value)} rows={6} style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid #D1D5DB", fontSize: "13px", boxSizing: "border-box", resize: "vertical", outline: "none", lineHeight: 1.6 }} />
       </div>
 
-      <button onClick={handleSend} disabled={loading} style={{ background: ORANGE, color: "#fff", fontWeight: "800", fontSize: "13px", padding: "10px 24px", borderRadius: "10px", border: "none", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1 }}>
+      <button onClick={handleSend} disabled={loading || (audience === "manual" && manualEmails.length === 0)} style={{ background: ORANGE, color: "#fff", fontWeight: "800", fontSize: "13px", padding: "10px 24px", borderRadius: "10px", border: "none", cursor: loading ? "not-allowed" : "pointer", opacity: (loading || (audience === "manual" && manualEmails.length === 0)) ? 0.6 : 1 }}>
         {loading ? "Sending…" : "🚀 Send Blast"}
       </button>
 

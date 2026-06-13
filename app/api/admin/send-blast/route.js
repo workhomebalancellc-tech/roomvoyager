@@ -4,21 +4,25 @@
  * Auth: body.adminEmail in ALLOWED_EMAILS  OR  x-admin-secret header
  *
  * Body:
- *   { adminEmail, subject, htmlBody, textBody, audience }
- *   audience: "all" | "subscribers" | "users"  (default "all")
+ *   { adminEmail, subject, messageBody, audience, manualEmails? }
  *
- * Pulls recipients from Firestore, sends via SendGrid.
- * Deduplicates by email address across both collections.
+ * audience options:
+ *   "all"            → all registered users + active subscribers (deduped)
+ *   "users"          → all registered users only
+ *   "subscribers"    → newsletter subscribers only
+ *   "customers"      → users who have at least one booking
+ *   "points"         → users with redeemable points > 0
+ *   "manual"         → only the emails listed in body.manualEmails[]
  */
 
 import { adminDb } from "../../../../lib/firebase-admin";
 
 export const dynamic = "force-dynamic";
 
-const IMPORT_SECRET  = process.env.EXPEDIA_IMPORT_SECRET;
-const SENDGRID_KEY   = process.env.SENDGRID_API_KEY;
-const FROM_EMAIL     = process.env.SENDGRID_FROM_EMAIL || "noreply@roomvoyager.com";
-const FROM_NAME      = "RoomVoyager Rewards";
+const IMPORT_SECRET = process.env.EXPEDIA_IMPORT_SECRET;
+const SENDGRID_KEY  = process.env.SENDGRID_API_KEY;
+const FROM_EMAIL    = process.env.SENDGRID_FROM_EMAIL || "noreply@roomvoyagertravel.com";
+const FROM_NAME     = "RoomVoyager Rewards";
 
 const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
 
@@ -30,27 +34,50 @@ function isAuthorized(body, headers) {
 
 // ── Collect recipients ────────────────────────────────────────────────────────
 
-async function getRecipients(audience = "all") {
+async function getRecipients(audience = "all", manualEmails = []) {
   const seen = new Map(); // email → { email, name }
 
-  // Registered users
-  if (audience === "all" || audience === "users") {
-    const snap = await adminDb.collection("users").get();
-    snap.forEach(doc => {
-      const d = doc.data();
-      if (d.email) seen.set(d.email.toLowerCase(), { email: d.email.toLowerCase(), name: d.displayName || d.name || "" });
-    });
+  const addUser = (d) => {
+    const email = (d.email || "").toLowerCase();
+    if (email && !seen.has(email)) {
+      seen.set(email, { email, name: d.displayName || d.name || "" });
+    }
+  };
+
+  if (audience === "manual") {
+    // Only send to the explicitly listed emails
+    for (const raw of manualEmails) {
+      const email = (raw || "").trim().toLowerCase();
+      if (email) seen.set(email, { email, name: "" });
+    }
+    return Array.from(seen.values());
   }
 
-  // Newsletter subscribers
+  if (audience === "all" || audience === "users") {
+    const snap = await adminDb.collection("users").get();
+    snap.forEach(doc => addUser(doc.data()));
+  }
+
   if (audience === "all" || audience === "subscribers") {
     const snap = await adminDb.collection("subscribers").where("active", "==", true).get();
-    snap.forEach(doc => {
-      const d = doc.data();
-      if (d.email && !seen.has(d.email)) {
-        seen.set(d.email, { email: d.email, name: d.name || "" });
-      }
-    });
+    snap.forEach(doc => addUser(doc.data()));
+  }
+
+  if (audience === "customers") {
+    // Users who appear in the bookings collection at least once
+    const bookingSnap = await adminDb.collection("bookings").get();
+    const uids = new Set();
+    bookingSnap.forEach(doc => { const uid = doc.data().uid; if (uid) uids.add(uid); });
+    for (const uid of uids) {
+      const userDoc = await adminDb.collection("users").doc(uid).get();
+      if (userDoc.exists) addUser(userDoc.data());
+    }
+  }
+
+  if (audience === "points") {
+    // Users with redeemable points > 0
+    const snap = await adminDb.collection("users").where("points", ">", 0).get();
+    snap.forEach(doc => addUser(doc.data()));
   }
 
   return Array.from(seen.values());
@@ -77,12 +104,12 @@ async function sendEmail({ to, name, subject, htmlBody, textBody }) {
   });
 
   if (!res.ok) {
-    const txt = await res.text().catch(() => res.status);
+    const txt = await res.text().catch(() => String(res.status));
     throw new Error(`SendGrid ${res.status}: ${txt}`);
   }
 }
 
-// ── Build branded HTML email ─────────────────────────────────────────────────
+// ── Build branded HTML email ──────────────────────────────────────────────────
 
 function buildHtml({ name, subject, body }) {
   const greeting = name ? `Hi ${name},` : "Hi there,";
@@ -114,7 +141,7 @@ function buildHtml({ name, subject, body }) {
         <!-- CTA -->
         <tr>
           <td style="padding:0 32px 32px;text-align:center;">
-            <a href="https://roomvoyager.com/hotels" style="display:inline-block;background:#FF6600;color:#fff;font-weight:800;font-size:15px;padding:14px 32px;border-radius:12px;text-decoration:none;">
+            <a href="https://roomvoyagertravel.com/hotels" style="display:inline-block;background:#FF6600;color:#fff;font-weight:800;font-size:15px;padding:14px 32px;border-radius:12px;text-decoration:none;">
               Book Now &amp; Earn Points →
             </a>
           </td>
@@ -150,12 +177,12 @@ export async function POST(req) {
     return Response.json({ error: "SENDGRID_API_KEY not configured" }, { status: 500 });
   }
 
-  const { subject, messageBody, audience = "all" } = body;
+  const { subject, messageBody, audience = "all", manualEmails = [] } = body;
   if (!subject || !messageBody) {
     return Response.json({ error: "subject and messageBody are required" }, { status: 400 });
   }
 
-  const recipients = await getRecipients(audience);
+  const recipients = await getRecipients(audience, manualEmails);
   if (recipients.length === 0) {
     return Response.json({ ok: true, sent: 0, failed: 0, message: "No recipients found" });
   }
@@ -170,10 +197,9 @@ export async function POST(req) {
         name:     r.name,
         subject,
         htmlBody: buildHtml({ name: r.name, subject, body: messageBody }),
-        textBody: `${r.name ? `Hi ${r.name},\n\n` : ""}${messageBody}\n\nBook now at roomvoyager.com`,
+        textBody: `${r.name ? `Hi ${r.name},\n\n` : ""}${messageBody}\n\nBook now at roomvoyagertravel.com`,
       });
       sent++;
-      // Small delay to stay within SendGrid rate limits
       await new Promise(res => setTimeout(res, 50));
     } catch (err) {
       failed++;
@@ -182,10 +208,10 @@ export async function POST(req) {
     }
   }
 
-  // Log the blast to Firestore for auditing
   await adminDb.collection("email_blasts").add({
     subject,
     audience,
+    manualEmails: audience === "manual" ? manualEmails : [],
     recipientCount: recipients.length,
     sent,
     failed,
@@ -196,7 +222,7 @@ export async function POST(req) {
   return Response.json({ ok: true, sent, failed, total: recipients.length, errors: errors.slice(0, 10) });
 }
 
-// GET: preview recipient count without sending
+// GET: preview recipient count
 export async function GET(req) {
   const url    = new URL(req.url);
   const secret = url.searchParams.get("secret");
