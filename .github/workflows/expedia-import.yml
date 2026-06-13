@@ -34,3 +34,11 @@ jobs:
           IMPORT_API_URL:         ${{ secrets.IMPORT_API_URL }}
           EXPEDIA_IMPORT_SECRET:  ${{ secrets.EXPEDIA_IMPORT_SECRET }}
         run: node scripts/expedia-import.js
+
+      - name: Upload debug screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-screenshots
+          path: tmp-downloads/
+          if-no-files-found: ignore

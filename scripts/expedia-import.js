@@ -30,9 +30,24 @@ const DOWNLOAD_DIR = path.join(__dirname, "..", "tmp-downloads");
 async function run() {
   if (!fs.existsSync(DOWNLOAD_DIR)) fs.mkdirSync(DOWNLOAD_DIR, { recursive: true });
 
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({ acceptDownloads: true });
-  const page    = await context.newPage();
+  const browser = await chromium.launch({
+    headless: true,
+    args: [
+      "--no-sandbox",
+      "--disable-blink-features=AutomationControlled",
+      "--disable-dev-shm-usage",
+    ],
+  });
+  const context = await browser.newContext({
+    acceptDownloads: true,
+    userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+    viewport: { width: 1280, height: 800 },
+  });
+  // Hide webdriver flag
+  await context.addInitScript(() => {
+    Object.defineProperty(navigator, "webdriver", { get: () => undefined });
+  });
+  const page = await context.newPage();
 
   console.log("→ Navigating to Expedia Creator sign-in...");
   await page.goto("https://creator.expediagroup.com/signin?creator-type=creator", {
@@ -63,11 +78,16 @@ async function run() {
     'button[type="submit"], button:has-text("Sign in"), button:has-text("Log in"), button:has-text("Continue")'
   );
 
-  // Wait for dashboard
+  // Wait for dashboard — take screenshot if it fails so we can diagnose
   await page.waitForURL("**/app/**", { timeout: 30000 }).catch(async () => {
-    await page.waitForNavigation({ timeout: 30000 });
+    console.log("  waitForURL timed out, current URL:", page.url());
+    await page.screenshot({ path: path.join(DOWNLOAD_DIR, "login-state.png") });
+    console.log("  Screenshot saved to login-state.png");
+    // Try waiting a bit longer for any redirect
+    await page.waitForTimeout(5000);
+    console.log("  URL after extra wait:", page.url());
   });
-  console.log("→ Logged in. Current URL:", page.url());
+  console.log("→ Post-login URL:", page.url());
 
   // Navigate to performance page
   console.log("→ Navigating to performance page...");
