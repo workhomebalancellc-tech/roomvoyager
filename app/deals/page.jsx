@@ -91,7 +91,7 @@ function DealTile({ city, img, dealOfWeek, link }) {
   return (
     <div style={{ flexShrink: 0 }} onClick={() => link && (window.location.href = link)}>
       <p style={{ fontWeight: "800", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 5px", textAlign: "center", color: dealOfWeek ? ORANGE : "transparent", userSelect: "none" }}>
-        🔥 Deal of the Week
+        🔥 Deals for this Week
       </p>
     <div
       onMouseEnter={() => setHovered(true)}
