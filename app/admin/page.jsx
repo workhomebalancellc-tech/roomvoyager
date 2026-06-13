@@ -1287,6 +1287,11 @@ export default function AdminDashboard() {
           <AdminCreateBooking adminEmail={user.email} />
         </div>
 
+        {/* POINTS MANAGEMENT */}
+        <div style={{ marginBottom: "20px" }}>
+          <AwardPoints />
+        </div>
+
         {/* MANAGE BOOKINGS */}
         <div style={{ marginBottom: "20px" }}>
           <ManageBookings adminEmail={user.email} />
@@ -1295,11 +1300,6 @@ export default function AdminDashboard() {
         {/* EXPEDIA CSV IMPORT */}
         <div style={{ marginBottom: "20px" }}>
           <ExpediaImport adminEmail={user.email} />
-        </div>
-
-        {/* POINTS MANAGEMENT */}
-        <div style={{ marginBottom: "20px" }}>
-          <AwardPoints />
         </div>
 
         {/* RATES REFERENCE */}

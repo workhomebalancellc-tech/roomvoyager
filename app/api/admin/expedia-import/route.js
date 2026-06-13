@@ -24,6 +24,14 @@
 import { adminDb } from "../../../../lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
 
+// Auth helpers — accepts either admin email OR the server automation secret
+function isAuthorized(body) {
+  const { adminEmail, secret } = body;
+  if (ALLOWED_EMAILS.includes(adminEmail)) return true;
+  if (secret && secret === process.env.EXPEDIA_IMPORT_SECRET) return true;
+  return false;
+}
+
 const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
 
 // Points rate for hotels
@@ -61,8 +69,118 @@ export async function POST(req) {
   const body = await req.json();
   const { adminEmail, action } = body;
 
-  if (!ALLOWED_EMAILS.includes(adminEmail)) {
+  if (!isAuthorized(body)) {
     return Response.json({ error: "Not authorized" }, { status: 403 });
+  }
+
+  // ── AUTO-IMPORT (used by GitHub Actions cron — parses + awards best match) ─
+  if (action === "auto-import") {
+    const { csvText } = body;
+    if (!csvText) return Response.json({ error: "csvText required" }, { status: 400 });
+
+    const rows = parseCSV(csvText);
+    const dataRows = rows.slice(1).filter(r => r.length >= 10 && r[0]);
+
+    const clicksSnap = await adminDb.collection("hotel_clicks")
+      .where("matched", "==", false).get();
+    const clicks = clicksSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    const awarded = [], skipped = [], alreadyDone = [];
+
+    for (const row of dataRows) {
+      const tripElement = row[10] || "";
+      if (tripElement === "Air") continue;
+
+      const bookedDate   = row[0] || "";
+      const product      = row[1] || "";
+      const destinationCity = row[2] || "";
+      const commission   = parseFloat(row[5]) || 0;
+      const tripStatus   = row[6] || "";
+      const startDate    = row[8] || "";
+      const endDate      = row[9] || "";
+      const company      = row[11] || "";
+      const country      = row[12] || "";
+      const travelers    = parseInt(row[13]) || 1;
+      const bookingAmount = parseFloat(row[14]) || 0;
+      const dedupKey     = `${bookedDate}__${product}`;
+
+      // Dedup check
+      const existing = await adminDb.collection("expedia_imports")
+        .where("dedupKey", "==", dedupKey).limit(1).get();
+      if (!existing.empty) { alreadyDone.push(dedupKey); continue; }
+
+      // Match clicks
+      const bookedMs = new Date(bookedDate).getTime();
+      const windowMs = MATCH_WINDOW_HOURS * 60 * 60 * 1000;
+      const matches = clicks.filter(c => {
+        const clickMs = c.clickedAt?.toMillis?.() || new Date(c.clickedAtISO || 0).getTime();
+        if (Math.abs(bookedMs - clickMs) > windowMs) return false;
+        const dest = destinationCity.toLowerCase();
+        const cd   = (c.destination || "").toLowerCase();
+        if (!dest || !cd) return true;
+        return dest.includes(cd.split(",")[0]) || cd.includes(dest.split(",")[0]) ||
+               dest.split(" ")[0] === cd.split(" ")[0];
+      }).sort((a, b) => {
+        // Prefer closer in time
+        const ams = a.clickedAt?.toMillis?.() || new Date(a.clickedAtISO || 0).getTime();
+        const bms = b.clickedAt?.toMillis?.() || new Date(b.clickedAtISO || 0).getTime();
+        return Math.abs(bookedMs - ams) - Math.abs(bookedMs - bms);
+      });
+
+      if (matches.length === 0) {
+        skipped.push({ dedupKey, product, destinationCity, reason: "no_match" });
+        continue;
+      }
+
+      // Take best match
+      const best = matches[0];
+      const pts  = Math.round(bookingAmount * PTS_PER_DOLLAR);
+
+      await adminDb.collection("users").doc(best.uid).update({
+        points:         FieldValue.increment(pts),
+        lifetimePoints: FieldValue.increment(pts),
+        updatedAt:      FieldValue.serverTimestamp(),
+      }).catch(() => {});
+
+      const bookingRef = `EXP-${Date.now().toString(36).toUpperCase()}`;
+      await adminDb.collection("bookings").add({
+        uid: best.uid, email: best.email, product: "hotel",
+        amount: bookingAmount, destination: destinationCity || product,
+        startDate, endDate, reference: bookingRef,
+        notes: `Expedia: ${product}${company ? ` · ${company}` : ""}`,
+        status: tripStatus === "COMPLETED" ? "completed" : "upcoming",
+        pts, rate: PTS_PER_DOLLAR, source: "expedia_auto_import",
+        createdAt: FieldValue.serverTimestamp(),
+      });
+
+      await adminDb.collection("expedia_imports").add({
+        dedupKey, uid: best.uid, email: best.email, name: best.name || "",
+        bookedDate, product, destination: destinationCity,
+        bookingAmount, commission, pts, matchConfidence: matches.length === 1 ? "high" : "medium",
+        importedAt: FieldValue.serverTimestamp(),
+      });
+
+      await adminDb.collection("hotel_clicks").doc(best.id).update({
+        matched: true, matchedAt: FieldValue.serverTimestamp(), matchedToBooking: bookingRef,
+      }).catch(() => {});
+
+      // Notify customer
+      const siteUrl = process.env.NEXTAUTH_URL || "https://www.roomvoyagertravel.com";
+      const userSnap = await adminDb.collection("users").doc(best.uid).get().catch(() => null);
+      const newBalance = userSnap?.data()?.points || pts;
+      await fetch(`${siteUrl}/api/booking-points-notify`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: best.email, name: best.name || "", product: "Hotel",
+          amount: bookingAmount.toFixed(2), pts, cash: (pts / 1000).toFixed(2),
+          newBalance, notes: product,
+        }),
+      }).catch(() => {});
+
+      awarded.push({ dedupKey, product, destinationCity, uid: best.uid, email: best.email, pts });
+    }
+
+    return Response.json({ ok: true, awarded, skipped, alreadyDone });
   }
 
   // ── PARSE + MATCH (no DB writes) ──────────────────────────────────────────
