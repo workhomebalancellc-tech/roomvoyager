@@ -16,7 +16,7 @@ const sections = [
     body: "RoomVoyager is a travel booking platform that connects users with third-party travel providers including:",
     list: [
       "Hotel bookings via Expedia affiliate network",
-      "Flight bookings via Travelpayouts white-label search — flights are booked directly through Travelpayouts and its airline partners, not through RoomVoyager",
+      "Flight bookings via Kiwi.com (powered by Travelpayouts) — flights are booked directly through Kiwi.com and its airline partners, not through RoomVoyager",
       "Cruise bookings via CruiseDirect and partner networks",
       "Vacation packages via our travel partners",
     ],
