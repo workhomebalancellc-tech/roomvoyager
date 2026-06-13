@@ -368,14 +368,15 @@ function ManualBookingLog() {
 
 // ── Admin Control Toggles ─────────────────────────────────────────────────────
 function AdminToggles({ adminEmail }) {
-  const [bookingTracking, setBookingTracking] = useState(true);
-  const [doublePointsOn,  setDoublePointsOn]  = useState(false);
-  const [promoStartDate,  setPromoStartDate]  = useState("");
-  const [promoStartTime,  setPromoStartTime]  = useState("");
-  const [promoEndDate,    setPromoEndDate]    = useState("");
-  const [promoEndTime,    setPromoEndTime]    = useState("");
-  const [saving,          setSaving]          = useState(false);
-  const [saveMsg,         setSaveMsg]         = useState("");
+  const [bookingTracking,  setBookingTracking]  = useState(true);
+  const [doublePointsOn,   setDoublePointsOn]   = useState(false);
+  const [promoStartDate,   setPromoStartDate]   = useState("");
+  const [promoStartTime,   setPromoStartTime]   = useState("");
+  const [promoEndDate,     setPromoEndDate]     = useState("");
+  const [promoEndTime,     setPromoEndTime]     = useState("");
+  const [promoBannerText,  setPromoBannerText]  = useState("🎉 Deals of the Week — Earn 2× points on hotels & cruises!");
+  const [saving,           setSaving]           = useState(false);
+  const [saveMsg,          setSaveMsg]          = useState("");
 
   // Load settings on mount
   useEffect(() => {
@@ -388,6 +389,7 @@ function AdminToggles({ adminEmail }) {
         if (d.promoStartTime)  setPromoStartTime(d.promoStartTime);
         if (d.promoEndDate)    setPromoEndDate(d.promoEndDate);
         if (d.promoEndTime)    setPromoEndTime(d.promoEndTime);
+        if (d.promoBannerText) setPromoBannerText(d.promoBannerText);
       })
       .catch(() => {});
   }, []);
@@ -401,6 +403,7 @@ function AdminToggles({ adminEmail }) {
         adminEmail,
         bookingTracking, doublePointsOn,
         promoStartDate, promoStartTime, promoEndDate, promoEndTime,
+        promoBannerText,
         ...patch,
       }),
     }).catch(() => {});
@@ -496,7 +499,31 @@ function AdminToggles({ adminEmail }) {
             </div>
           )}
 
-          <div style={{ padding: "8px 12px", borderRadius: "8px", background: doublePointsOn ? "#FFF7ED" : "#F9FAFB", fontSize: "11px", fontWeight: "600", color: doublePointsOn ? ORANGE : "#9CA3AF" }}>
+          {/* Banner text editor — always visible so you can A/B test messaging */}
+          <div style={{ marginTop: "10px" }}>
+            <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "4px" }}>
+              Banner text <span style={{ fontWeight: "400" }}>(shown on all pages when promo is active)</span>
+            </label>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <input
+                type="text"
+                value={promoBannerText}
+                onChange={e => setPromoBannerText(e.target.value)}
+                placeholder="🎉 Deals of the Week — Earn 2× points on hotels & cruises!"
+                style={{ flex: 1, padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", outline: "none", boxSizing: "border-box" }}
+              />
+              <button
+                onClick={() => save({ promoBannerText })}
+                style={{ padding: "8px 14px", background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", flexShrink: 0 }}>
+                Save
+              </button>
+            </div>
+            <p style={{ fontSize: "10px", color: "#9CA3AF", margin: "4px 0 0" }}>
+              Preview: <span style={{ fontStyle: "italic", color: "#6B7280" }}>{promoBannerText || "—"}{promoEndDate ? ` · Ends ${promoEndDate}` : ""}</span>
+            </p>
+          </div>
+
+          <div style={{ padding: "8px 12px", borderRadius: "8px", background: doublePointsOn ? "#FFF7ED" : "#F9FAFB", fontSize: "11px", fontWeight: "600", color: doublePointsOn ? ORANGE : "#9CA3AF", marginTop: "10px" }}>
             {doublePointsOn
               ? `🔥 Double points active${promoStartDate ? ` · Starts ${promoStartDate}${promoStartTime ? ` at ${promoStartTime}` : ""}` : ""}${promoEndDate ? ` · Ends ${promoEndDate}${promoEndTime ? ` at ${promoEndTime}` : ""}` : " · No end date set"}`
               : "Standard points rates in effect"}
@@ -1613,30 +1640,31 @@ export default function AdminDashboard() {
 
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "32px 24px 64px" }}>
 
-        {/* HEADER */}
-        <div style={{ marginBottom: "28px" }}>
-          <h1 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 4px" }}>⚙️ Admin Dashboard</h1>
-          <p style={{ fontSize: "14px", color: "#6B7280", margin: 0 }}>RoomVoyager back office — tools, calculators, and quick links</p>
+        {/* HEADER + QUICK LINKS */}
+        <div style={{ marginBottom: "24px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px" }}>
+            <div>
+              <h1 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 4px" }}>⚙️ Admin Dashboard</h1>
+              <p style={{ fontSize: "14px", color: "#6B7280", margin: 0 }}>RoomVoyager back office — tools, calculators, and quick links</p>
+            </div>
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              {TOOLS.map((t, i) => (
+                <a key={i} href={t.href} target={t.external ? "_blank" : undefined} rel={t.external ? "noopener noreferrer" : undefined}
+                  style={{ display: "flex", alignItems: "center", gap: "7px", background: "#fff", border: "1px solid #E5E7EB", borderRadius: "10px", padding: "9px 16px", textDecoration: "none", fontSize: "13px", fontWeight: "700", color: "#111827", whiteSpace: "nowrap" }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = NAVY; e.currentTarget.style.color = NAVY; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "#E5E7EB"; e.currentTarget.style.color = "#111827"; }}>
+                  <span style={{ fontSize: "16px" }}>{t.icon}</span>
+                  {t.label}
+                  {t.external && <span style={{ fontSize: "10px", color: "#9CA3AF" }}>↗</span>}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* CONTROL TOGGLES */}
         <div style={{ marginBottom: "20px" }}>
           <AdminToggles adminEmail={user.email} />
-        </div>
-
-        {/* QUICK LINKS */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "12px", marginBottom: "28px" }}>
-          {TOOLS.map((t, i) => (
-            <a key={i} href={t.href} target={t.external ? "_blank" : undefined} rel={t.external ? "noopener noreferrer" : undefined}
-              style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "16px", textDecoration: "none", display: "block" }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = NAVY}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "#E5E7EB"}>
-              <p style={{ fontSize: "24px", margin: "0 0 6px" }}>{t.icon}</p>
-              <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 3px" }}>{t.label}</p>
-              <p style={{ fontSize: "11px", color: "#6B7280", margin: 0, lineHeight: 1.4 }}>{t.desc}</p>
-              {t.external && <p style={{ fontSize: "10px", color: "#9CA3AF", margin: "6px 0 0" }}>Opens in new tab ↗</p>}
-            </a>
-          ))}
         </div>
 
         {/* MAIN TOOLS GRID */}
