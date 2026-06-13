@@ -156,7 +156,6 @@ export default function ProfilePage() {
   const TABS = [
     { id: "overview",   label: "Overview",    icon: "👤" },
     { id: "bookings",   label: "My Bookings", icon: "🗂️" },
-    { id: "rewards",    label: "Rewards",     icon: "🏆" },
   ];
 
   const allBookings = [
@@ -605,45 +604,6 @@ export default function ProfilePage() {
           </div>
         )}
 
-        {/* ══════════════════════════════
-            TAB: REWARDS
-        ══════════════════════════════ */}
-        {activeTab === "rewards" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", padding: "32px", textAlign: "center" }}>
-              <p style={{ fontSize: "48px", margin: "0 0 12px" }}>🏆</p>
-              <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>RoomVoyager Rewards</p>
-              <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 6px" }}>Your Rewards Dashboard</h2>
-              <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>Earn real cash back on every booking — redeemable 45 days after travel via Zelle, Cash App, or Venmo.</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px", marginBottom: "24px" }}>
-                {[["🧭", "Explorer", "Your tier"], ["0", "Points", "Available"], ["$0.00", "Cash value", "Redeemable"]].map(([val, label, sub], i) => (
-                  <div key={i} style={{ background: LIGHT_BLUE, borderRadius: "12px", padding: "16px" }}>
-                    <p style={{ fontSize: "24px", fontWeight: "800", color: NAVY, margin: "0 0 2px" }}>{val}</p>
-                    <p style={{ fontSize: "12px", fontWeight: "700", color: NAVY, margin: "0 0 1px" }}>{label}</p>
-                    <p style={{ fontSize: "10px", color: "#6B7280", margin: 0 }}>{sub}</p>
-                  </div>
-                ))}
-              </div>
-              <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "12px 28px", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", display: "inline-block", boxShadow: "0 4px 14px rgba(255,102,0,0.3)" }}>
-                View Full Rewards Page →
-              </a>
-              <p style={{ fontSize: "12px", color: "#9CA3AF", margin: "12px 0 0" }}>Points sync after each completed trip · 45-day hold applies</p>
-            </div>
-
-            {/* Tip */}
-            <div style={{ background: "#fff", borderRadius: "16px", boxShadow: "0 2px 12px rgba(0,59,149,0.08)", padding: "20px 24px", display: "flex", gap: "14px", alignItems: "flex-start" }}>
-              <span style={{ fontSize: "24px", flexShrink: 0 }}>💡</span>
-              <div>
-                <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 4px", fontSize: "14px" }}>Don't see your booking points?</p>
-                <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 10px" }}>Bookings booked through RoomVoyager are verified and added within a few business days. If it's been more than 7 days, request a review.</p>
-                <button onClick={() => { setActiveTab("bookings"); setReviewOpen(true); setReviewSent(false); setReviewForm(EMPTY_REVIEW); }}
-                  style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", padding: "8px 16px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
-                  📋 Request Booking Review →
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
 
       </div>
     </div>
