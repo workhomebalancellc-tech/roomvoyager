@@ -35,7 +35,7 @@ export default function LasVegasDealsPage() {
           <p style={{ fontSize: "15px", color: "#6B7280", lineHeight: "1.7", margin: "0 0 32px" }}>
             We're curating the best Las Vegas hotel and package deals just for you. Check back soon — or get notified when they drop!
           </p>
-          <a href="/contact" style={{ display: "inline-block", padding: "12px 32px", background: NAVY, color: "#fff", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none" }}>
+          <a href="/#newsletter" style={{ display: "inline-block", padding: "12px 32px", background: NAVY, color: "#fff", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none" }}>
             Notify Me →
           </a>
         </div>

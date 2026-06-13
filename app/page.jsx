@@ -37,7 +37,7 @@ function NewsletterSignup() {
   }
 
   return (
-    <div style={{
+    <div id="newsletter" style={{
       background: `url('https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=1600&q=60') center/cover no-repeat`,
       position: "relative",
     }}>
