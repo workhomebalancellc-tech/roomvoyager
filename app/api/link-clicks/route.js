@@ -4,10 +4,10 @@ export async function POST(request) {
   try {
     const { partner, product, url, userEmail, userName } = await request.json();
 
-    const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
+    const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
     const AIRTABLE_BASE  = process.env.AIRTABLE_BASE_ID;
 
-    if (!AIRTABLE_TOKEN || !AIRTABLE_BASE) {
+    if (!AIRTABLE_API_KEY || !AIRTABLE_BASE) {
       // Silently succeed if Airtable isn't configured — don't block the redirect
       return NextResponse.json({ success: true, note: "Airtable not configured" });
     }
@@ -27,7 +27,7 @@ export async function POST(request) {
       {
         method:  "POST",
         headers: {
-          "Authorization": `Bearer ${AIRTABLE_TOKEN}`,
+          "Authorization": `Bearer ${AIRTABLE_API_KEY}`,
           "Content-Type":  "application/json",
         },
         body: JSON.stringify({ fields }),

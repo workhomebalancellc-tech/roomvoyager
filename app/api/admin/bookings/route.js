@@ -94,9 +94,9 @@ export async function POST(req) {
     }).catch(e => console.warn("EmailJS error:", e));
 
     // 2. Log to Airtable — "Booking Review Requests" table
-    const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
+    const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
     const AIRTABLE_BASE  = process.env.AIRTABLE_BASE_ID;
-    if (!AIRTABLE_TOKEN || !AIRTABLE_BASE) {
+    if (!AIRTABLE_API_KEY || !AIRTABLE_BASE) {
       console.warn("Airtable env vars missing — skipping Booking Review Requests log");
     } else {
       const fields = {
@@ -122,7 +122,7 @@ export async function POST(req) {
           `https://api.airtable.com/v0/${AIRTABLE_BASE}/Booking%20Review%20Requests`,
           {
             method:  "POST",
-            headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}`, "Content-Type": "application/json" },
+            headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}`, "Content-Type": "application/json" },
             body: JSON.stringify({ fields }),
           }
         );
