@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { adminDb, adminAuth } from "../../../../lib/firebaseAdmin";
+import { adminDb } from "../../../../lib/firebase-admin";
+import { getAuth } from "firebase-admin/auth";
 
 export async function POST(req) {
   try {
@@ -27,8 +28,7 @@ export async function POST(req) {
     await batch.commit();
 
     // Delete Firebase Auth user
-    const auth = adminAuth();
-    await auth.deleteUser(uid);
+    await getAuth().deleteUser(uid);
 
     return NextResponse.json({ success: true });
   } catch (err) {
