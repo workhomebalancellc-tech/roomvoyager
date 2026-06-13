@@ -36,9 +36,6 @@ export default function ProfilePage() {
   const { user, loading, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
 
-  /* ── countdown (overview) — auto-populated from Firestore bookings ── */
-  const [tripDate, setTripDate] = useState("");
-  const daysLeft = calcCountdown(tripDate);
 
   /* ── local bookings (customer-managed) ── */
   const [bookings, setBookings]             = useState([]);
@@ -71,19 +68,7 @@ export default function ProfilePage() {
     fetch(`/api/admin/bookings?uid=${user.uid}`)
       .then(r => r.json())
       .then(data => {
-        if (data.bookings) {
-          setFirestoreBookings(data.bookings);
-          // Auto-populate overview countdown from the most recent booking with an endDate
-          // Only auto-set if the user hasn't manually chosen a date
-          // Always use the most recent endDate from Firestore bookings as the source of truth
-          const withEnd = data.bookings.filter(b => b.endDate);
-          if (withEnd.length > 0) {
-            withEnd.sort((a, b) => new Date(b.endDate) - new Date(a.endDate));
-            const latestEnd = withEnd[0].endDate;
-            setTripDate(latestEnd);
-            localStorage.setItem("rv_trip_date", latestEnd);
-          }
-        }
+        if (data.bookings) setFirestoreBookings(data.bookings);
       })
       .catch(() => {});
   }, [user?.uid]);
@@ -232,50 +217,69 @@ export default function ProfilePage() {
         {activeTab === "overview" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
 
-            {/* 45-day countdown */}
-            <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", overflow: "hidden" }}>
-              <div style={{ background: NAVY, padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <div>
-                  <p style={{ color: "#93C5FD", fontSize: "10px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 2px" }}>⏰ Rewards Countdown</p>
-                  <p style={{ color: "#fff", fontSize: "15px", fontWeight: "700", margin: 0 }}>45-Day Redemption Timer</p>
-                </div>
-                <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "7px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", textDecoration: "none" }}>View Rewards →</a>
-              </div>
-              <div style={{ padding: "24px" }}>
-                {!tripDate ? (
-                  <div style={{ textAlign: "center", padding: "12px 0" }}>
+            {/* 45-day countdown — one card per booking with an end date */}
+            {(() => {
+              const countdownBookings = firestoreBookings.filter(b => b.endDate);
+              if (countdownBookings.length === 0) return (
+                <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", overflow: "hidden" }}>
+                  <div style={{ background: NAVY, padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div>
+                      <p style={{ color: "#93C5FD", fontSize: "10px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 2px" }}>⏰ Rewards Countdown</p>
+                      <p style={{ color: "#fff", fontSize: "15px", fontWeight: "700", margin: 0 }}>45-Day Redemption Timer</p>
+                    </div>
+                    <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "7px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", textDecoration: "none" }}>View Rewards →</a>
+                  </div>
+                  <div style={{ padding: "24px", textAlign: "center" }}>
                     <p style={{ fontSize: "36px", margin: "0 0 8px" }}>🗓️</p>
                     <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>No upcoming trip on file</p>
                     <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>Your 45-day redemption countdown will appear here once your booking is confirmed.</p>
                   </div>
-                ) : daysLeft > 0 ? (
-                  <div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "16px", flexWrap: "wrap" }}>
-                      <div style={{ background: "#FFF7ED", border: `2px solid ${ORANGE}`, borderRadius: "16px", padding: "18px 24px", textAlign: "center", minWidth: "110px" }}>
-                        <p style={{ fontSize: "48px", fontWeight: "800", color: ORANGE, margin: "0 0 2px", lineHeight: 1 }}>{daysLeft}</p>
-                        <p style={{ fontSize: "12px", fontWeight: "700", color: "#92400E", margin: 0 }}>days left</p>
+                </div>
+              );
+              return countdownBookings.map((b, i) => {
+                const days = calcCountdown(b.endDate);
+                const unlockDate = new Date(new Date(b.endDate + "T12:00:00").getTime() + 45*24*60*60*1000).toISOString().split("T")[0];
+                return (
+                  <div key={b.id || i} style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", overflow: "hidden" }}>
+                    <div style={{ background: NAVY, padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div>
+                        <p style={{ color: "#93C5FD", fontSize: "10px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 2px" }}>⏰ Rewards Countdown</p>
+                        <p style={{ color: "#fff", fontSize: "15px", fontWeight: "700", margin: 0 }}>{b.destination || "Your Trip"}</p>
                       </div>
-                      <div style={{ flex: 1 }}>
-                        <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 4px", fontSize: "14px" }}>Unlocks in {daysLeft} day{daysLeft !== 1 ? "s" : ""}</p>
-                        <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 4px" }}>Trip ended: <strong>{fmtDate(tripDate)}</strong></p>
-                        <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>Unlocks: <strong style={{ color: NAVY }}>{fmtDate(new Date(new Date(tripDate + "T12:00:00").getTime() + 45*24*60*60*1000).toISOString().split("T")[0])}</strong></p>
-                      </div>
+                      <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "7px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", textDecoration: "none" }}>View Rewards →</a>
                     </div>
-                    <div style={{ background: "#E5E7EB", borderRadius: "999px", height: "8px", overflow: "hidden", marginBottom: "6px" }}>
-                      <div style={{ background: `linear-gradient(to right, ${NAVY}, ${ORANGE})`, height: "100%", borderRadius: "999px", width: `${Math.min(100,((45-daysLeft)/45)*100)}%` }} />
+                    <div style={{ padding: "24px" }}>
+                      {days > 0 ? (
+                        <div>
+                          <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "16px", flexWrap: "wrap" }}>
+                            <div style={{ background: "#FFF7ED", border: `2px solid ${ORANGE}`, borderRadius: "16px", padding: "18px 24px", textAlign: "center", minWidth: "110px" }}>
+                              <p style={{ fontSize: "48px", fontWeight: "800", color: ORANGE, margin: "0 0 2px", lineHeight: 1 }}>{days}</p>
+                              <p style={{ fontSize: "12px", fontWeight: "700", color: "#92400E", margin: 0 }}>days left</p>
+                            </div>
+                            <div style={{ flex: 1 }}>
+                              <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 4px", fontSize: "14px" }}>Unlocks in {days} day{days !== 1 ? "s" : ""}</p>
+                              <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 4px" }}>Trip ended: <strong>{fmtDate(b.endDate)}</strong></p>
+                              <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>Unlocks: <strong style={{ color: NAVY }}>{fmtDate(unlockDate)}</strong></p>
+                            </div>
+                          </div>
+                          <div style={{ background: "#E5E7EB", borderRadius: "999px", height: "8px", overflow: "hidden", marginBottom: "6px" }}>
+                            <div style={{ background: `linear-gradient(to right, ${NAVY}, ${ORANGE})`, height: "100%", borderRadius: "999px", width: `${Math.min(100,((45-days)/45)*100)}%` }} />
+                          </div>
+                          <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0, textAlign: "right" }}>{45-days} of 45 days</p>
+                        </div>
+                      ) : (
+                        <div style={{ background: "#F0FDF4", border: "2px solid #86EFAC", borderRadius: "14px", padding: "18px 20px" }}>
+                          <p style={{ fontSize: "28px", margin: "0 0 6px" }}>🎉</p>
+                          <p style={{ fontWeight: "700", color: "#15803D", margin: "0 0 4px" }}>Points are ready to redeem!</p>
+                          <p style={{ fontSize: "13px", color: "#374151", margin: "0 0 12px" }}>45 days have passed since {fmtDate(b.endDate)}.</p>
+                          <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "9px 18px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", textDecoration: "none", display: "inline-block" }}>Redeem now →</a>
+                        </div>
+                      )}
                     </div>
-                    <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0, textAlign: "right" }}>{45-daysLeft} of 45 days</p>
                   </div>
-                ) : (
-                  <div style={{ background: "#F0FDF4", border: "2px solid #86EFAC", borderRadius: "14px", padding: "18px 20px" }}>
-                    <p style={{ fontSize: "28px", margin: "0 0 6px" }}>🎉</p>
-                    <p style={{ fontWeight: "700", color: "#15803D", margin: "0 0 4px" }}>Points are ready to redeem!</p>
-                    <p style={{ fontSize: "13px", color: "#374151", margin: "0 0 12px" }}>45 days have passed since {fmtDate(tripDate)}.</p>
-                    <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "9px 18px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", textDecoration: "none", display: "inline-block" }}>Redeem now →</a>
-                  </div>
-                )}
-              </div>
-            </div>
+                );
+              });
+            })()}
 
             {/* Account details */}
             <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", padding: "28px" }}>
