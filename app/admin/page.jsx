@@ -340,6 +340,210 @@ function ManualBookingLog() {
   );
 }
 
+// ── Create Booking for Customer ──────────────────────────────────────────────
+function AdminCreateBooking() {
+  const { user } = useAuth();
+  const LIGHT_BLUE = "#EBF3FF";
+
+  const [form, setForm] = useState({
+    guestEmail: "", product: "cruise", amount: "", destination: "",
+    startDate: "", endDate: "", reference: "", notes: "", status: "upcoming", double: false,
+  });
+  const [preview, setPreview]   = useState(null);
+  const [looking, setLooking]   = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [result, setResult]     = useState(null);
+  const [notFound, setNotFound] = useState(false);
+
+  const rates   = PTS_RATES[form.product] || PTS_RATES.cruise;
+  const canDbl  = !!rates.dbl;
+  const rate    = (form.double && canDbl) ? rates.dbl : rates.std;
+  const amt     = parseFloat(form.amount) || 0;
+  const pts     = Math.round(amt * rate);
+
+  async function lookupMember() {
+    if (!form.guestEmail) return;
+    setLooking(true); setPreview(null); setNotFound(false);
+    const res  = await fetch("/api/admin/firestore", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "lookup", email: form.guestEmail }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setPreview({ uid: data.uid, memberName: data.name || data.email, currentPts: data.points });
+    } else {
+      setNotFound(true);
+    }
+    setLooking(false);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!preview?.uid) { alert("Look up the member first."); return; }
+    setSubmitting(true); setResult(null);
+    try {
+      const res = await fetch("/api/admin/bookings", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action:     "create",
+          adminEmail: user.email,
+          uid:        preview.uid,
+          email:      form.guestEmail,
+          ...form,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed");
+      setResult({ ok: true, reference: data.reference, pts: data.pts, name: preview.memberName });
+      setForm({ guestEmail: "", product: "cruise", amount: "", destination: "", startDate: "", endDate: "", reference: "", notes: "", status: "upcoming", double: false });
+      setPreview(null);
+    } catch (err) {
+      setResult({ ok: false, error: err.message });
+    }
+    setSubmitting(false);
+  }
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>📋 Create Booking for Customer</p>
+      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>Add a confirmed booking to a customer's My Bookings tab (stored in Firestore, visible immediately).</p>
+
+      {result?.ok ? (
+        <div style={{ textAlign: "center", padding: "20px", background: "#F0FDF4", borderRadius: "12px" }}>
+          <p style={{ fontSize: "28px", margin: "0 0 8px" }}>✅</p>
+          <p style={{ fontSize: "14px", fontWeight: "800", color: "#15803D", margin: "0 0 4px" }}>Booking created for {result.name}</p>
+          <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 12px" }}>Ref: {result.reference} · {result.pts.toLocaleString()} pts visible in their account</p>
+          <button onClick={() => setResult(null)} style={{ padding: "8px 20px", background: NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "13px", fontWeight: "700", cursor: "pointer" }}>
+            Create another →
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          {/* Email */}
+          <div>
+            <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Member Email</label>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <input required type="email" placeholder="guest@example.com" value={form.guestEmail}
+                onChange={e => { setForm(f => ({ ...f, guestEmail: e.target.value })); setPreview(null); setNotFound(false); }}
+                style={{ flex: 1, padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", outline: "none" }} />
+              <button type="button" onClick={lookupMember} disabled={looking || !form.guestEmail}
+                style={{ padding: "8px 14px", background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
+                {looking ? "…" : "Look up"}
+              </button>
+            </div>
+            {preview && (
+              <div style={{ marginTop: "6px", padding: "8px 12px", background: "#F0FDF4", borderRadius: "8px", fontSize: "12px", color: "#15803D", fontWeight: "600" }}>
+                ✓ {preview.memberName} · UID: {preview.uid} · {preview.currentPts.toLocaleString()} pts
+              </div>
+            )}
+            {notFound && <p style={{ marginTop: "6px", fontSize: "12px", color: "#DC2626", fontWeight: "600" }}>⚠️ No account found for that email.</p>}
+          </div>
+
+          {/* Product + Double */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "10px" }}>
+            <div>
+              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Product</label>
+              <select value={form.product} onChange={e => setForm(f => ({ ...f, product: e.target.value, double: false }))}
+                style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", background: "#fff" }}>
+                {PRODUCT_TYPES.map(p => <option key={p.id} value={p.id}>{p.icon} {p.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Amount ($)</label>
+              <input required type="number" min="1" step="0.01" placeholder="0.00" value={form.amount}
+                onChange={e => setForm(f => ({ ...f, amount: e.target.value }))}
+                style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none" }} />
+            </div>
+            <div>
+              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Status</label>
+              <select value={form.status} onChange={e => setForm(f => ({ ...f, status: e.target.value }))}
+                style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", background: "#fff" }}>
+                <option value="upcoming">🗓️ Upcoming</option>
+                <option value="completed">✅ Completed</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Destination + Reference */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+            <div>
+              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Destination</label>
+              <input type="text" placeholder="e.g. Caribbean Cruise" value={form.destination}
+                onChange={e => setForm(f => ({ ...f, destination: e.target.value }))}
+                style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none" }} />
+            </div>
+            <div>
+              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Booking Reference (auto if empty)</label>
+              <input type="text" placeholder="e.g. RC-123456" value={form.reference}
+                onChange={e => setForm(f => ({ ...f, reference: e.target.value }))}
+                style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none" }} />
+            </div>
+          </div>
+
+          {/* Dates */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+            <div>
+              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Departure / Check-in</label>
+              <input type="date" value={form.startDate} onChange={e => setForm(f => ({ ...f, startDate: e.target.value }))}
+                style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none" }} />
+            </div>
+            <div>
+              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Return / Check-out</label>
+              <input type="date" value={form.endDate} onChange={e => setForm(f => ({ ...f, endDate: e.target.value }))}
+                style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none" }} />
+            </div>
+          </div>
+
+          {/* Double points + Notes */}
+          <div style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: "10px", alignItems: "end" }}>
+            <div>
+              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Points Mode</label>
+              <button type="button" onClick={() => { if (canDbl) setForm(f => ({ ...f, double: !f.double })); }}
+                style={{ width: "100%", padding: "8px 10px", borderRadius: "8px", border: `1.5px solid ${form.double ? ORANGE : "#E5E7EB"}`, background: form.double ? "#FFF7ED" : "#fff", fontSize: "12px", fontWeight: "700", cursor: canDbl ? "pointer" : "not-allowed", color: form.double ? ORANGE : "#6B7280", opacity: canDbl ? 1 : 0.5 }}>
+                {form.double ? "🔥 Double" : "Standard"}
+              </button>
+            </div>
+            <div>
+              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Notes</label>
+              <input type="text" placeholder="e.g. Verified via email confirmation" value={form.notes}
+                onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
+                style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none" }} />
+            </div>
+          </div>
+
+          {/* Points preview */}
+          {amt > 0 && (
+            <div style={{ background: "#F0F4FF", borderRadius: "10px", padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div>
+                <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 2px", fontWeight: "600" }}>POINTS SHOWN TO CUSTOMER</p>
+                <p style={{ fontSize: "20px", fontWeight: "800", color: NAVY, margin: 0 }}>{pts.toLocaleString()} pts</p>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 2px", fontWeight: "600" }}>CASH VALUE</p>
+                <p style={{ fontSize: "18px", fontWeight: "800", color: GREEN, margin: 0 }}>${(pts / 1000).toFixed(2)}</p>
+              </div>
+              <div>
+                <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 2px", fontWeight: "600" }}>RATE</p>
+                <p style={{ fontSize: "14px", fontWeight: "700", color: form.double ? ORANGE : "#374151", margin: 0 }}>{rate} pts/$1 {form.double ? "🔥" : ""}</p>
+              </div>
+            </div>
+          )}
+
+          {result?.ok === false && (
+            <p style={{ fontSize: "12px", color: "#DC2626", fontWeight: "600", margin: 0 }}>❌ {result.error}</p>
+          )}
+
+          <button type="submit" disabled={submitting || !preview?.uid || !pts}
+            style={{ padding: "11px", background: submitting || !preview?.uid ? "#D1D5DB" : NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "13px", fontWeight: "700", cursor: (submitting || !preview?.uid) ? "default" : "pointer" }}>
+            {submitting ? "Creating…" : `✅ Create Booking${pts > 0 ? ` (${pts.toLocaleString()} pts)` : ""} →`}
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 function AdminLogin() {
   const { signInWithEmail, signInWithGoogle } = useAuth();
   const [email, setEmail]       = useState("");
@@ -623,6 +827,11 @@ export default function AdminDashboard() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "20px" }}>
           <CommissionCalc />
           <ManualBookingLog />
+        </div>
+
+        {/* BOOKING CREATION */}
+        <div style={{ marginBottom: "20px" }}>
+          <AdminCreateBooking />
         </div>
 
         {/* POINTS MANAGEMENT */}
