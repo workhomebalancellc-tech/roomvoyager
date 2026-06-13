@@ -206,7 +206,7 @@ function RedirectContent() {
       {/* Footer */}
       <div style={{ padding: "16px 24px", textAlign: "center", borderTop: "1px solid #E5E7EB" }}>
         <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0 }}>
-          RoomVoyager is an independent travel agency. We may earn a commission when you book through our links — at no extra cost to you.{" "}
+          RoomVoyager is your trusted travel partner. We may earn a commission when you book through our links — at no extra cost to you.{" "}
           <a href="/rewards" style={{ color: "#9CA3AF" }}>Learn about Rewards →</a>
         </p>
       </div>

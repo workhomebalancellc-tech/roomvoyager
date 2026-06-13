@@ -22,7 +22,7 @@ export default function Footer() {
             Room<span style={{ color: ORANGE }}>Voyager</span>
           </a>
           <p style={{ fontSize: "12px", color: "#93C5FD", margin: "10px 0 0", lineHeight: 1.6 }}>
-            Your independent travel agency. Earn real cash back on every booking.
+            Your trusted travel partner. Earn real cash back on every booking.
           </p>
           <div style={{ display: "flex", gap: "10px", marginTop: "14px", flexWrap: "wrap" }}>
             {[

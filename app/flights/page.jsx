@@ -228,7 +228,7 @@ function FlightsContent() {
 
       {/* ── SEARCH FORM ──────────────────────────────────────────────── */}
       <div style={{ background: NAVY, padding: "32px 24px" }}>
-        <div style={{ maxWidth: "960px", margin: "0 auto" }}>
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
           <form onSubmit={handleSearch} style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }}>
             <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
               {["round", "oneway"].map(t => (
@@ -374,7 +374,7 @@ function FlightsContent() {
           {[
             { icon: "🏆", title: "Earn real cash back",       desc: "5 Rewards points per $1 on flights — redeem for real money via Zelle, Cash App, or Venmo." },
             { icon: "🔍", title: "500+ airlines compared",    desc: "We search major carriers, budget airlines, and everything in between to find the best price." },
-            // { icon: "✈️+🏨", title: "Bundle & save", desc: "Add a hotel or cruise to your flight and unlock package pricing not available separately." },
+            { icon: "🔄", title: "Flexible booking options",  desc: "Filter for free cancellation fares — book with confidence and change your plans if you need to." },
           ].map((item, i) => (
             <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "24px", flex: "1 1 220px", maxWidth: "320px" }}>
               <div style={{ fontSize: "32px", marginBottom: "12px" }}>{item.icon}</div>
