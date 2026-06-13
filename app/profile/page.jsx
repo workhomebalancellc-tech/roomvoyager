@@ -171,7 +171,7 @@ export default function ProfilePage() {
 
       {/* ── HERO with travel photo ── */}
       <div style={{
-        background: `linear-gradient(to bottom, rgba(0,20,60,0.55) 0%, rgba(0,59,149,0.88) 100%), url('https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1600&q=75') center/cover no-repeat`,
+        background: `linear-gradient(to bottom, rgba(0,20,60,0.45) 0%, rgba(0,59,149,0.85) 100%), url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=75') center/cover no-repeat`,
         padding: "36px 24px 80px",
       }}>
         <div style={{ maxWidth: "860px", margin: "0 auto", textAlign: "center" }}>
