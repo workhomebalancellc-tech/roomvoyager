@@ -22,11 +22,12 @@ export async function GET(req) {
 
   const snap = await adminDb.collection("bookings")
     .where("uid", "==", uid)
-    .orderBy("createdAt", "desc")
     .limit(50)
     .get();
 
-  const bookings = snap.docs.map(d => ({ id: d.id, ...d.data(), createdAt: d.data().createdAt?.toDate?.()?.toISOString() }));
+  const bookings = snap.docs
+    .map(d => ({ id: d.id, ...d.data(), createdAt: d.data().createdAt?.toDate?.()?.toISOString() }))
+    .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
   return Response.json({ bookings });
 }
 
@@ -65,6 +66,33 @@ export async function POST(req) {
     };
 
     const docRef = await adminDb.collection("bookings").add(doc);
+
+    // Award points to user
+    await adminDb.collection("users").doc(uid).update({
+      points:         FieldValue.increment(pts),
+      lifetimePoints: FieldValue.increment(pts),
+      updatedAt:      FieldValue.serverTimestamp(),
+    }).catch(() => {}); // silent if user doc missing
+
+    // Email customer
+    const newBalanceSnap = await adminDb.collection("users").doc(uid).get().catch(() => null);
+    const newBalance = newBalanceSnap?.data()?.points || pts;
+    const siteUrl = process.env.NEXTAUTH_URL || "https://www.roomvoyagertravel.com";
+    await fetch(`${siteUrl}/api/booking-points-notify`, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email:      email,
+        name:       "",
+        product:    product.charAt(0).toUpperCase() + product.slice(1),
+        amount:     (parseFloat(amount) || 0).toFixed(2),
+        pts,
+        cash:       (pts / 1000).toFixed(2),
+        newBalance,
+        notes:      notes || "",
+      }),
+    }).catch(e => console.warn("Email notify error:", e));
+
     return Response.json({ ok: true, id: docRef.id, reference: doc.reference, pts });
   }
 

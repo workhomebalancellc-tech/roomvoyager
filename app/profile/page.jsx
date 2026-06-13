@@ -72,7 +72,25 @@ export default function ProfilePage() {
     if (!user?.uid) return;
     fetch(`/api/admin/bookings?uid=${user.uid}`)
       .then(r => r.json())
-      .then(data => { if (data.bookings) setFirestoreBookings(data.bookings); })
+      .then(data => {
+        if (data.bookings) {
+          setFirestoreBookings(data.bookings);
+          // Auto-populate overview countdown from the most recent booking with an endDate
+          // Only auto-set if the user hasn't manually chosen a date
+          const withEnd = data.bookings.filter(b => b.endDate);
+          if (withEnd.length > 0) {
+            withEnd.sort((a, b) => new Date(b.endDate) - new Date(a.endDate));
+            const latestEnd = withEnd[0].endDate;
+            setTripDate(prev => {
+              if (!prev) {
+                localStorage.setItem("rv_trip_date", latestEnd);
+                return latestEnd;
+              }
+              return prev;
+            });
+          }
+        }
+      })
       .catch(() => {});
   }, [user?.uid]);
 
