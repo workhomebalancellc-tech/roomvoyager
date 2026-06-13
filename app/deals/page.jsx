@@ -13,6 +13,7 @@ const DOMESTIC = [
     city: "Las Vegas",
     img: "https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=600&h=900&fit=crop&auto=format",
     link: "/hotels",
+    dealOfWeek: true,
   },
   {
     city: "Orlando",
@@ -36,7 +37,7 @@ const DOMESTIC = [
   },
   {
     city: "Nashville",
-    img: "https://images.unsplash.com/photo-1545093149-618ce3bcf49d?w=600&h=900&fit=crop&auto=format",
+    img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&h=900&fit=crop&auto=format",
     link: "/hotels",
   },
   {
@@ -84,10 +85,16 @@ const INTERNATIONAL = [
   },
 ];
 
-function DealTile({ city, img }) {
+function DealTile({ city, img, dealOfWeek }) {
   const [hovered, setHovered] = useState(false);
 
   return (
+    <div style={{ flexShrink: 0 }}>
+      {dealOfWeek && (
+        <p style={{ color: ORANGE, fontWeight: "800", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 5px", textAlign: "center" }}>
+          🔥 Deal of the Week
+        </p>
+      )}
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -101,7 +108,7 @@ function DealTile({ city, img }) {
           ? "0 10px 28px rgba(0,0,0,0.28)"
           : "0 3px 10px rgba(0,0,0,0.14)",
         transition: "box-shadow 0.25s",
-        flexShrink: 0,
+        border: dealOfWeek ? `3px solid ${ORANGE}` : "none",
       }}
     >
       <img
@@ -135,6 +142,7 @@ function DealTile({ city, img }) {
           {city}
         </p>
       </div>
+    </div>
     </div>
   );
 }

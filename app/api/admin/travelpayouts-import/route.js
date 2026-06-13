@@ -43,47 +43,26 @@ function isPending(releaseDateStr) {
 // ── Travelpayouts Statistics API ────────────────────────────────────────────
 
 async function fetchTPBookings(dateFrom, dateTo) {
-  // Statistics v1 endpoint — returns aggregated click/booking data
-  const url = new URL("https://api.travelpayouts.com/statistics/v1/");
-  url.searchParams.set("date_from",  dateFrom);
-  url.searchParams.set("date_to",    dateTo);
-  url.searchParams.set("group_by",   "date");
-  url.searchParams.set("page",       "0");
-  url.searchParams.set("limit",      "200");
-
-  const statsRes = await fetch(url.toString(), {
-    headers: { "X-Access-Token": TP_TOKEN },
-  });
-
-  if (!statsRes.ok) {
-    const txt = await statsRes.text();
-    throw new Error(`TP stats API ${statsRes.status}: ${txt}`);
-  }
-
-  const statsData = await statsRes.json();
-  console.log("TP stats response:", JSON.stringify(statsData).slice(0, 400));
-
-  // Also fetch the finance/actions endpoint for commission details
+  // Finance endpoint — returns individual bookings with commission amounts
   const finUrl = new URL("https://api.travelpayouts.com/finance/v2/get_user_actions_affecting_balance");
-  finUrl.searchParams.set("date_from",  dateFrom);
-  finUrl.searchParams.set("date_to",    dateTo);
-  finUrl.searchParams.set("page",       "0");
-  finUrl.searchParams.set("limit",      "200");
+  finUrl.searchParams.set("date_from", dateFrom);
+  finUrl.searchParams.set("date_to",   dateTo);
+  finUrl.searchParams.set("page",      "0");
+  finUrl.searchParams.set("limit",     "200");
 
   const finRes = await fetch(finUrl.toString(), {
     headers: { "X-Access-Token": TP_TOKEN },
   });
 
-  let finData = null;
-  if (finRes.ok) {
-    finData = await finRes.json();
-    console.log("TP finance response:", JSON.stringify(finData).slice(0, 400));
-  } else {
-    console.log("TP finance API not available:", finRes.status);
+  if (!finRes.ok) {
+    const txt = await finRes.text();
+    throw new Error(`TP finance API ${finRes.status}: ${txt}`);
   }
 
-  // Return both so we can try to merge
-  return { statsData, finData };
+  const finData = await finRes.json();
+  console.log("TP finance response:", JSON.stringify(finData).slice(0, 600));
+
+  return { statsData: null, finData };
 }
 
 // ── Match a TP booking to a Firestore flight_click ──────────────────────────
