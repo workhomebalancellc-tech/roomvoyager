@@ -12,7 +12,7 @@ const DOMESTIC = [
   {
     city: "Las Vegas",
     img: "https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=600&h=900&fit=crop&auto=format",
-    link: "/hotels",
+    link: "/deals/las-vegas",
     dealOfWeek: true,
   },
   {
@@ -85,11 +85,11 @@ const INTERNATIONAL = [
   },
 ];
 
-function DealTile({ city, img, dealOfWeek }) {
+function DealTile({ city, img, dealOfWeek, link }) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div style={{ flexShrink: 0 }}>
+    <div style={{ flexShrink: 0 }} onClick={() => link && (window.location.href = link)}>
       <p style={{ fontWeight: "800", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 5px", textAlign: "center", color: dealOfWeek ? ORANGE : "transparent", userSelect: "none" }}>
         🔥 Deal of the Week
       </p>
