@@ -712,6 +712,91 @@ function AdminCreateBooking({ adminEmail }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Email Blast ───────────────────────────────────────────────────────────────
+function FixPointsStatus({ adminEmail }) {
+  const [loading, setLoading] = useState(false);
+  const [result,  setResult]  = useState(null);
+
+  async function run(dryRun) {
+    setLoading(true);
+    setResult(null);
+    try {
+      const res  = await fetch("/api/admin/fix-points-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ adminEmail, dryRun }),
+      });
+      setResult(await res.json());
+    } catch (e) { setResult({ error: e.message }); }
+    setLoading(false);
+  }
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 6px" }}>🔧 Fix Points Status</p>
+      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 14px" }}>
+        Scans all bookings and moves points to the correct bucket — pending (future release date) or redeemable (past release date).
+        Run <strong>Preview</strong> first to see what would change.
+      </p>
+      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+        <button onClick={() => run(true)} disabled={loading} style={{ padding: "9px 20px", borderRadius: "9px", border: "1px solid #D1D5DB", fontSize: "13px", fontWeight: "700", cursor: "pointer", background: "#F9FAFB", color: "#374151" }}>
+          {loading ? "Scanning…" : "🔍 Preview"}
+        </button>
+        <button onClick={() => { if (window.confirm("This will move points between pending/redeemable buckets for all affected bookings. Continue?")) run(false); }} disabled={loading} style={{ padding: "9px 20px", borderRadius: "9px", border: "none", fontSize: "13px", fontWeight: "700", cursor: "pointer", background: NAVY, color: "#fff" }}>
+          {loading ? "Fixing…" : "✅ Fix Now"}
+        </button>
+      </div>
+
+      {result && !result.error && (
+        <div style={{ marginTop: "14px", padding: "12px 16px", borderRadius: "10px", background: "#F0FDF4", border: "1px solid #86EFAC" }}>
+          <p style={{ fontSize: "13px", fontWeight: "700", color: "#15803D", margin: "0 0 6px" }}>
+            {result.dryRun ? "Preview" : "Fixed"}: {result.fixed.length} booking{result.fixed.length !== 1 ? "s" : ""} · {result.skipped} already correct · {result.total} total scanned
+          </p>
+          {result.fixed.length > 0 && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+              {result.fixed.map((f, i) => (
+                <p key={i} style={{ fontSize: "12px", color: "#374151", margin: 0 }}>
+                  {result.dryRun ? "Would fix" : "Fixed"}: <strong>{f.destination}</strong> — {f.pts} pts · {f.action} · unlocks {f.releaseDate}
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      {result?.error && (
+        <div style={{ marginTop: "14px", padding: "12px 16px", borderRadius: "10px", background: "#FEF2F2", border: "1px solid #FCA5A5" }}>
+          <p style={{ fontSize: "13px", color: "#DC2626", margin: 0 }}>Error: {result.error}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const BLAST_TEMPLATES = [
+  {
+    id: "double-points",
+    label: "🔥 Double Points",
+    audience: "all",
+    subject: "🔥 Deals of the Week — Double Points Are Live!",
+    body:
+      "Great news — we just turned on Double Points for all hotel and cruise bookings!\n\n" +
+      "For a limited time, earn 2× rewards on every stay and sailing you book through RoomVoyager. " +
+      "That means faster cash back and more money back in your pocket.\n\n" +
+      "Don't miss out — double points won't last long!",
+  },
+  {
+    id: "running-late",
+    label: "⏰ Running Late",
+    audience: "manual",
+    subject: "Quick Update — Running a Bit Behind",
+    body:
+      "I wanted to give you a heads-up that I'm running approximately 30 minutes behind schedule " +
+      "and will not be able to reach you at our originally planned time.\n\n" +
+      "I will give you a call as soon as possible. If I am still running behind at that point, " +
+      "I will send you another email with an updated call time.\n\n" +
+      "I sincerely apologize for any inconvenience and appreciate your patience!",
+  },
+];
+
 const AUDIENCE_OPTIONS = [
   { val: "all",         label: "Everyone",          desc: "All registered users + newsletter subscribers" },
   { val: "users",       label: "Registered users",  desc: "Anyone with a RoomVoyager account" },
@@ -768,9 +853,30 @@ function SendBlast({ adminEmail }) {
 
   const selectedOption = AUDIENCE_OPTIONS.find(o => o.val === audience);
 
+  function applyTemplate(tpl) {
+    setSubject(tpl.subject);
+    setMessageBody(tpl.body);
+    setAudience(tpl.audience);
+    setManualInput("");
+    setCount(null);
+    setResult(null);
+  }
+
   return (
     <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
-      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 16px" }}>✉️ Send Email Blast</p>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>✉️ Send Email Blast</p>
+
+      {/* Template picker */}
+      <div style={{ marginBottom: "18px", padding: "12px 16px", background: "#F8FAFF", borderRadius: "10px", border: "1px solid #E0E7FF" }}>
+        <p style={{ fontSize: "11px", fontWeight: "700", color: "#374151", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 8px" }}>Quick Templates</p>
+        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+          {BLAST_TEMPLATES.map(tpl => (
+            <button key={tpl.id} onClick={() => applyTemplate(tpl)} style={{ padding: "7px 16px", borderRadius: "8px", border: "1px solid #C7D2FE", fontSize: "12px", fontWeight: "700", cursor: "pointer", background: "#fff", color: NAVY }}>
+              {tpl.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Audience picker */}
       <div style={{ marginBottom: "16px" }}>
@@ -1507,6 +1613,11 @@ export default function AdminDashboard() {
         {/* TRAVELPAYOUTS FLIGHT IMPORT */}
         <div style={{ marginBottom: "20px" }}>
           <TravelpayoutsImport adminEmail={user.email} />
+        </div>
+
+        {/* FIX POINTS STATUS */}
+        <div style={{ marginBottom: "20px" }}>
+          <FixPointsStatus adminEmail={user.email} />
         </div>
 
         {/* EMAIL BLAST */}
