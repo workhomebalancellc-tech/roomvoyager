@@ -23,6 +23,18 @@ export async function GET(req) {
     }
   }
 
+  const { searchParams } = new URL(req.url);
+
+  // ── TEST MODE ──────────────────────────────────────────────────────────────
+  // Hit /api/cron/cj-commissions?test_uid=YOUR_UID&test_amount=100
+  // Simulates a $100 cruise sale attributed to that user — no real CJ call made.
+  const testUid    = searchParams.get("test_uid");
+  const testAmount = parseFloat(searchParams.get("test_amount") || "100");
+  if (testUid) {
+    return processTestCommission(testUid, testAmount);
+  }
+  // ──────────────────────────────────────────────────────────────────────────
+
   try {
     const token = process.env.CJ_API_TOKEN;
     if (!token) {
@@ -171,6 +183,68 @@ export async function GET(req) {
     return Response.json({ error: e.message }, { status: 500 });
   }
 }
+
+// ── Test helper ───────────────────────────────────────────────────────────────
+async function processTestCommission(uid, amount) {
+  try {
+    const userSnap = await adminDb.collection("users").doc(uid).get();
+    if (!userSnap.exists) {
+      return Response.json({ error: `No user found for uid: ${uid}` }, { status: 404 });
+    }
+    const userData = userSnap.data();
+    const pts = Math.round(amount * PTS_PER_DOLLAR);
+
+    await adminDb.collection("users").doc(uid).update({
+      points:         FieldValue.increment(pts),
+      lifetimePoints: FieldValue.increment(pts),
+      updatedAt:      FieldValue.serverTimestamp(),
+    });
+
+    const fakeCommissionId = `TEST-${Date.now()}`;
+    await adminDb.collection("cj_commission_log").add({
+      commissionId: fakeCommissionId,
+      sid: uid,
+      email: userData.email || "",
+      name:  userData.name  || "",
+      saleAmount: amount,
+      pts,
+      orderId: fakeCommissionId,
+      status: "test",
+      result: "awarded",
+      processedAt: FieldValue.serverTimestamp(),
+    });
+
+    const newBalance = (userData.points || 0) + pts;
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.roomvoyagertravel.com";
+    await fetch(`${siteUrl}/api/booking-points-notify`, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email:      userData.email,
+        name:       userData.name || "",
+        product:    "Cruise (TEST)",
+        amount:     amount.toFixed(2),
+        pts,
+        cash:       (pts / 1000).toFixed(2),
+        newBalance,
+        notes:      `Test commission — no real booking`,
+      }),
+    }).catch(e => console.warn("Test email error:", e));
+
+    return Response.json({
+      ok: true,
+      mode: "TEST",
+      uid,
+      email: userData.email,
+      saleAmount: amount,
+      ptsAwarded: pts,
+      newBalance,
+    });
+  } catch (e) {
+    return Response.json({ error: e.message }, { status: 500 });
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
 
 // Simple XML parser for CJ commission records
 function parseXmlCommissions(xml) {
