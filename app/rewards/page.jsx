@@ -295,46 +295,52 @@ export default function RewardsPage() {
 
       {/* HERO */}
       <div style={{ position: "relative", overflow: "hidden" }}>
-        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600&h=420&fit=crop&auto=format" alt="Travel rewards" style={{ width: "100%", height: "380px", objectFit: "cover" }} />
+        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600&h=700&fit=crop&auto=format" alt="Travel rewards" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
         <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to bottom, ${NAVY}cc 0%, ${NAVY}f0 100%)` }} />
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
+        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", padding: "64px 24px 56px", textAlign: "center" }}>
           <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 12px" }}>💰 Cash Back Loyalty Program</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(28px, 5vw, 46px)", fontWeight: "800", margin: "0 0 12px", lineHeight: 1.15, textShadow: "0 2px 12px rgba(0,0,0,0.3)" }}>RoomVoyager Rewards</h1>
-          <p style={{ color: "#BFDBFE", fontSize: "17px", margin: "0 0 28px", maxWidth: "520px", lineHeight: 1.6 }}>
+          <p style={{ color: "#BFDBFE", fontSize: "17px", margin: "0 0 36px", maxWidth: "520px", lineHeight: 1.6 }}>
             Earn cash back on every booking — double points on hotels, cruises & packages. Paid via Zelle, Cash App, or Venmo. No blackout dates. Real money.
           </p>
           {session ? (
-            <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", borderRadius: "16px", padding: "24px 32px", display: "flex", gap: "28px", flexWrap: "wrap", justifyContent: "center", border: "1px solid rgba(255,255,255,0.2)", width: "100%", maxWidth: "640px", boxSizing: "border-box" }}>
-              {session.name && (
+            <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", borderRadius: "20px", padding: "32px 40px", border: "1px solid rgba(255,255,255,0.2)", width: "100%", maxWidth: "780px", boxSizing: "border-box" }}>
+              {/* Row 1 — main stats */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px", marginBottom: "28px", paddingBottom: "24px", borderBottom: "1px solid rgba(255,255,255,0.15)" }}>
                 <div>
-                  <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Welcome back</p>
-                  <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: 0 }}>{session.name.split(" ")[0]}</p>
+                  <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Welcome Back</p>
+                  <p style={{ color: "#fff", fontSize: "22px", fontWeight: "800", margin: 0 }}>{session.name?.split(" ")[0] || "Traveler"}</p>
                 </div>
-              )}
-              <div>
-                <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Your Points</p>
-                <p style={{ color: "#fff", fontSize: "32px", fontWeight: "800", margin: 0 }}>{userPoints.toLocaleString()}</p>
-              </div>
-              <div>
-                <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Cash Value</p>
-                <p style={{ color: "#fff", fontSize: "32px", fontWeight: "800", margin: 0 }}>${cashValue}</p>
-              </div>
-              <div>
-                <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Lifetime Earned</p>
-                <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: 0 }}>{lifetimePoints.toLocaleString()} pts</p>
-              </div>
-              <div>
-                <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Your Tier</p>
-                <p style={{ color: "#fff", fontSize: "20px", fontWeight: "700", margin: 0 }}>{currentTier.icon} {currentTier.name}</p>
-              </div>
-              {canRedeem && (
-                <div style={{ display: "flex", alignItems: "flex-end" }}>
-                  <button onClick={() => { setRedeemSubmitted(false); redeemRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
-                    style={{ background: ORANGE, color: "#fff", padding: "10px 20px", borderRadius: "8px", fontSize: "14px", fontWeight: "700", border: "none", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
-                    Redeem Cash →
-                  </button>
+                <div>
+                  <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Your Points</p>
+                  <p style={{ color: "#fff", fontSize: "36px", fontWeight: "800", margin: 0 }}>{userPoints.toLocaleString()}</p>
                 </div>
-              )}
+                <div>
+                  <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Cash Value</p>
+                  <p style={{ color: "#fff", fontSize: "36px", fontWeight: "800", margin: 0 }}>${cashValue}</p>
+                </div>
+              </div>
+              {/* Row 2 — secondary stats + redeem */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px", alignItems: "center" }}>
+                <div>
+                  <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Lifetime Earned</p>
+                  <p style={{ color: "#fff", fontSize: "22px", fontWeight: "800", margin: 0 }}>{lifetimePoints.toLocaleString()} pts</p>
+                </div>
+                <div>
+                  <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Your Tier</p>
+                  <p style={{ color: "#fff", fontSize: "22px", fontWeight: "700", margin: 0 }}>{currentTier.icon} {currentTier.name}</p>
+                </div>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  {canRedeem ? (
+                    <button onClick={() => { setRedeemSubmitted(false); redeemRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
+                      style={{ background: ORANGE, color: "#fff", padding: "12px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", border: "none", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.4)", width: "100%" }}>
+                      Redeem Cash →
+                    </button>
+                  ) : (
+                    <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "12px", margin: 0 }}>Need 10,000 pts to redeem</p>
+                  )}
+                </div>
+              </div>
             </div>
           ) : (
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
