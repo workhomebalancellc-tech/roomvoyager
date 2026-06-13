@@ -216,12 +216,7 @@ function FlightsContent() {
     const kiwiUrl = `https://www.kiwi.com/en/search/results/${slugFrom}/${slugTo}/${d}/${r}${paxParam}`;
     const tpUrl = `https://c111.travelpayouts.com/click?shmarker=722477&promo_id=3791&source_type=customlink&type=click&custom_url=${encodeURIComponent(kiwiUrl)}`;
     const dest = `/redirect?to=${encodeURIComponent(tpUrl)}&partner=Kiwi.com&product=flight`;
-    // Mobile browsers block window.open from form submit — navigate in same tab instead
-    if (isMobile) {
-      window.location.href = dest;
-    } else {
-      window.open(dest, "_blank", "noopener,noreferrer");
-    }
+    window.location.href = dest;
   }
 
   function pickDest(dest) {
@@ -274,7 +269,7 @@ function FlightsContent() {
       {/* ── SEARCH FORM ──────────────────────────────────────────────── */}
       <div style={{ background: NAVY, padding: "32px 24px" }}>
         <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <form onSubmit={handleSearch} style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }}>
+          <form onSubmit={handleSearch} style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }} noValidate>
             <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
               {["round", "oneway"].map(t => (
                 <button key={t} type="button" onClick={() => setTripType(t)}
@@ -358,7 +353,7 @@ function FlightsContent() {
                   {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n} {n === 1 ? "Adult" : "Adults"}</option>)}
                 </select>
               </div>
-              <button type="submit" style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(0,59,149,0.3)", height: "42px", alignSelf: "flex-end", width: "100%" }}>
+              <button type="button" onClick={handleSearch} style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(0,59,149,0.3)", height: "42px", alignSelf: "flex-end", width: "100%" }}>
                 Search ✈️
               </button>
             </div>
