@@ -218,18 +218,17 @@ function HotelsContent() {
           </div>
         </div>
 
-        {/* Newsletter CTA with photo */}
-        <div style={{ position: "relative", borderRadius: "20px", overflow: "hidden" }}>
-          <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&h=240&fit=crop&auto=format" alt="Hotel deals" style={{ width: "100%", height: "160px", objectFit: "cover" }} />
-          <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to right, ${NAVY}f0, rgba(0,30,80,0.5))` }} />
-          <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "16px 24px", gap: "12px" }}>
+        {/* Rewards CTA */}
+        <div style={{ position: "relative", overflow: "hidden", borderRadius: "20px" }}>
+          <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1400&h=220&fit=crop&auto=format" alt="Hotel deals" style={{ width: "100%", height: isMobile ? "260px" : "180px", objectFit: "cover", borderRadius: "20px" }} />
+          <div style={{ position: "absolute", inset: 0, background: `${NAVY}e0`, borderRadius: "20px" }} />
+          <div style={{ position: "absolute", inset: 0, display: "flex", justifyContent: isMobile ? "center" : "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", padding: isMobile ? "28px 24px 32px" : "0 40px", gap: "20px" }}>
             <div>
-              <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#fff", margin: "0 0 4px" }}>Want exclusive hotel deals?</h3>
-              <p style={{ fontSize: "13px", color: "#BFDBFE", margin: 0 }}>Join our member newsletter and get early access to promotions before they go public.</p>
+              <h3 style={{ fontSize: "20px", fontWeight: "800", color: "#fff", margin: "0 0 6px" }}>Earn rewards on every hotel you book</h3>
+              <p style={{ color: "#BFDBFE", fontSize: "14px", margin: 0 }}>5 points per $1 · Redeem for real cash · No blackout dates</p>
             </div>
-            <a href="/rewards"
-              style={{ background: ORANGE, color: "#fff", padding: "12px 24px", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none" }}>
-              Join RoomVoyager Rewards →
+            <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: isMobile ? "14px 28px" : "12px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(255,102,0,0.4)", alignSelf: isMobile ? "stretch" : "auto", textAlign: "center" }}>
+              Join Rewards free →
             </a>
           </div>
         </div>

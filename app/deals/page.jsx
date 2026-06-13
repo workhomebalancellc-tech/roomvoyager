@@ -180,7 +180,7 @@ export default function DealsPage() {
         />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.55) 0%, rgba(0,15,60,0.78) 100%)" }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
-          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>✈️ Updated Weekly</p>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🤠 Updated Weekly</p>
           <h1 style={{ color: "#fff", fontSize: isMobile ? "28px" : "48px", fontWeight: "800", margin: "0 0 12px", lineHeight: 1.15, textShadow: "0 2px 14px rgba(0,0,0,0.4)" }}>
             Weekly <span style={{ color: ORANGE }}>Deals</span>
           </h1>

@@ -611,16 +611,22 @@ export default function RewardsPage() {
         </section>
 
         {/* CTA */}
-        <div style={{ background: NAVY, borderRadius: "20px", padding: "48px 24px", textAlign: "center" }}>
-          <h2 style={{ fontSize: "clamp(20px, 4vw, 26px)", fontWeight: "800", color: "#fff", margin: "0 0 10px" }}>Ready to start earning?</h2>
-          <p style={{ color: "#BFDBFE", fontSize: "15px", margin: "0 0 28px", lineHeight: 1.6 }}>Join free — no credit card required. Start earning on your first booking.</p>
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
-            <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
-              Join Rewards free →
-            </a>
-            <a href="/hotels" style={{ background: "rgba(255,255,255,0.15)", color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "600", textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)" }}>
-              Browse hotels
-            </a>
+        <div style={{ position: "relative", overflow: "hidden", borderRadius: "20px" }}>
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&h=220&fit=crop&auto=format" alt="Airplane wing" style={{ width: "100%", height: "180px", objectFit: "cover", borderRadius: "20px" }} />
+          <div style={{ position: "absolute", inset: 0, background: `${NAVY}e0`, borderRadius: "20px" }} />
+          <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "0 40px", gap: "12px" }}>
+            <div>
+              <h2 style={{ fontSize: "20px", fontWeight: "800", color: "#fff", margin: "0 0 6px" }}>Ready to start earning?</h2>
+              <p style={{ color: "#BFDBFE", fontSize: "14px", margin: 0 }}>Join free — no credit card required. Start earning on your first booking.</p>
+            </div>
+            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
+              <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "12px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.4)", whiteSpace: "nowrap" }}>
+                Join Rewards free →
+              </a>
+              <a href="/hotels" style={{ background: "rgba(255,255,255,0.15)", color: "#fff", padding: "12px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "600", textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)", whiteSpace: "nowrap" }}>
+                Browse hotels
+              </a>
+            </div>
           </div>
         </div>
       </div>
