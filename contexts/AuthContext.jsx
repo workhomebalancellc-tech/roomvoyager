@@ -67,13 +67,20 @@ export function AuthProvider({ children }) {
     return result.user;
   };
 
+  // Updates displayName in Firebase Auth + Firestore, and refreshes local user state
+  const updateName = async (newName) => {
+    if (!auth.currentUser || !newName?.trim()) return;
+    await updateProfile(auth.currentUser, { displayName: newName.trim() });
+    setUser(prev => prev ? { ...prev, name: newName.trim() } : prev);
+  };
+
   const logout = async () => {
     await firebaseSignOut(auth);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signInWithEmail, signUpWithEmail, logout }}>
+    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signInWithEmail, signUpWithEmail, updateName, logout }}>
       {children}
     </AuthContext.Provider>
   );

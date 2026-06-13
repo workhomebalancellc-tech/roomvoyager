@@ -11,83 +11,269 @@ const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
+// Shared subscribe logic
+async function subscribeEmail(name, email, source) {
+  const res  = await fetch("/api/subscribe", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, source }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error("error");
+  return data.alreadySubscribed ? "duplicate" : "success";
+}
+
 function NewsletterSignup() {
+  const [name,   setName]   = useState("");
+  const [email,  setEmail]  = useState("");
+  const [status, setStatus] = useState("idle");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!email) return;
+    setStatus("loading");
+    try { setStatus(await subscribeEmail(name, email, "homepage")); }
+    catch { setStatus("error"); }
+  }
+
+  return (
+    <div style={{
+      background: `url('https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=1600&q=60') center/cover no-repeat`,
+      position: "relative",
+    }}>
+      {/* Overlay */}
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(0,20,70,0.93) 0%, rgba(0,59,149,0.88) 60%, rgba(0,82,204,0.80) 100%)" }} />
+
+      <div className="nl-grid" style={{ position: "relative", maxWidth: "1100px", margin: "0 auto", padding: "72px 24px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px", alignItems: "center" }}>
+
+        {/* LEFT — copy */}
+        <div>
+          <span style={{ display: "inline-block", background: "rgba(255,102,0,0.18)", color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.12em", padding: "5px 12px", borderRadius: "999px", border: "1px solid rgba(255,102,0,0.35)", marginBottom: "20px" }}>
+            ✉️ Free Newsletter
+          </span>
+          <h2 style={{ color: "#fff", fontSize: "clamp(24px, 3vw, 36px)", fontWeight: "800", margin: "0 0 16px", lineHeight: 1.2 }}>
+            Get deals before<br />they're gone
+          </h2>
+          <p style={{ color: "#BFDBFE", fontSize: "15px", margin: "0 0 32px", lineHeight: 1.7 }}>
+            Join our free list and be first in line for flash sales, double-points windows, and exclusive offers our regular visitors never see.
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            {[
+              ["✈️", "Deals before they sell out"],
+              ["🔥", "Double-points alerts"],
+              ["🎁", "Exclusive subscriber offers"],
+              ["🚫", "No spam, unsubscribe anytime"],
+            ].map(([icon, text]) => (
+              <div key={text} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <span style={{ fontSize: "16px" }}>{icon}</span>
+                <span style={{ color: "#E0EEFF", fontSize: "14px", fontWeight: "500" }}>{text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* RIGHT — form card */}
+        <div style={{ background: "#fff", borderRadius: "20px", padding: "36px 32px", boxShadow: "0 20px 60px rgba(0,0,0,0.35)" }}>
+          {status === "success" ? (
+            <div style={{ textAlign: "center", padding: "20px 0" }}>
+              <div style={{ fontSize: "52px", marginBottom: "14px" }}>🎉</div>
+              <p style={{ fontSize: "20px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>You're on the list!</p>
+              <p style={{ fontSize: "14px", color: "#6B7280", margin: 0 }}>Watch your inbox — deals are coming.</p>
+            </div>
+          ) : status === "duplicate" ? (
+            <div style={{ textAlign: "center", padding: "20px 0" }}>
+              <div style={{ fontSize: "44px", marginBottom: "14px" }}>✅</div>
+              <p style={{ fontSize: "18px", fontWeight: "700", color: "#111827", margin: "0 0 8px" }}>Already subscribed!</p>
+              <p style={{ fontSize: "14px", color: "#6B7280", margin: 0 }}>We've got you covered — deals are on the way.</p>
+            </div>
+          ) : (
+            <>
+              <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 4px" }}>Stay in the loop</p>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 24px" }}>Join free. Unsubscribe anytime.</p>
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                <input
+                  type="text"
+                  placeholder="First name (optional)"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  style={{ padding: "13px 16px", borderRadius: "10px", border: "1.5px solid #E5E7EB", fontSize: "14px", outline: "none", color: "#111827", transition: "border-color 0.15s" }}
+                  onFocus={e => e.target.style.borderColor = NAVY}
+                  onBlur={e => e.target.style.borderColor = "#E5E7EB"}
+                />
+                <input
+                  type="email"
+                  placeholder="Your email address *"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                  style={{ padding: "13px 16px", borderRadius: "10px", border: "1.5px solid #E5E7EB", fontSize: "14px", outline: "none", color: "#111827" }}
+                  onFocus={e => e.target.style.borderColor = NAVY}
+                  onBlur={e => e.target.style.borderColor = "#E5E7EB"}
+                />
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  style={{ background: status === "loading" ? "#D1D5DB" : ORANGE, color: "#fff", fontWeight: "800", fontSize: "15px", padding: "14px", borderRadius: "10px", border: "none", cursor: status === "loading" ? "default" : "pointer", marginTop: "4px" }}>
+                  {status === "loading" ? "Joining…" : "Subscribe — It's Free →"}
+                </button>
+                {status === "error" && <p style={{ color: "#DC2626", fontSize: "12px", margin: 0 }}>Something went wrong — please try again.</p>}
+              </form>
+              <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "14px 0 0", textAlign: "center" }}>
+                🔒 Your info is private. We never sell or share your email.
+              </p>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile stacked layout */}
+      <style>{`
+        @media (max-width: 700px) {
+          .nl-grid { grid-template-columns: 1fr !important; gap: 32px !important; padding: 48px 20px !important; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// ── Newsletter Popup ──────────────────────────────────────────────────────────
+const POPUP_KEY     = "rv_nl_popup";
+const POPUP_DELAY   = 10000; // 10 seconds
+const SNOOZE_DAYS   = 7;
+
+function NewsletterPopup() {
+  const [visible, setVisible] = useState(false);
   const [name,    setName]    = useState("");
   const [email,   setEmail]   = useState("");
-  const [status,  setStatus]  = useState("idle"); // idle | loading | success | error | duplicate
-  const [isMobile, setIsMobile] = useState(false);
+  const [status,  setStatus]  = useState("idle");
+
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 640);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    // Don't show if already dismissed/subscribed recently
+    try {
+      const stored = JSON.parse(localStorage.getItem(POPUP_KEY) || "{}");
+      if (stored.until && new Date(stored.until) > new Date()) return;
+    } catch {}
+    const t = setTimeout(() => setVisible(true), POPUP_DELAY);
+    return () => clearTimeout(t);
   }, []);
+
+  function dismiss() {
+    try {
+      const until = new Date();
+      until.setDate(until.getDate() + SNOOZE_DAYS);
+      localStorage.setItem(POPUP_KEY, JSON.stringify({ until: until.toISOString() }));
+    } catch {}
+    setVisible(false);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!email) return;
     setStatus("loading");
     try {
-      const res  = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, source: "homepage" }),
-      });
-      const data = await res.json();
-      if (!res.ok) { setStatus("error"); return; }
-      setStatus(data.alreadySubscribed ? "duplicate" : "success");
+      const result = await subscribeEmail(name, email, "popup");
+      setStatus(result);
+      // After success/duplicate, hide after 2.5s and mark as done
+      setTimeout(() => {
+        dismiss();
+      }, 2500);
     } catch { setStatus("error"); }
   }
 
+  if (!visible) return null;
+
   return (
-    <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #0052CC 100%)`, padding: isMobile ? "48px 20px" : "64px 24px", textAlign: "center" }}>
-      <div style={{ maxWidth: "520px", margin: "0 auto" }}>
-        <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>✉️ Stay in the Loop</p>
-        <h2 style={{ color: "#fff", fontSize: isMobile ? "24px" : "30px", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.2 }}>
-          Get deals &amp; double-points alerts
-        </h2>
-        <p style={{ color: "#BFDBFE", fontSize: "14px", margin: "0 0 28px", lineHeight: 1.6 }}>
-          Be the first to know when we run promos. No spam — just travel deals.
-        </p>
+    <div
+      onClick={e => { if (e.target === e.currentTarget) dismiss(); }}
+      style={{
+        position: "fixed", inset: 0, zIndex: 9999,
+        background: "rgba(0,15,50,0.65)", backdropFilter: "blur(4px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: "20px",
+        animation: "fadeInOverlay 0.3s ease",
+      }}>
+      <style>{`
+        @keyframes fadeInOverlay { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes slideUpCard   { from { opacity: 0; transform: translateY(24px) } to { opacity: 1; transform: translateY(0) } }
+      `}</style>
+      <div style={{
+        background: "#fff", borderRadius: "20px", overflow: "hidden",
+        maxWidth: "460px", width: "100%", position: "relative",
+        boxShadow: "0 24px 80px rgba(0,0,0,0.4)",
+        animation: "slideUpCard 0.35s cubic-bezier(0.22,1,0.36,1)",
+      }}>
+        {/* Close button */}
+        <button onClick={dismiss} style={{
+          position: "absolute", top: "14px", right: "16px", width: "32px", height: "32px",
+          borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.08)", fontSize: "18px",
+          cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+          color: "#6B7280", zIndex: 1, lineHeight: 1,
+        }}>×</button>
 
-        {status === "success" ? (
-          <div style={{ background: "rgba(255,255,255,0.12)", borderRadius: "14px", padding: "20px 24px", color: "#fff", fontWeight: "700", fontSize: "16px" }}>
-            🎉 You're on the list! Watch your inbox for deals.
+        {/* Header image strip */}
+        <div style={{
+          height: "140px",
+          background: `url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&h=280&fit=crop&auto=format') center/cover no-repeat`,
+          position: "relative",
+        }}>
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,20,70,0.3), rgba(0,40,120,0.85))" }} />
+          <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", padding: "0 24px 18px", textAlign: "center" }}>
+            <p style={{ color: "#FFA366", fontSize: "10px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 4px" }}>Free Newsletter</p>
+            <h2 style={{ color: "#fff", fontSize: "22px", fontWeight: "800", margin: 0, lineHeight: 1.2 }}>Deals straight to your inbox</h2>
           </div>
-        ) : status === "duplicate" ? (
-          <div style={{ background: "rgba(255,255,255,0.12)", borderRadius: "14px", padding: "20px 24px", color: "#BFDBFE", fontWeight: "600", fontSize: "15px" }}>
-            You're already subscribed — we've got you covered! ✅
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "10px" }}>
-            <input
-              type="text"
-              placeholder="First name (optional)"
-              value={name}
-              onChange={e => setName(e.target.value)}
-              style={{ flex: "1", padding: "13px 16px", borderRadius: "10px", border: "none", fontSize: "14px", outline: "none", background: "rgba(255,255,255,0.15)", color: "#fff", "::placeholder": { color: "#93C5FD" } }}
-            />
-            <input
-              type="email"
-              placeholder="Your email address"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-              style={{ flex: "2", padding: "13px 16px", borderRadius: "10px", border: "none", fontSize: "14px", outline: "none", background: "rgba(255,255,255,0.15)", color: "#fff" }}
-            />
-            <button
-              type="submit"
-              disabled={status === "loading"}
-              style={{ background: ORANGE, color: "#fff", fontWeight: "800", fontSize: "14px", padding: "13px 24px", borderRadius: "10px", border: "none", cursor: "pointer", flexShrink: 0, opacity: status === "loading" ? 0.7 : 1 }}
-            >
-              {status === "loading" ? "Joining…" : "Subscribe"}
-            </button>
-          </form>
-        )}
+        </div>
 
-        {status === "error" && (
-          <p style={{ color: "#FCA5A5", fontSize: "13px", marginTop: "10px" }}>Something went wrong — please try again.</p>
-        )}
+        {/* Body */}
+        <div style={{ padding: "24px 28px 28px" }}>
+          {status === "success" || status === "duplicate" ? (
+            <div style={{ textAlign: "center", padding: "12px 0" }}>
+              <div style={{ fontSize: "44px", marginBottom: "10px" }}>{status === "success" ? "🎉" : "✅"}</div>
+              <p style={{ fontSize: "17px", fontWeight: "800", color: "#111827", margin: "0 0 6px" }}>
+                {status === "success" ? "You're on the list!" : "Already subscribed!"}
+              </p>
+              <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>
+                {status === "success" ? "Watch your inbox — deals are coming." : "We've already got you covered."}
+              </p>
+            </div>
+          ) : (
+            <>
+              <p style={{ fontSize: "14px", color: "#4B5563", margin: "0 0 20px", lineHeight: 1.6, textAlign: "center" }}>
+                Be first in line for flash sales, double-points windows, and travel deals.
+              </p>
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                <input
+                  type="text"
+                  placeholder="First name (optional)"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  style={{ padding: "12px 14px", borderRadius: "9px", border: "1.5px solid #E5E7EB", fontSize: "14px", outline: "none" }}
+                  onFocus={e => e.target.style.borderColor = NAVY}
+                  onBlur={e => e.target.style.borderColor = "#E5E7EB"}
+                />
+                <input
+                  type="email"
+                  placeholder="Your email *"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                  style={{ padding: "12px 14px", borderRadius: "9px", border: "1.5px solid #E5E7EB", fontSize: "14px", outline: "none" }}
+                  onFocus={e => e.target.style.borderColor = NAVY}
+                  onBlur={e => e.target.style.borderColor = "#E5E7EB"}
+                />
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  style={{ background: status === "loading" ? "#D1D5DB" : ORANGE, color: "#fff", fontWeight: "800", fontSize: "15px", padding: "13px", borderRadius: "9px", border: "none", cursor: status === "loading" ? "default" : "pointer", marginTop: "2px" }}>
+                  {status === "loading" ? "Joining…" : "Get the Deals →"}
+                </button>
+                {status === "error" && <p style={{ color: "#DC2626", fontSize: "12px", margin: 0 }}>Something went wrong — please try again.</p>}
+              </form>
+              <button onClick={dismiss} style={{ display: "block", width: "100%", marginTop: "12px", background: "none", border: "none", color: "#9CA3AF", fontSize: "12px", cursor: "pointer", padding: "4px" }}>
+                No thanks, I don't want deals
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -359,6 +545,7 @@ export default function HomePage() {
     </div>
     <FloatingChat />
     <Footer />
+    <NewsletterPopup />
     </>
   );
 }

@@ -33,7 +33,7 @@ function fmtDate(str) {
 const EMPTY_BOOKING = { type: "flight", destination: "", startDate: "", endDate: "", amount: "", reference: "", status: "upcoming", notes: "" };
 
 export default function ProfilePage() {
-  const { user, loading, logout } = useAuth();
+  const { user, loading, logout, updateName } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
 
 
@@ -63,16 +63,20 @@ export default function ProfilePage() {
   async function saveName() {
     if (!nameInput.trim() || !user?.uid) return;
     setNameSaving(true); setNameMsg("");
-    const res = await fetch("/api/user/profile", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ uid: user.uid, name: nameInput.trim() }),
-    });
-    if (res.ok) {
+    try {
+      // Update Firestore
+      const res = await fetch("/api/user/profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid: user.uid, name: nameInput.trim() }),
+      });
+      if (!res.ok) throw new Error("Server error");
+      // Update Firebase Auth displayName + local user state so it persists across reloads
+      await updateName(nameInput.trim());
       setDisplayName(nameInput.trim());
       setEditingName(false);
       setNameMsg("✓ Name updated");
-    } else {
+    } catch {
       setNameMsg("❌ Could not save — try again.");
     }
     setNameSaving(false);
