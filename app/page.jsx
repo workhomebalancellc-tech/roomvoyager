@@ -5,6 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import FloatingChat from "./components/FloatingChat";
+import PromoBanner from "./components/PromoBanner";
 
 const NAVY = "#003B95";
 const ORANGE = "#FF6600";
@@ -64,6 +65,7 @@ export default function HomePage() {
     <div style={{ minHeight: "100vh", background: "#fff", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
       <NavBar active="home" />
+      <PromoBanner />
 
       {/* HERO */}
       <div style={{ position: "relative", height: "580px", overflow: "hidden" }}>

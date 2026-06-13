@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import FloatingChat from "../components/FloatingChat";
+import PromoBanner from "../components/PromoBanner";
 import { useAuth } from "../../contexts/AuthContext";
 
 // Appends ?sid=USER_UID to affiliate URLs so CJ postbacks can identify the user
@@ -350,6 +351,7 @@ export default function CruisesPage() {
       )}
 
       <NavBar active="cruises" />
+      <PromoBanner />
 
       {/* HERO */}
       <div style={{ position: "relative", height: "320px", overflow: "hidden" }}>
