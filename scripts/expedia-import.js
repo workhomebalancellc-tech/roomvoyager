@@ -71,21 +71,21 @@ async function run() {
     { timeout: 15000 }
   );
 
-  // Step 2 — enter password and submit
+  // Step 2 — enter password and submit via Enter key (more reliable than button click)
   console.log("→ Entering password...");
-  await page.fill('input[type="password"], input[name="password"], input[id*="password"]', EXPEDIA_PASSWORD);
-  await page.click(
-    'button[type="submit"], button:has-text("Sign in"), button:has-text("Log in"), button:has-text("Continue")'
-  );
+  const pwField = await page.locator('input[type="password"], input[name="password"], input[id*="password"]').first();
+  await pwField.fill(EXPEDIA_PASSWORD);
+  await pwField.press("Enter");
 
-  // Wait for dashboard — take screenshot if it fails so we can diagnose
-  await page.waitForURL("**/app/**", { timeout: 30000 }).catch(async () => {
-    console.log("  waitForURL timed out, current URL:", page.url());
+  // Wait for URL to leave the password/signin page
+  console.log("→ Waiting for post-login redirect...");
+  await page.waitForFunction(
+    () => !window.location.href.includes("/password") && !window.location.href.includes("/signin"),
+    { timeout: 30000 }
+  ).catch(async () => {
+    console.log("  Still on auth page after 30s, URL:", page.url());
     await page.screenshot({ path: path.join(DOWNLOAD_DIR, "login-state.png") });
     console.log("  Screenshot saved to login-state.png");
-    // Try waiting a bit longer for any redirect
-    await page.waitForTimeout(5000);
-    console.log("  URL after extra wait:", page.url());
   });
   console.log("→ Post-login URL:", page.url());
 

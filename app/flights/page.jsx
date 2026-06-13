@@ -215,7 +215,13 @@ function FlightsContent() {
     const paxParam = pax > 1 ? `?adults=${pax}` : "";
     const kiwiUrl = `https://www.kiwi.com/en/search/results/${slugFrom}/${slugTo}/${d}/${r}${paxParam}`;
     const tpUrl = `https://c111.travelpayouts.com/click?shmarker=722477&promo_id=3791&source_type=customlink&type=click&custom_url=${encodeURIComponent(kiwiUrl)}`;
-    window.open(`/redirect?to=${encodeURIComponent(tpUrl)}&partner=Kiwi.com&product=flight`, "_blank", "noopener,noreferrer");
+    const dest = `/redirect?to=${encodeURIComponent(tpUrl)}&partner=Kiwi.com&product=flight`;
+    // Mobile browsers block window.open from form submit — navigate in same tab instead
+    if (isMobile) {
+      window.location.href = dest;
+    } else {
+      window.open(dest, "_blank", "noopener,noreferrer");
+    }
   }
 
   function pickDest(dest) {
@@ -293,7 +299,7 @@ function FlightsContent() {
                         ? <div style={{ padding: "10px 12px", fontSize: "12px", color: "#9CA3AF" }}>Searching…</div>
                         : fromSugg.map((c, i) => (
                           <div key={i}
-                            onMouseDown={() => { setFrom(c.label || c.name); setFromKiwi(resolveKiwi(c.name) || buildKiwiSlugFromSugg(c.name, c.sub) || ""); setShowFromSugg(false); }}
+                            onPointerDown={() => { setFrom(c.label || c.name); setFromKiwi(resolveKiwi(c.name) || buildKiwiSlugFromSugg(c.name, c.sub) || ""); setShowFromSugg(false); }}
                             style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < fromSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
                             onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
                             onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
@@ -321,7 +327,7 @@ function FlightsContent() {
                         ? <div style={{ padding: "10px 12px", fontSize: "12px", color: "#9CA3AF" }}>Searching…</div>
                         : toSugg.map((c, i) => (
                           <div key={i}
-                            onMouseDown={() => { setTo(c.label || c.name); setToKiwi(resolveKiwi(c.name) || toKiwiSlug(c.name) || ""); setShowToSugg(false); }}
+                            onPointerDown={() => { setTo(c.label || c.name); setToKiwi(resolveKiwi(c.name) || toKiwiSlug(c.name) || ""); setShowToSugg(false); }}
                             style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < toSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
                             onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
                             onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
