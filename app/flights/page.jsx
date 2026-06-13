@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import NavBar from "../components/NavBar";
+import PromoBanner from "../components/PromoBanner";
 import Footer from "../components/Footer";
 import FloatingChat from "../components/FloatingChat";
 import { useAuth } from "../../contexts/AuthContext";
@@ -256,6 +257,7 @@ function FlightsContent() {
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
       <NavBar active="flights" />
+      <PromoBanner />
 
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <div style={{ position: "relative", height: "320px", overflow: "hidden" }}>

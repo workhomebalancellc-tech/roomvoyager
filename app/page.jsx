@@ -11,6 +11,88 @@ const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
+function NewsletterSignup() {
+  const [name,    setName]    = useState("");
+  const [email,   setEmail]   = useState("");
+  const [status,  setStatus]  = useState("idle"); // idle | loading | success | error | duplicate
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!email) return;
+    setStatus("loading");
+    try {
+      const res  = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, source: "homepage" }),
+      });
+      const data = await res.json();
+      if (!res.ok) { setStatus("error"); return; }
+      setStatus(data.alreadySubscribed ? "duplicate" : "success");
+    } catch { setStatus("error"); }
+  }
+
+  return (
+    <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #0052CC 100%)`, padding: isMobile ? "48px 20px" : "64px 24px", textAlign: "center" }}>
+      <div style={{ maxWidth: "520px", margin: "0 auto" }}>
+        <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>✉️ Stay in the Loop</p>
+        <h2 style={{ color: "#fff", fontSize: isMobile ? "24px" : "30px", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.2 }}>
+          Get deals &amp; double-points alerts
+        </h2>
+        <p style={{ color: "#BFDBFE", fontSize: "14px", margin: "0 0 28px", lineHeight: 1.6 }}>
+          Be the first to know when we run promos. No spam — just travel deals.
+        </p>
+
+        {status === "success" ? (
+          <div style={{ background: "rgba(255,255,255,0.12)", borderRadius: "14px", padding: "20px 24px", color: "#fff", fontWeight: "700", fontSize: "16px" }}>
+            🎉 You're on the list! Watch your inbox for deals.
+          </div>
+        ) : status === "duplicate" ? (
+          <div style={{ background: "rgba(255,255,255,0.12)", borderRadius: "14px", padding: "20px 24px", color: "#BFDBFE", fontWeight: "600", fontSize: "15px" }}>
+            You're already subscribed — we've got you covered! ✅
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "10px" }}>
+            <input
+              type="text"
+              placeholder="First name (optional)"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              style={{ flex: "1", padding: "13px 16px", borderRadius: "10px", border: "none", fontSize: "14px", outline: "none", background: "rgba(255,255,255,0.15)", color: "#fff", "::placeholder": { color: "#93C5FD" } }}
+            />
+            <input
+              type="email"
+              placeholder="Your email address"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              style={{ flex: "2", padding: "13px 16px", borderRadius: "10px", border: "none", fontSize: "14px", outline: "none", background: "rgba(255,255,255,0.15)", color: "#fff" }}
+            />
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              style={{ background: ORANGE, color: "#fff", fontWeight: "800", fontSize: "14px", padding: "13px 24px", borderRadius: "10px", border: "none", cursor: "pointer", flexShrink: 0, opacity: status === "loading" ? 0.7 : 1 }}
+            >
+              {status === "loading" ? "Joining…" : "Subscribe"}
+            </button>
+          </form>
+        )}
+
+        {status === "error" && (
+          <p style={{ color: "#FCA5A5", fontSize: "13px", marginTop: "10px" }}>Something went wrong — please try again.</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState("hotels");
   const [searchVal, setSearchVal] = useState("");
@@ -258,6 +340,9 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* NEWSLETTER SIGNUP */}
+      <NewsletterSignup />
 
       {/* FINAL CTA */}
       <div style={{ background: "#fff", padding: "64px 24px", textAlign: "center" }}>

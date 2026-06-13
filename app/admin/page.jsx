@@ -711,6 +711,92 @@ function AdminCreateBooking({ adminEmail }) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ── Email Blast ───────────────────────────────────────────────────────────────
+function SendBlast({ adminEmail }) {
+  const [subject,     setSubject]     = useState("🔥 Deals of the Week — Double Points Are Live!");
+  const [messageBody, setMessageBody] = useState(
+    "Great news — we just turned on Double Points for all hotel and cruise bookings!\n\n" +
+    "For a limited time, earn 2× rewards on every stay and sailing you book through RoomVoyager. " +
+    "That means faster cash back and more money back in your pocket.\n\n" +
+    "Don't miss out — double points won't last long!"
+  );
+  const [audience,    setAudience]    = useState("all");
+  const [count,       setCount]       = useState(null);
+  const [loading,     setLoading]     = useState(false);
+  const [result,      setResult]      = useState(null);
+
+  async function loadCount() {
+    try {
+      const res  = await fetch(`/api/admin/send-blast?adminEmail=${encodeURIComponent(adminEmail)}&audience=${audience}`);
+      const data = await res.json();
+      setCount(data.count ?? null);
+    } catch { setCount(null); }
+  }
+
+  async function handleSend() {
+    if (!window.confirm(`Send to ${count ?? "all"} recipients?`)) return;
+    setLoading(true);
+    setResult(null);
+    try {
+      const res  = await fetch("/api/admin/send-blast", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ adminEmail, subject, messageBody, audience }),
+      });
+      setResult(await res.json());
+    } catch (e) {
+      setResult({ error: e.message });
+    }
+    setLoading(false);
+  }
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 16px" }}>✉️ Send Email Blast</p>
+
+      {/* Audience */}
+      <div style={{ marginBottom: "14px" }}>
+        <label style={{ fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "6px" }}>Audience</label>
+        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+          {[["all","Everyone"],["users","Registered users"],["subscribers","Newsletter only"]].map(([val, label]) => (
+            <button key={val} onClick={() => { setAudience(val); setCount(null); }} style={{ padding: "6px 14px", borderRadius: "8px", border: "1px solid", fontSize: "12px", fontWeight: "600", cursor: "pointer", background: audience === val ? NAVY : "#F9FAFB", color: audience === val ? "#fff" : "#374151", borderColor: audience === val ? NAVY : "#D1D5DB" }}>
+              {label}
+            </button>
+          ))}
+          <button onClick={loadCount} style={{ padding: "6px 14px", borderRadius: "8px", border: "1px solid #D1D5DB", fontSize: "12px", fontWeight: "600", cursor: "pointer", background: "#F9FAFB", color: "#374151" }}>
+            {count !== null ? `👥 ${count} recipients` : "Preview count"}
+          </button>
+        </div>
+      </div>
+
+      {/* Subject */}
+      <div style={{ marginBottom: "12px" }}>
+        <label style={{ fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "6px" }}>Subject line</label>
+        <input value={subject} onChange={e => setSubject(e.target.value)} style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid #D1D5DB", fontSize: "13px", boxSizing: "border-box", outline: "none" }} />
+      </div>
+
+      {/* Body */}
+      <div style={{ marginBottom: "16px" }}>
+        <label style={{ fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "6px" }}>Message body</label>
+        <textarea value={messageBody} onChange={e => setMessageBody(e.target.value)} rows={6} style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid #D1D5DB", fontSize: "13px", boxSizing: "border-box", resize: "vertical", outline: "none", lineHeight: 1.6 }} />
+      </div>
+
+      <button onClick={handleSend} disabled={loading} style={{ background: ORANGE, color: "#fff", fontWeight: "800", fontSize: "13px", padding: "10px 24px", borderRadius: "10px", border: "none", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1 }}>
+        {loading ? "Sending…" : "🚀 Send Blast"}
+      </button>
+
+      {result && (
+        <div style={{ marginTop: "14px", padding: "12px 16px", borderRadius: "10px", background: result.error ? "#FEF2F2" : "#F0FDF4", border: `1px solid ${result.error ? "#FCA5A5" : "#86EFAC"}` }}>
+          {result.error
+            ? <p style={{ color: "#DC2626", fontSize: "13px", margin: 0 }}>Error: {result.error}</p>
+            : <p style={{ color: "#15803D", fontSize: "13px", margin: 0 }}>✅ Sent {result.sent} · Failed {result.failed} · Total {result.total}</p>
+          }
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Expedia CSV Import ────────────────────────────────────────────────────────
 /* ── Travelpayouts Flight Import ──────────────────────────────────────────── */
 function TravelpayoutsImport() {
@@ -1379,6 +1465,11 @@ export default function AdminDashboard() {
         {/* TRAVELPAYOUTS FLIGHT IMPORT */}
         <div style={{ marginBottom: "20px" }}>
           <TravelpayoutsImport adminEmail={user.email} />
+        </div>
+
+        {/* EMAIL BLAST */}
+        <div style={{ marginBottom: "20px" }}>
+          <SendBlast adminEmail={user.email} />
         </div>
 
         {/* RATES REFERENCE */}
