@@ -240,7 +240,7 @@ function FlightsContent() {
       }).catch(() => {}); // never block navigation
     }
 
-    window.location.href = dest;
+    window.open(dest, "_blank");
   }
 
   function pickDest(dest) {
