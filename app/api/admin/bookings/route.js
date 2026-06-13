@@ -4,6 +4,7 @@
 
 import { adminDb } from "../../../../lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
+import { isPromoActive } from "../settings/route";
 
 const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
 
@@ -41,7 +42,10 @@ export async function POST(req) {
     }
 
     const rates = PTS_RATES[product] || PTS_RATES.cruise;
-    const rate  = (useDouble && rates.dbl) ? rates.dbl : rates.std;
+    // promoActive overrides manual double flag — if promo is live, everyone gets double
+    const promoActive = await isPromoActive();
+    const applyDouble = promoActive || useDouble;
+    const rate  = (applyDouble && rates.dbl) ? rates.dbl : rates.std;
     const pts   = Math.round((parseFloat(amount) || 0) * rate);
     const bookingRef = `RV-${Date.now().toString(36).toUpperCase()}`;
 
@@ -53,7 +57,8 @@ export async function POST(req) {
       reference:   reference   || bookingRef,
       notes:       notes       || "",
       status:      status      || "upcoming",
-      double:      useDouble   || false,
+      double:      applyDouble || false,
+      promoApplied: promoActive || false,
       pts, rate,
       source:      "admin",
       createdAt:   FieldValue.serverTimestamp(),

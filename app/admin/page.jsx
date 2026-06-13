@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 // Points management now goes through /api/admin/firestore (server-side, bypasses CSP/extensions)
 
@@ -148,7 +148,27 @@ const PTS_RATES = {
 };
 
 function ManualBookingLog() {
+  const [promoActive, setPromoActive] = useState(false);
   const [form, setForm] = useState({ guestEmail: "", product: "cruise", amount: "", double: false, notes: "" });
+
+  useEffect(() => {
+    fetch("/api/admin/settings")
+      .then(r => r.json())
+      .then(d => {
+        if (!d.doublePointsOn) return;
+        const now = new Date();
+        if (d.promoStartDate) {
+          const start = new Date(`${d.promoStartDate}T${d.promoStartTime || "00:00"}:00`);
+          if (now < start) return;
+        }
+        if (d.promoEndDate) {
+          const end = new Date(`${d.promoEndDate}T${d.promoEndTime || "23:59"}:00`);
+          if (now > end) return;
+        }
+        setPromoActive(true);
+      })
+      .catch(() => {});
+  }, []);
   const [preview, setPreview]     = useState(null);  // { pts, cash, memberName }
   const [looking, setLooking]     = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -231,7 +251,12 @@ function ManualBookingLog() {
   return (
     <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
       <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>📝 Log Booking & Award Points</p>
-      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>Enter a booking to auto-calculate points, credit the member, log to Airtable, and email the customer.</p>
+      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 12px" }}>Enter a booking to auto-calculate points, credit the member, log to Airtable, and email the customer.</p>
+      {promoActive && (
+        <div style={{ marginBottom: "14px", padding: "8px 12px", background: "#FFF7ED", borderRadius: "8px", border: `1px solid ${ORANGE}`, fontSize: "12px", fontWeight: "700", color: ORANGE }}>
+          🔥 Double Points Promo is active — all eligible bookings will automatically earn 2× points
+        </div>
+      )}
 
       {result?.ok ? (
         <div style={{ textAlign: "center", padding: "24px", background: "#F0FDF4", borderRadius: "12px" }}>
@@ -342,13 +367,47 @@ function ManualBookingLog() {
 }
 
 // ── Admin Control Toggles ─────────────────────────────────────────────────────
-function AdminToggles() {
-  const [bookingTracking, setBookingTracking] = useState(true);   // true = Auto
-  const [doublePointsOn,    setDoublePointsOn]    = useState(false);
-  const [promoStartDate,    setPromoStartDate]    = useState("");
-  const [promoStartTime,    setPromoStartTime]    = useState("");
-  const [promoEndDate,      setPromoEndDate]      = useState("");
-  const [promoEndTime,      setPromoEndTime]      = useState("");
+function AdminToggles({ adminEmail }) {
+  const [bookingTracking, setBookingTracking] = useState(true);
+  const [doublePointsOn,  setDoublePointsOn]  = useState(false);
+  const [promoStartDate,  setPromoStartDate]  = useState("");
+  const [promoStartTime,  setPromoStartTime]  = useState("");
+  const [promoEndDate,    setPromoEndDate]    = useState("");
+  const [promoEndTime,    setPromoEndTime]    = useState("");
+  const [saving,          setSaving]          = useState(false);
+  const [saveMsg,         setSaveMsg]         = useState("");
+
+  // Load settings on mount
+  useEffect(() => {
+    fetch("/api/admin/settings")
+      .then(r => r.json())
+      .then(d => {
+        if (d.bookingTracking  !== undefined) setBookingTracking(d.bookingTracking);
+        if (d.doublePointsOn   !== undefined) setDoublePointsOn(d.doublePointsOn);
+        if (d.promoStartDate)  setPromoStartDate(d.promoStartDate);
+        if (d.promoStartTime)  setPromoStartTime(d.promoStartTime);
+        if (d.promoEndDate)    setPromoEndDate(d.promoEndDate);
+        if (d.promoEndTime)    setPromoEndTime(d.promoEndTime);
+      })
+      .catch(() => {});
+  }, []);
+
+  async function save(patch) {
+    setSaving(true); setSaveMsg("");
+    await fetch("/api/admin/settings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        adminEmail,
+        bookingTracking, doublePointsOn,
+        promoStartDate, promoStartTime, promoEndDate, promoEndTime,
+        ...patch,
+      }),
+    }).catch(() => {});
+    setSaving(false);
+    setSaveMsg("Saved ✓");
+    setTimeout(() => setSaveMsg(""), 2000);
+  }
 
   const toggleStyle = (active, color) => ({
     width: "52px", height: "28px", borderRadius: "14px",
@@ -366,7 +425,11 @@ function AdminToggles() {
 
   return (
     <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
-      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 18px" }}>🎛️ Booking Controls</p>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "18px" }}>
+        <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: 0 }}>🎛️ Booking Controls</p>
+        {saving && <span style={{ fontSize: "11px", color: "#9CA3AF" }}>Saving…</span>}
+        {!saving && saveMsg && <span style={{ fontSize: "11px", color: GREEN, fontWeight: "600" }}>{saveMsg}</span>}
+      </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
 
@@ -377,16 +440,16 @@ function AdminToggles() {
               <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 2px" }}>Booking Tracking</p>
               <p style={{ fontSize: "11px", color: "#6B7280", margin: 0 }}>Auto logs bookings immediately · Manual requires your review</p>
             </div>
-            <button onClick={() => setBookingTracking(v => !v)} style={toggleStyle(bookingTracking, GREEN)}>
+            <button onClick={() => { setBookingTracking(v => !v); save({ bookingTracking: !bookingTracking }); }} style={toggleStyle(bookingTracking, GREEN)}>
               <span style={knobStyle(bookingTracking)} />
             </button>
           </div>
           <div style={{ display: "flex", gap: "6px", marginBottom: "8px" }}>
-            <button onClick={() => setBookingTracking(true)}
+            <button onClick={() => { setBookingTracking(true); save({ bookingTracking: true }); }}
               style={{ flex: 1, padding: "6px", borderRadius: "8px", border: `1.5px solid ${bookingTracking ? GREEN : "#E5E7EB"}`, background: bookingTracking ? "#F0FDF4" : "#fff", fontSize: "12px", fontWeight: "700", cursor: "pointer", color: bookingTracking ? GREEN : "#6B7280" }}>
               Auto
             </button>
-            <button onClick={() => setBookingTracking(false)}
+            <button onClick={() => { setBookingTracking(false); save({ bookingTracking: false }); }}
               style={{ flex: 1, padding: "6px", borderRadius: "8px", border: `1.5px solid ${!bookingTracking ? ORANGE : "#E5E7EB"}`, background: !bookingTracking ? "#FFF7ED" : "#fff", fontSize: "12px", fontWeight: "700", cursor: "pointer", color: !bookingTracking ? ORANGE : "#6B7280" }}>
               Manual
             </button>
@@ -401,9 +464,9 @@ function AdminToggles() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
             <div>
               <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 2px" }}>🔥 Double Points Promotion</p>
-              <p style={{ fontSize: "11px", color: "#6B7280", margin: 0 }}>When on, all eligible bookings earn 2× points</p>
+              <p style={{ fontSize: "11px", color: "#6B7280", margin: 0 }}>When on, all eligible bookings earn 2× points automatically</p>
             </div>
-            <button onClick={() => setDoublePointsOn(v => !v)} style={toggleStyle(doublePointsOn, ORANGE)}>
+            <button onClick={() => { const v = !doublePointsOn; setDoublePointsOn(v); save({ doublePointsOn: v }); }} style={toggleStyle(doublePointsOn, ORANGE)}>
               <span style={knobStyle(doublePointsOn)} />
             </button>
           </div>
@@ -412,22 +475,22 @@ function AdminToggles() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginBottom: "8px" }}>
               <div>
                 <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Start Date</label>
-                <input type="date" value={promoStartDate} onChange={e => setPromoStartDate(e.target.value)}
+                <input type="date" value={promoStartDate} onChange={e => { setPromoStartDate(e.target.value); save({ promoStartDate: e.target.value }); }}
                   style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", boxSizing: "border-box", outline: "none" }} />
               </div>
               <div>
                 <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Start Time</label>
-                <input type="time" value={promoStartTime} onChange={e => setPromoStartTime(e.target.value)}
+                <input type="time" value={promoStartTime} onChange={e => { setPromoStartTime(e.target.value); save({ promoStartTime: e.target.value }); }}
                   style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", boxSizing: "border-box", outline: "none" }} />
               </div>
               <div>
                 <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>End Date</label>
-                <input type="date" value={promoEndDate} onChange={e => setPromoEndDate(e.target.value)}
+                <input type="date" value={promoEndDate} onChange={e => { setPromoEndDate(e.target.value); save({ promoEndDate: e.target.value }); }}
                   style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", boxSizing: "border-box", outline: "none" }} />
               </div>
               <div>
                 <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>End Time</label>
-                <input type="time" value={promoEndTime} onChange={e => setPromoEndTime(e.target.value)}
+                <input type="time" value={promoEndTime} onChange={e => { setPromoEndTime(e.target.value); save({ promoEndTime: e.target.value }); }}
                   style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", boxSizing: "border-box", outline: "none" }} />
               </div>
             </div>
@@ -914,7 +977,7 @@ export default function AdminDashboard() {
 
         {/* CONTROL TOGGLES */}
         <div style={{ marginBottom: "20px" }}>
-          <AdminToggles />
+          <AdminToggles adminEmail={user.email} />
         </div>
 
         {/* QUICK LINKS */}
