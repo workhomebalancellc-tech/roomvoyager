@@ -166,5 +166,15 @@ export async function POST(req) {
     return Response.json({ ok: true });
   }
 
+  if (action === "delete") {
+    const { adminEmail, bookingId } = body;
+    if (!ALLOWED_EMAILS.includes(adminEmail)) {
+      return Response.json({ error: "Not authorized" }, { status: 403 });
+    }
+    if (!bookingId) return Response.json({ error: "bookingId required" }, { status: 400 });
+    await adminDb.collection("bookings").doc(bookingId).delete();
+    return Response.json({ ok: true });
+  }
+
   return Response.json({ error: "Unknown action" }, { status: 400 });
 }

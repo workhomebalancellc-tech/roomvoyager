@@ -711,6 +711,91 @@ function AdminCreateBooking({ adminEmail }) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ── Manage / Delete Bookings ──────────────────────────────────────────────────
+function ManageBookings({ adminEmail }) {
+  const [email,    setEmail]    = useState("");
+  const [bookings, setBookings] = useState([]);
+  const [loading,  setLoading]  = useState(false);
+  const [deleting, setDeleting] = useState(null); // bookingId being deleted
+  const [msg,      setMsg]      = useState("");
+
+  async function lookup() {
+    if (!email) return;
+    setLoading(true); setMsg(""); setBookings([]);
+    // Find user UID by email
+    const res  = await fetch("/api/admin/firestore", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "lookup", email }),
+    });
+    const data = await res.json();
+    if (!res.ok) { setMsg("⚠️ No account found for that email."); setLoading(false); return; }
+
+    // Fetch their bookings
+    const bRes  = await fetch(`/api/admin/bookings?uid=${data.uid}`);
+    const bData = await bRes.json();
+    setBookings(bData.bookings || []);
+    if ((bData.bookings || []).length === 0) setMsg("No bookings on file for this customer.");
+    setLoading(false);
+  }
+
+  async function deleteBooking(bookingId) {
+    if (!window.confirm("Delete this booking? This cannot be undone.")) return;
+    setDeleting(bookingId);
+    await fetch("/api/admin/bookings", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "delete", adminEmail, bookingId }),
+    });
+    setBookings(prev => prev.filter(b => b.id !== bookingId));
+    setDeleting(null);
+  }
+
+  function fmtDate(str) {
+    if (!str) return "—";
+    return new Date(str + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>🗂️ Manage Customer Bookings</p>
+      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 14px" }}>Look up a customer's bookings to remove duplicates or incorrect entries.</p>
+
+      <div style={{ display: "flex", gap: "8px", marginBottom: "14px" }}>
+        <input type="email" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && lookup()}
+          placeholder="customer@email.com"
+          style={{ flex: 1, padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", outline: "none" }} />
+        <button onClick={lookup} disabled={loading || !email}
+          style={{ padding: "8px 16px", background: NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
+          {loading ? "…" : "Look up"}
+        </button>
+      </div>
+
+      {msg && <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 10px" }}>{msg}</p>}
+
+      {bookings.length > 0 && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          {bookings.map(b => (
+            <div key={b.id} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "10px 14px", background: "#F9FAFB", borderRadius: "10px", border: "1px solid #E5E7EB" }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 2px" }}>
+                  {b.destination || "Unnamed booking"} · {b.product}
+                </p>
+                <p style={{ fontSize: "11px", color: "#6B7280", margin: 0 }}>
+                  {fmtDate(b.startDate)}{b.endDate ? ` → ${fmtDate(b.endDate)}` : ""} · {b.pts?.toLocaleString() || 0} pts · Ref: {b.reference || "—"} · <span style={{ color: b.status === "completed" ? GREEN : NAVY }}>{b.status}</span>
+                </p>
+              </div>
+              <button onClick={() => deleteBooking(b.id)} disabled={deleting === b.id}
+                style={{ padding: "6px 12px", background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA", borderRadius: "8px", fontSize: "11px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap" }}>
+                {deleting === b.id ? "…" : "🗑️ Delete"}
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 function AdminLogin() {
   const { signInWithEmail, signInWithGoogle } = useAuth();
   const [email, setEmail]       = useState("");
@@ -1004,6 +1089,11 @@ export default function AdminDashboard() {
         {/* BOOKING CREATION */}
         <div style={{ marginBottom: "20px" }}>
           <AdminCreateBooking adminEmail={user.email} />
+        </div>
+
+        {/* MANAGE BOOKINGS */}
+        <div style={{ marginBottom: "20px" }}>
+          <ManageBookings adminEmail={user.email} />
         </div>
 
         {/* POINTS MANAGEMENT */}

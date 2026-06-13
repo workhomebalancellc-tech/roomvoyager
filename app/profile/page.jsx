@@ -36,10 +36,8 @@ export default function ProfilePage() {
   const { user, loading, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
 
-  /* ── countdown (overview) ── */
-  const [tripDate, setTripDate]     = useState("");
-  const [editingTrip, setEditingTrip] = useState(false);
-  const [tempDate, setTempDate]     = useState("");
+  /* ── countdown (overview) — auto-populated from Firestore bookings ── */
+  const [tripDate, setTripDate] = useState("");
   const daysLeft = calcCountdown(tripDate);
 
   /* ── local bookings (customer-managed) ── */
@@ -97,14 +95,6 @@ export default function ProfilePage() {
   function saveBookings(next) {
     setBookings(next);
     localStorage.setItem("rv_bookings", JSON.stringify(next));
-  }
-
-  function saveTrip() {
-    if (tempDate) { setTripDate(tempDate); localStorage.setItem("rv_trip_date", tempDate); }
-    setEditingTrip(false);
-  }
-  function clearTrip() {
-    setTripDate(""); setTempDate(""); localStorage.removeItem("rv_trip_date"); setEditingTrip(false);
   }
 
   function addBooking(e) {
@@ -257,64 +247,36 @@ export default function ProfilePage() {
                 <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "7px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", textDecoration: "none" }}>View Rewards →</a>
               </div>
               <div style={{ padding: "24px" }}>
-                {!tripDate && !editingTrip && (
+                {!tripDate ? (
                   <div style={{ textAlign: "center", padding: "12px 0" }}>
                     <p style={{ fontSize: "36px", margin: "0 0 8px" }}>🗓️</p>
-                    <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>No trip logged yet</p>
-                    <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px" }}>Add your trip completion date to track your 45-day unlock countdown.</p>
-                    <button onClick={() => { setEditingTrip(true); setTempDate(""); }}
-                      style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "13px", fontWeight: "700", cursor: "pointer" }}>
-                      + Add trip date
-                    </button>
+                    <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>No upcoming trip on file</p>
+                    <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>Your 45-day redemption countdown will appear here once your booking is confirmed.</p>
                   </div>
-                )}
-                {editingTrip && (
+                ) : daysLeft > 0 ? (
                   <div>
-                    <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 10px", fontSize: "14px" }}>When did your most recent trip end?</p>
-                    <input type="date" value={tempDate} onChange={e => setTempDate(e.target.value)} max={new Date().toISOString().split("T")[0]}
-                      style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box", marginBottom: "12px" }} />
-                    <div style={{ display: "flex", gap: "10px" }}>
-                      <button onClick={saveTrip} disabled={!tempDate}
-                        style={{ flex: 1, background: tempDate ? NAVY : "#D1D5DB", color: "#fff", border: "none", borderRadius: "8px", padding: "10px", fontSize: "14px", fontWeight: "700", cursor: tempDate ? "pointer" : "default" }}>Save</button>
-                      <button onClick={() => setEditingTrip(false)}
-                        style={{ background: "#fff", color: "#374151", border: "1px solid #E5E7EB", borderRadius: "8px", padding: "10px 16px", fontSize: "14px", cursor: "pointer" }}>Cancel</button>
+                    <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "16px", flexWrap: "wrap" }}>
+                      <div style={{ background: "#FFF7ED", border: `2px solid ${ORANGE}`, borderRadius: "16px", padding: "18px 24px", textAlign: "center", minWidth: "110px" }}>
+                        <p style={{ fontSize: "48px", fontWeight: "800", color: ORANGE, margin: "0 0 2px", lineHeight: 1 }}>{daysLeft}</p>
+                        <p style={{ fontSize: "12px", fontWeight: "700", color: "#92400E", margin: 0 }}>days left</p>
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 4px", fontSize: "14px" }}>Unlocks in {daysLeft} day{daysLeft !== 1 ? "s" : ""}</p>
+                        <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 4px" }}>Trip ended: <strong>{fmtDate(tripDate)}</strong></p>
+                        <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>Unlocks: <strong style={{ color: NAVY }}>{fmtDate(new Date(new Date(tripDate + "T12:00:00").getTime() + 45*24*60*60*1000).toISOString().split("T")[0])}</strong></p>
+                      </div>
                     </div>
+                    <div style={{ background: "#E5E7EB", borderRadius: "999px", height: "8px", overflow: "hidden", marginBottom: "6px" }}>
+                      <div style={{ background: `linear-gradient(to right, ${NAVY}, ${ORANGE})`, height: "100%", borderRadius: "999px", width: `${Math.min(100,((45-daysLeft)/45)*100)}%` }} />
+                    </div>
+                    <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0, textAlign: "right" }}>{45-daysLeft} of 45 days</p>
                   </div>
-                )}
-                {tripDate && !editingTrip && (
-                  <div>
-                    {daysLeft > 0 ? (
-                      <div>
-                        <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "16px", flexWrap: "wrap" }}>
-                          <div style={{ background: "#FFF7ED", border: `2px solid ${ORANGE}`, borderRadius: "16px", padding: "18px 24px", textAlign: "center", minWidth: "110px" }}>
-                            <p style={{ fontSize: "48px", fontWeight: "800", color: ORANGE, margin: "0 0 2px", lineHeight: 1 }}>{daysLeft}</p>
-                            <p style={{ fontSize: "12px", fontWeight: "700", color: "#92400E", margin: 0 }}>days left</p>
-                          </div>
-                          <div style={{ flex: 1 }}>
-                            <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 4px", fontSize: "14px" }}>Unlocks in {daysLeft} day{daysLeft !== 1 ? "s" : ""}</p>
-                            <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 4px" }}>Trip ended: <strong>{fmtDate(tripDate)}</strong></p>
-                            <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>Unlocks: <strong style={{ color: NAVY }}>{fmtDate(new Date(new Date(tripDate + "T12:00:00").getTime() + 45*24*60*60*1000).toISOString().split("T")[0])}</strong></p>
-                          </div>
-                        </div>
-                        <div style={{ background: "#E5E7EB", borderRadius: "999px", height: "8px", overflow: "hidden", marginBottom: "6px" }}>
-                          <div style={{ background: `linear-gradient(to right, ${NAVY}, ${ORANGE})`, height: "100%", borderRadius: "999px", width: `${Math.min(100,((45-daysLeft)/45)*100)}%` }} />
-                        </div>
-                        <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "0 0 14px", textAlign: "right" }}>{45-daysLeft} of 45 days</p>
-                      </div>
-                    ) : (
-                      <div style={{ background: "#F0FDF4", border: "2px solid #86EFAC", borderRadius: "14px", padding: "18px 20px", marginBottom: "14px" }}>
-                        <p style={{ fontSize: "28px", margin: "0 0 6px" }}>🎉</p>
-                        <p style={{ fontWeight: "700", color: "#15803D", margin: "0 0 4px" }}>Points are ready to redeem!</p>
-                        <p style={{ fontSize: "13px", color: "#374151", margin: "0 0 12px" }}>45 days have passed since {fmtDate(tripDate)}.</p>
-                        <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "9px 18px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", textDecoration: "none", display: "inline-block" }}>Redeem now →</a>
-                      </div>
-                    )}
-                    <div style={{ display: "flex", gap: "8px" }}>
-                      <button onClick={() => { setEditingTrip(true); setTempDate(tripDate); }}
-                        style={{ background: LIGHT_BLUE, color: NAVY, border: "none", borderRadius: "8px", padding: "7px 14px", fontSize: "12px", fontWeight: "600", cursor: "pointer" }}>✏️ Update</button>
-                      <button onClick={clearTrip}
-                        style={{ background: "#fff", color: "#9CA3AF", border: "1px solid #E5E7EB", borderRadius: "8px", padding: "7px 14px", fontSize: "12px", cursor: "pointer" }}>Clear</button>
-                    </div>
+                ) : (
+                  <div style={{ background: "#F0FDF4", border: "2px solid #86EFAC", borderRadius: "14px", padding: "18px 20px" }}>
+                    <p style={{ fontSize: "28px", margin: "0 0 6px" }}>🎉</p>
+                    <p style={{ fontWeight: "700", color: "#15803D", margin: "0 0 4px" }}>Points are ready to redeem!</p>
+                    <p style={{ fontSize: "13px", color: "#374151", margin: "0 0 12px" }}>45 days have passed since {fmtDate(tripDate)}.</p>
+                    <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "9px 18px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", textDecoration: "none", display: "inline-block" }}>Redeem now →</a>
                   </div>
                 )}
               </div>
