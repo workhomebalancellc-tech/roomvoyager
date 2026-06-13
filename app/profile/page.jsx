@@ -56,8 +56,6 @@ export default function ProfilePage() {
   const showNights = ["cruise", "hotel", "package"].includes(reviewForm.product);
 
   useEffect(() => {
-    const d = localStorage.getItem("rv_trip_date");
-    if (d) setTripDate(d);
     const b = localStorage.getItem("rv_bookings");
     if (b) { try { setBookings(JSON.parse(b)); } catch {} }
   }, []);
