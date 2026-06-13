@@ -15,8 +15,15 @@ import { FieldValue } from "firebase-admin/firestore";
 
 export const dynamic = "force-dynamic";
 
-const IMPORT_SECRET = process.env.EXPEDIA_IMPORT_SECRET; // reuse same secret
-const TP_TOKEN      = process.env.TRAVELPAYOUTS_TOKEN;
+const IMPORT_SECRET  = process.env.EXPEDIA_IMPORT_SECRET; // reuse same secret
+const TP_TOKEN       = process.env.TRAVELPAYOUTS_TOKEN;
+const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
+
+function isAuthorized(body, headers) {
+  if (body.adminEmail && ALLOWED_EMAILS.includes(body.adminEmail)) return true;
+  const secret = body.secret || headers?.get?.("x-admin-secret");
+  return !!(secret && secret === IMPORT_SECRET);
+}
 
 const PTS_PER_DOLLAR = 5;
 
@@ -154,8 +161,7 @@ async function awardPoints(uid, pts, reason, bookingRef, returnDate) {
 export async function POST(req) {
   // Auth check
   const body = await req.json().catch(() => ({}));
-  const secret = body.secret || req.headers.get("x-admin-secret");
-  if (!secret || secret !== IMPORT_SECRET) {
+  if (!isAuthorized(body, req.headers)) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
   if (!TP_TOKEN) {
@@ -292,9 +298,8 @@ export async function POST(req) {
 // ── GET: manual trigger from admin panel ────────────────────────────────────
 
 export async function GET(req) {
-  const secret = req.nextUrl?.searchParams?.get("secret")
-    || new URL(req.url).searchParams.get("secret");
-  if (!secret || secret !== IMPORT_SECRET) {
+  const secret = new URL(req.url).searchParams.get("secret");
+  if (!isAuthorized({ secret }, req.headers)) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
   // Forward to POST handler

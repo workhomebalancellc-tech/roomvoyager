@@ -728,7 +728,7 @@ function TravelpayoutsImport() {
     const res  = await fetch("/api/admin/travelpayouts-import", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ dateFrom, dateTo }),
+      body: JSON.stringify({ dateFrom, dateTo, adminEmail: "workhomebalancellc@gmail.com" }),
     });
     const data = await res.json();
     setResult({ ok: res.ok, ...data });
