@@ -174,6 +174,7 @@ function EarningsSlider() {
 
 export default function RewardsPage() {
   const { user: session } = useAuth();
+  const [isMobile, setIsMobile] = useState(false);
   const [userPoints, setUserPoints]           = useState(0);
   const [lifetimePoints, setLifetimePoints]   = useState(0);
   const cashValue = (userPoints / 1000).toFixed(2);
@@ -191,6 +192,13 @@ export default function RewardsPage() {
   const [autoPayMethod, setAutoPayMethod] = useState("zelle");
   const [autoPayHandle, setAutoPayHandle] = useState("");
   const [autoPaySaved, setAutoPaySaved] = useState(false);
+
+  useEffect(() => {
+    function onResize() { setIsMobile(window.innerWidth < 1024); }
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     if (session?.uid) {
