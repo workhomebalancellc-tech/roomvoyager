@@ -75,17 +75,13 @@ export default function ProfilePage() {
           setFirestoreBookings(data.bookings);
           // Auto-populate overview countdown from the most recent booking with an endDate
           // Only auto-set if the user hasn't manually chosen a date
+          // Always use the most recent endDate from Firestore bookings as the source of truth
           const withEnd = data.bookings.filter(b => b.endDate);
           if (withEnd.length > 0) {
             withEnd.sort((a, b) => new Date(b.endDate) - new Date(a.endDate));
             const latestEnd = withEnd[0].endDate;
-            setTripDate(prev => {
-              if (!prev) {
-                localStorage.setItem("rv_trip_date", latestEnd);
-                return latestEnd;
-              }
-              return prev;
-            });
+            setTripDate(latestEnd);
+            localStorage.setItem("rv_trip_date", latestEnd);
           }
         }
       })
