@@ -244,7 +244,15 @@ export default function ProfilePage() {
       <div style={{
         background: `linear-gradient(to bottom, rgba(0,20,60,0.45) 0%, rgba(0,59,149,0.85) 100%), url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=75') center/cover no-repeat`,
         padding: "36px 24px 80px",
+        position: "relative",
       }}>
+        <button
+          onClick={() => { setDeleteOpen(true); setDeleteConfirm(""); setDeleteError(""); }}
+          style={{ position: "absolute", top: "14px", right: "16px", background: "rgba(220,38,38,0.18)", color: "rgba(255,255,255,0.8)", border: "1px solid rgba(220,38,38,0.35)", borderRadius: "8px", padding: "5px 12px", fontSize: "12px", fontWeight: "600", cursor: "pointer", letterSpacing: "0.01em" }}
+          onMouseEnter={e => { e.currentTarget.style.background = "rgba(220,38,38,0.35)"; e.currentTarget.style.color = "#fff"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "rgba(220,38,38,0.18)"; e.currentTarget.style.color = "rgba(255,255,255,0.8)"; }}>
+          🗑️ Delete Account
+        </button>
         <div style={{ maxWidth: "860px", margin: "0 auto", textAlign: "center" }}>
           <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 12px" }}>👤 My Account</p>
           {user.image
@@ -464,16 +472,6 @@ export default function ProfilePage() {
                 onMouseEnter={e => e.currentTarget.style.background = "#FEDDCA"}
                 onMouseLeave={e => e.currentTarget.style.background = "#FFF7F3"}>
                 🚪 Sign Out
-              </button>
-            </div>
-
-            {/* Delete account */}
-            <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", padding: "20px 28px" }}>
-              <p style={{ fontSize: "11px", fontWeight: "700", color: "#DC2626", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 8px" }}>Danger Zone</p>
-              <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 14px" }}>Permanently delete your account and all associated data including bookings, points, and profile information. This cannot be undone.</p>
-              <button onClick={() => { setDeleteOpen(true); setDeleteConfirm(""); setDeleteError(""); }}
-                style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "12px", background: "#FFF1F1", color: "#DC2626", border: "1.5px solid #FECACA", borderRadius: "10px", fontWeight: "700", fontSize: "14px", cursor: "pointer" }}>
-                🗑️ Delete My Account
               </button>
             </div>
 

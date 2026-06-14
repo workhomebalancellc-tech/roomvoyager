@@ -82,7 +82,7 @@ const faqs = [
       },
       {
         q: "How do I delete my account?",
-        a: "You can delete your account directly from your profile page. Go to your Profile, scroll to the bottom of the Overview tab, and click 'Delete My Account.' You'll be asked to type DELETE to confirm. This permanently removes your account, bookings, and all rewards points and cannot be undone.",
+        a: "You can delete your account from your Profile page. Click the 'Delete Account' button in the top-right corner of the profile header. You'll be asked to type DELETE to confirm. This permanently removes your account, bookings, and all rewards points and cannot be undone.",
       },
     ],
   },
