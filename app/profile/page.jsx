@@ -51,6 +51,10 @@ export default function ProfilePage() {
   const [redeemablePoints, setRedeemablePoints] = useState(0);
   const [pendingPoints,    setPendingPoints]    = useState(0);
 
+  /* ── referral code ── */
+  const [referralCode,   setReferralCode]   = useState("");
+  const [refLinkCopied, setRefLinkCopied]  = useState(false);
+
   /* ── name editing ── */
   const [editingName, setEditingName] = useState(false);
   const [nameInput,   setNameInput]   = useState("");
@@ -110,6 +114,14 @@ export default function ProfilePage() {
         setRedeemablePoints(d.points || 0);
         setPendingPoints(d.pendingPoints || 0);
       })
+      .catch(() => {});
+    fetch("/api/admin/firestore", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "initUser", uid: user.uid, name: user.name || "", email: user.email || "" }),
+    })
+      .then(r => r.json())
+      .then(d => { if (d.referralCode) setReferralCode(d.referralCode); })
       .catch(() => {});
   }, [user?.uid]);
 
@@ -441,6 +453,30 @@ export default function ProfilePage() {
                 {nameMsg && <p style={{ fontSize: "11px", color: nameMsg.startsWith("✓") ? "#15803D" : "#DC2626", margin: "8px 0 0 34px", fontWeight: "600" }}>{nameMsg}</p>}
               </div>
             </div>
+
+            {/* Referral code */}
+            {referralCode && (
+              <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", overflow: "hidden" }}>
+                <div style={{ background: NAVY, padding: "16px 24px" }}>
+                  <p style={{ color: "#93C5FD", fontSize: "10px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 2px" }}>🎁 Refer a Friend</p>
+                  <p style={{ color: "#fff", fontSize: "15px", fontWeight: "700", margin: 0 }}>Earn bonus points together</p>
+                </div>
+                <div style={{ padding: "20px 24px" }}>
+                  <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 12px" }}>Share your code — when they make their first booking, you both earn bonus points.</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+                    <div style={{ flex: 1, background: "#F8FAFF", border: `1.5px solid #DBEAFE`, borderRadius: "10px", padding: "10px 14px", fontFamily: "monospace", fontSize: "18px", fontWeight: "800", color: NAVY, letterSpacing: "0.1em" }}>{referralCode}</div>
+                    <button
+                      onClick={() => {
+                        const link = `https://www.roomvoyagertravel.com/account/signup?ref=${referralCode}`;
+                        navigator.clipboard.writeText(link).then(() => { setRefLinkCopied(true); setTimeout(() => setRefLinkCopied(false), 2000); });
+                      }}
+                      style={{ background: refLinkCopied ? "#16A34A" : ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "10px 16px", fontSize: "13px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", transition: "background 0.2s" }}>
+                      {refLinkCopied ? "✓ Copied!" : "Copy Link"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Quick links */}
             <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,59,149,0.1)", padding: "28px" }}>
