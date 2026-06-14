@@ -93,6 +93,14 @@ export async function POST(req) {
       }),
     }).catch(e => console.warn("Email notify error:", e));
 
+    // Auto-award referral bonus on first booking if applicable
+    const siteUrl2 = process.env.NEXTAUTH_URL || "https://www.roomvoyagertravel.com";
+    fetch(`${siteUrl2}/api/admin/firestore`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "awardReferralBonus", uid, product }),
+    }).catch(() => {});
+
     return Response.json({ ok: true, id: docRef.id, reference: doc.reference, pts });
   }
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "../../../contexts/AuthContext";
 
 const NAVY = "#003B95";
@@ -17,20 +17,49 @@ const GoogleIcon = () => (
   </svg>
 );
 
+async function applyReferralCode(uid, code) {
+  if (!code) return;
+  await fetch("/api/admin/firestore", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: "saveReferral", uid, referralCode: code }),
+  }).catch(() => {});
+}
+
 export default function SignUpPage() {
   const { signInWithGoogle, signUpWithEmail } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [referralCode, setReferralCode] = useState("");
+  const [codeValid, setCodeValid] = useState(null); // null | true | false
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const ref = searchParams.get("ref");
+    if (ref) setReferralCode(ref.toUpperCase());
+  }, [searchParams]);
+
+  async function validateCode(code) {
+    if (!code || code.length < 4) { setCodeValid(null); return; }
+    const res = await fetch("/api/admin/firestore", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "lookupReferralCode", code }),
+    }).catch(() => null);
+    if (!res) { setCodeValid(null); return; }
+    setCodeValid(res.ok);
+  }
 
   const handleGoogleSignIn = async () => {
     try {
       setError(null);
-      await signInWithGoogle();
+      const firebaseUser = await signInWithGoogle();
+      if (referralCode) await applyReferralCode(firebaseUser.uid, referralCode);
       router.push("/profile");
     } catch (err) {
       console.error("Google sign-up error:", err.code, err.message);
@@ -53,7 +82,8 @@ export default function SignUpPage() {
     if (password !== confirmPassword) { setError("Passwords do not match"); setLoading(false); return; }
     if (password.length < 8) { setError("Password must be at least 8 characters"); setLoading(false); return; }
     try {
-      await signUpWithEmail(name, email, password);
+      const firebaseUser = await signUpWithEmail(name, email, password);
+      if (referralCode) await applyReferralCode(firebaseUser.uid, referralCode);
       router.push("/profile");
     } catch (err) {
       console.error("Email sign-up error:", err.code, err.message);
@@ -120,6 +150,25 @@ export default function SignUpPage() {
                   onFocus={e => e.target.style.borderColor = NAVY} onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
               </div>
             ))}
+
+            {/* Referral code */}
+            <div style={{ marginBottom: "16px" }}>
+              <label style={{ display: "block", fontSize: "12px", fontWeight: "700", color: "#374151", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Referral Code (Optional)</label>
+              <div style={{ position: "relative" }}>
+                <input
+                  type="text"
+                  placeholder="e.g. JANE4821"
+                  value={referralCode}
+                  onChange={e => { setReferralCode(e.target.value.toUpperCase()); setCodeValid(null); }}
+                  onBlur={() => validateCode(referralCode)}
+                  maxLength={12}
+                  style={{ width: "100%", padding: "11px 14px", border: `1.5px solid ${codeValid === true ? "#16A34A" : codeValid === false ? "#DC2626" : "#E5E7EB"}`, borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box", fontFamily: "monospace" }}
+                />
+                {codeValid === true  && <span style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", color: "#16A34A", fontSize: "16px" }}>✓</span>}
+                {codeValid === false && <span style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", color: "#DC2626", fontSize: "13px" }}>Invalid</span>}
+              </div>
+              {codeValid === true && <p style={{ margin: "4px 0 0", fontSize: "12px", color: "#16A34A" }}>Code applied — you&apos;ll both earn bonus points on your first booking!</p>}
+            </div>
 
             {error && <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", color: "#DC2626", padding: "12px 14px", borderRadius: "10px", fontSize: "13px", marginBottom: "16px" }}>{error}</div>}
 

@@ -1661,6 +1661,108 @@ const IATA_MAP = {
   ROA:"roanoke-virginia-united-states",
 };
 
+function ReferralsPanel() {
+  const [data,    setData]    = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  async function load() {
+    setLoading(true);
+    const res  = await fetch("/api/admin/firestore", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "listReferrals" }) });
+    const json = await res.json();
+    setData(json);
+    setLoading(false);
+  }
+
+  async function awardManual(uid, product) {
+    await fetch("/api/admin/firestore", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "awardReferralBonus", uid, product }) });
+    load();
+  }
+
+  const thStyle = { fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.06em", padding: "8px 12px", textAlign: "left" };
+  const tdStyle = { fontSize: "13px", color: "#111827", padding: "10px 12px", borderTop: "1px solid #F3F4F6" };
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+        <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: 0 }}>🤝 Referral Tracking</p>
+        <button onClick={load} disabled={loading} style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "7px 16px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
+          {loading ? "Loading…" : "Load Referrals"}
+        </button>
+      </div>
+
+      {data && (
+        <>
+          {/* Pending */}
+          <p style={{ fontSize: "12px", fontWeight: "700", color: "#374151", margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+            Pending ({data.pending?.length || 0}) — referred but first booking not yet made
+          </p>
+          {data.pending?.length > 0 ? (
+            <div style={{ overflowX: "auto", marginBottom: "20px" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead><tr style={{ background: "#F9FAFB" }}>
+                  <th style={thStyle}>Email</th>
+                  <th style={thStyle}>Name</th>
+                  <th style={thStyle}>Referred By (UID)</th>
+                  <th style={thStyle}>Manual Award</th>
+                </tr></thead>
+                <tbody>
+                  {data.pending.map((p, i) => (
+                    <tr key={i}>
+                      <td style={tdStyle}>{p.email}</td>
+                      <td style={tdStyle}>{p.name || "—"}</td>
+                      <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: "11px" }}>{p.referredBy}</td>
+                      <td style={tdStyle}>
+                        <select id={`sel-${i}`} style={{ fontSize: "12px", padding: "4px 6px", borderRadius: "6px", border: "1px solid #D1D5DB", marginRight: "6px" }}>
+                          <option value="hotel">Hotel (350 pts)</option>
+                          <option value="flight">Flight (200 pts)</option>
+                          <option value="cruise">Cruise (500 pts)</option>
+                        </select>
+                        <button onClick={() => awardManual(p.uid, document.getElementById(`sel-${i}`).value)}
+                          style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "6px", padding: "4px 10px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
+                          Award
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : <p style={{ fontSize: "13px", color: "#9CA3AF", marginBottom: "20px" }}>No pending referrals.</p>}
+
+          {/* Awarded */}
+          <p style={{ fontSize: "12px", fontWeight: "700", color: "#374151", margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+            Awarded ({data.bonuses?.length || 0})
+          </p>
+          {data.bonuses?.length > 0 ? (
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead><tr style={{ background: "#F9FAFB" }}>
+                  <th style={thStyle}>Referred UID</th>
+                  <th style={thStyle}>Referrer UID</th>
+                  <th style={thStyle}>Product</th>
+                  <th style={thStyle}>Pts Each</th>
+                  <th style={thStyle}>Awarded</th>
+                </tr></thead>
+                <tbody>
+                  {data.bonuses.map((b, i) => (
+                    <tr key={i}>
+                      <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: "11px" }}>{b.referredUid}</td>
+                      <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: "11px" }}>{b.referrerUid}</td>
+                      <td style={tdStyle}>{b.product}</td>
+                      <td style={{ ...tdStyle, fontWeight: "700", color: GREEN }}>{b.pts}</td>
+                      <td style={tdStyle}>{b.awardedAt ? new Date(b.awardedAt).toLocaleDateString() : "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : <p style={{ fontSize: "13px", color: "#9CA3AF" }}>No awarded referrals yet.</p>}
+        </>
+      )}
+    </div>
+  );
+}
+
 function AirportCodeTester() {
   const [input, setInput]   = useState("");
   const [result, setResult] = useState(null);
@@ -1834,6 +1936,11 @@ export default function AdminDashboard() {
         {/* AIRPORT CODE TESTER */}
         <div style={{ marginBottom: "20px" }}>
           <AirportCodeTester />
+        </div>
+
+        {/* REFERRALS */}
+        <div style={{ marginBottom: "20px" }}>
+          <ReferralsPanel />
         </div>
 
         {/* RATES REFERENCE */}

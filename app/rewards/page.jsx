@@ -172,6 +172,49 @@ function EarningsSlider() {
   );
 }
 
+function ReferralCodeBox({ uid }) {
+  const [code, setCode]       = useState("");
+  const [copied, setCopied]   = useState(false);
+
+  useEffect(() => {
+    fetch("/api/admin/firestore", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "initUser", uid, name: "", email: "" }),
+    })
+      .then(r => r.json())
+      .then(d => { if (d.referralCode) setCode(d.referralCode); })
+      .catch(() => {});
+  }, [uid]);
+
+  const referralLink = code ? `https://www.roomvoyagertravel.com/account/signup?ref=${code}` : "";
+
+  function copyLink() {
+    navigator.clipboard.writeText(referralLink).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
+
+  if (!code) return <div style={{ padding: "16px", background: LIGHT_BLUE, borderRadius: "12px", fontSize: "13px", color: "#6B7280" }}>Loading your referral code…</div>;
+
+  return (
+    <div style={{ background: LIGHT_BLUE, borderRadius: "16px", padding: "24px" }}>
+      <p style={{ fontWeight: "700", color: NAVY, margin: "0 0 4px", fontSize: "15px" }}>Your referral code</p>
+      <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 16px" }}>Share this code or link. When your friend makes their first booking, you both earn bonus points automatically.</p>
+      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "12px" }}>
+        <div style={{ background: "#fff", border: `2px solid ${NAVY}`, borderRadius: "10px", padding: "10px 20px", fontFamily: "monospace", fontSize: "22px", fontWeight: "800", color: NAVY, letterSpacing: "0.1em" }}>
+          {code}
+        </div>
+        <button onClick={copyLink} style={{ background: copied ? "#16A34A" : ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "10px 20px", fontSize: "14px", fontWeight: "700", cursor: "pointer", transition: "background 0.2s" }}>
+          {copied ? "✓ Copied!" : "Copy invite link"}
+        </button>
+      </div>
+      <p style={{ fontSize: "12px", color: "#9CA3AF", margin: 0, wordBreak: "break-all" }}>{referralLink}</p>
+    </div>
+  );
+}
+
 export default function RewardsPage() {
   const { user: session } = useAuth();
   const [isMobile, setIsMobile] = useState(false);
@@ -612,18 +655,37 @@ export default function RewardsPage() {
 
         </section>
 
-        {/* REFERRALS — simplified */}
+        {/* REFERRALS */}
         <section style={{ marginBottom: "56px" }}>
-          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 16px" }}>Refer a friend, both earn</h2>
-          <div style={{ background: LIGHT_BLUE, borderRadius: "14px", padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
-            <div>
-              <p style={{ fontWeight: "700", color: NAVY, margin: "0 0 4px" }}>200–500 bonus points for you and your friend</p>
-              <p style={{ fontSize: "13px", color: "#374151", margin: 0 }}>Flights: 200 pts · Hotels: 350 pts · Cruises & packages: 500 pts. Referral codes coming soon.</p>
-            </div>
-            <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "10px 20px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", textDecoration: "none", flexShrink: 0 }}>
-              Join free →
-            </a>
+          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Earn together</p>
+          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Refer a friend, both earn</h2>
+          <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 20px" }}>When your friend makes their first booking, you both get bonus points automatically.</p>
+
+          {/* Bonus table */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px", marginBottom: "24px" }}>
+            {REFERRAL.map((r, i) => (
+              <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "12px", padding: "16px", textAlign: "center" }}>
+                <p style={{ fontSize: "12px", fontWeight: "700", color: "#6B7280", margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{r.product}</p>
+                <p style={{ fontSize: "20px", fontWeight: "800", color: NAVY, margin: "0 0 2px" }}>{r.referrer}</p>
+                <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0 }}>you + friend each</p>
+              </div>
+            ))}
           </div>
+
+          {session
+            ? <ReferralCodeBox uid={session.uid} />
+            : (
+              <div style={{ background: LIGHT_BLUE, borderRadius: "14px", padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
+                <div>
+                  <p style={{ fontWeight: "700", color: NAVY, margin: "0 0 4px" }}>Create a free account to get your referral code</p>
+                  <p style={{ fontSize: "13px", color: "#374151", margin: 0 }}>Share your unique code — when your friend books, you both earn bonus points.</p>
+                </div>
+                <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "10px 20px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", textDecoration: "none", flexShrink: 0 }}>
+                  Join free →
+                </a>
+              </div>
+            )
+          }
         </section>
 
         {/* CTA */}

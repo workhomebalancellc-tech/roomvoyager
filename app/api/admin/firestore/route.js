@@ -1,6 +1,27 @@
 import { adminDb } from "../../../../lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
 
+// Referral bonus points by product type
+const REFERRAL_PTS = { flight: 200, hotel: 350, cruise: 500, package: 500 };
+
+function generateReferralCode(name) {
+  const prefix = (name || "USER").replace(/[^a-zA-Z]/g, "").slice(0, 5).toUpperCase() || "USER";
+  const num = Math.floor(1000 + Math.random() * 9000);
+  return `${prefix}${num}`;
+}
+
+async function ensureUniqueCode(name) {
+  let code, exists;
+  let attempts = 0;
+  do {
+    code = generateReferralCode(name);
+    const snap = await adminDb.collection("referralCodes").doc(code).get();
+    exists = snap.exists;
+    attempts++;
+  } while (exists && attempts < 10);
+  return code;
+}
+
 export async function POST(req) {
   try {
     const body = await req.json();
@@ -13,17 +34,90 @@ export async function POST(req) {
       const ref = adminDb.collection("users").doc(uid);
       const snap = await ref.get();
       if (!snap.exists) {
+        const code = await ensureUniqueCode(name);
         await ref.set({
           uid,
           name:           name  || "",
           email:          (email || "").toLowerCase(),
           points:         0,
           lifetimePoints: 0,
+          referralCode:   code,
+          referredBy:     null,
+          referralBonusAwarded: false,
           createdAt:      FieldValue.serverTimestamp(),
           updatedAt:      FieldValue.serverTimestamp(),
         });
+        // Register code for reverse lookup
+        await adminDb.collection("referralCodes").doc(code).set({ uid, createdAt: FieldValue.serverTimestamp() });
+      } else if (!snap.data().referralCode) {
+        // Backfill code for existing users who don't have one
+        const code = await ensureUniqueCode(snap.data().name || name);
+        await ref.update({ referralCode: code, updatedAt: FieldValue.serverTimestamp() });
+        await adminDb.collection("referralCodes").doc(code).set({ uid, createdAt: FieldValue.serverTimestamp() });
       }
-      return Response.json({ ok: true });
+      const latest = (await ref.get()).data();
+      return Response.json({ ok: true, referralCode: latest.referralCode });
+    }
+
+    // ── lookupReferralCode: given a code, return the owner uid ─────────────
+    if (action === "lookupReferralCode") {
+      const { code } = body;
+      if (!code) return Response.json({ error: "code required" }, { status: 400 });
+      const snap = await adminDb.collection("referralCodes").doc(code.trim().toUpperCase()).get();
+      if (!snap.exists) return Response.json({ error: "invalid_code" }, { status: 404 });
+      return Response.json({ ok: true, referrerUid: snap.data().uid });
+    }
+
+    // ── saveReferral: store referredBy on a newly signed-up user ───────────
+    if (action === "saveReferral") {
+      const { uid, referralCode } = body;
+      if (!uid || !referralCode) return Response.json({ error: "uid and referralCode required" }, { status: 400 });
+      const codeSnap = await adminDb.collection("referralCodes").doc(referralCode.trim().toUpperCase()).get();
+      if (!codeSnap.exists) return Response.json({ error: "invalid_code" }, { status: 404 });
+      const referrerUid = codeSnap.data().uid;
+      if (referrerUid === uid) return Response.json({ error: "cannot_refer_self" }, { status: 400 });
+      const userRef = adminDb.collection("users").doc(uid);
+      const userSnap = await userRef.get();
+      if (userSnap.exists && userSnap.data().referredBy) {
+        return Response.json({ ok: true, already: true }); // already referred, skip
+      }
+      await userRef.update({ referredBy: referrerUid, referralBonusAwarded: false, updatedAt: FieldValue.serverTimestamp() });
+      return Response.json({ ok: true, referrerUid });
+    }
+
+    // ── awardReferralBonus: fire when referred user's first booking is added ─
+    if (action === "awardReferralBonus") {
+      const { uid, product } = body;
+      if (!uid) return Response.json({ error: "uid required" }, { status: 400 });
+      const userRef  = adminDb.collection("users").doc(uid);
+      const userSnap = await userRef.get();
+      if (!userSnap.exists) return Response.json({ ok: false, reason: "user_not_found" });
+      const userData = userSnap.data();
+      if (!userData.referredBy || userData.referralBonusAwarded) {
+        return Response.json({ ok: false, reason: "no_referral_or_already_awarded" });
+      }
+      const pts = REFERRAL_PTS[product] || REFERRAL_PTS.hotel;
+      const batch = adminDb.batch();
+      // Award referred user
+      batch.update(userRef, { points: FieldValue.increment(pts), lifetimePoints: FieldValue.increment(pts), referralBonusAwarded: true, updatedAt: FieldValue.serverTimestamp() });
+      // Award referrer
+      const referrerRef = adminDb.collection("users").doc(userData.referredBy);
+      batch.update(referrerRef, { points: FieldValue.increment(pts), lifetimePoints: FieldValue.increment(pts), updatedAt: FieldValue.serverTimestamp() });
+      // Log it
+      const logRef = adminDb.collection("referralBonuses").doc();
+      batch.set(logRef, { referredUid: uid, referrerUid: userData.referredBy, product, pts, awardedAt: FieldValue.serverTimestamp() });
+      await batch.commit();
+      return Response.json({ ok: true, pts, referrerUid: userData.referredBy });
+    }
+
+    // ── listReferrals: admin panel — show all referral relationships ────────
+    if (action === "listReferrals") {
+      const snap = await adminDb.collection("referralBonuses").orderBy("awardedAt", "desc").limit(50).get();
+      const bonuses = snap.docs.map(d => ({ id: d.id, ...d.data(), awardedAt: d.data().awardedAt?.toDate?.()?.toISOString() }));
+      // Also get pending referrals (referredBy set but bonus not yet awarded)
+      const pendingSnap = await adminDb.collection("users").where("referredBy", "!=", null).where("referralBonusAwarded", "==", false).limit(50).get();
+      const pending = pendingSnap.docs.map(d => ({ uid: d.id, email: d.data().email, name: d.data().name, referredBy: d.data().referredBy }));
+      return Response.json({ ok: true, bonuses, pending });
     }
 
     // ── All other actions require email ────────────────────────────────────
