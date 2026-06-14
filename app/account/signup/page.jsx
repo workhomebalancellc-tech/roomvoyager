@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "../../../contexts/AuthContext";
 
@@ -26,7 +26,7 @@ async function applyReferralCode(uid, code) {
   }).catch(() => {});
 }
 
-export default function SignUpPage() {
+function SignUpContent() {
   const { signInWithGoogle, signUpWithEmail } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -192,5 +192,13 @@ export default function SignUpPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SignUpPage() {
+  return (
+    <Suspense fallback={null}>
+      <SignUpContent />
+    </Suspense>
   );
 }
