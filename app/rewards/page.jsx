@@ -610,19 +610,6 @@ export default function RewardsPage() {
           )}
 
 
-          {/* Not signed in nudge */}
-          {!session && (
-            <div style={{ marginTop: "24px", background: LIGHT_BLUE, borderRadius: "14px", padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
-              <div>
-                <p style={{ fontWeight: "700", color: NAVY, margin: "0 0 4px" }}>Sign in to redeem your points</p>
-                <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>Create a free account to start earning and cash out once you hit 10,000 points ($10).</p>
-              </div>
-              <div style={{ display: "flex", gap: "10px" }}>
-                <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "10px 20px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", textDecoration: "none" }}>Join free →</a>
-                <a href="/account/signin" style={{ background: "#fff", color: NAVY, padding: "10px 20px", borderRadius: "8px", fontSize: "13px", fontWeight: "600", textDecoration: "none", border: `1.5px solid ${NAVY}` }}>Sign in</a>
-              </div>
-            </div>
-          )}
         </section>
 
         {/* REFERRALS — simplified */}

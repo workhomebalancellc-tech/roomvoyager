@@ -32,6 +32,111 @@ const tips = [
   { icon: "🎒", title: "Travel carry-on only",     desc: "Skipping checked bags saves $30–$60 each way on most budget and major carriers." },
 ];
 
+/* ── IATA airport code → Kiwi city slug ─────────────────────── */
+const IATA_TO_KIWI = {
+  // ── Major hubs ──
+  ATL:"atlanta-georgia-united-states", LAX:"los-angeles-california-united-states",
+  ORD:"chicago-illinois-united-states", DFW:"dallas-texas-united-states",
+  DEN:"denver-colorado-united-states", JFK:"new-york-new-york-united-states",
+  SFO:"san-francisco-california-united-states", SEA:"seattle-washington-united-states",
+  LAS:"las-vegas-nevada-united-states", MCO:"orlando-florida-united-states",
+  MIA:"miami-florida-united-states", CLT:"charlotte-north-carolina-united-states",
+  EWR:"new-york-new-york-united-states", PHX:"phoenix-arizona-united-states",
+  IAH:"houston-texas-united-states", BOS:"boston-massachusetts-united-states",
+  MSP:"minneapolis-minnesota-united-states", DTW:"detroit-michigan-united-states",
+  FLL:"fort-lauderdale-florida-united-states", PHL:"philadelphia-pennsylvania-united-states",
+  LGA:"new-york-new-york-united-states", DCA:"washington-district-of-columbia-united-states",
+  IAD:"washington-district-of-columbia-united-states", BWI:"baltimore-maryland-united-states",
+  MDW:"chicago-illinois-united-states", SLC:"salt-lake-city-utah-united-states",
+  SAN:"san-diego-california-united-states", PDX:"portland-oregon-united-states",
+  HOU:"houston-texas-united-states", AUS:"austin-texas-united-states",
+  MCI:"kansas-city-missouri-united-states", STL:"st-louis-missouri-united-states",
+  BNA:"nashville-tennessee-united-states", RDU:"raleigh-north-carolina-united-states",
+  MEM:"memphis-tennessee-united-states", CLE:"cleveland-ohio-united-states",
+  PIT:"pittsburgh-pennsylvania-united-states", CMH:"columbus-ohio-united-states",
+  IND:"indianapolis-indiana-united-states", MKE:"milwaukee-wisconsin-united-states",
+  // ── Florida ──
+  TPA:"tampa-florida-united-states", PIE:"st-petersburg-florida-united-states",
+  RSW:"fort-myers-florida-united-states", JAX:"jacksonville-florida-united-states",
+  PBI:"west-palm-beach-florida-united-states", SRQ:"sarasota-florida-united-states",
+  DAB:"daytona-beach-florida-united-states", TLH:"tallahassee-florida-united-states",
+  PNS:"pensacola-florida-united-states", VPS:"fort-walton-beach-florida-united-states",
+  MLB:"melbourne-florida-united-states", SFB:"orlando-florida-united-states",
+  EYW:"key-west-florida-united-states", GNV:"gainesville-florida-united-states",
+  PGD:"punta-gorda-florida-united-states",
+  // ── Southeast ──
+  SAV:"savannah-georgia-united-states", CHS:"charleston-south-carolina-united-states",
+  MSY:"new-orleans-louisiana-united-states", BHM:"birmingham-alabama-united-states",
+  MOB:"mobile-alabama-united-states", HSV:"huntsville-alabama-united-states",
+  GSP:"greenville-south-carolina-united-states", GSO:"greensboro-north-carolina-united-states",
+  AVL:"asheville-north-carolina-united-states", ORF:"norfolk-virginia-united-states",
+  RIC:"richmond-virginia-united-states", ILM:"wilmington-north-carolina-united-states",
+  FAY:"fayetteville-north-carolina-united-states", OAJ:"jacksonville-north-carolina-united-states",
+  TYS:"knoxville-tennessee-united-states", CHA:"chattanooga-tennessee-united-states",
+  TRI:"bristol-tennessee-united-states", JAN:"jackson-mississippi-united-states",
+  GPT:"gulfport-mississippi-united-states", BTR:"baton-rouge-louisiana-united-states",
+  SHV:"shreveport-louisiana-united-states", LFT:"lafayette-louisiana-united-states",
+  LEX:"lexington-kentucky-united-states", SDF:"louisville-kentucky-united-states",
+  // ── Northeast ──
+  BGR:"bangor-maine-united-states", PWM:"portland-maine-united-states",
+  BTV:"burlington-vermont-united-states", MHT:"manchester-new-hampshire-united-states",
+  PVD:"providence-rhode-island-united-states", BDL:"hartford-connecticut-united-states",
+  ALB:"albany-new-york-united-states", SYR:"syracuse-new-york-united-states",
+  ROC:"rochester-new-york-united-states", BUF:"buffalo-new-york-united-states",
+  ABE:"allentown-pennsylvania-united-states", MDT:"harrisburg-pennsylvania-united-states",
+  // ── Midwest ──
+  DSM:"des-moines-iowa-united-states", CID:"cedar-rapids-iowa-united-states",
+  OMA:"omaha-nebraska-united-states", LNK:"lincoln-nebraska-united-states",
+  FSD:"sioux-falls-south-dakota-united-states", RAP:"rapid-city-south-dakota-united-states",
+  FAR:"fargo-north-dakota-united-states", BIS:"bismarck-north-dakota-united-states",
+  GRR:"grand-rapids-michigan-united-states", FNT:"flint-michigan-united-states",
+  LAN:"lansing-michigan-united-states", TOL:"toledo-ohio-united-states",
+  DAY:"dayton-ohio-united-states", CAK:"akron-ohio-united-states",
+  EVV:"evansville-indiana-united-states", SBN:"south-bend-indiana-united-states",
+  GRB:"green-bay-wisconsin-united-states", MSN:"madison-wisconsin-united-states",
+  // ── Texas ──
+  SAT:"san-antonio-texas-united-states", ELP:"el-paso-texas-united-states",
+  CRP:"corpus-christi-texas-united-states", LBB:"lubbock-texas-united-states",
+  AMA:"amarillo-texas-united-states", MAF:"midland-texas-united-states",
+  HRL:"harlingen-texas-united-states", MFE:"mcallen-texas-united-states",
+  BRO:"brownsville-texas-united-states", LRD:"laredo-texas-united-states",
+  GRK:"killeen-texas-united-states", ACT:"waco-texas-united-states",
+  TYR:"tyler-texas-united-states", ABI:"abilene-texas-united-states",
+  // ── Southwest / Mountain ──
+  TUS:"tucson-arizona-united-states", OKC:"oklahoma-city-oklahoma-united-states",
+  TUL:"tulsa-oklahoma-united-states", ABQ:"albuquerque-new-mexico-united-states",
+  RNO:"reno-nevada-united-states", BOI:"boise-idaho-united-states",
+  GEG:"spokane-washington-united-states", ASE:"aspen-colorado-united-states",
+  EGE:"eagle-vail-colorado-united-states", COS:"colorado-springs-colorado-united-states",
+  GJT:"grand-junction-colorado-united-states", DRO:"durango-colorado-united-states",
+  BZN:"bozeman-montana-united-states", BIL:"billings-montana-united-states",
+  MSO:"missoula-montana-united-states", HLN:"helena-montana-united-states",
+  GTF:"great-falls-montana-united-states", JAC:"jackson-wyoming-united-states",
+  // ── California ──
+  OAK:"oakland-california-united-states", SJC:"san-jose-california-united-states",
+  SMF:"sacramento-california-united-states", SNA:"santa-ana-california-united-states",
+  BUR:"burbank-california-united-states", LGB:"long-beach-california-united-states",
+  ONT:"ontario-california-united-states", FAT:"fresno-california-united-states",
+  SBA:"santa-barbara-california-united-states", SBP:"san-luis-obispo-california-united-states",
+  PSP:"palm-springs-california-united-states", STS:"santa-rosa-california-united-states",
+  RDD:"redding-california-united-states",
+  // ── Pacific / Hawaii / Alaska ──
+  HNL:"honolulu-hawaii-united-states", OGG:"kahului-maui-hawaii-united-states",
+  KOA:"kailua-kona-hawaii-united-states", LIH:"lihue-hawaii-united-states",
+  ITO:"hilo-hawaii-united-states", ANC:"anchorage-alaska-united-states",
+  FAI:"fairbanks-alaska-united-states", JNU:"juneau-alaska-united-states",
+  // ── Pacific Northwest ──
+  GEG:"spokane-washington-united-states", BLI:"bellingham-washington-united-states",
+  YKM:"yakima-washington-united-states", PSC:"pasco-washington-united-states",
+  MFR:"medford-oregon-united-states", EUG:"eugene-oregon-united-states",
+  RDM:"bend-oregon-united-states",
+  // ── Mid-Atlantic / Virginia ──
+  ROA:"roanoke-virginia-united-states", CHO:"charlottesville-virginia-united-states",
+  PHF:"newport-news-virginia-united-states", SBY:"salisbury-maryland-united-states",
+  // ── Arkansas ──
+  XNA:"fayetteville-arkansas-united-states", LIT:"little-rock-arkansas-united-states",
+};
+
 /* ── City → Kiwi slug lookup ─────────────────────────────────── */
 const CITY_TO_KIWI = {
   "cancún": "cancun-quintana-roo-mexico", "cancun": "cancun-quintana-roo-mexico",
@@ -96,10 +201,16 @@ const ABBR_TO_STATE = {
 };
 function resolveKiwi(cityName) {
   if (!cityName) return null;
-  // Try full string first, then just the city part before any comma
-  const full = CITY_TO_KIWI[cityName.toLowerCase().trim()];
+  const trimmed = cityName.trim();
+  // Try IATA code first (2–4 uppercase letters)
+  if (/^[A-Za-z]{2,4}$/.test(trimmed)) {
+    const iata = IATA_TO_KIWI[trimmed.toUpperCase()];
+    if (iata) return iata;
+  }
+  // Try full city name, then city portion before comma
+  const full = CITY_TO_KIWI[trimmed.toLowerCase()];
   if (full) return full;
-  const cityOnly = cityName.split(",")[0].trim().toLowerCase();
+  const cityOnly = trimmed.split(",")[0].trim().toLowerCase();
   return CITY_TO_KIWI[cityOnly] || null;
 }
 // Build a Kiwi slug from an autocomplete suggestion {name, sub} where sub is "GA" or "France"

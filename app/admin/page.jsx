@@ -1585,6 +1585,127 @@ function AwardPoints() {
   );
 }
 
+/* ── IATA → Kiwi slug map (mirrors flights/page.jsx) ───────────── */
+const IATA_MAP = {
+  ATL:"atlanta-georgia-united-states",LAX:"los-angeles-california-united-states",
+  ORD:"chicago-illinois-united-states",DFW:"dallas-texas-united-states",
+  DEN:"denver-colorado-united-states",JFK:"new-york-new-york-united-states",
+  SFO:"san-francisco-california-united-states",SEA:"seattle-washington-united-states",
+  LAS:"las-vegas-nevada-united-states",MCO:"orlando-florida-united-states",
+  MIA:"miami-florida-united-states",CLT:"charlotte-north-carolina-united-states",
+  EWR:"new-york-new-york-united-states",PHX:"phoenix-arizona-united-states",
+  IAH:"houston-texas-united-states",BOS:"boston-massachusetts-united-states",
+  MSP:"minneapolis-minnesota-united-states",DTW:"detroit-michigan-united-states",
+  FLL:"fort-lauderdale-florida-united-states",PHL:"philadelphia-pennsylvania-united-states",
+  LGA:"new-york-new-york-united-states",DCA:"washington-district-of-columbia-united-states",
+  IAD:"washington-district-of-columbia-united-states",BWI:"baltimore-maryland-united-states",
+  MDW:"chicago-illinois-united-states",SLC:"salt-lake-city-utah-united-states",
+  SAN:"san-diego-california-united-states",PDX:"portland-oregon-united-states",
+  HOU:"houston-texas-united-states",AUS:"austin-texas-united-states",
+  MCI:"kansas-city-missouri-united-states",STL:"st-louis-missouri-united-states",
+  BNA:"nashville-tennessee-united-states",RDU:"raleigh-north-carolina-united-states",
+  MEM:"memphis-tennessee-united-states",CLE:"cleveland-ohio-united-states",
+  PIT:"pittsburgh-pennsylvania-united-states",CMH:"columbus-ohio-united-states",
+  IND:"indianapolis-indiana-united-states",MKE:"milwaukee-wisconsin-united-states",
+  TPA:"tampa-florida-united-states",PIE:"st-petersburg-florida-united-states",
+  RSW:"fort-myers-florida-united-states",JAX:"jacksonville-florida-united-states",
+  PBI:"west-palm-beach-florida-united-states",SRQ:"sarasota-florida-united-states",
+  TLH:"tallahassee-florida-united-states",PNS:"pensacola-florida-united-states",
+  VPS:"fort-walton-beach-florida-united-states",MLB:"melbourne-florida-united-states",
+  EYW:"key-west-florida-united-states",GNV:"gainesville-florida-united-states",
+  PGD:"punta-gorda-florida-united-states",
+  SAV:"savannah-georgia-united-states",CHS:"charleston-south-carolina-united-states",
+  MSY:"new-orleans-louisiana-united-states",BHM:"birmingham-alabama-united-states",
+  MOB:"mobile-alabama-united-states",HSV:"huntsville-alabama-united-states",
+  GSP:"greenville-south-carolina-united-states",GSO:"greensboro-north-carolina-united-states",
+  AVL:"asheville-north-carolina-united-states",ORF:"norfolk-virginia-united-states",
+  RIC:"richmond-virginia-united-states",ILM:"wilmington-north-carolina-united-states",
+  FAY:"fayetteville-north-carolina-united-states",TYS:"knoxville-tennessee-united-states",
+  CHA:"chattanooga-tennessee-united-states",JAN:"jackson-mississippi-united-states",
+  GPT:"gulfport-mississippi-united-states",BTR:"baton-rouge-louisiana-united-states",
+  SHV:"shreveport-louisiana-united-states",LFT:"lafayette-louisiana-united-states",
+  LEX:"lexington-kentucky-united-states",SDF:"louisville-kentucky-united-states",
+  BGR:"bangor-maine-united-states",PWM:"portland-maine-united-states",
+  BTV:"burlington-vermont-united-states",MHT:"manchester-new-hampshire-united-states",
+  PVD:"providence-rhode-island-united-states",BDL:"hartford-connecticut-united-states",
+  ALB:"albany-new-york-united-states",SYR:"syracuse-new-york-united-states",
+  ROC:"rochester-new-york-united-states",BUF:"buffalo-new-york-united-states",
+  ABE:"allentown-pennsylvania-united-states",MDT:"harrisburg-pennsylvania-united-states",
+  DSM:"des-moines-iowa-united-states",CID:"cedar-rapids-iowa-united-states",
+  OMA:"omaha-nebraska-united-states",LNK:"lincoln-nebraska-united-states",
+  FSD:"sioux-falls-south-dakota-united-states",FAR:"fargo-north-dakota-united-states",
+  BIS:"bismarck-north-dakota-united-states",GRR:"grand-rapids-michigan-united-states",
+  TOL:"toledo-ohio-united-states",DAY:"dayton-ohio-united-states",
+  CAK:"akron-ohio-united-states",SBN:"south-bend-indiana-united-states",
+  GRB:"green-bay-wisconsin-united-states",MSN:"madison-wisconsin-united-states",
+  SAT:"san-antonio-texas-united-states",ELP:"el-paso-texas-united-states",
+  CRP:"corpus-christi-texas-united-states",LBB:"lubbock-texas-united-states",
+  AMA:"amarillo-texas-united-states",MAF:"midland-texas-united-states",
+  HRL:"harlingen-texas-united-states",MFE:"mcallen-texas-united-states",
+  OKC:"oklahoma-city-oklahoma-united-states",TUL:"tulsa-oklahoma-united-states",
+  ABQ:"albuquerque-new-mexico-united-states",TUS:"tucson-arizona-united-states",
+  RNO:"reno-nevada-united-states",BOI:"boise-idaho-united-states",
+  GEG:"spokane-washington-united-states",BZN:"bozeman-montana-united-states",
+  BIL:"billings-montana-united-states",MSO:"missoula-montana-united-states",
+  JAC:"jackson-wyoming-united-states",COS:"colorado-springs-colorado-united-states",
+  ASE:"aspen-colorado-united-states",DRO:"durango-colorado-united-states",
+  OAK:"oakland-california-united-states",SJC:"san-jose-california-united-states",
+  SMF:"sacramento-california-united-states",SNA:"santa-ana-california-united-states",
+  BUR:"burbank-california-united-states",LGB:"long-beach-california-united-states",
+  ONT:"ontario-california-united-states",FAT:"fresno-california-united-states",
+  PSP:"palm-springs-california-united-states",
+  HNL:"honolulu-hawaii-united-states",OGG:"kahului-maui-hawaii-united-states",
+  KOA:"kailua-kona-hawaii-united-states",LIH:"lihue-hawaii-united-states",
+  ANC:"anchorage-alaska-united-states",FAI:"fairbanks-alaska-united-states",
+  XNA:"fayetteville-arkansas-united-states",LIT:"little-rock-arkansas-united-states",
+  ROA:"roanoke-virginia-united-states",
+};
+
+function AirportCodeTester() {
+  const [input, setInput]   = useState("");
+  const [result, setResult] = useState(null);
+
+  function test() {
+    const code = input.trim().toUpperCase();
+    const slug = IATA_MAP[code];
+    setResult(slug
+      ? { ok: true,  msg: `✅ ${code} → ${slug}`, url: `https://www.kiwi.com/en/search/results/${slug}/anywhere/anytime/no-return` }
+      : { ok: false, msg: `❌ ${code} not found in map` }
+    );
+  }
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>✈️ Airport Code → Kiwi Slug Tester</p>
+      <div style={{ display: "flex", gap: "8px", marginBottom: "12px" }}>
+        <input
+          value={input}
+          onChange={e => { setInput(e.target.value.toUpperCase()); setResult(null); }}
+          onKeyDown={e => e.key === "Enter" && test()}
+          placeholder="Enter IATA code (e.g. ATL)"
+          maxLength={4}
+          style={{ flex: 1, padding: "9px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", fontFamily: "monospace", textTransform: "uppercase" }}
+        />
+        <button onClick={test} style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "9px 20px", fontSize: "13px", fontWeight: "700", cursor: "pointer" }}>
+          Test
+        </button>
+      </div>
+      {result && (
+        <div style={{ padding: "10px 14px", borderRadius: "8px", background: result.ok ? "#F0FDF4" : "#FEF2F2", border: `1px solid ${result.ok ? "#BBF7D0" : "#FECACA"}` }}>
+          <p style={{ margin: 0, fontSize: "13px", fontWeight: "600", color: result.ok ? GREEN : "#DC2626", fontFamily: "monospace" }}>{result.msg}</p>
+          {result.ok && (
+            <a href={result.url} target="_blank" rel="noopener noreferrer"
+              style={{ fontSize: "12px", color: NAVY, display: "block", marginTop: "6px" }}>
+              Test on Kiwi.com ↗
+            </a>
+          )}
+        </div>
+      )}
+      <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "10px 0 0" }}>{Object.keys(IATA_MAP).length} airports mapped</p>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   const { user, loading: authLoading, logout } = useAuth();
 
@@ -1708,6 +1829,11 @@ export default function AdminDashboard() {
         {/* EMAIL BLAST */}
         <div style={{ marginBottom: "20px" }}>
           <SendBlast adminEmail={user.email} />
+        </div>
+
+        {/* AIRPORT CODE TESTER */}
+        <div style={{ marginBottom: "20px" }}>
+          <AirportCodeTester />
         </div>
 
         {/* RATES REFERENCE */}
