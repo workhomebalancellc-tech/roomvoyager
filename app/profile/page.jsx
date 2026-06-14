@@ -293,7 +293,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div style={{ maxWidth: "860px", margin: "-40px auto 0", padding: "0 24px 80px" }}>
+      <div style={{ maxWidth: "860px", margin: "-64px auto 0", padding: "0 24px 80px", position: "relative", zIndex: 1 }}>
 
         {/* ══════════════════════════════
             TAB: OVERVIEW
