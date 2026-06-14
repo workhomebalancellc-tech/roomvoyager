@@ -255,7 +255,7 @@ export default function ProfilePage() {
       {/* ── HERO with travel photo ── */}
       <div style={{
         background: `linear-gradient(to bottom, rgba(0,20,60,0.45) 0%, rgba(0,59,149,0.85) 100%), url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=75') center/cover no-repeat`,
-        padding: "36px 24px 80px",
+        padding: "36px 24px 32px",
         position: "relative",
       }}>
         <button
@@ -293,7 +293,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div style={{ maxWidth: "860px", margin: "-64px auto 0", padding: "0 24px 80px", position: "relative", zIndex: 1 }}>
+      <div style={{ maxWidth: "860px", margin: "0 auto", padding: "24px 24px 80px" }}>
 
         {/* ══════════════════════════════
             TAB: OVERVIEW

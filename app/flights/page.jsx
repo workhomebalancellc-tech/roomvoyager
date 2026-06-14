@@ -202,16 +202,29 @@ const ABBR_TO_STATE = {
 function resolveKiwi(cityName) {
   if (!cityName) return null;
   const trimmed = cityName.trim();
-  // Try IATA code first (2–4 uppercase letters)
+  // Try IATA code first (2–4 letter string, no spaces)
   if (/^[A-Za-z]{2,4}$/.test(trimmed)) {
     const iata = IATA_TO_KIWI[trimmed.toUpperCase()];
     if (iata) return iata;
   }
-  // Try full city name, then city portion before comma
+  // Try full string in city map
   const full = CITY_TO_KIWI[trimmed.toLowerCase()];
   if (full) return full;
-  const cityOnly = trimmed.split(",")[0].trim().toLowerCase();
-  return CITY_TO_KIWI[cityOnly] || null;
+  // Try city portion before comma
+  const parts = trimmed.split(",");
+  const cityOnly = parts[0].trim().toLowerCase();
+  const fromCity = CITY_TO_KIWI[cityOnly];
+  if (fromCity) return fromCity;
+  // Build slug from "City, ST" or "City, Country" — gives Kiwi a full slug to resolve
+  if (parts.length >= 2) {
+    const citySlug = cityOnly.replace(/[^a-z0-9]+/g, "-");
+    const qualifier = parts[1].trim().toUpperCase();
+    const stateFull = ABBR_TO_STATE[qualifier];
+    if (stateFull) return `${citySlug}-${stateFull}-united-states`;
+    const countrySlug = parts[1].trim().toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    return `${citySlug}-${countrySlug}`;
+  }
+  return null;
 }
 // Build a Kiwi slug from an autocomplete suggestion {name, sub} where sub is "GA" or "France"
 function buildKiwiSlugFromSugg(name, sub) {
@@ -326,13 +339,10 @@ function FlightsContent() {
     e?.preventDefault();
     const slugFrom = fromKiwi || resolveKiwi(from) || toKiwiSlug(from.split(",")[0].trim()) || "anywhere";
     const slugTo   = toKiwi   || resolveKiwi(to)   || toKiwiSlug(to)   || "anywhere";
-    const d = depart || "";
-    const r = tripType === "round" ? ret : "";
-    const kiwiParams = new URLSearchParams({ origin: slugFrom, destination: slugTo });
-    if (d) kiwiParams.set("outboundDate", d);
-    if (r) kiwiParams.set("inboundDate", r);
-    if (pax > 1) kiwiParams.set("adults", String(pax));
-    const kiwiUrl = `https://www.kiwi.com/en/?${kiwiParams.toString()}`;
+    const d = depart || "anytime";
+    const r = tripType === "round" ? (ret || "anytime") : "no-return";
+    const paxParam = pax > 1 ? `?adults=${pax}` : "";
+    const kiwiUrl = `https://www.kiwi.com/en/search/results/${slugFrom}/${slugTo}/${d}/${r}${paxParam}`;
     const tpUrl = `https://c111.travelpayouts.com/click?shmarker=722477&promo_id=3791&source_type=customlink&type=click&custom_url=${encodeURIComponent(kiwiUrl)}`;
     const dest = `/redirect?to=${encodeURIComponent(tpUrl)}&partner=Kiwi.com&product=flight`;
 
