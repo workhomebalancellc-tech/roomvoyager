@@ -340,10 +340,13 @@ function FlightsContent() {
     e?.preventDefault();
     const slugFrom = fromKiwi || resolveKiwi(from) || toKiwiSlug(from.split(",")[0].trim()) || "anywhere";
     const slugTo   = toKiwi   || resolveKiwi(to)   || toKiwiSlug(to)   || "anywhere";
-    const d = depart || "anytime";
-    const r = tripType === "round" ? (ret || "anytime") : "no-return";
-    const paxParam = pax > 1 ? `?adults=${pax}` : "";
-    const kiwiUrl = `https://www.kiwi.com/en/search/results/${slugFrom}/${slugTo}/${d}/${r}${paxParam}`;
+    const params = new URLSearchParams();
+    params.set("origin", slugFrom);
+    params.set("destination", slugTo);
+    if (depart) params.set("outboundDate", depart);
+    if (tripType === "round" && ret) params.set("inboundDate", ret);
+    if (pax > 1) params.set("adults", String(pax));
+    const kiwiUrl = `https://www.kiwi.com/en/?${params.toString()}`;
     const tpUrl = `https://c111.travelpayouts.com/click?shmarker=722477&promo_id=3791&source_type=customlink&type=click&custom_url=${encodeURIComponent(kiwiUrl)}`;
     const dest = `/redirect?to=${encodeURIComponent(tpUrl)}&partner=Kiwi.com&product=flight`;
 
