@@ -766,7 +766,7 @@ function FlightsContent() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
               {/* FROM with autocomplete */}
               <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>From</label>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>From</label>
                 <div style={{ position: "relative" }}>
                   <input type="text" placeholder="City or airport (e.g. New York)" value={from}
                     onChange={e => handleFromChange(e.target.value)}
@@ -794,7 +794,7 @@ function FlightsContent() {
               </div>
               {/* TO with autocomplete */}
               <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>To</label>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>To</label>
                 <div style={{ position: "relative" }}>
                   <input ref={toInputRef} type="text" placeholder="City or airport (e.g. Cancún)" value={to}
                     onChange={e => handleToChange(e.target.value)}
@@ -823,17 +823,17 @@ function FlightsContent() {
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "12px", alignItems: "flex-end" }}>
               <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Depart</label>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Depart</label>
                 <input type="date" value={depart} min={mounted ? new Date().toISOString().split("T")[0] : ""} onChange={e => handleDepartChange(e.target.value)} style={inp} />
               </div>
               {tripType === "round" && (
                 <div>
-                  <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Return</label>
+                  <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Return</label>
                   <input type="date" value={ret} min={depart || (mounted ? new Date().toISOString().split("T")[0] : "")} onChange={e => setRet(e.target.value)} style={inp} />
                 </div>
               )}
               <div>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Passengers</label>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Passengers</label>
                 <select value={pax} onChange={e => setPax(Number(e.target.value))} style={{ ...inp, cursor: "pointer" }}>
                   {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n} {n === 1 ? "Adult" : "Adults"}</option>)}
                 </select>
