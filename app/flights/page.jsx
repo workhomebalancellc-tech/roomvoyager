@@ -180,8 +180,8 @@ const IATA_TO_KIWI = {
   KEF:"reykjavik-iceland",
   EDI:"edinburgh-united-kingdom", MAN:"manchester-united-kingdom",
   NCE:"nice-france",
-  PRG:"prague-czech-republic",
-  BRU:"brussels-belgium",
+  PRG:"prague-czechia",
+  BRU:"city-of-brussels-belgium",
   BUD:"budapest-hungary",
   WAW:"warsaw-poland",
   // ── Middle East ──
@@ -202,10 +202,10 @@ const IATA_TO_KIWI = {
   BNE:"brisbane-queensland-australia",
   AKL:"auckland-auckland-new-zealand",
   NAN:"nadi-fiji",
-  PPT:"papeete-french-polynesia",
+  PPT:"tahiti-french-polynesia",
   // ── Latin America ──
-  GRU:"sao-paulo-brazil", GIG:"rio-de-janeiro-brazil",
-  EZE:"buenos-aires-argentina",
+  GRU:"sao-paulo-state-of-sao-paulo-brazil", GIG:"rio-de-janeiro-state-of-rio-de-janeiro-brazil",
+  EZE:"buenos-aires-buenos-aires-argentina",
   SCL:"santiago-chile",
   BOG:"bogota-colombia",
   LIM:"lima-peru",
@@ -249,7 +249,7 @@ const CITY_TO_KIWI = {
   "athens": "athens-greece",
   "milan": "milan-italy",
   "vienna": "vienna-austria",
-  "prague": "prague-czech-republic",
+  "prague": "prague-czechia",
   // ── Major US hubs ──
   "new york": "new-york-new-york-united-states", "new york city": "new-york-new-york-united-states", "nyc": "new-york-new-york-united-states",
   "atlanta": "atlanta-georgia-united-states",
