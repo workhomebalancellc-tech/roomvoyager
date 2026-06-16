@@ -63,6 +63,111 @@ function fmt(d) {
 const inputStyle = { width: "100%", padding: "9px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", boxSizing: "border-box", outline: "none" };
 const labelStyle = { fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "4px" };
 
+// ── Cruisebound Search Widget ──────────────────────────────────────────────
+const REGION_OPTIONS = [
+  { label: "Any destination", value: "" },
+  { label: "Caribbean",       value: "10" },
+  { label: "Bahamas",         value: "16" },
+  { label: "Mexico",          value: "26" },
+  { label: "Alaska",          value: "32" },
+  { label: "Hawaii",          value: "29" },
+  { label: "Mediterranean",   value: "5"  },
+  { label: "Europe",          value: "3"  },
+  { label: "North America",   value: "6"  },
+];
+
+const PORT_OPTIONS = [
+  { label: "Any port",                  value: ""     },
+  { label: "Miami, FL",                 value: "314"  },
+  { label: "Fort Lauderdale, FL",       value: "308"  },
+  { label: "Port Canaveral, FL",        value: "319"  },
+  { label: "Tampa, FL",                 value: "328"  },
+  { label: "Galveston, TX",             value: "310"  },
+  { label: "New Orleans, LA",           value: "315"  },
+  { label: "Cape Liberty (Bayonne), NJ",value: "1020" },
+  { label: "Los Angeles, CA",           value: "312"  },
+  { label: "Seattle, WA",               value: "326"  },
+];
+
+function getMonthOptions() {
+  const opts = [{ label: "Any month", firstDay: "", lastDay: "" }];
+  const today = new Date();
+  for (let i = 0; i < 18; i++) {
+    const d = new Date(today.getFullYear(), today.getMonth() + i, 1);
+    const label = d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const last = new Date(y, d.getMonth() + 1, 0).getDate();
+    opts.push({ label, firstDay: `${y}-${m}-01`, lastDay: `${y}-${m}-${String(last).padStart(2, "0")}` });
+  }
+  return opts;
+}
+const MONTH_OPTIONS = getMonthOptions();
+const CB_AFFILIATE = "https://cruisebound.sjv.io/c/7402959/3242486/40968";
+
+function CruiseboundSearch() {
+  const [region,   setRegion]   = useState("");
+  const [port,     setPort]     = useState("");
+  const [monthIdx, setMonthIdx] = useState(0);
+  const [duration, setDuration] = useState("3");
+
+  function handleSearch() {
+    const params = new URLSearchParams({ sortBy: "recommended", sortOrder: "asc", page: "1", minNights: duration });
+    if (region) params.set("regionIds", region);
+    if (port)   params.set("departurePortIds", port);
+    const mo = MONTH_OPTIONS[monthIdx];
+    if (mo.firstDay) { params.set("firstDepartDate", mo.firstDay); params.set("lastDepartDate", mo.lastDay); }
+    const searchUrl = `https://www.cruisebound.com/Searches?${params.toString()}`;
+    window.open(`${CB_AFFILIATE}?u=${encodeURIComponent(searchUrl)}`, "_blank", "noopener,noreferrer");
+  }
+
+  const sel = {
+    width: "100%", padding: "9px 12px", border: "1.5px solid rgba(255,255,255,0.22)", borderRadius: "8px",
+    fontSize: "13px", boxSizing: "border-box", outline: "none", background: "rgba(255,255,255,0.10)",
+    color: "#fff", cursor: "pointer", WebkitAppearance: "none", appearance: "none",
+  };
+  const lbl = { fontSize: "11px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: "5px" };
+  const optStyle = { background: "#003B95", color: "#fff" };
+
+  return (
+    <div style={{ background: NAVY, borderRadius: "16px", padding: "20px 18px", boxShadow: "0 6px 28px rgba(0,59,149,0.25)", border: "1px solid rgba(147,197,253,0.25)" }}>
+      <p style={{ color: "#fff", fontWeight: "800", fontSize: "15px", margin: "0 0 2px" }}>🚢 Search Cruises</p>
+      <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "600", margin: "0 0 18px" }}>Powered by Cruisebound</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: "13px" }}>
+        <div>
+          <label style={lbl}>Destination</label>
+          <select value={region} onChange={e => setRegion(e.target.value)} style={sel}>
+            {REGION_OPTIONS.map((r, i) => <option key={i} value={r.value} style={optStyle}>{r.label}</option>)}
+          </select>
+        </div>
+        <div>
+          <label style={lbl}>Departure Port</label>
+          <select value={port} onChange={e => setPort(e.target.value)} style={sel}>
+            {PORT_OPTIONS.map((p, i) => <option key={i} value={p.value} style={optStyle}>{p.label}</option>)}
+          </select>
+        </div>
+        <div>
+          <label style={lbl}>Departure Month</label>
+          <select value={monthIdx} onChange={e => setMonthIdx(Number(e.target.value))} style={sel}>
+            {MONTH_OPTIONS.map((m, i) => <option key={i} value={i} style={optStyle}>{m.label}</option>)}
+          </select>
+        </div>
+        <div>
+          <label style={lbl}>Duration</label>
+          <select value={duration} onChange={e => setDuration(e.target.value)} style={sel}>
+            {[["3","3+ nights"],["5","5+ nights"],["7","7+ nights"],["10","10+ nights"],["14","14+ nights"]].map(([v,l]) => (
+              <option key={v} value={v} style={optStyle}>{l}</option>
+            ))}
+          </select>
+        </div>
+        <button onClick={handleSearch} style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "13px 12px", fontWeight: "800", fontSize: "14px", cursor: "pointer", width: "100%", marginTop: "2px", boxShadow: "0 4px 12px rgba(255,102,0,0.4)" }}>
+          Search Cruises →
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function CruisesPage() {
   const { user } = useAuth();
   const uid = user?.uid || null;
@@ -94,19 +199,12 @@ export default function CruisesPage() {
     link.rel = "stylesheet";
     document.head.appendChild(link);
 
-    const script = document.createElement("script");
-    script.src = "https://cruisedirect.com/cjjs/snippet-300x600.js";
-    script.type = "text/javascript";
-    script.async = true;
-    document.body.appendChild(script);
-
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile(); // set correct value immediately after mount
     window.addEventListener("resize", checkMobile);
 
     return () => {
       if (document.head.contains(link)) document.head.removeChild(link);
-      if (document.body.contains(script)) document.body.removeChild(script);
       window.removeEventListener("resize", checkMobile);
     };
   }, []);
@@ -350,6 +448,9 @@ export default function CruisesPage() {
         </div>
       )}
 
+      {/* Cruisebound impression pixel */}
+      <img height="0" width="0" src="https://imp.pxf.io/i/7402959/3242485/40968" style={{ position: "absolute", visibility: "hidden" }} alt="" />
+
       <NavBar active="cruises" />
       <PromoBanner />
 
@@ -359,7 +460,7 @@ export default function CruisesPage() {
           style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.65) 0%, rgba(0,15,60,0.82) 100%)" }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
-          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🚢 Powered by CruiseDirect</p>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🚢 Powered by Cruisebound</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(26px, 4vw, 44px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>Find Your Perfect Cruise</h1>
           <p style={{ color: "#BFDBFE", fontSize: "16px", margin: 0, maxWidth: "480px" }}>Search live inventory across all major cruise lines</p>
         </div>
@@ -380,20 +481,10 @@ export default function CruisesPage() {
       {/* MAIN — responsive two column */}
       <div style={{ maxWidth: "1140px", margin: "0 auto", padding: isMobile ? "24px 16px 60px" : "48px 24px 80px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "320px 1fr", gap: "40px", alignItems: "start" }}>
 
-        {/* ── LEFT — sticky widget (hidden on mobile, shown below content) ── */}
+        {/* ── LEFT — sticky Cruisebound search widget ── */}
         {!isMobile && (
           <div style={{ position: "sticky", top: "80px" }}>
-            <p style={{ fontSize: "12px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px", textAlign: "center", fontFamily: "Montserrat, sans-serif" }}>
-              🔍 Search &amp; Book Cruises
-            </p>
-            <div style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,59,149,0.15)", border: "1px solid #E5E7EB", width: "300px" }}>
-              <div id="cdsearch" data-redirect-server="https://www.roomvoyagertravel.com/api/cruise-redirect?to=" />
-              <div id="cruiseSearchBox300x600" />
-              <img src="https://www.lduhtrp.net/image-101734691-15534473" width="1" height="1" alt="" style={{ display: "block" }} />
-            </div>
-            <p style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "center", margin: "10px 0 0", fontFamily: "Montserrat, sans-serif" }}>
-              Powered by CruiseDirect · Best price guarantee
-            </p>
+            <CruiseboundSearch />
           </div>
         )}
 
@@ -451,18 +542,8 @@ export default function CruisesPage() {
 
           {/* Mobile widget */}
           {isMobile && (
-            <div id="search" style={{ marginBottom: "48px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <p style={{ fontSize: "12px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px", textAlign: "center", fontFamily: "Montserrat, sans-serif" }}>
-                🔍 Search &amp; Book Cruises
-              </p>
-              <div style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,59,149,0.15)", border: "1px solid #E5E7EB", width: "300px" }}>
-                <div id="cdsearch" data-redirect-server="https://www.roomvoyagertravel.com/api/cruise-redirect?to=" />
-                <div id="cruiseSearchBox300x600" />
-                <img src="https://www.lduhtrp.net/image-101734691-15534473" width="1" height="1" alt="" style={{ display: "block" }} />
-              </div>
-              <p style={{ fontSize: "11px", color: "#9CA3AF", textAlign: "center", margin: "10px 0 0", fontFamily: "Montserrat, sans-serif" }}>
-                Powered by CruiseDirect · Best price guarantee
-              </p>
+            <div id="search" style={{ marginBottom: "48px" }}>
+              <CruiseboundSearch />
             </div>
           )}
 
