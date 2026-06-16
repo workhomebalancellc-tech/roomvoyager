@@ -19,31 +19,37 @@ const DOMESTIC = [
     city: "Orlando",
     img: "https://images.unsplash.com/photo-1627035983655-0ceec61bb733?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
+    locked: true,
   },
   {
     city: "New York City",
     img: "https://images.unsplash.com/photo-1546436836-07a91091f160?w=600&h=900&fit=crop&auto=format",
     link: "/hotels",
+    locked: true,
   },
   {
     city: "Miami",
     img: "https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?w=600&h=900&fit=crop&auto=format",
     link: "/hotels",
+    locked: true,
   },
   {
     city: "Honolulu",
     img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
+    locked: true,
   },
   {
     city: "Nashville",
     img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&h=900&fit=crop&auto=format",
     link: "/hotels",
+    locked: true,
   },
   {
     city: "New Orleans",
     img: "https://images.unsplash.com/photo-1595867818082-083862f3d630?w=600&h=900&fit=crop&auto=format",
     link: "/hotels",
+    locked: true,
   },
 ];
 
@@ -52,56 +58,63 @@ const INTERNATIONAL = [
     city: "Cancún",
     img: "https://images.unsplash.com/photo-1552074284-5e88ef1aef18?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
+    locked: true,
   },
   {
     city: "Paris",
     img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
+    locked: true,
   },
   {
     city: "Punta Cana",
     img: "https://images.unsplash.com/photo-1590523278191-995cbcda646b?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
+    locked: true,
   },
   {
     city: "Bali",
     img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
+    locked: true,
   },
   {
     city: "London",
     img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
+    locked: true,
   },
   {
     city: "Montego Bay",
     img: "https://images.unsplash.com/photo-1530225029356-e301a685e6b1?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
+    locked: true,
   },
   {
     city: "Rome",
     img: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=600&h=900&fit=crop&auto=format",
     link: "/packages",
+    locked: true,
   },
 ];
 
-function DealTile({ city, img, dealOfWeek, link }) {
+function DealTile({ city, img, dealOfWeek, link, locked }) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div style={{ flexShrink: 0 }} onClick={() => link && (window.location.href = link)}>
+    <div style={{ flexShrink: 0 }} onClick={() => !locked && link && (window.location.href = link)}>
       <p style={{ fontWeight: "800", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 5px", textAlign: "center", color: dealOfWeek ? ORANGE : "transparent", userSelect: "none" }}>
         🔥 Deals for this Week
       </p>
     <div
-      onMouseEnter={() => setHovered(true)}
+      onMouseEnter={() => !locked && setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         position: "relative",
         borderRadius: "14px",
         overflow: "hidden",
         aspectRatio: "2 / 3",
-        cursor: "pointer",
+        cursor: locked ? "not-allowed" : "pointer",
         boxShadow: hovered
           ? "0 10px 28px rgba(0,0,0,0.28)"
           : "0 3px 10px rgba(0,0,0,0.14)",
@@ -119,27 +132,40 @@ function DealTile({ city, img, dealOfWeek, link }) {
           display: "block",
           transform: hovered ? "scale(1.07)" : "scale(1)",
           transition: "transform 0.4s ease",
+          filter: locked ? "blur(4px)" : "none",
         }}
         onError={e => { e.currentTarget.style.background = NAVY; }}
       />
       {/* Subtle dark overlay */}
-      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.30)" }} />
+      <div style={{ position: "absolute", inset: 0, background: locked ? "rgba(0,0,0,0.55)" : "rgba(0,0,0,0.30)" }} />
 
-      {/* City name centered */}
-      <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "8px" }}>
-        <p style={{
-          color: "#fff",
-          fontWeight: "800",
-          fontSize: "clamp(11px, 1.1vw, 16px)",
-          textAlign: "center",
-          margin: 0,
-          lineHeight: 1.25,
-          textShadow: "0 2px 10px rgba(0,0,0,0.7)",
-          letterSpacing: "0.01em",
-        }}>
-          {city}
-        </p>
-      </div>
+      {/* Lock overlay */}
+      {locked && (
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+          <span style={{ fontSize: "clamp(20px, 2vw, 28px)", lineHeight: 1 }}>🔒</span>
+          <p style={{ color: "#fff", fontWeight: "700", fontSize: "clamp(9px, 0.9vw, 12px)", margin: 0, textAlign: "center", opacity: 0.9, letterSpacing: "0.05em", textTransform: "uppercase" }}>
+            Coming Soon
+          </p>
+        </div>
+      )}
+
+      {/* City name centered (unlocked only) */}
+      {!locked && (
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "8px" }}>
+          <p style={{
+            color: "#fff",
+            fontWeight: "800",
+            fontSize: "clamp(11px, 1.1vw, 16px)",
+            textAlign: "center",
+            margin: 0,
+            lineHeight: 1.25,
+            textShadow: "0 2px 10px rgba(0,0,0,0.7)",
+            letterSpacing: "0.01em",
+          }}>
+            {city}
+          </p>
+        </div>
+      )}
     </div>
     </div>
   );
