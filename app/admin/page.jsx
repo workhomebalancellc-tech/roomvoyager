@@ -1763,6 +1763,64 @@ function ReferralsPanel() {
   );
 }
 
+function AirportSlugDirectory() {
+  const [filter, setFilter] = useState("");
+  const [open,   setOpen]   = useState(false);
+
+  function humanize(slug) {
+    return slug
+      .replace(/-united-states$/, "").replace(/-united-kingdom$/, "").replace(/-canada$/, "")
+      .split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+  }
+
+  const entries = Object.entries(IATA_MAP);
+  const q = filter.trim().toLowerCase();
+  const filtered = q
+    ? entries.filter(([code, slug]) => code.toLowerCase().includes(q) || slug.includes(q))
+    : entries;
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div>
+          <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 2px" }}>🗺️ Airport Slug Directory</p>
+          <p style={{ fontSize: "11px", color: "#6B7280", margin: 0 }}>{entries.length} airports mapped — click any to test on Kiwi</p>
+        </div>
+        <button onClick={() => setOpen(v => !v)}
+          style={{ padding: "6px 14px", borderRadius: "8px", border: "1px solid #E5E7EB", fontSize: "12px", fontWeight: "600", cursor: "pointer", background: "#F9FAFB", color: "#374151" }}>
+          {open ? "Collapse ▲" : "View All ▼"}
+        </button>
+      </div>
+
+      {open && (
+        <div style={{ marginTop: "16px" }}>
+          <input type="text" placeholder="Search by code or city…" value={filter}
+            onChange={e => setFilter(e.target.value)}
+            style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none", marginBottom: "14px" }} />
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(210px, 1fr))", gap: "8px" }}>
+            {filtered.map(([code, slug]) => (
+              <a key={code}
+                href={`https://www.kiwi.com/en/?origin=${slug}&destination=anywhere`}
+                target="_blank" rel="noopener noreferrer"
+                style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 12px", background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "10px", textDecoration: "none" }}
+                onMouseEnter={e => e.currentTarget.style.background = "#DCFCE7"}
+                onMouseLeave={e => e.currentTarget.style.background = "#F0FDF4"}>
+                <span style={{ fontFamily: "monospace", fontWeight: "800", fontSize: "14px", color: NAVY, minWidth: "38px" }}>{code}</span>
+                <span style={{ fontSize: "11px", color: "#374151", flex: 1, lineHeight: 1.3 }}>{humanize(slug)}</span>
+                <span style={{ fontSize: "11px", color: "#16A34A", flexShrink: 0 }}>↗</span>
+              </a>
+            ))}
+          </div>
+          {filtered.length === 0 && (
+            <p style={{ fontSize: "13px", color: "#9CA3AF", textAlign: "center", padding: "20px 0", margin: 0 }}>No airports match "{filter}"</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function AirportCodeTester() {
   const [input, setInput]   = useState("");
   const [result, setResult] = useState(null);
@@ -1771,7 +1829,7 @@ function AirportCodeTester() {
     const code = input.trim().toUpperCase();
     const slug = IATA_MAP[code];
     setResult(slug
-      ? { ok: true,  msg: `✅ ${code} → ${slug}`, url: `https://www.kiwi.com/en/search/results/${slug}/anywhere/anytime/no-return` }
+      ? { ok: true,  msg: `✅ ${code} → ${slug}`, url: `https://www.kiwi.com/en/?origin=${slug}&destination=anywhere` }
       : { ok: false, msg: `❌ ${code} not found in map` }
     );
   }
@@ -1936,6 +1994,11 @@ export default function AdminDashboard() {
         {/* AIRPORT CODE TESTER */}
         <div style={{ marginBottom: "20px" }}>
           <AirportCodeTester />
+        </div>
+
+        {/* AIRPORT SLUG DIRECTORY */}
+        <div style={{ marginBottom: "20px" }}>
+          <AirportSlugDirectory />
         </div>
 
         {/* REFERRALS */}
