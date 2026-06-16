@@ -838,8 +838,8 @@ function FlightsContent() {
                   {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n} {n === 1 ? "Adult" : "Adults"}</option>)}
                 </select>
               </div>
-              <button type="button" onClick={handleSearch} style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(0,59,149,0.3)", height: "42px", alignSelf: "flex-end", width: "100%" }}>
-                Search ✈️
+              <button type="button" onClick={handleSearch} style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(255,102,0,0.3)", height: "42px", alignSelf: "flex-end", width: "100%" }}>
+                Search Flights
               </button>
             </div>
           </form>

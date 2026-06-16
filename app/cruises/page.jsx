@@ -119,7 +119,7 @@ function CruiseboundSearch() {
     if (mo.firstDay) { params.set("firstDepartDate", mo.firstDay); params.set("lastDepartDate", mo.lastDay); }
     const searchUrl = `https://www.cruisebound.com/Searches?${params.toString()}`;
     const affiliateUrl = `${CB_AFFILIATE}?u=${encodeURIComponent(searchUrl)}`;
-    window.location.href = `/redirect?to=${encodeURIComponent(affiliateUrl)}&partner=Cruisebound&product=cruise`;
+    window.open(`/redirect?to=${encodeURIComponent(affiliateUrl)}&partner=Cruisebound&product=cruise`, "_blank", "noopener,noreferrer");
   }
 
   const inp = { width: "100%", padding: "10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", boxSizing: "border-box", outline: "none", cursor: "pointer", height: "42px" };
@@ -143,7 +143,7 @@ function CruiseboundSearch() {
               </select>
             </div>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "12px", alignItems: "flex-end" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px", alignItems: "flex-end" }}>
             <div>
               <label style={lbl}>Departure Month</label>
               <select value={monthIdx} onChange={e => setMonthIdx(Number(e.target.value))} style={inp}>
@@ -158,8 +158,8 @@ function CruiseboundSearch() {
                 ))}
               </select>
             </div>
-            <button onClick={handleSearch} style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(0,59,149,0.3)", height: "42px", alignSelf: "flex-end", width: "100%" }}>
-              Search 🚢
+            <button onClick={handleSearch} style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(255,102,0,0.3)", height: "42px", alignSelf: "flex-end", width: "100%" }}>
+              Search Cruises
             </button>
           </div>
         </div>
@@ -491,7 +491,7 @@ export default function CruisesPage() {
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>Popular Cruise Destinations</h2>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(3, 1fr)", gap: "16px" }}>
               {DESTINATIONS.map((d, i) => (
-                <a key={i} href={`/redirect?to=${encodeURIComponent(tagLink(d.href, uid))}&partner=Cruisebound&product=cruise`} style={{ textDecoration: "none", display: "block", background: "#fff", borderRadius: "14px", overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 8px rgba(0,59,149,0.06)", cursor: "pointer" }}
+                <a key={i} href={`/redirect?to=${encodeURIComponent(tagLink(d.href, uid))}&partner=Cruisebound&product=cruise`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block", background: "#fff", borderRadius: "14px", overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 8px rgba(0,59,149,0.06)", cursor: "pointer" }}
                   onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,59,149,0.15)"}
                   onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,59,149,0.06)"}>
                   <div style={{ position: "relative", height: "110px", overflow: "hidden", background: NAVY }}>
@@ -517,6 +517,7 @@ export default function CruisesPage() {
               {LINES.map((l, i) => (
                 <a key={i}
                   href={`/redirect?to=${encodeURIComponent(tagLink(l.href, uid))}&partner=${encodeURIComponent(l.name)}&product=cruise`}
+                  target="_blank" rel="noopener noreferrer"
                   style={{ background: "#fff", borderRadius: "12px", padding: "16px", border: "1px solid #E5E7EB", display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = NAVY}
                   onMouseLeave={e => e.currentTarget.style.borderColor = "#E5E7EB"}>
