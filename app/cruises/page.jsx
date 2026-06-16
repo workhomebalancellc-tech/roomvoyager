@@ -121,48 +121,47 @@ function CruiseboundSearch() {
     window.open(`${CB_AFFILIATE}?u=${encodeURIComponent(searchUrl)}`, "_blank", "noopener,noreferrer");
   }
 
-  const sel = {
-    width: "100%", padding: "9px 12px", border: "1.5px solid rgba(255,255,255,0.22)", borderRadius: "8px",
-    fontSize: "13px", boxSizing: "border-box", outline: "none", background: "rgba(255,255,255,0.10)",
-    color: "#fff", cursor: "pointer", WebkitAppearance: "none", appearance: "none",
-  };
-  const lbl = { fontSize: "11px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: "5px" };
-  const optStyle = { background: "#003B95", color: "#fff" };
+  const inp = { width: "100%", padding: "10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", boxSizing: "border-box", outline: "none", cursor: "pointer", height: "42px" };
+  const lbl = { display: "block", fontSize: "11px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" };
 
   return (
-    <div style={{ background: NAVY, borderRadius: "16px", padding: "20px 18px", boxShadow: "0 6px 28px rgba(0,59,149,0.25)", border: "1px solid rgba(147,197,253,0.25)" }}>
-      <p style={{ color: "#fff", fontWeight: "800", fontSize: "15px", margin: "0 0 2px" }}>🚢 Search Cruises</p>
-      <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "600", margin: "0 0 18px" }}>Powered by Cruisebound</p>
-      <div style={{ display: "flex", flexDirection: "column", gap: "13px" }}>
-        <div>
-          <label style={lbl}>Destination</label>
-          <select value={region} onChange={e => setRegion(e.target.value)} style={sel}>
-            {REGION_OPTIONS.map((r, i) => <option key={i} value={r.value} style={optStyle}>{r.label}</option>)}
-          </select>
+    <div style={{ background: NAVY, padding: "32px 24px" }}>
+      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+        <div style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
+            <div>
+              <label style={lbl}>Destination</label>
+              <select value={region} onChange={e => setRegion(e.target.value)} style={inp}>
+                {REGION_OPTIONS.map((r, i) => <option key={i} value={r.value}>{r.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={lbl}>Departure Port</label>
+              <select value={port} onChange={e => setPort(e.target.value)} style={inp}>
+                {PORT_OPTIONS.map((p, i) => <option key={i} value={p.value}>{p.label}</option>)}
+              </select>
+            </div>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "12px", alignItems: "flex-end" }}>
+            <div>
+              <label style={lbl}>Departure Month</label>
+              <select value={monthIdx} onChange={e => setMonthIdx(Number(e.target.value))} style={inp}>
+                {MONTH_OPTIONS.map((m, i) => <option key={i} value={i}>{m.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={lbl}>Duration</label>
+              <select value={duration} onChange={e => setDuration(e.target.value)} style={inp}>
+                {[["3","3+ nights"],["5","5+ nights"],["7","7+ nights"],["10","10+ nights"],["14","14+ nights"]].map(([v,l]) => (
+                  <option key={v} value={v}>{l}</option>
+                ))}
+              </select>
+            </div>
+            <button onClick={handleSearch} style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(0,59,149,0.3)", height: "42px", alignSelf: "flex-end", width: "100%" }}>
+              Search 🚢
+            </button>
+          </div>
         </div>
-        <div>
-          <label style={lbl}>Departure Port</label>
-          <select value={port} onChange={e => setPort(e.target.value)} style={sel}>
-            {PORT_OPTIONS.map((p, i) => <option key={i} value={p.value} style={optStyle}>{p.label}</option>)}
-          </select>
-        </div>
-        <div>
-          <label style={lbl}>Departure Month</label>
-          <select value={monthIdx} onChange={e => setMonthIdx(Number(e.target.value))} style={sel}>
-            {MONTH_OPTIONS.map((m, i) => <option key={i} value={i} style={optStyle}>{m.label}</option>)}
-          </select>
-        </div>
-        <div>
-          <label style={lbl}>Duration</label>
-          <select value={duration} onChange={e => setDuration(e.target.value)} style={sel}>
-            {[["3","3+ nights"],["5","5+ nights"],["7","7+ nights"],["10","10+ nights"],["14","14+ nights"]].map(([v,l]) => (
-              <option key={v} value={v} style={optStyle}>{l}</option>
-            ))}
-          </select>
-        </div>
-        <button onClick={handleSearch} style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "13px 12px", fontWeight: "800", fontSize: "14px", cursor: "pointer", width: "100%", marginTop: "2px", boxShadow: "0 4px 12px rgba(255,102,0,0.4)" }}>
-          Search Cruises →
-        </button>
       </div>
     </div>
   );
@@ -478,24 +477,18 @@ export default function CruisesPage() {
       </div>
 
 
-      {/* MAIN — responsive two column */}
-      <div style={{ maxWidth: "1140px", margin: "0 auto", padding: isMobile ? "24px 16px 60px" : "48px 24px 80px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "320px 1fr", gap: "40px", alignItems: "start" }}>
+      {/* ── SEARCH FORM ── */}
+      <CruiseboundSearch />
 
-        {/* ── LEFT — sticky Cruisebound search widget ── */}
-        {!isMobile && (
-          <div style={{ position: "sticky", top: "80px" }}>
-            <CruiseboundSearch />
-          </div>
-        )}
-
-        {/* ── RIGHT — content ── */}
+      {/* MAIN */}
+      <div style={{ maxWidth: "1140px", margin: "0 auto", padding: isMobile ? "24px 16px 60px" : "48px 24px 80px" }}>
         <div>
 
           {/* Destination Cards */}
           <section id="destinations" style={{ marginBottom: "52px" }}>
             <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Where do you want to go?</p>
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>Popular Cruise Destinations</h2>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr", gap: "16px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(3, 1fr)", gap: "16px" }}>
               {DESTINATIONS.map((d, i) => (
                 <a key={i} href={tagLink(d.href, uid)} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block", background: "#fff", borderRadius: "14px", overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 2px 8px rgba(0,59,149,0.06)", cursor: "pointer" }}
                   onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,59,149,0.15)"}
@@ -539,13 +532,6 @@ export default function CruisesPage() {
               ))}
             </div>
           </section>
-
-          {/* Mobile widget */}
-          {isMobile && (
-            <div id="search" style={{ marginBottom: "48px" }}>
-              <CruiseboundSearch />
-            </div>
-          )}
 
           {/* Agent CTA — temporarily hidden
           <section id="quote" style={{ background: "#fff", borderRadius: "20px", padding: "28px", border: "1px solid #E5E7EB", boxShadow: "0 2px 12px rgba(0,59,149,0.07)", marginBottom: "32px" }}>
