@@ -286,6 +286,31 @@ export default function HomePage() {
   const [showSugg, setShowSugg] = useState(false);
   const [loadingSugg, setLoadingSugg] = useState(false);
   const debounceRef = useRef(null);
+  // Flight-specific: separate from/to fields
+  const [flightFrom, setFlightFrom] = useState("");
+  const [flightTo,   setFlightTo]   = useState("");
+  const [fromSugg,   setFromSugg]   = useState([]);
+  const [toSugg,     setToSugg]     = useState([]);
+  const [showFromSugg, setShowFromSugg] = useState(false);
+  const [showToSugg,   setShowToSugg]   = useState(false);
+  const [loadingFrom,  setLoadingFrom]  = useState(false);
+  const [loadingTo,    setLoadingTo]    = useState(false);
+  const fromDebounceRef = useRef(null);
+  const toDebounceRef   = useRef(null);
+
+  async function fetchCities(q, setData, setShow, setLoading, debounceRef) {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (!q || q.length < 2) { setData([]); setShow(false); return; }
+    setLoading(true);
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const res  = await fetch(`/api/cities?q=${encodeURIComponent(q)}`);
+        const data = await res.json();
+        setData(data); setShow(data.length > 0);
+      } catch { setData([]); setShow(false); }
+      finally { setLoading(false); }
+    }, 300);
+  }
   const { user } = useAuth();
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -325,7 +350,13 @@ export default function HomePage() {
     const q = searchVal.trim() ? `?q=${encodeURIComponent(searchVal.trim())}` : "";
     if (activeTab === "hotels") window.location.href = `/hotels${q}`;
     else if (activeTab === "cruises") window.location.href = `/cruises${q}`;
-    else window.location.href = `/flights${q}`;
+    else {
+      const params = new URLSearchParams();
+      if (flightFrom.trim()) params.set("from", flightFrom.trim());
+      if (flightTo.trim())   params.set("to",   flightTo.trim());
+      const qs = params.toString() ? `?${params.toString()}` : "";
+      window.location.href = `/flights${qs}`;
+    }
   }
 
   return (
@@ -361,11 +392,60 @@ export default function HomePage() {
               <div style={{ display: "flex", justifyContent: "center", padding: "0 4px 4px" }}>
                 <a href="/cruises" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "14px 60px", fontSize: "17px", fontWeight: "700", cursor: "pointer", textDecoration: "none", display: "inline-block" }}>Browse Cruises →</a>
               </div>
+            ) : activeTab === "flights" ? (
+              <form onSubmit={handleSearch} style={{ display: "flex", gap: "8px", padding: "0 4px 4px", flexWrap: "wrap" }}>
+                {/* FROM field */}
+                <div style={{ flex: 1, minWidth: "140px", position: "relative" }}>
+                  <input type="text" placeholder="Flying from…" value={flightFrom}
+                    onChange={e => { setFlightFrom(e.target.value); fetchCities(e.target.value, setFromSugg, setShowFromSugg, setLoadingFrom, fromDebounceRef); }}
+                    onBlur={() => setTimeout(() => setShowFromSugg(false), 160)}
+                    onFocus={() => flightFrom.length >= 1 && fromSugg.length > 0 && setShowFromSugg(true)}
+                    style={{ width: "100%", padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827", boxSizing: "border-box" }} />
+                  {(showFromSugg || loadingFrom) && (
+                    <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "10px", boxShadow: "0 6px 24px rgba(0,0,0,0.13)", zIndex: 200, marginTop: "4px", overflow: "hidden" }}>
+                      {loadingFrom && fromSugg.length === 0
+                        ? <div style={{ padding: "10px 14px", fontSize: "13px", color: "#9CA3AF" }}>Searching…</div>
+                        : fromSugg.map((c, i) => (
+                          <div key={i} onMouseDown={() => { setFlightFrom(c.label); setShowFromSugg(false); }}
+                            style={{ padding: "10px 14px", cursor: "pointer", display: "flex", justifyContent: "space-between", borderBottom: i < fromSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
+                            onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
+                            onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
+                            <span style={{ fontSize: "14px", color: "#111827", fontWeight: "600" }}>{c.name}</span>
+                            <span style={{ fontSize: "12px", color: "#9CA3AF" }}>{c.sub}</span>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </div>
+                {/* TO field */}
+                <div style={{ flex: 1, minWidth: "140px", position: "relative" }}>
+                  <input type="text" placeholder="Flying to…" value={flightTo}
+                    onChange={e => { setFlightTo(e.target.value); fetchCities(e.target.value, setToSugg, setShowToSugg, setLoadingTo, toDebounceRef); }}
+                    onBlur={() => setTimeout(() => setShowToSugg(false), 160)}
+                    onFocus={() => flightTo.length >= 1 && toSugg.length > 0 && setShowToSugg(true)}
+                    style={{ width: "100%", padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827", boxSizing: "border-box" }} />
+                  {(showToSugg || loadingTo) && (
+                    <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "10px", boxShadow: "0 6px 24px rgba(0,0,0,0.13)", zIndex: 200, marginTop: "4px", overflow: "hidden" }}>
+                      {loadingTo && toSugg.length === 0
+                        ? <div style={{ padding: "10px 14px", fontSize: "13px", color: "#9CA3AF" }}>Searching…</div>
+                        : toSugg.map((c, i) => (
+                          <div key={i} onMouseDown={() => { setFlightTo(c.label); setShowToSugg(false); }}
+                            style={{ padding: "10px 14px", cursor: "pointer", display: "flex", justifyContent: "space-between", borderBottom: i < toSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
+                            onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
+                            onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
+                            <span style={{ fontSize: "14px", color: "#111827", fontWeight: "600" }}>{c.name}</span>
+                            <span style={{ fontSize: "12px", color: "#9CA3AF" }}>{c.sub}</span>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </div>
+                <button type="submit" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", flexShrink: 0 }}>Search →</button>
+              </form>
             ) : (
               <form onSubmit={handleSearch} style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
                 <div style={{ flex: 1, position: "relative" }}>
-                  <input type="text"
-                    placeholder={activeTab === "hotels" ? "Where are you going?" : "Where are you flying from?"}
+                  <input type="text" placeholder="Where are you going?"
                     value={searchVal}
                     onChange={e => handleSearchChange(e.target.value)}
                     onBlur={() => setTimeout(() => setShowSugg(false), 160)}

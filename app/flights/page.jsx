@@ -16,11 +16,11 @@ const destinations = [
   { name: "Cancún",       country: "Mexico",             photo: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=400&h=280&fit=crop&auto=format", tag: "🏖️ Beach",          iata: "CUN", kiwi: "cancun" },
   { name: "Miami",        country: "Florida, USA",        photo: "https://images.unsplash.com/photo-1503891450247-ee5f8ec46dc3?w=400&h=280&fit=crop&auto=format", tag: "🌆 City",           iata: "MIA", kiwi: "miami-florida-united-states" },
   { name: "Las Vegas",    country: "Nevada, USA",         photo: "https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=400&h=280&fit=crop&auto=format", tag: "🎰 Entertainment",  iata: "LAS", kiwi: "las-vegas-nevada-united-states" },
-  { name: "Paris",        country: "France",              photo: "https://images.unsplash.com/photo-1431274172761-fca41d930114?w=400&h=280&fit=crop&auto=format", tag: "🗼 Romance",         iata: "CDG", kiwi: "paris-ile-de-france-france" },
+  { name: "Paris",        country: "France",              photo: "https://images.unsplash.com/photo-1431274172761-fca41d930114?w=400&h=280&fit=crop&auto=format", tag: "🗼 Romance",         iata: "CDG", kiwi: "paris-france" },
   { name: "Orlando",      country: "Florida, USA",        photo: "https://images.unsplash.com/photo-1627035983655-0ceec61bb733?w=400&h=280&fit=crop&auto=format", tag: "🎡 Family",          iata: "MCO", kiwi: "orlando-florida-united-states" },
-  { name: "London",       country: "United Kingdom",      photo: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=280&fit=crop&auto=format", tag: "🎭 Culture",         iata: "LHR", kiwi: "london-england-united-kingdom" },
-  { name: "Punta Cana",   country: "Dominican Republic",  photo: "https://images.unsplash.com/photo-1612865547334-09cb8cb455da?w=400&h=280&fit=crop&auto=format", tag: "🌴 All-Inclusive",   iata: "PUJ", kiwi: "punta-cana-la-altagracia-dominican-republic" },
-  { name: "New York",     country: "New York, USA",       photo: "https://images.unsplash.com/photo-1522083165195-3424ed129620?w=400&h=280&fit=crop&auto=format", tag: "🗽 Iconic",          iata: "JFK", kiwi: "new-york-new-york-united-states" },
+  { name: "London",       country: "United Kingdom",      photo: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=280&fit=crop&auto=format", tag: "🎭 Culture",         iata: "LHR", kiwi: "london-united-kingdom" },
+  { name: "Punta Cana",   country: "Dominican Republic",  photo: "https://images.unsplash.com/photo-1612865547334-09cb8cb455da?w=400&h=280&fit=crop&auto=format", tag: "🌴 All-Inclusive",   iata: "PUJ", kiwi: "punta-cana-dominican-republic" },
+  { name: "New York",     country: "New York, USA",       photo: "https://images.unsplash.com/photo-1522083165195-3424ed129620?w=400&h=280&fit=crop&auto=format", tag: "🗽 Iconic",          iata: "JFK", kiwi: "john-f-kennedy-international-new-york-city-new-york-united-states" },
 ];
 
 const tips = [
@@ -693,8 +693,8 @@ function FlightsContent() {
           to,
           fromKiwi: slugFrom,
           toKiwi:   slugTo,
-          depart:   d,
-          ret:      r,
+          depart:   depart,
+          ret:      ret,
           pax,
         }),
       }).catch(() => {}); // never block navigation
