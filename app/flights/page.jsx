@@ -174,6 +174,7 @@ const CITY_TO_KIWI = {
   "sydney": "sydney-new-south-wales-australia",
   "st petersburg": "st-pete-clearwater-international-tampa-florida-united-states", "st. petersburg": "st-pete-clearwater-international-tampa-florida-united-states", "saint petersburg": "st-pete-clearwater-international-tampa-florida-united-states", "st pete": "st-pete-clearwater-international-tampa-florida-united-states", "st. pete": "st-pete-clearwater-international-tampa-florida-united-states", "pie": "st-pete-clearwater-international-tampa-florida-united-states", "clearwater": "st-pete-clearwater-international-tampa-florida-united-states",
   "tampa": "tampa-international-tampa-florida-united-states", "tpa": "tampa-international-tampa-florida-united-states",
+  "new orleans": "new-orleans-louisiana-united-states",
   "nassau": "nassau-new-providence-bahamas",
   "montego bay": "montego-bay-saint-james-jamaica",
   "aruba": "oranjestad-aruba-aruba",
@@ -473,7 +474,7 @@ function FlightsContent() {
                         ? <div style={{ padding: "10px 12px", fontSize: "12px", color: "#9CA3AF" }}>Searching…</div>
                         : toSugg.map((c, i) => (
                           <div key={i}
-                            onPointerDown={() => { setTo(c.label || c.name); setToKiwi(resolveKiwi(c.name) || toKiwiSlug(c.name) || ""); setShowToSugg(false); }}
+                            onPointerDown={() => { setTo(c.label || c.name); setToKiwi(resolveKiwi(c.name) || buildKiwiSlugFromSugg(c.name, c.sub) || ""); setShowToSugg(false); }}
                             style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < toSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
                             onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
                             onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
