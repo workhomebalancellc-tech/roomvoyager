@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { useAuth } from "../../contexts/AuthContext";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import FloatingChat from "../components/FloatingChat";
@@ -15,7 +14,6 @@ const LIGHT_BLUE = "#EBF3FF";
 
 
 function HotelsContent() {
-  const { user } = useAuth();
   const searchParams = useSearchParams();
   const [destination, setDestination] = useState(searchParams.get("q") || "");
   const [checkIn, setCheckIn] = useState("");
@@ -71,21 +69,6 @@ function HotelsContent() {
 
   function handleSearch(e) {
     e.preventDefault();
-    // Log click for Expedia import matching (only for logged-in users)
-    if (user?.uid) {
-      fetch("/api/track/hotel-click", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          uid:         user.uid,
-          email:       user.email || "",
-          name:        user.name  || "",
-          destination: destination || "",
-          checkIn:     checkIn    || "",
-          checkOut:    checkOut   || "",
-        }),
-      }).catch(() => {}); // fire-and-forget, never block the search
-    }
     const params = new URLSearchParams({ destination: destination || "United States", startDate: checkIn, endDate: checkOut, adults, camref: "1110l8R3Z", pubref: "hotels-page" });
     const expediaUrl = `https://www.expedia.com/Hotel-Search?${params.toString()}`;
     window.open(`/redirect?to=${encodeURIComponent(expediaUrl)}&partner=Expedia&product=hotel`, "_blank", "noopener,noreferrer");
