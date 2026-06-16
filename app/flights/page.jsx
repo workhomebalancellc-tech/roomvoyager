@@ -37,11 +37,11 @@ const IATA_TO_KIWI = {
   // ── Major hubs ──
   ATL:"atlanta-georgia-united-states", LAX:"los-angeles-california-united-states",
   ORD:"chicago-illinois-united-states", DFW:"dallas-texas-united-states",
-  DEN:"denver-colorado-united-states", JFK:"new-york-new-york-united-states",
+  DEN:"denver-colorado-united-states", JFK:"john-f-kennedy-international-new-york-city-new-york-united-states",
   SFO:"san-francisco-california-united-states", SEA:"seattle-washington-united-states",
   LAS:"las-vegas-nevada-united-states", MCO:"orlando-florida-united-states",
   MIA:"miami-florida-united-states", CLT:"charlotte-north-carolina-united-states",
-  EWR:"new-york-new-york-united-states", PHX:"phoenix-arizona-united-states",
+  EWR:"newark-new-jersey-united-states", PHX:"phoenix-arizona-united-states",
   IAH:"houston-texas-united-states", BOS:"boston-massachusetts-united-states",
   MSP:"minneapolis-minnesota-united-states", DTW:"detroit-michigan-united-states",
   FLL:"fort-lauderdale-florida-united-states", PHL:"philadelphia-pennsylvania-united-states",
@@ -121,8 +121,8 @@ const IATA_TO_KIWI = {
   PSP:"palm-springs-california-united-states", STS:"santa-rosa-california-united-states",
   RDD:"redding-california-united-states",
   // ── Pacific / Hawaii / Alaska ──
-  HNL:"honolulu-hawaii-united-states", OGG:"kahului-maui-hawaii-united-states",
-  KOA:"kailua-kona-hawaii-united-states", LIH:"lihue-hawaii-united-states",
+  HNL:"honolulu-hawaii-united-states", OGG:"kahului-hawaii-united-states",
+  KOA:"kailua-kona-hawaii-united-states", LIH:"lihue-kauai-hawaii-united-states",
   ITO:"hilo-hawaii-united-states", ANC:"anchorage-alaska-united-states",
   FAI:"fairbanks-alaska-united-states", JNU:"juneau-alaska-united-states",
   // ── Pacific Northwest ──
@@ -135,6 +135,87 @@ const IATA_TO_KIWI = {
   PHF:"newport-news-virginia-united-states", SBY:"salisbury-maryland-united-states",
   // ── Arkansas ──
   XNA:"fayetteville-arkansas-united-states", LIT:"little-rock-arkansas-united-states",
+  // ── Southeast additions ──
+  MYR:"myrtle-beach-south-carolina-united-states", SGF:"springfield-missouri-united-states",
+  EGE:"eagle-vail-colorado-united-states",
+  // ── Indiana ──
+  FWA:"fort-wayne-indiana-united-states",
+  // ── Caribbean & Mexico ──
+  CUN:"cancun-quintana-roo-mexico", SJD:"cabo-san-lucas-baja-california-sur-mexico",
+  PVR:"puerto-vallarta-jalisco-mexico", GDL:"guadalajara-jalisco-mexico",
+  MEX:"mexico-city-mexico-city-mexico", ZIH:"ixtapa-guerrero-mexico",
+  CZM:"cozumel-quintana-roo-mexico",
+  MBJ:"montego-bay-saint-james-jamaica", KIN:"kingston-surrey-jamaica",
+  NAS:"nassau-new-providence-bahamas",
+  AUA:"oranjestad-aruba-aruba",
+  PUJ:"punta-cana-la-altagracia-dominican-republic", SDQ:"santo-domingo-national-district-dominican-republic",
+  SJU:"san-juan-puerto-rico-united-states", BQN:"aguadilla-puerto-rico-united-states",
+  SXM:"philipsburg-sint-maarten-sint-maarten",
+  GCM:"george-town-grand-cayman-cayman-islands",
+  HAV:"havana-la-habana-cuba", VRA:"varadero-matanzas-cuba",
+  BGI:"bridgetown-saint-michael-barbados",
+  UVF:"vieux-fort-saint-lucia-saint-lucia",
+  GND:"st-george-saint-george-grenada",
+  // ── Canada ──
+  YYZ:"toronto-ontario-canada", YVR:"vancouver-british-columbia-canada",
+  YUL:"montreal-quebec-canada", YYC:"calgary-alberta-canada",
+  YEG:"edmonton-alberta-canada", YOW:"ottawa-ontario-canada",
+  // ── Europe ──
+  LHR:"london-england-united-kingdom", LGW:"london-england-united-kingdom",
+  CDG:"paris-ile-de-france-france",
+  FCO:"rome-lazio-italy", VCE:"venice-veneto-italy", FLR:"florence-tuscany-italy", NAP:"naples-campania-italy",
+  AMS:"amsterdam-north-holland-netherlands",
+  BCN:"barcelona-catalonia-spain", MAD:"madrid-community-of-madrid-spain",
+  FRA:"frankfurt-hesse-germany", MUC:"munich-bavaria-germany", DUS:"dusseldorf-north-rhine-westphalia-germany", HAM:"hamburg-hamburg-germany",
+  DUB:"dublin-leinster-ireland",
+  ATH:"athens-attica-greece",
+  LIS:"lisbon-lisbon-portugal",
+  MXP:"milan-lombardy-italy",
+  ZRH:"zurich-zurich-switzerland", GVA:"geneva-canton-of-geneva-switzerland",
+  VIE:"vienna-vienna-austria",
+  CPH:"copenhagen-capital-region-of-denmark-denmark",
+  ARN:"stockholm-stockholm-county-sweden",
+  OSL:"oslo-oslo-norway",
+  HEL:"helsinki-uusimaa-finland",
+  KEF:"reykjavik-capital-region-iceland",
+  EDI:"edinburgh-scotland-united-kingdom", MAN:"manchester-england-united-kingdom",
+  NCE:"nice-provence-alpes-cote-dazur-france",
+  PRG:"prague-bohemia-czech-republic",
+  BRU:"brussels-brussels-capital-region-belgium",
+  BUD:"budapest-budapest-hungary",
+  WAW:"warsaw-masovian-voivodeship-poland",
+  // ── Middle East ──
+  DXB:"dubai-dubai-united-arab-emirates",
+  DOH:"doha-ad-dawhah-qatar",
+  AUH:"abu-dhabi-abu-dhabi-united-arab-emirates",
+  // ── Asia ──
+  NRT:"tokyo-tokyo-japan", HND:"tokyo-tokyo-japan",
+  KIX:"osaka-osaka-japan",
+  ICN:"seoul-seoul-south-korea",
+  HKG:"hong-kong-hong-kong-hong-kong",
+  BKK:"bangkok-bangkok-thailand",
+  SIN:"singapore-central-region-singapore",
+  KUL:"kuala-lumpur-federal-territory-of-kuala-lumpur-malaysia",
+  DEL:"new-delhi-delhi-india", BOM:"mumbai-maharashtra-india",
+  // ── Pacific & Australia ──
+  SYD:"sydney-new-south-wales-australia", MEL:"melbourne-victoria-australia",
+  BNE:"brisbane-queensland-australia",
+  AKL:"auckland-auckland-new-zealand",
+  NAN:"nadi-ba-fiji",
+  PPT:"papeete-windward-islands-french-polynesia",
+  // ── Latin America ──
+  GRU:"sao-paulo-state-of-sao-paulo-brazil", GIG:"rio-de-janeiro-state-of-rio-de-janeiro-brazil",
+  EZE:"buenos-aires-buenos-aires-argentina",
+  SCL:"santiago-santiago-metropolitan-region-chile",
+  BOG:"bogota-bogota-colombia",
+  LIM:"lima-lima-region-peru",
+  SJO:"san-jose-san-jose-costa-rica",
+  PTY:"panama-city-panama-province-panama",
+  BZE:"belize-city-belize-district-belize",
+  // ── Africa ──
+  JNB:"johannesburg-gauteng-south-africa",
+  CPT:"cape-town-western-cape-south-africa",
+  CAI:"cairo-cairo-governorate-egypt",
 };
 
 /* ── City → Kiwi slug lookup ─────────────────────────────────── */
@@ -312,9 +393,122 @@ const CITY_TO_KIWI = {
   "anchorage": "anchorage-alaska-united-states",
   "fairbanks": "fairbanks-alaska-united-states",
   "juneau": "juneau-alaska-united-states",
-  // ── Arkansas ──
+  // ── Arkansas / Indiana ──
   "little rock": "little-rock-arkansas-united-states",
   "roanoke": "roanoke-virginia-united-states",
+  "fort wayne": "fort-wayne-indiana-united-states",
+  // ── No-airport cities → nearest airport ──
+  // Florida
+  "kissimmee": "orlando-florida-united-states",
+  "celebration": "orlando-florida-united-states",
+  "lake buena vista": "orlando-florida-united-states",
+  "naples": "fort-myers-florida-united-states",
+  "marco island": "fort-myers-florida-united-states",
+  "bonita springs": "fort-myers-florida-united-states",
+  "cape coral": "fort-myers-florida-united-states",
+  "boca raton": "fort-lauderdale-florida-united-states",
+  "pompano beach": "fort-lauderdale-florida-united-states",
+  "delray beach": "west-palm-beach-florida-united-states",
+  "boynton beach": "west-palm-beach-florida-united-states",
+  "palm beach": "west-palm-beach-florida-united-states",
+  "vero beach": "west-palm-beach-florida-united-states",
+  "ocala": "orlando-florida-united-states",
+  "the villages": "orlando-florida-united-states",
+  // Virginia Beach / Hampton Roads
+  "virginia beach": "norfolk-virginia-united-states",
+  "hampton": "norfolk-virginia-united-states",
+  "newport news": "norfolk-virginia-united-states",
+  "chesapeake": "norfolk-virginia-united-states",
+  // DC suburbs
+  "arlington": "washington-district-of-columbia-united-states",
+  "alexandria": "washington-district-of-columbia-united-states",
+  "bethesda": "washington-district-of-columbia-united-states",
+  "mclean": "washington-district-of-columbia-united-states",
+  "falls church": "washington-district-of-columbia-united-states",
+  "reston": "washington-district-of-columbia-united-states",
+  "tysons": "washington-district-of-columbia-united-states",
+  // NYC suburbs
+  "hoboken": "newark-new-jersey-united-states",
+  "jersey city": "newark-new-jersey-united-states",
+  "newark": "newark-new-jersey-united-states",
+  "brooklyn": "new-york-new-york-united-states",
+  "queens": "new-york-new-york-united-states",
+  "bronx": "new-york-new-york-united-states",
+  "staten island": "new-york-new-york-united-states",
+  "stamford": "new-york-new-york-united-states",
+  // DFW / Texas
+  "fort worth": "dallas-texas-united-states",
+  "arlington tx": "dallas-texas-united-states",
+  "plano": "dallas-texas-united-states",
+  "irving": "dallas-texas-united-states",
+  "frisco": "dallas-texas-united-states",
+  "mckinney": "dallas-texas-united-states",
+  // Phoenix metro
+  "scottsdale": "phoenix-arizona-united-states",
+  "tempe": "phoenix-arizona-united-states",
+  "mesa": "phoenix-arizona-united-states",
+  "chandler": "phoenix-arizona-united-states",
+  "gilbert": "phoenix-arizona-united-states",
+  "glendale": "phoenix-arizona-united-states",
+  "sedona": "phoenix-arizona-united-states",
+  "grand canyon": "phoenix-arizona-united-states",
+  "flagstaff": "phoenix-arizona-united-states",
+  // Chicago suburbs
+  "evanston": "chicago-illinois-united-states",
+  "naperville": "chicago-illinois-united-states",
+  "aurora": "chicago-illinois-united-states",
+  "schaumburg": "chicago-illinois-united-states",
+  "oak park": "chicago-illinois-united-states",
+  "rosemont": "chicago-illinois-united-states",
+  // Los Angeles area
+  "anaheim": "los-angeles-california-united-states",
+  "beverly hills": "los-angeles-california-united-states",
+  "santa monica": "los-angeles-california-united-states",
+  "pasadena": "los-angeles-california-united-states",
+  "malibu": "los-angeles-california-united-states",
+  "torrance": "los-angeles-california-united-states",
+  "irvine": "santa-ana-california-united-states",
+  "laguna beach": "santa-ana-california-united-states",
+  "newport beach": "santa-ana-california-united-states",
+  // Bay Area
+  "napa": "san-francisco-california-united-states",
+  "napa valley": "san-francisco-california-united-states",
+  "santa cruz": "san-jose-california-united-states",
+  "palo alto": "san-francisco-california-united-states",
+  "san mateo": "san-francisco-california-united-states",
+  // Tennessee vacation
+  "gatlinburg": "knoxville-tennessee-united-states",
+  "pigeon forge": "knoxville-tennessee-united-states",
+  "sevierville": "knoxville-tennessee-united-states",
+  // Carolinas
+  "myrtle beach": "myrtle-beach-south-carolina-united-states",
+  "hilton head": "savannah-georgia-united-states",
+  "outer banks": "norfolk-virginia-united-states",
+  "wilmington nc": "wilmington-north-carolina-united-states",
+  // New England
+  "cape cod": "boston-massachusetts-united-states",
+  "martha's vineyard": "boston-massachusetts-united-states",
+  "nantucket": "boston-massachusetts-united-states",
+  "newport": "providence-rhode-island-united-states",
+  // Mountains / ski
+  "lake tahoe": "reno-nevada-united-states",
+  "vail": "eagle-vail-colorado-united-states",
+  "beaver creek": "eagle-vail-colorado-united-states",
+  "breckenridge": "denver-colorado-united-states",
+  "steamboat springs": "denver-colorado-united-states",
+  "telluride": "durango-colorado-united-states",
+  "park city": "salt-lake-city-utah-united-states",
+  "moab": "salt-lake-city-utah-united-states",
+  "zion": "salt-lake-city-utah-united-states",
+  "bryce canyon": "salt-lake-city-utah-united-states",
+  // Missouri
+  "branson": "springfield-missouri-united-states",
+  // Maryland / Delaware beach
+  "ocean city md": "baltimore-maryland-united-states",
+  "rehoboth beach": "baltimore-maryland-united-states",
+  // Georgia
+  "savannah beach": "savannah-georgia-united-states",
+  "tybee island": "savannah-georgia-united-states",
 };
 // US state abbreviation → full name (for building Kiwi slugs)
 const ABBR_TO_STATE = {
@@ -468,15 +662,21 @@ function FlightsContent() {
 
   function handleSearch(e) {
     e?.preventDefault();
-    const slugFrom = fromKiwi || resolveKiwi(from) || toKiwiSlug(from.split(",")[0].trim()) || "anywhere";
-    const slugTo   = toKiwi   || resolveKiwi(to)   || toKiwiSlug(to)   || "anywhere";
-    const params = new URLSearchParams();
-    params.set("origin", slugFrom);
-    params.set("destination", slugTo);
-    if (depart) params.set("outboundDate", depart);
-    if (tripType === "round" && ret) params.set("inboundDate", ret);
-    if (pax > 1) params.set("adults", String(pax));
-    const kiwiUrl = `https://www.kiwi.com/en/?${params.toString()}`;
+    const slugFrom = fromKiwi || resolveKiwi(from) || toKiwiSlug(from.split(",")[0].trim()) || "";
+    const slugTo   = toKiwi   || resolveKiwi(to)   || toKiwiSlug(to)   || "";
+    let kiwiUrl;
+    if (!slugFrom && !slugTo) {
+      // Nothing resolved — send to Kiwi homepage
+      kiwiUrl = "https://www.kiwi.com/en/";
+    } else {
+      const params = new URLSearchParams();
+      if (slugFrom) params.set("origin", slugFrom);
+      if (slugTo)   params.set("destination", slugTo);
+      if (depart) params.set("outboundDate", depart);
+      if (tripType === "round" && ret) params.set("inboundDate", ret);
+      if (pax > 1) params.set("adults", String(pax));
+      kiwiUrl = `https://www.kiwi.com/en/?${params.toString()}`;
+    }
     const tpUrl = `https://c111.travelpayouts.com/click?shmarker=722477&promo_id=3791&source_type=customlink&type=click&custom_url=${encodeURIComponent(kiwiUrl)}`;
     const dest = `/redirect?to=${encodeURIComponent(tpUrl)}&partner=Kiwi.com&product=flight`;
 

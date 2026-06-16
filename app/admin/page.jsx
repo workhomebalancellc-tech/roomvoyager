@@ -1589,11 +1589,11 @@ function AwardPoints() {
 const IATA_MAP = {
   ATL:"atlanta-georgia-united-states",LAX:"los-angeles-california-united-states",
   ORD:"chicago-illinois-united-states",DFW:"dallas-texas-united-states",
-  DEN:"denver-colorado-united-states",JFK:"new-york-new-york-united-states",
+  DEN:"denver-colorado-united-states",JFK:"john-f-kennedy-international-new-york-city-new-york-united-states",
   SFO:"san-francisco-california-united-states",SEA:"seattle-washington-united-states",
   LAS:"las-vegas-nevada-united-states",MCO:"orlando-florida-united-states",
   MIA:"miami-florida-united-states",CLT:"charlotte-north-carolina-united-states",
-  EWR:"new-york-new-york-united-states",PHX:"phoenix-arizona-united-states",
+  EWR:"newark-new-jersey-united-states",PHX:"phoenix-arizona-united-states",
   IAH:"houston-texas-united-states",BOS:"boston-massachusetts-united-states",
   MSP:"minneapolis-minnesota-united-states",DTW:"detroit-michigan-united-states",
   FLL:"fort-lauderdale-florida-united-states",PHL:"philadelphia-pennsylvania-united-states",
@@ -1654,11 +1654,116 @@ const IATA_MAP = {
   BUR:"burbank-california-united-states",LGB:"long-beach-california-united-states",
   ONT:"ontario-california-united-states",FAT:"fresno-california-united-states",
   PSP:"palm-springs-california-united-states",
-  HNL:"honolulu-hawaii-united-states",OGG:"kahului-maui-hawaii-united-states",
-  KOA:"kailua-kona-hawaii-united-states",LIH:"lihue-hawaii-united-states",
+  HNL:"honolulu-hawaii-united-states",OGG:"kahului-hawaii-united-states",
+  KOA:"kailua-kona-hawaii-united-states",LIH:"lihue-kauai-hawaii-united-states",
   ANC:"anchorage-alaska-united-states",FAI:"fairbanks-alaska-united-states",
   XNA:"fayetteville-arkansas-united-states",LIT:"little-rock-arkansas-united-states",
   ROA:"roanoke-virginia-united-states",
+  FWA:"fort-wayne-indiana-united-states",
+  MYR:"myrtle-beach-south-carolina-united-states",SGF:"springfield-missouri-united-states",
+};
+
+const INTL_MAP = {
+  // ── Caribbean & Mexico ──
+  CUN:"cancun-quintana-roo-mexico",
+  SJD:"cabo-san-lucas-baja-california-sur-mexico",
+  PVR:"puerto-vallarta-jalisco-mexico",
+  GDL:"guadalajara-jalisco-mexico",
+  MEX:"mexico-city-mexico-city-mexico",
+  CZM:"cozumel-quintana-roo-mexico",
+  ZIH:"ixtapa-guerrero-mexico",
+  MBJ:"montego-bay-saint-james-jamaica",
+  KIN:"kingston-surrey-jamaica",
+  NAS:"nassau-new-providence-bahamas",
+  AUA:"oranjestad-aruba-aruba",
+  PUJ:"punta-cana-la-altagracia-dominican-republic",
+  SDQ:"santo-domingo-national-district-dominican-republic",
+  SJU:"san-juan-puerto-rico-united-states",
+  BQN:"aguadilla-puerto-rico-united-states",
+  SXM:"philipsburg-sint-maarten-sint-maarten",
+  GCM:"george-town-grand-cayman-cayman-islands",
+  HAV:"havana-la-habana-cuba",
+  VRA:"varadero-matanzas-cuba",
+  BGI:"bridgetown-saint-michael-barbados",
+  UVF:"vieux-fort-saint-lucia-saint-lucia",
+  GND:"st-george-saint-george-grenada",
+  // ── Canada ──
+  YYZ:"toronto-ontario-canada",
+  YVR:"vancouver-british-columbia-canada",
+  YUL:"montreal-quebec-canada",
+  YYC:"calgary-alberta-canada",
+  YEG:"edmonton-alberta-canada",
+  YOW:"ottawa-ontario-canada",
+  // ── Europe ──
+  LHR:"london-england-united-kingdom",
+  LGW:"london-england-united-kingdom",
+  CDG:"paris-ile-de-france-france",
+  FCO:"rome-lazio-italy",
+  VCE:"venice-veneto-italy",
+  FLR:"florence-tuscany-italy",
+  NAP:"naples-campania-italy",
+  AMS:"amsterdam-north-holland-netherlands",
+  BCN:"barcelona-catalonia-spain",
+  MAD:"madrid-community-of-madrid-spain",
+  FRA:"frankfurt-hesse-germany",
+  MUC:"munich-bavaria-germany",
+  DUS:"dusseldorf-north-rhine-westphalia-germany",
+  HAM:"hamburg-hamburg-germany",
+  DUB:"dublin-leinster-ireland",
+  ATH:"athens-attica-greece",
+  LIS:"lisbon-lisbon-portugal",
+  MXP:"milan-lombardy-italy",
+  ZRH:"zurich-zurich-switzerland",
+  GVA:"geneva-canton-of-geneva-switzerland",
+  VIE:"vienna-vienna-austria",
+  CPH:"copenhagen-capital-region-of-denmark-denmark",
+  ARN:"stockholm-stockholm-county-sweden",
+  OSL:"oslo-oslo-norway",
+  HEL:"helsinki-uusimaa-finland",
+  KEF:"reykjavik-capital-region-iceland",
+  EDI:"edinburgh-scotland-united-kingdom",
+  MAN:"manchester-england-united-kingdom",
+  NCE:"nice-provence-alpes-cote-dazur-france",
+  PRG:"prague-bohemia-czech-republic",
+  BRU:"brussels-brussels-capital-region-belgium",
+  BUD:"budapest-budapest-hungary",
+  WAW:"warsaw-masovian-voivodeship-poland",
+  // ── Middle East ──
+  DXB:"dubai-dubai-united-arab-emirates",
+  DOH:"doha-ad-dawhah-qatar",
+  AUH:"abu-dhabi-abu-dhabi-united-arab-emirates",
+  // ── Asia ──
+  NRT:"tokyo-tokyo-japan",
+  HND:"tokyo-tokyo-japan",
+  KIX:"osaka-osaka-japan",
+  ICN:"seoul-seoul-south-korea",
+  HKG:"hong-kong-hong-kong-hong-kong",
+  BKK:"bangkok-bangkok-thailand",
+  SIN:"singapore-central-region-singapore",
+  KUL:"kuala-lumpur-federal-territory-of-kuala-lumpur-malaysia",
+  DEL:"new-delhi-delhi-india",
+  BOM:"mumbai-maharashtra-india",
+  // ── Pacific & Australia ──
+  SYD:"sydney-new-south-wales-australia",
+  MEL:"melbourne-victoria-australia",
+  BNE:"brisbane-queensland-australia",
+  AKL:"auckland-auckland-new-zealand",
+  NAN:"nadi-ba-fiji",
+  PPT:"papeete-windward-islands-french-polynesia",
+  // ── Latin America ──
+  GRU:"sao-paulo-state-of-sao-paulo-brazil",
+  GIG:"rio-de-janeiro-state-of-rio-de-janeiro-brazil",
+  EZE:"buenos-aires-buenos-aires-argentina",
+  SCL:"santiago-santiago-metropolitan-region-chile",
+  BOG:"bogota-bogota-colombia",
+  LIM:"lima-lima-region-peru",
+  SJO:"san-jose-san-jose-costa-rica",
+  PTY:"panama-city-panama-province-panama",
+  BZE:"belize-city-belize-district-belize",
+  // ── Africa ──
+  JNB:"johannesburg-gauteng-south-africa",
+  CPT:"cape-town-western-cape-south-africa",
+  CAI:"cairo-cairo-governorate-egypt",
 };
 
 function ReferralsPanel() {
@@ -1815,6 +1920,103 @@ function AirportSlugDirectory() {
           {filtered.length === 0 && (
             <p style={{ fontSize: "13px", color: "#9CA3AF", textAlign: "center", padding: "20px 0", margin: 0 }}>No airports match "{filter}"</p>
           )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function InternationalSlugDirectory() {
+  const [filter, setFilter] = useState("");
+  const [open,   setOpen]   = useState(false);
+
+  const entries = Object.entries(INTL_MAP);
+  const q = filter.trim().toLowerCase();
+  const filtered = q
+    ? entries.filter(([code, slug]) => code.toLowerCase().includes(q) || slug.includes(q))
+    : entries;
+
+  // Group by region label (first comment above each block) — use a simple prefix map
+  const REGION = {
+    CUN:"Caribbean & Mexico",SJD:"Caribbean & Mexico",PVR:"Caribbean & Mexico",GDL:"Caribbean & Mexico",MEX:"Caribbean & Mexico",CZM:"Caribbean & Mexico",ZIH:"Caribbean & Mexico",
+    MBJ:"Caribbean & Mexico",KIN:"Caribbean & Mexico",NAS:"Caribbean & Mexico",AUA:"Caribbean & Mexico",PUJ:"Caribbean & Mexico",SDQ:"Caribbean & Mexico",SJU:"Caribbean & Mexico",BQN:"Caribbean & Mexico",SXM:"Caribbean & Mexico",GCM:"Caribbean & Mexico",HAV:"Caribbean & Mexico",VRA:"Caribbean & Mexico",BGI:"Caribbean & Mexico",UVF:"Caribbean & Mexico",GND:"Caribbean & Mexico",
+    YYZ:"Canada",YVR:"Canada",YUL:"Canada",YYC:"Canada",YEG:"Canada",YOW:"Canada",
+    LHR:"Europe",LGW:"Europe",CDG:"Europe",FCO:"Europe",VCE:"Europe",FLR:"Europe",NAP:"Europe",AMS:"Europe",BCN:"Europe",MAD:"Europe",FRA:"Europe",MUC:"Europe",DUS:"Europe",HAM:"Europe",DUB:"Europe",ATH:"Europe",LIS:"Europe",MXP:"Europe",ZRH:"Europe",GVA:"Europe",VIE:"Europe",CPH:"Europe",ARN:"Europe",OSL:"Europe",HEL:"Europe",KEF:"Europe",EDI:"Europe",MAN:"Europe",NCE:"Europe",PRG:"Europe",BRU:"Europe",BUD:"Europe",WAW:"Europe",
+    DXB:"Middle East",DOH:"Middle East",AUH:"Middle East",
+    NRT:"Asia",HND:"Asia",KIX:"Asia",ICN:"Asia",HKG:"Asia",BKK:"Asia",SIN:"Asia",KUL:"Asia",DEL:"Asia",BOM:"Asia",
+    SYD:"Pacific & Australia",MEL:"Pacific & Australia",BNE:"Pacific & Australia",AKL:"Pacific & Australia",NAN:"Pacific & Australia",PPT:"Pacific & Australia",
+    GRU:"Latin America",GIG:"Latin America",EZE:"Latin America",SCL:"Latin America",BOG:"Latin America",LIM:"Latin America",SJO:"Latin America",PTY:"Latin America",BZE:"Latin America",
+    JNB:"Africa",CPT:"Africa",CAI:"Africa",
+  };
+
+  // Build grouped output when no filter active
+  const groups = {};
+  (q ? filtered : entries).forEach(([code, slug]) => {
+    const region = REGION[code] || "Other";
+    if (!groups[region]) groups[region] = [];
+    groups[region].push([code, slug]);
+  });
+
+  const REGION_ORDER = ["Caribbean & Mexico","Canada","Europe","Middle East","Asia","Pacific & Australia","Latin America","Africa"];
+
+  const REGION_COLORS = {
+    "Caribbean & Mexico": { bg:"#FFF7ED", border:"#FED7AA", tag:"#C2410C" },
+    "Canada":             { bg:"#FEF2F2", border:"#FECACA", tag:"#DC2626" },
+    "Europe":             { bg:"#EFF6FF", border:"#BFDBFE", tag:"#1D4ED8" },
+    "Middle East":        { bg:"#FFFBEB", border:"#FDE68A", tag:"#B45309" },
+    "Asia":               { bg:"#F0FDF4", border:"#BBF7D0", tag:"#15803D" },
+    "Pacific & Australia":{ bg:"#F5F3FF", border:"#DDD6FE", tag:"#7C3AED" },
+    "Latin America":      { bg:"#FDF4FF", border:"#E9D5FF", tag:"#7E22CE" },
+    "Africa":             { bg:"#FFF1F2", border:"#FFE4E6", tag:"#BE123C" },
+  };
+
+  const orderedGroups = q
+    ? [["Results", filtered]]
+    : REGION_ORDER.filter(r => groups[r]).map(r => [r, groups[r]]);
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div>
+          <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 2px" }}>🌍 International Airport Directory</p>
+          <p style={{ fontSize: "11px", color: "#6B7280", margin: 0 }}>{entries.length} airports across 8 regions — click any to test on Kiwi</p>
+        </div>
+        <button onClick={() => setOpen(v => !v)}
+          style={{ padding: "6px 14px", borderRadius: "8px", border: "1px solid #E5E7EB", fontSize: "12px", fontWeight: "600", cursor: "pointer", background: "#F9FAFB", color: "#374151" }}>
+          {open ? "Collapse ▲" : "View All ▼"}
+        </button>
+      </div>
+
+      {open && (
+        <div style={{ marginTop: "16px" }}>
+          <input type="text" placeholder="Search by code or city…" value={filter}
+            onChange={e => setFilter(e.target.value)}
+            style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none", marginBottom: "14px" }} />
+
+          {orderedGroups.map(([region, cards]) => {
+            const c = REGION_COLORS[region] || { bg:"#F9FAFB", border:"#E5E7EB", tag:"#374151" };
+            return (
+              <div key={region} style={{ marginBottom: "16px" }}>
+                <p style={{ fontSize: "10px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: c.tag, margin: "0 0 8px", paddingLeft: "2px" }}>{region}</p>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(210px, 1fr))", gap: "7px" }}>
+                  {cards.map(([code, slug]) => (
+                    <a key={code}
+                      href={`https://www.kiwi.com/en/?origin=${slug}&destination=anywhere`}
+                      target="_blank" rel="noopener noreferrer"
+                      style={{ display: "flex", alignItems: "center", gap: "10px", padding: "9px 12px", background: c.bg, border: `1px solid ${c.border}`, borderRadius: "10px", textDecoration: "none" }}
+                      onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
+                      onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                      <span style={{ fontFamily: "monospace", fontWeight: "800", fontSize: "13px", color: NAVY, minWidth: "34px" }}>{code}</span>
+                      <span style={{ fontSize: "10px", color: "#374151", flex: 1, lineHeight: 1.3 }}>
+                        {slug.split("-").slice(0,3).map(w => w.charAt(0).toUpperCase()+w.slice(1)).join(" ")}
+                      </span>
+                      <span style={{ fontSize: "11px", color: c.tag, flexShrink: 0 }}>↗</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
@@ -1999,6 +2201,11 @@ export default function AdminDashboard() {
         {/* AIRPORT SLUG DIRECTORY */}
         <div style={{ marginBottom: "20px" }}>
           <AirportSlugDirectory />
+        </div>
+
+        {/* INTERNATIONAL SLUG DIRECTORY */}
+        <div style={{ marginBottom: "20px" }}>
+          <InternationalSlugDirectory />
         </div>
 
         {/* REFERRALS */}
