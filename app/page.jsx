@@ -393,9 +393,10 @@ export default function HomePage() {
                 <a href="/cruises" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "14px 60px", fontSize: "17px", fontWeight: "700", cursor: "pointer", textDecoration: "none", display: "inline-block" }}>Browse Cruises →</a>
               </div>
             ) : activeTab === "flights" ? (
-              <form onSubmit={handleSearch} style={{ display: "flex", gap: "8px", padding: "0 4px 4px", flexWrap: "wrap" }}>
+              <form onSubmit={handleSearch} style={{ display: "flex", flexDirection: "column", gap: "8px", padding: "0 4px 4px" }}>
+                <div style={{ display: "flex", gap: "8px" }}>
                 {/* FROM field */}
-                <div style={{ flex: 1, minWidth: "140px", position: "relative" }}>
+                <div style={{ flex: "1 1 0", position: "relative" }}>
                   <input type="text" placeholder="Flying from…" value={flightFrom}
                     onChange={e => { setFlightFrom(e.target.value); fetchCities(e.target.value, setFromSugg, setShowFromSugg, setLoadingFrom, fromDebounceRef); }}
                     onBlur={() => setTimeout(() => setShowFromSugg(false), 160)}
@@ -418,7 +419,7 @@ export default function HomePage() {
                   )}
                 </div>
                 {/* TO field */}
-                <div style={{ flex: 1, minWidth: "140px", position: "relative" }}>
+                <div style={{ flex: "1 1 0", position: "relative" }}>
                   <input type="text" placeholder="Flying to…" value={flightTo}
                     onChange={e => { setFlightTo(e.target.value); fetchCities(e.target.value, setToSugg, setShowToSugg, setLoadingTo, toDebounceRef); }}
                     onBlur={() => setTimeout(() => setShowToSugg(false), 160)}
@@ -440,7 +441,8 @@ export default function HomePage() {
                     </div>
                   )}
                 </div>
-                <button type="submit" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", flexShrink: 0 }}>Search →</button>
+                </div>
+                <button type="submit" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", width: "100%" }}>Search →</button>
               </form>
             ) : (
               <form onSubmit={handleSearch} style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
