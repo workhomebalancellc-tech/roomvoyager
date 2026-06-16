@@ -142,7 +142,10 @@ function DealTile({ city, img, dealOfWeek, link, locked }) {
       {/* Lock overlay */}
       {locked && (
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "6px" }}>
-          <span style={{ fontSize: "clamp(20px, 2vw, 28px)", lineHeight: 1 }}>🔒</span>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" fill="rgba(255,255,255,0.15)" stroke="#fff"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
           <p style={{ color: "#fff", fontWeight: "700", fontSize: "clamp(9px, 0.9vw, 12px)", margin: 0, textAlign: "center", opacity: 0.9, letterSpacing: "0.05em", textTransform: "uppercase" }}>
             Coming Soon
           </p>
