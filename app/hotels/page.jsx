@@ -134,56 +134,57 @@ function HotelsContent() {
       </div>
 
       {/* SEARCH */}
-      <div id="hotel-search-form" style={{ background: NAVY, padding: "24px 24px 28px" }}>
+      <div id="hotel-search-form" style={{ background: NAVY, padding: "32px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "16px", marginBottom: "16px" }}>
-            <div>
-              <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Destination</label>
-              <div style={{ position: "relative" }}>
-                <input type="text" placeholder="City, hotel, or area" value={destination}
-                  onChange={e => handleDestChange(e.target.value)}
-                  onBlur={() => setTimeout(() => setShowSugg(false), 160)}
-                  onFocus={() => destination.length >= 1 && destSugg.length > 0 && setShowSugg(true)}
-                  style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none" }} />
-                {(showSugg || loadingSugg) && (
-                  <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "8px", boxShadow: "0 6px 20px rgba(0,0,0,0.15)", zIndex: 200, marginTop: "3px", overflow: "hidden" }}>
-                    {loadingSugg && destSugg.length === 0 ? (
-                      <div style={{ padding: "10px 12px", fontSize: "12px", color: "#9CA3AF" }}>Searching…</div>
-                    ) : destSugg.map((c, i) => (
-                      <div key={i}
-                        onMouseDown={() => { setDestination(c.label); setShowSugg(false); }}
-                        style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < destSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
-                        onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
-                        onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
-                        <span style={{ fontSize: "13px", color: "#111827", fontWeight: "600" }}>{c.name}</span>
-                        <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{c.sub}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+          <div style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px", alignItems: "flex-end" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Destination</label>
+                <div style={{ position: "relative" }}>
+                  <input type="text" placeholder="City, hotel, or area" value={destination}
+                    onChange={e => handleDestChange(e.target.value)}
+                    onBlur={() => setTimeout(() => setShowSugg(false), 160)}
+                    onFocus={() => destination.length >= 1 && destSugg.length > 0 && setShowSugg(true)}
+                    style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none", height: "42px" }} />
+                  {(showSugg || loadingSugg) && (
+                    <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "8px", boxShadow: "0 6px 20px rgba(0,0,0,0.15)", zIndex: 200, marginTop: "3px", overflow: "hidden" }}>
+                      {loadingSugg && destSugg.length === 0 ? (
+                        <div style={{ padding: "10px 12px", fontSize: "12px", color: "#9CA3AF" }}>Searching…</div>
+                      ) : destSugg.map((c, i) => (
+                        <div key={i}
+                          onMouseDown={() => { setDestination(c.label); setShowSugg(false); }}
+                          style={{ padding: "9px 12px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: i < destSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
+                          onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
+                          onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
+                          <span style={{ fontSize: "13px", color: "#111827", fontWeight: "600" }}>{c.name}</span>
+                          <span style={{ fontSize: "11px", color: "#9CA3AF" }}>{c.sub}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
+              <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Check-In</label>
+                <input type="date" value={checkIn} min={today} onChange={e => handleCheckInChange(e.target.value)}
+                  style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none", height: "42px" }} />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Check-Out</label>
+                <input type="date" value={checkOut} min={minCheckOut} onChange={e => setCheckOut(e.target.value)}
+                  style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none", height: "42px" }} />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: "700", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Guests</label>
+                <select value={adults} onChange={e => setAdults(e.target.value)}
+                  style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none", height: "42px", cursor: "pointer" }}>
+                  {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} {n===1?"guest":"guests"}</option>)}
+                </select>
+              </div>
+              <button onClick={handleSearch} style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(255,102,0,0.3)", height: "42px", alignSelf: "flex-end", width: "100%" }}>
+                Search Hotels
+              </button>
             </div>
-            <div>
-              <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Check-In</label>
-              <input type="date" value={checkIn} min={today} onChange={e => handleCheckInChange(e.target.value)}
-                style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none" }} />
-            </div>
-            <div>
-              <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Check-Out</label>
-              <input type="date" value={checkOut} min={minCheckOut} onChange={e => setCheckOut(e.target.value)}
-                style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none" }} />
-            </div>
-            <div>
-              <label style={{ display: "block", fontSize: "11px", fontWeight: "600", color: "#93C5FD", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Guests</label>
-              <select value={adults} onChange={e => setAdults(e.target.value)}
-                style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "none", fontSize: "14px", background: "#fff", color: "#111827", boxSizing: "border-box", outline: "none" }}>
-                {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} {n===1?"guest":"guests"}</option>)}
-              </select>
-            </div>
-          </div>
-          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-            <button onClick={handleSearch} style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "8px", padding: "11px 28px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>Search Hotels →</button>
-            <button onClick={clearFilters} style={{ background: "rgba(255,255,255,0.12)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "8px", padding: "11px 20px", fontSize: "13px", cursor: "pointer" }}>Clear filters</button>
           </div>
         </div>
       </div>
