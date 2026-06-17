@@ -495,7 +495,7 @@ export default function HomePage() {
       {/* TRUST BAR */}
       <div style={{ background: NAVY, padding: "14px 24px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
-          {[["✅","Best price guarantee"],["💰","Earn real cash back"],["🔄","Free cancellation options"],["🛡️","Secure booking"],["🧑‍✈️","Personal travel agent"]].map(([icon, text], i) => (
+          {[["✅","Best price guarantee"],["💰","Earn real cash back"],["🔄","Free cancellation options"],["🛡️","Secure booking"]].map(([icon, text], i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", color: "#fff", fontSize: "13px", fontWeight: "500" }}>
               <span>{icon}</span><span>{text}</span>
             </div>

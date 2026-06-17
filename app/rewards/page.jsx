@@ -12,7 +12,7 @@ const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
 const TIERS = [
-  { name: "Explorer", icon: "🧭", range: "0–9,999 pts", color: "#6B7280", perks: ["5 pts/$1 on flights & hotels · 10 pts/$1 on cruises", "Double pts on hotels & cruises", "Redeem points on our website", "No blackout dates"] },
+  { name: "Explorer", icon: "🧭", range: "0–9,999 pts", color: "#6B7280", perks: ["5 pts/$1 on flights & hotels · 10 pts/$1 on cruises", "Hotels & cruises eligible for double pts when promotions apply", "Redeem points on our website", "No blackout dates"] },
   { name: "Voyager", icon: "⚓", range: "10,000–49,999 pts", color: NAVY, perks: ["🎂 Birthday bonus: 500 pts", "Exclusive member deals newsletter", "Early access to promotions", "Redeem points via website or email"] },
   { name: "Navigator", icon: "🗺️", range: "50,000–99,999 pts", color: "#7C3AED", perks: ["🎂 Birthday bonus: 500 pts", "Auto rewards payout at 50,000 pts", "Personalized trip planning consultation", "✈️ Complimentary air check-in assistance"] },
   { name: "Admiral", icon: "👑", range: "100,000+ pts", color: ORANGE, perks: ["🎂 Birthday bonus: 500 pts", "Auto rewards payout at 25,000 pts", "VIP concierge service", "✈️ Air + 🚢 cruise check-in assistance"] },
@@ -354,7 +354,7 @@ export default function RewardsPage() {
           <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 12px" }}>💰 Cash Back Loyalty Program</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(28px, 5vw, 46px)", fontWeight: "800", margin: "0 0 12px", lineHeight: 1.15, textShadow: "0 2px 12px rgba(0,0,0,0.3)" }}>RoomVoyager Rewards</h1>
           <p style={{ color: "#BFDBFE", fontSize: "17px", margin: "0 0 36px", maxWidth: "520px", lineHeight: 1.6 }}>
-            Earn cash back on every booking — double points on hotels & cruises. Paid via Zelle, Cash App, or Venmo. No blackout dates. Real money.
+            Earn cash back on every booking — hotels & cruises are eligible for double points when promotions apply. Paid via Zelle, Cash App, or Venmo. No blackout dates. Real money.
           </p>
           {session ? (
             <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", borderRadius: "20px", padding: "32px 40px", border: "1px solid rgba(255,255,255,0.2)", width: "100%", maxWidth: "780px", boxSizing: "border-box" }}>
@@ -411,7 +411,7 @@ export default function RewardsPage() {
       {/* TRUST BAR */}
       <div style={{ background: NAVY, padding: "14px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto", display: "flex", flexWrap: "nowrap", gap: "20px", justifyContent: "center", overflowX: "auto" }}>
-          {[["✅","Free to join"],["💵","Real cash payouts"],["🔥","Double pts on hotels & cruises"],["🚫","No blackout dates"],["⏰","45 days post-travel"],["📲","Zelle · Cash App · Venmo"]].map(([icon,text],i) => (
+          {[["✅","Free to join"],["💵","Real cash payouts"],["🔥","Hotels & cruises eligible for double pts"],["🚫","No blackout dates"],["⏰","45 days post-travel"],["📲","Zelle · Cash App · Venmo"]].map(([icon,text],i) => (
             <div key={i} style={{ display:"flex", alignItems:"center", gap:"5px", fontSize:"12px", color:"#BFDBFE", fontWeight: "500", whiteSpace: "nowrap" }}><span>{icon}</span><span>{text}</span></div>
           ))}
         </div>
@@ -442,7 +442,7 @@ export default function RewardsPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" }}>
             {[
               { step: "1", icon: "🔍", title: "Book through RoomVoyager", desc: "Search and book flights, hotels, or cruises on our site" },
-              { step: "2", icon: "⭐", title: "Earn points on your booking", desc: "5 pts per $1 on flights & hotels · 10 pts per $1 on cruises. Double available on hotels & cruises. Points may take up to 7 days to appear after your booking is confirmed in our system." },
+              { step: "2", icon: "⭐", title: "Earn points on your booking", desc: "5 pts per $1 on flights & hotels · 10 pts per $1 on cruises. Standard points apply unless a double points promotion is explicitly stated on our website or in an official RoomVoyager email. Points may take up to 7 days to appear after your booking is confirmed in our system." },
               { step: "3", icon: "⏳", title: "Wait 45 days after travel", desc: "Points become redeemable 45 days after your trip is completed — no exceptions" },
               { step: "4", icon: "💵", title: "Redeem for real cash", desc: "Cash out via Zelle, Cash App, or Venmo — no restrictions, no travel credit" },
             ].map(item => (
@@ -475,6 +475,12 @@ export default function RewardsPage() {
           <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Earnings calculator</h2>
           <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 24px" }}>Drag the slider to any booking amount and see exactly how many points — and how much cash — you'd earn across hotels, flights, and cruises.</p>
           <EarningsSlider />
+          <div style={{ marginTop: "16px", background: "#F8FAFF", border: "1.5px solid #DBEAFE", borderRadius: "12px", padding: "14px 18px", display: "flex", gap: "10px", alignItems: "flex-start" }}>
+            <span style={{ fontSize: "18px", flexShrink: 0 }}>ℹ️</span>
+            <p style={{ fontSize: "13px", color: "#374151", margin: 0, lineHeight: 1.6 }}>
+              <strong>Standard points apply to all bookings</strong> unless a double points promotion is explicitly stated on the RoomVoyager website or communicated in an official RoomVoyager email. Double points are a limited-time offer and are not automatically applied.
+            </p>
+          </div>
         </section>
 
         {/* TIERS */}

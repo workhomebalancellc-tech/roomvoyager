@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { storage } from "../../lib/firebase";
-import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
@@ -122,14 +120,17 @@ export default function ProfilePage() {
     if (!file || !user?.uid) return;
     setPhotoUploading(true); setPhotoMsg("");
     try {
-      const fileRef = storageRef(storage, `profile-photos/${user.uid}`);
-      await uploadBytes(fileRef, file);
-      const url = await getDownloadURL(fileRef);
-      await updatePhotoURL(url);
+      const form = new FormData();
+      form.append("file", file);
+      form.append("uid", user.uid);
+      const res  = await fetch("/api/upload-photo", { method: "POST", body: form });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Upload failed");
+      await updatePhotoURL(data.url);
       setPhotoMsg("✓ Photo updated");
     } catch (err) {
       console.error("Photo upload error:", err);
-      setPhotoMsg(`❌ ${err?.message || err?.code || "Upload failed"}`);
+      setPhotoMsg(`❌ ${err?.message || "Upload failed"}`);
     }
     setPhotoUploading(false);
     e.target.value = "";

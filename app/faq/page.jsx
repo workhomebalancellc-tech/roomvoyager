@@ -45,7 +45,11 @@ const faqs = [
     questions: [
       {
         q: "How do I earn Rewards points?",
-        a: "You earn points on every booking made through RoomVoyager — 5 pts per $1 on flights and hotels, 10 pts per $1 on cruises and packages (double points available on hotels, cruises, and packages). Points may take up to 7 days to appear in your account after your booking is confirmed in our system. If you don't see them after 7 days, contact us at roomvoyager@protonmail.com.",
+        a: "You earn points on every booking made through RoomVoyager — 5 pts per $1 on flights and hotels, 10 pts per $1 on cruises. Hotels and cruises are eligible for double points when promotions apply. Standard points apply to all bookings unless a double points promotion is explicitly stated on our website or communicated via email. Points may take up to 7 days to appear in your account after your booking is confirmed in our system. If you don't see them after 7 days, contact us at roomvoyager@protonmail.com.",
+      },
+      {
+        q: "When do double points apply?",
+        a: "Hotels and cruises are eligible for double points when promotions apply. Double points are a limited-time promotion and only apply when explicitly stated on the RoomVoyager website or in an official RoomVoyager email. Unless a double points offer is specifically communicated to you through one of these channels, standard earning rates apply: 5 pts per $1 on flights and hotels, 10 pts per $1 on cruises.",
       },
       {
         q: "What is the difference between Pending, Redeemable, and Lifetime points?",
@@ -168,11 +172,4 @@ export default function FAQPage() {
           <p style={{ color: "#93C5FD", fontSize: "14px", margin: "0 0 24px" }}>Our team is happy to help with anything not covered above.</p>
           <a href="/contact" style={{ display: "inline-block", padding: "12px 32px", background: ORANGE, color: "#fff", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
             Contact Us →
-          </a>
-        </div>
-      </div>
-    </div>
-    <Footer />
-    </>
-  );
-}
+          <
