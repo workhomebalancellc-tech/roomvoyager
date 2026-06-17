@@ -16,12 +16,38 @@ const GoogleIcon = () => (
   </svg>
 );
 
+const EyeIcon = ({ open }) => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    {open ? (
+      <>
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+        <circle cx="12" cy="12" r="3" />
+      </>
+    ) : (
+      <>
+        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+        <line x1="1" y1="1" x2="23" y2="23" />
+      </>
+    )}
+  </svg>
+);
+
 function SignInForm() {
-  const { signInWithGoogle, signInWithEmail } = useAuth();
+  const { signInWithGoogle, signInWithEmail, resetPassword } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // Forgot password state
+  const [forgotOpen, setForgotOpen] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetSent, setResetSent] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resetError, setResetError] = useState(null);
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const callbackUrl = searchParams.get("callbackUrl") || "/profile";
@@ -32,13 +58,12 @@ function SignInForm() {
       await signInWithGoogle();
       router.push(callbackUrl);
     } catch (err) {
-      console.error("Google sign-in error:", err.code, err.message);
       if (err.code === "auth/popup-blocked") {
         setError("Popup was blocked by your browser. Please allow popups for this site and try again.");
       } else if (err.code === "auth/unauthorized-domain") {
         setError("Sign-in is not authorized for this domain. Please contact support.");
       } else if (err.code === "auth/popup-closed-by-user") {
-        setError(null); // User closed the popup — not an error
+        setError(null);
       } else {
         setError(`Google sign-in failed (${err.code || "unknown"}). Please try again.`);
       }
@@ -53,7 +78,6 @@ function SignInForm() {
       await signInWithEmail(email, password);
       router.push(callbackUrl);
     } catch (err) {
-      console.error("Email sign-in error:", err.code, err.message);
       if (err.code === "auth/user-not-found" || err.code === "auth/wrong-password" || err.code === "auth/invalid-credential") {
         setError("Invalid email or password. Please try again.");
       } else if (err.code === "auth/too-many-requests") {
@@ -63,6 +87,23 @@ function SignInForm() {
       }
       setLoading(false);
     }
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    setResetLoading(true);
+    setResetError(null);
+    try {
+      await resetPassword(resetEmail);
+      setResetSent(true);
+    } catch (err) {
+      if (err.code === "auth/user-not-found") {
+        setResetError("No account found with that email address.");
+      } else {
+        setResetError("Something went wrong. Please try again.");
+      }
+    }
+    setResetLoading(false);
   };
 
   return (
@@ -90,11 +131,26 @@ function SignInForm() {
             style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box" }}
             onFocus={e => e.target.style.borderColor = NAVY} onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
         </div>
-        <div style={{ marginBottom: "20px" }}>
+
+        <div style={{ marginBottom: "8px" }}>
           <label style={{ display: "block", fontSize: "12px", fontWeight: "700", color: "#374151", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Password</label>
-          <input type="password" required placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)}
-            style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box" }}
-            onFocus={e => e.target.style.borderColor = NAVY} onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
+          <div style={{ position: "relative" }}>
+            <input type={showPassword ? "text" : "password"} required placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)}
+              style={{ width: "100%", padding: "11px 42px 11px 14px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box" }}
+              onFocus={e => e.target.style.borderColor = NAVY} onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
+            <button type="button" onClick={() => setShowPassword(v => !v)}
+              style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#9CA3AF", padding: "2px", display: "flex", alignItems: "center" }}>
+              <EyeIcon open={showPassword} />
+            </button>
+          </div>
+        </div>
+
+        {/* Forgot password link */}
+        <div style={{ marginBottom: "20px", textAlign: "right" }}>
+          <button type="button" onClick={() => { setForgotOpen(true); setResetEmail(email); setResetSent(false); setResetError(null); }}
+            style={{ background: "none", border: "none", color: NAVY, fontSize: "12px", fontWeight: "600", cursor: "pointer", textDecoration: "underline", padding: 0 }}>
+            Forgot password?
+          </button>
         </div>
 
         {error && <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", color: "#DC2626", padding: "12px 14px", borderRadius: "10px", fontSize: "13px", marginBottom: "16px" }}>{error}</div>}
@@ -107,7 +163,7 @@ function SignInForm() {
 
       <div style={{ borderTop: "1px solid #E5E7EB", padding: "20px 28px", textAlign: "center" }}>
         <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 8px" }}>
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <a href="/account/signup" style={{ color: ORANGE, fontWeight: "700", textDecoration: "none" }}>Sign up free</a>
         </p>
         <p style={{ fontSize: "12px", color: "#9CA3AF", margin: 0 }}>
@@ -116,6 +172,46 @@ function SignInForm() {
           <a href="/privacy" style={{ color: NAVY, textDecoration: "none" }}>Privacy Policy</a>
         </p>
       </div>
+
+      {/* Forgot password modal */}
+      {forgotOpen && (
+        <div onClick={() => setForgotOpen(false)} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: "#fff", borderRadius: "20px", padding: "32px", maxWidth: "400px", width: "100%", boxShadow: "0 20px 60px rgba(0,0,0,0.25)" }}>
+            {resetSent ? (
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: "48px", marginBottom: "12px" }}>📧</div>
+                <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Check your inbox</h3>
+                <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px" }}>We sent a password reset link to <strong>{resetEmail}</strong>. It may take a minute to arrive.</p>
+                <button onClick={() => setForgotOpen(false)}
+                  style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "10px", padding: "11px 28px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>
+                  Back to Sign In
+                </button>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
+                  <div>
+                    <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 4px" }}>Reset your password</h3>
+                    <p style={{ fontSize: "13px", color: "#6B7280", margin: 0 }}>Enter your email and we&apos;ll send you a reset link.</p>
+                  </div>
+                  <button onClick={() => setForgotOpen(false)} style={{ background: "none", border: "none", fontSize: "20px", cursor: "pointer", color: "#9CA3AF", lineHeight: 1 }}>×</button>
+                </div>
+                <form onSubmit={handleResetPassword}>
+                  <label style={{ display: "block", fontSize: "12px", fontWeight: "700", color: "#374151", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Email Address</label>
+                  <input type="email" required placeholder="you@example.com" value={resetEmail} onChange={e => setResetEmail(e.target.value)}
+                    style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box", marginBottom: "16px" }}
+                    onFocus={e => e.target.style.borderColor = NAVY} onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
+                  {resetError && <p style={{ fontSize: "12px", color: "#DC2626", margin: "-8px 0 12px", fontWeight: "600" }}>{resetError}</p>}
+                  <button type="submit" disabled={resetLoading}
+                    style={{ width: "100%", background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px", fontSize: "14px", fontWeight: "700", cursor: resetLoading ? "not-allowed" : "pointer", opacity: resetLoading ? 0.7 : 1 }}>
+                    {resetLoading ? "Sending…" : "Send Reset Link"}
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

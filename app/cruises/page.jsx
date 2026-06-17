@@ -106,10 +106,10 @@ const MONTH_OPTIONS = getMonthOptions();
 const CB_AFFILIATE = "https://cruisebound.sjv.io/c/7402959/3242486/40968";
 
 function CruiseboundSearch() {
-  const [region,   setRegion]   = useState("");
+  const [region,   setRegion]   = useState("10");  // Caribbean
   const [port,     setPort]     = useState("");
-  const [monthIdx, setMonthIdx] = useState(0);
-  const [duration, setDuration] = useState("3");
+  const [monthIdx, setMonthIdx] = useState(1);     // next month
+  const [duration, setDuration] = useState("7");   // 7+ nights
 
   function handleSearch() {
     const params = new URLSearchParams({ sortBy: "recommended", sortOrder: "asc", page: "1", minNights: duration });

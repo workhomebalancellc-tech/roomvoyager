@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
+  sendPasswordResetEmail,
   GoogleAuthProvider,
   signOut as firebaseSignOut,
 } from "firebase/auth";
@@ -74,13 +75,23 @@ export function AuthProvider({ children }) {
     setUser(prev => prev ? { ...prev, name: newName.trim() } : prev);
   };
 
+  const resetPassword = async (email) => {
+    await sendPasswordResetEmail(auth, email);
+  };
+
+  const updatePhotoURL = async (url) => {
+    if (!auth.currentUser) return;
+    await updateProfile(auth.currentUser, { photoURL: url });
+    setUser(prev => prev ? { ...prev, image: url } : prev);
+  };
+
   const logout = async () => {
     await firebaseSignOut(auth);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signInWithEmail, signUpWithEmail, updateName, logout }}>
+    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signInWithEmail, signUpWithEmail, updateName, updatePhotoURL, resetPassword, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { storage } from "../../lib/firebase";
+import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
@@ -33,8 +35,11 @@ function fmtDate(str) {
 const EMPTY_BOOKING = { type: "flight", destination: "", startDate: "", endDate: "", amount: "", reference: "", status: "upcoming", notes: "" };
 
 export default function ProfilePage() {
-  const { user, loading, logout, updateName } = useAuth();
+  const { user, loading, logout, updateName, updatePhotoURL } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
+  const photoInputRef = useRef(null);
+  const [photoUploading, setPhotoUploading] = useState(false);
+  const [photoMsg, setPhotoMsg] = useState("");
 
 
   /* ── local bookings (customer-managed) ── */
@@ -62,6 +67,13 @@ export default function ProfilePage() {
   const [nameSaving,  setNameSaving]  = useState(false);
   const [nameMsg,     setNameMsg]     = useState("");
 
+  /* ── birthday ── */
+  const [birthday,      setBirthday]      = useState("");
+  const [editingBirthday, setEditingBirthday] = useState(false);
+  const [birthdayInput,  setBirthdayInput]  = useState("");
+  const [birthdaySaving, setBirthdaySaving] = useState(false);
+  const [birthdayMsg,    setBirthdayMsg]    = useState("");
+
   useEffect(() => { setDisplayName(user?.name || ""); }, [user?.name]);
 
   async function saveName() {
@@ -84,6 +96,42 @@ export default function ProfilePage() {
       setNameMsg("❌ Could not save — try again.");
     }
     setNameSaving(false);
+  }
+
+  async function saveBirthday() {
+    if (!birthdayInput || !user?.uid) return;
+    setBirthdaySaving(true); setBirthdayMsg("");
+    try {
+      const res = await fetch("/api/user/profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid: user.uid, birthday: birthdayInput }),
+      });
+      if (!res.ok) throw new Error("Server error");
+      setBirthday(birthdayInput);
+      setEditingBirthday(false);
+      setBirthdayMsg("✓ Birthday saved");
+    } catch {
+      setBirthdayMsg("❌ Could not save — try again.");
+    }
+    setBirthdaySaving(false);
+  }
+
+  async function handlePhotoUpload(e) {
+    const file = e.target.files?.[0];
+    if (!file || !user?.uid) return;
+    setPhotoUploading(true); setPhotoMsg("");
+    try {
+      const fileRef = storageRef(storage, `profile-photos/${user.uid}`);
+      await uploadBytes(fileRef, file);
+      const url = await getDownloadURL(fileRef);
+      await updatePhotoURL(url);
+      setPhotoMsg("✓ Photo updated");
+    } catch {
+      setPhotoMsg("❌ Upload failed — try again.");
+    }
+    setPhotoUploading(false);
+    e.target.value = "";
   }
 
   /* ── review request ── */
@@ -121,7 +169,10 @@ export default function ProfilePage() {
       body: JSON.stringify({ action: "initUser", uid: user.uid, name: user.name || "", email: user.email || "" }),
     })
       .then(r => r.json())
-      .then(d => { if (d.referralCode) setReferralCode(d.referralCode); })
+      .then(d => {
+        if (d.referralCode) setReferralCode(d.referralCode);
+        if (d.birthday) setBirthday(d.birthday);
+      })
       .catch(() => {});
   }, [user?.uid]);
 
@@ -267,12 +318,33 @@ export default function ProfilePage() {
         </button>
         <div style={{ maxWidth: "860px", margin: "0 auto", textAlign: "center" }}>
           <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 12px" }}>👤 My Account</p>
-          {user.image
-            ? <img src={user.image} alt="" style={{ width: "76px", height: "76px", borderRadius: "50%", objectFit: "cover", border: "3px solid rgba(255,255,255,0.3)", marginBottom: "14px" }} />
-            : <div style={{ width: "76px", height: "76px", borderRadius: "50%", background: ORANGE, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "30px", fontWeight: "800", color: "#fff", margin: "0 auto 14px", border: "3px solid rgba(255,255,255,0.2)" }}>
-                {(user.name || user.email || "U")[0].toUpperCase()}
-              </div>
-          }
+
+          {/* Hidden file input for photo upload */}
+          <input
+            ref={photoInputRef}
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handlePhotoUpload}
+          />
+
+          {/* Clickable avatar */}
+          <div
+            onClick={() => photoInputRef.current?.click()}
+            title="Click to change photo"
+            style={{ position: "relative", width: "76px", height: "76px", margin: "0 auto 14px", cursor: "pointer" }}>
+            {user.image
+              ? <img src={user.image} alt="" style={{ width: "76px", height: "76px", borderRadius: "50%", objectFit: "cover", border: "3px solid rgba(255,255,255,0.3)" }} />
+              : <div style={{ width: "76px", height: "76px", borderRadius: "50%", background: ORANGE, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "30px", fontWeight: "800", color: "#fff", border: "3px solid rgba(255,255,255,0.2)" }}>
+                  {(user.name || user.email || "U")[0].toUpperCase()}
+                </div>
+            }
+            {/* Camera overlay */}
+            <div style={{ position: "absolute", bottom: 0, right: 0, background: NAVY, borderRadius: "50%", width: "24px", height: "24px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", border: "2px solid #fff" }}>
+              {photoUploading ? "⏳" : "📷"}
+            </div>
+          </div>
+          {photoMsg && <p style={{ color: photoMsg.startsWith("✓") ? "#86EFAC" : "#FCA5A5", fontSize: "11px", fontWeight: "600", margin: "-8px 0 10px" }}>{photoMsg}</p>}
           <h1 style={{ color: "#fff", fontSize: "24px", fontWeight: "800", margin: "0 0 4px" }}>{user.name || "Traveler"}</h1>
           <p style={{ color: "#93C5FD", fontSize: "13px", margin: "0 0 24px" }}>{user.email}</p>
 
@@ -451,6 +523,47 @@ export default function ProfilePage() {
                   </div>
                 </div>
                 {nameMsg && <p style={{ fontSize: "11px", color: nameMsg.startsWith("✓") ? "#15803D" : "#DC2626", margin: "8px 0 0 34px", fontWeight: "600" }}>{nameMsg}</p>}
+              </div>
+
+              {/* Birthday — editable */}
+              <div style={{ padding: "12px 14px", background: LIGHT_BLUE, borderRadius: "12px", marginTop: "10px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                  <span style={{ fontSize: "20px" }}>🎂</span>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ fontSize: "10px", fontWeight: "700", color: NAVY, margin: "0 0 2px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Birthday</p>
+                    {editingBirthday ? (
+                      <div style={{ display: "flex", gap: "8px", alignItems: "center", marginTop: "4px" }}>
+                        <input
+                          autoFocus
+                          type="date"
+                          value={birthdayInput}
+                          onChange={e => setBirthdayInput(e.target.value)}
+                          onKeyDown={e => { if (e.key === "Enter") saveBirthday(); if (e.key === "Escape") setEditingBirthday(false); }}
+                          style={{ flex: 1, padding: "6px 10px", border: `1.5px solid ${NAVY}`, borderRadius: "8px", fontSize: "14px", outline: "none" }}
+                        />
+                        <button onClick={saveBirthday} disabled={birthdaySaving || !birthdayInput}
+                          style={{ padding: "6px 14px", background: birthdaySaving ? "#D1D5DB" : NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
+                          {birthdaySaving ? "…" : "Save"}
+                        </button>
+                        <button onClick={() => setEditingBirthday(false)}
+                          style={{ padding: "6px 10px", background: "transparent", color: "#6B7280", border: "1px solid #D1D5DB", borderRadius: "8px", fontSize: "12px", cursor: "pointer" }}>
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        <p style={{ fontSize: "14px", color: "#111827", margin: 0 }}>
+                          {birthday ? new Date(birthday + "T12:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : "Not provided"}
+                        </p>
+                        <button onClick={() => { setBirthdayInput(birthday || ""); setEditingBirthday(true); setBirthdayMsg(""); }}
+                          style={{ padding: "3px 10px", background: "#fff", color: NAVY, border: `1px solid ${NAVY}`, borderRadius: "6px", fontSize: "11px", fontWeight: "600", cursor: "pointer" }}>
+                          ✏️ Edit
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {birthdayMsg && <p style={{ fontSize: "11px", color: birthdayMsg.startsWith("✓") ? "#15803D" : "#DC2626", margin: "8px 0 0 34px", fontWeight: "600" }}>{birthdayMsg}</p>}
               </div>
             </div>
 

@@ -17,6 +17,23 @@ const GoogleIcon = () => (
   </svg>
 );
 
+const EyeIcon = ({ open }) => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    {open ? (
+      <>
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+        <circle cx="12" cy="12" r="3" />
+      </>
+    ) : (
+      <>
+        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+        <line x1="1" y1="1" x2="23" y2="23" />
+      </>
+    )}
+  </svg>
+);
+
 async function applyReferralCode(uid, code) {
   if (!code) return;
   await fetch("/api/admin/firestore", {
@@ -32,8 +49,10 @@ function SignUpContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [referralCode, setReferralCode] = useState("");
-  const [codeValid, setCodeValid] = useState(null); // null | true | false
+  const [codeValid, setCodeValid] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -62,13 +81,12 @@ function SignUpContent() {
       if (referralCode) await applyReferralCode(firebaseUser.uid, referralCode);
       router.push("/profile");
     } catch (err) {
-      console.error("Google sign-up error:", err.code, err.message);
       if (err.code === "auth/popup-blocked") {
         setError("Popup was blocked by your browser. Please allow popups for this site and try again.");
       } else if (err.code === "auth/unauthorized-domain") {
         setError("Sign-in is not authorized for this domain. Please contact support.");
       } else if (err.code === "auth/popup-closed-by-user") {
-        setError(null); // User closed the popup — not an error
+        setError(null);
       } else {
         setError(`Google sign-up failed (${err.code || "unknown"}). Please try again.`);
       }
@@ -86,13 +104,15 @@ function SignUpContent() {
       if (referralCode) await applyReferralCode(firebaseUser.uid, referralCode);
       router.push("/profile");
     } catch (err) {
-      console.error("Email sign-up error:", err.code, err.message);
       if (err.code === "auth/email-already-in-use") setError("An account with this email already exists.");
       else if (err.code === "auth/weak-password") setError("Password is too weak. Please choose a stronger password.");
       else setError(`Failed to create account (${err.code || "unknown"}). Please try again.`);
       setLoading(false);
     }
   };
+
+  const inp = { width: "100%", padding: "11px 14px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box" };
+  const lbl = { display: "block", fontSize: "12px", fontWeight: "700", color: "#374151", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" };
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
@@ -137,33 +157,58 @@ function SignUpContent() {
           </div>
 
           <form onSubmit={handleEmailSignUp} style={{ padding: "0 28px 28px" }}>
-            {[
-              { label: "Full Name (Optional)", type: "text", placeholder: "Jane Doe", value: name, onChange: e => setName(e.target.value), required: false },
-              { label: "Email Address", type: "email", placeholder: "you@example.com", value: email, onChange: e => setEmail(e.target.value), required: true },
-              { label: "Password", type: "password", placeholder: "Minimum 8 characters", value: password, onChange: e => setPassword(e.target.value), required: true },
-              { label: "Confirm Password", type: "password", placeholder: "••••••••", value: confirmPassword, onChange: e => setConfirmPassword(e.target.value), required: true },
-            ].map((field, i) => (
-              <div key={i} style={{ marginBottom: "16px" }}>
-                <label style={{ display: "block", fontSize: "12px", fontWeight: "700", color: "#374151", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{field.label}</label>
-                <input type={field.type} required={field.required} placeholder={field.placeholder} value={field.value} onChange={field.onChange}
-                  style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box" }}
+
+            {/* Name */}
+            <div style={{ marginBottom: "16px" }}>
+              <label style={lbl}>Full Name (Optional)</label>
+              <input type="text" placeholder="Jane Doe" value={name} onChange={e => setName(e.target.value)}
+                style={inp} onFocus={e => e.target.style.borderColor = NAVY} onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
+            </div>
+
+            {/* Email */}
+            <div style={{ marginBottom: "16px" }}>
+              <label style={lbl}>Email Address</label>
+              <input type="email" required placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)}
+                style={inp} onFocus={e => e.target.style.borderColor = NAVY} onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
+            </div>
+
+            {/* Password */}
+            <div style={{ marginBottom: "16px" }}>
+              <label style={lbl}>Password</label>
+              <div style={{ position: "relative" }}>
+                <input type={showPassword ? "text" : "password"} required placeholder="Minimum 8 characters" value={password} onChange={e => setPassword(e.target.value)}
+                  style={{ ...inp, padding: "11px 42px 11px 14px" }}
                   onFocus={e => e.target.style.borderColor = NAVY} onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
+                <button type="button" onClick={() => setShowPassword(v => !v)}
+                  style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#9CA3AF", padding: "2px", display: "flex", alignItems: "center" }}>
+                  <EyeIcon open={showPassword} />
+                </button>
               </div>
-            ))}
+            </div>
+
+            {/* Confirm Password */}
+            <div style={{ marginBottom: "16px" }}>
+              <label style={lbl}>Confirm Password</label>
+              <div style={{ position: "relative" }}>
+                <input type={showConfirmPassword ? "text" : "password"} required placeholder="••••••••" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
+                  style={{ ...inp, padding: "11px 42px 11px 14px" }}
+                  onFocus={e => e.target.style.borderColor = NAVY} onBlur={e => e.target.style.borderColor = "#E5E7EB"} />
+                <button type="button" onClick={() => setShowConfirmPassword(v => !v)}
+                  style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#9CA3AF", padding: "2px", display: "flex", alignItems: "center" }}>
+                  <EyeIcon open={showConfirmPassword} />
+                </button>
+              </div>
+            </div>
 
             {/* Referral code */}
             <div style={{ marginBottom: "16px" }}>
-              <label style={{ display: "block", fontSize: "12px", fontWeight: "700", color: "#374151", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Referral Code (Optional)</label>
+              <label style={lbl}>Referral Code (Optional)</label>
               <div style={{ position: "relative" }}>
-                <input
-                  type="text"
-                  placeholder="e.g. JANE4821"
-                  value={referralCode}
+                <input type="text" placeholder="e.g. JANE4821" value={referralCode}
                   onChange={e => { setReferralCode(e.target.value.toUpperCase()); setCodeValid(null); }}
                   onBlur={() => validateCode(referralCode)}
                   maxLength={12}
-                  style={{ width: "100%", padding: "11px 14px", border: `1.5px solid ${codeValid === true ? "#16A34A" : codeValid === false ? "#DC2626" : "#E5E7EB"}`, borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box", fontFamily: "monospace" }}
-                />
+                  style={{ ...inp, border: `1.5px solid ${codeValid === true ? "#16A34A" : codeValid === false ? "#DC2626" : "#E5E7EB"}`, fontFamily: "monospace" }} />
                 {codeValid === true  && <span style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", color: "#16A34A", fontSize: "16px" }}>✓</span>}
                 {codeValid === false && <span style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", color: "#DC2626", fontSize: "13px" }}>Invalid</span>}
               </div>
@@ -182,6 +227,10 @@ function SignUpContent() {
             <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 8px" }}>
               Already have an account?{" "}
               <a href="/account/signin" style={{ color: NAVY, fontWeight: "700", textDecoration: "none" }}>Sign in</a>
+            </p>
+            <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 8px" }}>
+              Forgot your password?{" "}
+              <a href="/account/signin" style={{ color: ORANGE, fontWeight: "700", textDecoration: "none" }}>Reset it here</a>
             </p>
             <p style={{ fontSize: "12px", color: "#9CA3AF", margin: 0 }}>
               By creating an account you agree to our{" "}

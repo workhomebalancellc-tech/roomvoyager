@@ -56,7 +56,7 @@ export async function POST(req) {
         await adminDb.collection("referralCodes").doc(code).set({ uid, createdAt: FieldValue.serverTimestamp() });
       }
       const latest = (await ref.get()).data();
-      return Response.json({ ok: true, referralCode: latest.referralCode });
+      return Response.json({ ok: true, referralCode: latest.referralCode, birthday: latest.birthday || null });
     }
 
     // ── lookupReferralCode: given a code, return the owner uid ─────────────
