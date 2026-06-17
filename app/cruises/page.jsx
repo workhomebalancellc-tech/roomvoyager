@@ -76,6 +76,26 @@ const REGION_OPTIONS = [
   { label: "North America",   value: "6"  },
 ];
 
+const LINE_OPTIONS = [
+  { label: "Any cruise line",       value: "" },
+  { label: "Carnival Cruise Line",  value: "1"  },
+  { label: "Holland America Line",  value: "3"  },
+  { label: "Celebrity Cruises",     value: "4"  },
+  { label: "Royal Caribbean",       value: "5"  },
+  { label: "Princess Cruises",      value: "6"  },
+  { label: "Regent Seven Seas",     value: "7"  },
+  { label: "Norwegian Cruise Line", value: "8"  },
+  { label: "Cunard",                value: "9"  },
+  { label: "Costa Cruise Lines",    value: "11" },
+  { label: "Seabourn",              value: "12" },
+  { label: "MSC Cruises",           value: "14" },
+  { label: "Disney Cruise Line",    value: "15" },
+  { label: "Oceania Cruises",       value: "16" },
+  { label: "Azamara",               value: "25" },
+  { label: "Viking Ocean Cruises",  value: "31" },
+  { label: "Virgin Voyages",        value: "43" },
+];
+
 const PORT_OPTIONS = [
   { label: "Any port",                  value: ""     },
   { label: "Miami, FL",                 value: "314"  },
@@ -107,6 +127,7 @@ const CB_AFFILIATE = "https://cruisebound.sjv.io/c/7402959/3242486/40968";
 
 function CruiseboundSearch() {
   const [region,   setRegion]   = useState("10");  // Caribbean
+  const [lineId,   setLineId]   = useState("");
   const [port,     setPort]     = useState("");
   const [monthIdx, setMonthIdx] = useState(1);     // next month
   const [duration, setDuration] = useState("7");   // 7+ nights
@@ -114,6 +135,7 @@ function CruiseboundSearch() {
   function handleSearch() {
     const params = new URLSearchParams({ sortBy: "recommended", sortOrder: "asc", page: "1", minNights: duration });
     if (region) params.set("regionIds", region);
+    if (lineId) params.set("lineIds", lineId);
     if (port)   params.set("departurePortIds", port);
     const mo = MONTH_OPTIONS[monthIdx];
     if (mo.firstDay) { params.set("firstDepartDate", mo.firstDay); params.set("lastDepartDate", mo.lastDay); }
@@ -129,11 +151,17 @@ function CruiseboundSearch() {
     <div style={{ background: NAVY, padding: "32px 24px" }}>
       <div style={{ maxWidth: "900px", margin: "0 auto" }}>
         <div style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px", marginBottom: "12px" }}>
             <div>
               <label style={lbl}>Destination</label>
               <select value={region} onChange={e => setRegion(e.target.value)} style={inp}>
                 {REGION_OPTIONS.map((r, i) => <option key={i} value={r.value}>{r.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={lbl}>Cruise Line</label>
+              <select value={lineId} onChange={e => setLineId(e.target.value)} style={inp}>
+                {LINE_OPTIONS.map((l, i) => <option key={i} value={l.value}>{l.label}</option>)}
               </select>
             </div>
             <div>
