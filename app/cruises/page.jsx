@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import FloatingChat from "../components/FloatingChat";
@@ -125,8 +126,9 @@ function getMonthOptions() {
 const MONTH_OPTIONS = getMonthOptions();
 const CB_AFFILIATE = "https://cruisebound.sjv.io/c/7402959/3242486/40968";
 
-function CruiseboundSearch() {
-  const [region,   setRegion]   = useState("10");  // Caribbean
+function CruiseboundSearchInner() {
+  const searchParams = useSearchParams();
+  const [region,   setRegion]   = useState(() => searchParams.get("regionIds") || "10");
   const [lineId,   setLineId]   = useState("");
   const [port,     setPort]     = useState("");
   const [monthIdx, setMonthIdx] = useState(1);     // next month
@@ -193,6 +195,14 @@ function CruiseboundSearch() {
         </div>
       </div>
     </div>
+  );
+}
+
+function CruiseboundSearch() {
+  return (
+    <Suspense fallback={null}>
+      <CruiseboundSearchInner />
+    </Suspense>
   );
 }
 
