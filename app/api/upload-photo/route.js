@@ -17,7 +17,7 @@ export async function POST(request) {
     const token       = randomUUID();
     const filePath    = `profile-photos/${uid}`;
 
-    const bucket  = adminStorage.bucket();
+    const bucket  = adminStorage.bucket(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "roomvoyager-46b98.firebasestorage.app");
     const fileRef = bucket.file(filePath);
 
     await fileRef.save(buffer, {
