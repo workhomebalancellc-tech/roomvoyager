@@ -1,6 +1,16 @@
 import { NextResponse } from "next/server";
-import { adminStorage } from "../../../lib/firebase-admin";
+import { Storage } from "@google-cloud/storage";
 import { randomUUID } from "crypto";
+
+const BUCKET_NAME = "roomvoyager-46b98.firebasestorage.app";
+
+function getStorage() {
+  const credentials = JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIALS || "{}");
+  return new Storage({
+    credentials,
+    projectId: credentials.project_id || "roomvoyager-46b98",
+  });
+}
 
 export async function POST(request) {
   try {
@@ -17,7 +27,8 @@ export async function POST(request) {
     const token       = randomUUID();
     const filePath    = `profile-photos/${uid}`;
 
-    const bucket  = adminStorage.bucket(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "roomvoyager-46b98.firebasestorage.app");
+    const storage = getStorage();
+    const bucket  = storage.bucket(BUCKET_NAME);
     const fileRef = bucket.file(filePath);
 
     await fileRef.save(buffer, {
@@ -27,9 +38,8 @@ export async function POST(request) {
       },
     });
 
-    const bucketName = bucket.name;
-    const encoded    = encodeURIComponent(filePath);
-    const url        = `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encoded}?alt=media&token=${token}`;
+    const encoded = encodeURIComponent(filePath);
+    const url     = `https://firebasestorage.googleapis.com/v0/b/${BUCKET_NAME}/o/${encoded}?alt=media&token=${token}`;
 
     return NextResponse.json({ url });
   } catch (err) {
