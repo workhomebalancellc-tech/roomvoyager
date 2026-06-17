@@ -507,7 +507,7 @@ export default function CruisesPage() {
       {/* TRUST BAR */}
       <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
-          {[["🚢","Top cruise lines"],["💰","No booking fees"],["🏆","Earn 10 pts per $1"]].map(([icon,text],i) => (
+          {[["🚢","Top cruise lines"],["💰","No booking fees"],["🏆","Earn 10 pts per $1"],["🔒","Secure booking"]].map(([icon,text],i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#374151" }}>
               <span>{icon}</span><span>{text}</span>
             </div>
