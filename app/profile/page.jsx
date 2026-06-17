@@ -127,8 +127,9 @@ export default function ProfilePage() {
       const url = await getDownloadURL(fileRef);
       await updatePhotoURL(url);
       setPhotoMsg("✓ Photo updated");
-    } catch {
-      setPhotoMsg("❌ Upload failed — try again.");
+    } catch (err) {
+      console.error("Photo upload error:", err);
+      setPhotoMsg(`❌ ${err?.message || err?.code || "Upload failed"}`);
     }
     setPhotoUploading(false);
     e.target.value = "";
