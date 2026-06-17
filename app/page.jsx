@@ -312,6 +312,7 @@ export default function HomePage() {
     }, 300);
   }
   const { user } = useAuth();
+  const [cruiseRegion, setCruiseRegion] = useState("10"); // Caribbean default
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -389,9 +390,23 @@ export default function HomePage() {
               ))}
             </div>
             {activeTab === "cruises" ? (
-              <div style={{ display: "flex", justifyContent: "center", padding: "0 4px 4px" }}>
-                <a href="/cruises" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "14px 60px", fontSize: "17px", fontWeight: "700", cursor: "pointer", textDecoration: "none", display: "inline-block" }}>Browse Cruises →</a>
-              </div>
+              <form onSubmit={e => { e.preventDefault(); const params = new URLSearchParams({ sortBy: "recommended", sortOrder: "asc", page: "1" }); if (cruiseRegion) params.set("regionIds", cruiseRegion); window.location.href = `/cruises?${params.toString()}`; }} style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
+                <select
+                  value={cruiseRegion}
+                  onChange={e => setCruiseRegion(e.target.value)}
+                  style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827", background: "#fff", cursor: "pointer" }}>
+                  <option value="">Any destination</option>
+                  <option value="10">Caribbean</option>
+                  <option value="16">Bahamas</option>
+                  <option value="26">Mexico</option>
+                  <option value="32">Alaska</option>
+                  <option value="29">Hawaii</option>
+                  <option value="5">Mediterranean</option>
+                  <option value="3">Europe</option>
+                  <option value="6">North America</option>
+                </select>
+                <button type="submit" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap" }}>Search →</button>
+              </form>
             ) : activeTab === "flights" ? (
               <form onSubmit={handleSearch} style={{ display: "flex", flexDirection: "column", gap: "8px", padding: "0 4px 4px" }}>
                 <div style={{ display: "flex", gap: "8px" }}>
