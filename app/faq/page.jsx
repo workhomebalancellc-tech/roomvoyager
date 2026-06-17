@@ -115,61 +115,71 @@ export default function FAQPage() {
 
   return (
     <>
-    <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
-      <NavBar active="faq" />
+      <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
+        <NavBar active="faq" />
 
-      {/* HERO */}
-      <div style={{ background: NAVY, padding: "48px 24px", borderBottom: `4px solid ${ORANGE}` }}>
-        <div style={{ maxWidth: "760px", margin: "0 auto" }}>
-          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 10px" }}>❓ Help Center</p>
-          <h1 style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: "800", margin: "0 0 8px", lineHeight: 1.2 }}>Frequently Asked Questions</h1>
-          <p style={{ color: "#93C5FD", fontSize: "14px", margin: 0 }}>Everything you need to know about booking with RoomVoyager</p>
+        {/* HERO */}
+        <div style={{ background: NAVY, padding: "48px 24px", borderBottom: `4px solid ${ORANGE}` }}>
+          <div style={{ maxWidth: "760px", margin: "0 auto" }}>
+            <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 10px" }}>❓ Help Center</p>
+            <h1 style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: "800", margin: "0 0 8px", lineHeight: 1.2 }}>Frequently Asked Questions</h1>
+            <p style={{ color: "#93C5FD", fontSize: "14px", margin: 0 }}>Everything you need to know about booking with RoomVoyager</p>
+          </div>
+        </div>
+
+        {/* CONTENT */}
+        <div style={{ maxWidth: "760px", margin: "0 auto", padding: "48px 24px 80px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+            {faqs.map((section) => (
+              <div key={section.category}>
+                {/* Category header */}
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
+                  <span style={{ width: "4px", height: "22px", background: ORANGE, borderRadius: "2px", display: "inline-block", flexShrink: 0 }} />
+                  <span style={{ fontSize: "16px" }}>{CATEGORY_ICONS[section.category]}</span>
+                  <h2 style={{ fontSize: "17px", fontWeight: "800", color: "#111827", margin: 0 }}>{section.category}</h2>
+                </div>
+
+                {/* Accordion */}
+                <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "16px", overflow: "hidden" }}>
+                  {section.questions.map((faq, i) => {
+                    const key = `${section.category}-${i}`;
+                    const isOpen = openIndex === key;
+                    return (
+                      <div key={key} style={{ borderBottom: i < section.questions.length - 1 ? "1px solid #F3F4F6" : "none" }}>
+                        <button
+                          onClick={() => toggle(key)}
+                          style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 22px", textAlign: "left", background: isOpen ? "#F8FAFF" : "#fff", border: "none", cursor: "pointer", gap: "16px" }}
+                        >
+                          <span style={{ fontSize: "14px", fontWeight: "700", color: "#111827", lineHeight: "1.5" }}>{faq.q}</span>
+                          <span style={{ fontSize: "20px", color: isOpen ? ORANGE : "#9CA3AF", flexShrink: 0, fontWeight: "300", lineHeight: 1 }}>{isOpen ? "−" : "+"}</span>
+                        </button>
+                        {isOpen && (
+                          <div style={{ padding: "0 22px 18px", fontSize: "14px", color: "#4B5563", lineHeight: "1.7" }}>
+                            {faq.a}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div style={{ marginTop: "40px", background: NAVY, borderRadius: "16px", padding: "36px", textAlign: "center" }}>
+            <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: "0 0 8px" }}>Still have questions?</p>
+            <p style={{ color: "#93C5FD", fontSize: "14px", margin: "0 0 24px" }}>Our team is happy to help with anything not covered above.</p>
+            <a
+              href="/contact"
+              style={{ display: "inline-block", padding: "12px 32px", background: ORANGE, color: "#fff", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
+            >
+              Contact Us
+            </a>
+          </div>
         </div>
       </div>
-
-      {/* CONTENT */}
-      <div style={{ maxWidth: "760px", margin: "0 auto", padding: "48px 24px 80px" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-          {faqs.map((section) => (
-            <div key={section.category}>
-              {/* Category header */}
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
-                <span style={{ width: "4px", height: "22px", background: ORANGE, borderRadius: "2px", display: "inline-block", flexShrink: 0 }} />
-                <span style={{ fontSize: "16px" }}>{CATEGORY_ICONS[section.category]}</span>
-                <h2 style={{ fontSize: "17px", fontWeight: "800", color: "#111827", margin: 0 }}>{section.category}</h2>
-              </div>
-
-              {/* Accordion */}
-              <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "16px", overflow: "hidden" }}>
-                {section.questions.map((faq, i) => {
-                  const key = `${section.category}-${i}`;
-                  const isOpen = openIndex === key;
-                  return (
-                    <div key={key} style={{ borderBottom: i < section.questions.length - 1 ? "1px solid #F3F4F6" : "none" }}>
-                      <button
-                        onClick={() => toggle(key)}
-                        style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 22px", textAlign: "left", background: isOpen ? "#F8FAFF" : "#fff", border: "none", cursor: "pointer", gap: "16px" }}
-                      >
-                        <span style={{ fontSize: "14px", fontWeight: "700", color: "#111827", lineHeight: "1.5" }}>{faq.q}</span>
-                        <span style={{ fontSize: "20px", color: isOpen ? ORANGE : "#9CA3AF", flexShrink: 0, fontWeight: "300", lineHeight: 1 }}>{isOpen ? "−" : "+"}</span>
-                      </button>
-                      {isOpen && (
-                        <div style={{ padding: "0 22px 18px", fontSize: "14px", color: "#4B5563", lineHeight: "1.7" }}>
-                          {faq.a}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div style={{ marginTop: "40px", background: NAVY, borderRadius: "16px", padding: "36px", textAlign: "center" }}>
-          <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: "0 0 8px" }}>Still have questions?</p>
-          <p style={{ color: "#93C5FD", fontSize: "14px", margin: "0 0 24px" }}>Our team is happy to help with anything not covered above.</p>
-          <a href="/contact" style={{ display: "inline-block", padding: "12px 32px", background: ORANGE, color: "#fff", borderRadius: "10px", fontSize: "14px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
-            Contact Us →
-          <
+      <Footer />
+    </>
+  );
+}
