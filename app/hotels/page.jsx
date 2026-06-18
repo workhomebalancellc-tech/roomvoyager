@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import { Suspense } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -12,38 +11,11 @@ const NAVY = "#003B95";
 const ORANGE = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
-
 function HotelsContent() {
-  const searchParams = useSearchParams();
-  const [destination, setDestination] = useState(searchParams.get("q") || "");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
-  const [adults, setAdults] = useState("2");
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
-  const [destSugg, setDestSugg] = useState([]);
-  const [showSugg, setShowSugg] = useState(false);
-  const [loadingSugg, setLoadingSugg] = useState(false);
-  const debounceRef = useRef(null);
-  // menuOpen handled by shared NavBar
-
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
 
-  // Inject Expedia widget script after the div is in the DOM
-  useEffect(() => {
-    const existing = document.querySelector(".eg-widgets-script");
-    if (existing) existing.remove();
-    const script = document.createElement("script");
-    script.src = "https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js";
-    script.className = "eg-widgets-script";
-    script.async = true;
-    document.body.appendChild(script);
-    return () => { script.remove(); };
-  }, []);
-  const today = mounted ? new Date().toISOString().split("T")[0] : "";
-  const minCheckOut = checkIn
-    ? (() => { const d = new Date(checkIn + "T12:00:00"); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; })()
-    : today;
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -51,46 +23,24 @@ function HotelsContent() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  function clearFilters() { setDestination(""); setCheckIn(""); setCheckOut(""); setAdults("2"); setDestSugg([]); setShowSugg(false); }
+  // Load Expedia widget after div is in the DOM
+  useEffect(() => {
+    if (!mounted) return;
+    const existing = document.querySelector(".eg-widgets-script");
+    if (existing) existing.remove();
+    const script = document.createElement("script");
+    script.className = "eg-widgets-script";
+    script.src = "https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js";
+    document.body.appendChild(script);
+    return () => {
+      const s = document.querySelector(".eg-widgets-script");
+      if (s) s.remove();
+    };
+  }, [mounted]);
 
-  function handleCheckInChange(val) {
-    setCheckIn(val);
-    if (val) {
-      const d = new Date(val + "T12:00:00");
-      d.setDate(d.getDate() + 1);
-      const next = d.toISOString().split("T")[0];
-      if (!checkOut || checkOut <= val) setCheckOut(next);
-    }
-  }
-
-  function handleDestChange(val) {
-    setDestination(val);
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    if (!val || val.length < 2) { setDestSugg([]); setShowSugg(false); return; }
-    setLoadingSugg(true);
-    debounceRef.current = setTimeout(async () => {
-      try {
-        const res = await fetch(`/api/cities?q=${encodeURIComponent(val)}`);
-        const data = await res.json();
-        setDestSugg(data);
-        setShowSugg(data.length > 0);
-      } catch { setDestSugg([]); setShowSugg(false); }
-      finally { setLoadingSugg(false); }
-    }, 300);
-  }
-
-  function handleSearch(e) {
-    e.preventDefault();
-    const params = new URLSearchParams({ destination: destination || "United States", startDate: checkIn, endDate: checkOut, adults });
-    const expediaUrl = `https://www.expedia.com/Hotel-Search?${params.toString()}`;
+  function openDest(destName) {
+    const expediaUrl = `https://www.expedia.com/Hotel-Search?destination=${encodeURIComponent(destName)}&camref=1110l8R3Z`;
     window.open(`/redirect?to=${encodeURIComponent(expediaUrl)}&partner=Expedia&product=hotel`, "_blank", "noopener,noreferrer");
-  }
-
-  function pickHotelDest(name) {
-    setDestination(name);
-    setTimeout(() => {
-      document.getElementById("hotel-search-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 0);
   }
 
   const destinations = [
@@ -128,10 +78,20 @@ function HotelsContent() {
         </div>
       </div>
 
-      {/* SEARCH — Expedia widget (tracked via Partnerize) */}
+      {/* EXPEDIA WIDGET */}
       <div id="hotel-search-form" style={{ background: NAVY, padding: "32px 24px" }}>
-        <div style={{ maxWidth: "960px", margin: "0 auto", background: "#fff", borderRadius: "18px", overflow: "hidden", minHeight: "80px" }}>
-          <div className="eg-widget" data-widget="search" data-program="us-expedia" data-lobs="stays" data-network="pz" data-camref="1110l8R3Z" data-pubref="hotels-page"></div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ width: "475px", maxWidth: "100%" }}>
+            <div
+              className="eg-widget"
+              data-widget="search"
+              data-program="us-expedia"
+              data-lobs="stays"
+              data-network="pz"
+              data-camref="1110l8R3Z"
+              data-pubref=""
+            />
+          </div>
         </div>
       </div>
 
@@ -144,7 +104,7 @@ function HotelsContent() {
           <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#111827", margin: "0 0 24px" }}>Trending destinations</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "14px" }}>
             {destinations.map((dest, i) => (
-              <button key={i} onClick={() => pickHotelDest(dest.name)}
+              <button key={i} onClick={() => openDest(dest.name)}
                 style={{ background: "none", border: "none", padding: 0, textAlign: "left", cursor: "pointer", width: "100%" }}>
                 <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", overflow: "hidden", display: "flex" }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,59,149,0.15)"; e.currentTarget.style.borderColor = "#93C5FD"; }}
@@ -170,7 +130,6 @@ function HotelsContent() {
             {[
               { icon: "💰", title: "Earn real cash back", desc: "5 points per $1 spent — redeemable for real money after your stay" },
               { icon: "🔒", title: "Secure booking", desc: "All bookings processed through Expedia's trusted platform" },
-              // { icon: "📞", title: "We're here to help", desc: "Questions about your booking? We'll help you find the perfect stay" },
               { icon: "🌍", title: "Massive selection", desc: "Over 1 million properties from budget to luxury worldwide" },
             ].map((item, i) => (
               <div key={i}>
