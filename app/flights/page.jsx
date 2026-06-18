@@ -731,6 +731,14 @@ function FlightsContent() {
           <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 12px" }}>✈️ Powered by Kiwi.com</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(26px, 4vw, 44px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>Find the best flight deals</h1>
           <p style={{ color: "#BFDBFE", fontSize: "16px", margin: "0 0 28px", maxWidth: "480px" }}>Search 500+ airlines — no hidden fees, earn rewards on every booking.</p>
+          <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+            <a href="/" style={{ display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,255,255,0.13)", border: "1.5px solid rgba(255,255,255,0.28)", color: "#fff", borderRadius: "999px", padding: "9px 20px", fontSize: "13px", fontWeight: "600", textDecoration: "none", backdropFilter: "blur(6px)", whiteSpace: "nowrap" }}>
+              🏨 Search Hotels
+            </a>
+            <a href="/cruises" style={{ display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,255,255,0.13)", border: "1.5px solid rgba(255,255,255,0.28)", color: "#fff", borderRadius: "999px", padding: "9px 20px", fontSize: "13px", fontWeight: "600", textDecoration: "none", backdropFilter: "blur(6px)", whiteSpace: "nowrap" }}>
+              🚢 Search Cruises
+            </a>
+          </div>
           <div style={{ width: "100%", maxWidth: "800px" }}>
             <form onSubmit={handleSearch} style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 16px 56px rgba(0,0,0,0.45)", textAlign: "left" }} noValidate>
             <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
