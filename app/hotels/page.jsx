@@ -13,9 +13,6 @@ const LIGHT_BLUE = "#EBF3FF";
 
 function HotelsContent() {
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -23,20 +20,19 @@ function HotelsContent() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Load Expedia widget after div is in the DOM
+  // Load Expedia widget after React commits the div to the DOM
   useEffect(() => {
-    if (!mounted) return;
     const existing = document.querySelector(".eg-widgets-script");
     if (existing) existing.remove();
     const script = document.createElement("script");
     script.className = "eg-widgets-script";
-    script.src = "https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js";
+    script.src = `https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js?v=${Date.now()}`;
     document.body.appendChild(script);
     return () => {
       const s = document.querySelector(".eg-widgets-script");
       if (s) s.remove();
     };
-  }, [mounted]);
+  }, []);
 
   function openDest(destName) {
     const expediaUrl = `https://www.expedia.com/Hotel-Search?destination=${encodeURIComponent(destName)}&camref=1110l8R3Z`;
