@@ -7,7 +7,7 @@ const NAVY   = "#003B95";
 const ORANGE = "#FF6600";
 
 const NAV_LINKS = [
-  { label: "Hotels",  href: "/hotels"  },
+  { label: "Hotels",  href: "/"  },
   { label: "Flights", href: "/flights" },
   { label: "Cruises", href: "/cruises" },
   { label: "Deals",   href: "/deals"   },

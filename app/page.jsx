@@ -289,13 +289,18 @@ export default function HomePage() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const destinations = [
-    { name: "Cancún", country: "Mexico", photo: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=500&h=320&fit=crop&auto=format", tag: "Most Popular", href: "/hotels" },
-    { name: "Miami", country: "Florida, USA", photo: "https://images.unsplash.com/photo-1503891450247-ee5f8ec46dc3?w=500&h=320&fit=crop&auto=format", tag: "Trending", href: "/hotels" },
-    { name: "Paris", country: "France", photo: "https://images.unsplash.com/photo-1431274172761-fca41d930114?w=500&h=320&fit=crop&auto=format", tag: "Romantic", href: "/hotels" },
-    { name: "Caribbean", country: "Multiple Islands", photo: "https://images.unsplash.com/photo-1548574505-5e239809ee19?w=500&h=320&fit=crop&auto=format", tag: "Top Cruise Destination", href: "/cruises" },
-    { name: "Alaska", country: "USA", photo: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=500&h=320&fit=crop&auto=format", tag: "Adventure", href: "/cruises" },
-    { name: "Mediterranean", country: "Europe", photo: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=500&h=320&fit=crop&auto=format", tag: "Luxury Cruises", href: "/cruises" },
+  function openDest(destName) {
+    const expediaUrl = `https://www.expedia.com/Hotel-Search?destination=${encodeURIComponent(destName)}&camref=1110l8R3Z`;
+    window.open(`/redirect?to=${encodeURIComponent(expediaUrl)}&partner=Expedia&product=hotel`, "_blank", "noopener,noreferrer");
+  }
+
+  const hotelDestinations = [
+    { name: "Cancún", photo: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=300&h=200&fit=crop&auto=format", country: "Mexico", tag: "Most Popular" },
+    { name: "Miami", photo: "https://images.unsplash.com/photo-1503891450247-ee5f8ec46dc3?w=300&h=200&fit=crop&auto=format", country: "Florida, USA", tag: "Trending" },
+    { name: "Las Vegas", photo: "https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=300&h=200&fit=crop&auto=format", country: "Nevada, USA", tag: "Best Value" },
+    { name: "Paris", photo: "https://images.unsplash.com/photo-1431274172761-fca41d930114?w=300&h=200&fit=crop&auto=format", country: "France", tag: "Romantic" },
+    { name: "Orlando", photo: "https://images.unsplash.com/photo-1627035983655-0ceec61bb733?w=300&h=200&fit=crop&auto=format", country: "Florida, USA", tag: "Family Pick" },
+    { name: "Punta Cana", photo: "https://images.unsplash.com/photo-1590523278191-995cbcda646b?w=300&h=200&fit=crop&auto=format", country: "Dominican Republic", tag: "All-Inclusive" },
   ];
 
   return (
@@ -353,31 +358,28 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* POPULAR DESTINATIONS */}
-      <div style={{ background: "#F8FAFF", padding: "64px 24px" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 8px" }}>Explore the world</p>
-          <h2 style={{ fontSize: "30px", fontWeight: "800", color: "#111827", margin: "0 0 32px" }}>Popular destinations</h2>
-          <div style={isMobile ? {
-            display: "flex", gap: "14px", overflowX: "auto", paddingBottom: "8px",
-            scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch",
-          } : {
-            display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "20px",
-          }}>
-            {destinations.map((dest, i) => (
-              <a key={i} href={dest.href} style={{
-                textDecoration: "none", display: "block", borderRadius: "16px", overflow: "hidden",
-                position: "relative", height: "210px", boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
-                ...(isMobile ? { flexShrink: 0, width: "200px", scrollSnapAlign: "start" } : {}),
-              }}>
-                <img src={dest.photo} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.1) 60%)" }} />
-                <div style={{ position: "absolute", bottom: "16px", left: "16px" }}>
-                  <span style={{ background: ORANGE, color: "#fff", fontSize: "10px", fontWeight: "700", padding: "2px 8px", borderRadius: "4px" }}>{dest.tag}</span>
-                  <p style={{ color: "#fff", fontWeight: "700", fontSize: "18px", margin: "6px 0 2px" }}>{dest.name}</p>
-                  <p style={{ color: "#D1D5DB", fontSize: "12px", margin: 0 }}>{dest.country}</p>
+      {/* TRENDING HOTEL DESTINATIONS */}
+      <div style={{ background: "#F8FAFF", padding: "48px 24px 56px" }}>
+        <div style={{ maxWidth: "960px", margin: "0 auto" }}>
+          <p style={{ fontSize: "11px", color: ORANGE, fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>Popular right now</p>
+          <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 24px" }}>Trending destinations</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "14px" }}>
+            {hotelDestinations.map((dest, i) => (
+              <button key={i} onClick={() => openDest(dest.name)}
+                style={{ background: "none", border: "none", padding: 0, textAlign: "left", cursor: "pointer", width: "100%" }}>
+                <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", overflow: "hidden", display: "flex" }}
+                  onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,59,149,0.15)"; e.currentTarget.style.borderColor = "#93C5FD"; }}
+                  onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "#E5E7EB"; }}>
+                  <div style={{ width: "80px", height: "72px", flexShrink: 0 }}>
+                    <img src={dest.photo} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  </div>
+                  <div style={{ flex: 1, padding: "12px" }}>
+                    <p style={{ fontSize: "14px", fontWeight: "700", color: "#111827", margin: "0 0 2px" }}>{dest.name}</p>
+                    <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 6px" }}>{dest.country}</p>
+                    <span style={{ fontSize: "10px", fontWeight: "600", background: LIGHT_BLUE, color: NAVY, padding: "2px 8px", borderRadius: "999px" }}>{dest.tag}</span>
+                  </div>
                 </div>
-              </a>
+              </button>
             ))}
           </div>
         </div>
