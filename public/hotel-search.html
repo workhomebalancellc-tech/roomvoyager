@@ -20,16 +20,17 @@
     data-pubref="">
   </div>
 
-  <!-- Auto-resize: tell parent our height once widget fully renders -->
+  <!-- Auto-resize: measure the widget element itself, not body -->
   <script>
     var checks = 0;
     var timer = setInterval(function () {
-      var h = document.body.scrollHeight;
-      if (h > 200) {
-        window.parent.postMessage({ egWidgetHeight: h + 16 }, '*');
+      var el = document.querySelector('.eg-widget');
+      var h = el ? el.getBoundingClientRect().height : 0;
+      if (h > 150) {
+        window.parent.postMessage({ egWidgetHeight: h + 8 }, '*');
         clearInterval(timer);
       } else if (++checks > 60) {
-        window.parent.postMessage({ egWidgetHeight: 280 }, '*');
+        window.parent.postMessage({ egWidgetHeight: 240 }, '*');
         clearInterval(timer);
       }
     }, 100);
