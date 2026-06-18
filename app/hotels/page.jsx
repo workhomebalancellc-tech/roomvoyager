@@ -66,22 +66,21 @@ function HotelsContent() {
       <div id="hotel-search-form" style={{ background: NAVY, padding: "28px 24px 36px" }}>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{
-            width: "560px",
+            width: "475px",
             maxWidth: "100%",
-            height: "218px",
             borderRadius: "16px",
             overflow: "hidden",
-            boxShadow: "0 16px 56px rgba(0,0,0,0.4)",
+            boxShadow: "0 12px 48px rgba(0,0,0,0.35)",
           }}>
             <iframe
               id="eg-iframe"
-              src="/hotel-search.html?v=4"
+              src="/hotel-search.html?v=5"
               title="Hotel Search"
               scrolling="no"
               style={{
                 border: "none",
                 width: "100%",
-                height: "250px",
+                height: "240px",
                 display: "block",
               }}
             />
