@@ -74,7 +74,7 @@ function HotelsContent() {
           }}>
             <iframe
               id="eg-iframe"
-              src="/hotel-search.html"
+              src="/hotel-search.html?v=3"
               title="Hotel Search"
               scrolling="no"
               style={{
