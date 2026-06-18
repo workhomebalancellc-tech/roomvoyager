@@ -20,19 +20,6 @@ function HotelsContent() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Load Expedia widget after React commits the div to the DOM
-  useEffect(() => {
-    const existing = document.querySelector(".eg-widgets-script");
-    if (existing) existing.remove();
-    const script = document.createElement("script");
-    script.className = "eg-widgets-script";
-    script.src = `https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js?v=${Date.now()}`;
-    document.body.appendChild(script);
-    return () => {
-      const s = document.querySelector(".eg-widgets-script");
-      if (s) s.remove();
-    };
-  }, []);
 
   function openDest(destName) {
     const expediaUrl = `https://www.expedia.com/Hotel-Search?destination=${encodeURIComponent(destName)}&camref=1110l8R3Z`;
@@ -77,17 +64,18 @@ function HotelsContent() {
       {/* EXPEDIA WIDGET */}
       <div id="hotel-search-form" style={{ background: NAVY, padding: "32px 24px" }}>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <div style={{ width: "475px", maxWidth: "100%" }}>
-            <div
-              className="eg-widget"
-              data-widget="search"
-              data-program="us-expedia"
-              data-lobs="stays"
-              data-network="pz"
-              data-camref="1110l8R3Z"
-              data-pubref=""
-            />
-          </div>
+          <iframe
+            src="/hotel-search.html"
+            title="Hotel Search"
+            scrolling="no"
+            style={{
+              border: "none",
+              width: "475px",
+              maxWidth: "100%",
+              height: "230px",
+              display: "block",
+            }}
+          />
         </div>
       </div>
 
