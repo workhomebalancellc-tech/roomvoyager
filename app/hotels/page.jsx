@@ -58,6 +58,7 @@ function HotelsContent() {
         <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&h=500&fit=crop&auto=format" alt="Luxury hotel pool" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.65) 0%, rgba(0,15,60,0.82) 100%)" }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🏨 Powered by Expedia</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(26px, 4vw, 44px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>Find your perfect hotel</h1>
           <p style={{ color: "#BFDBFE", fontSize: "16px", margin: 0, maxWidth: "480px" }}>Search millions of properties — best price guarantee, free cancellation on most rooms.</p>
         </div>
@@ -76,7 +77,7 @@ function HotelsContent() {
       <div id="hotel-search-form" style={{ background: NAVY, padding: "28px 24px 36px" }}>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{
-            width: "475px",
+            width: "560px",
             maxWidth: "100%",
             borderRadius: "16px",
             overflow: "hidden",
