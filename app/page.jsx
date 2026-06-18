@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -280,39 +280,7 @@ function NewsletterPopup() {
 }
 
 export default function HomePage() {
-  const [activeTab, setActiveTab] = useState("hotels");
-  const [searchVal, setSearchVal] = useState("");
-  const [citySugg, setCitySugg] = useState([]);
-  const [showSugg, setShowSugg] = useState(false);
-  const [loadingSugg, setLoadingSugg] = useState(false);
-  const debounceRef = useRef(null);
-  // Flight-specific: separate from/to fields
-  const [flightFrom, setFlightFrom] = useState("");
-  const [flightTo,   setFlightTo]   = useState("");
-  const [fromSugg,   setFromSugg]   = useState([]);
-  const [toSugg,     setToSugg]     = useState([]);
-  const [showFromSugg, setShowFromSugg] = useState(false);
-  const [showToSugg,   setShowToSugg]   = useState(false);
-  const [loadingFrom,  setLoadingFrom]  = useState(false);
-  const [loadingTo,    setLoadingTo]    = useState(false);
-  const fromDebounceRef = useRef(null);
-  const toDebounceRef   = useRef(null);
-
-  async function fetchCities(q, setData, setShow, setLoading, debounceRef) {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    if (!q || q.length < 2) { setData([]); setShow(false); return; }
-    setLoading(true);
-    debounceRef.current = setTimeout(async () => {
-      try {
-        const res  = await fetch(`/api/cities?q=${encodeURIComponent(q)}`);
-        const data = await res.json();
-        setData(data); setShow(data.length > 0);
-      } catch { setData([]); setShow(false); }
-      finally { setLoading(false); }
-    }, 300);
-  }
   const { user } = useAuth();
-  const [cruiseRegion, setCruiseRegion] = useState("10"); // Caribbean default
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -320,22 +288,6 @@ export default function HomePage() {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
-
-  function handleSearchChange(val) {
-    setSearchVal(val);
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    if (!val || val.length < 2) { setCitySugg([]); setShowSugg(false); return; }
-    setLoadingSugg(true);
-    debounceRef.current = setTimeout(async () => {
-      try {
-        const res = await fetch(`/api/cities?q=${encodeURIComponent(val)}`);
-        const data = await res.json();
-        setCitySugg(data);
-        setShowSugg(data.length > 0);
-      } catch { setCitySugg([]); setShowSugg(false); }
-      finally { setLoadingSugg(false); }
-    }, 300);
-  }
 
   const destinations = [
     { name: "Cancún", country: "Mexico", photo: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=500&h=320&fit=crop&auto=format", tag: "Most Popular", href: "/hotels" },
@@ -346,20 +298,6 @@ export default function HomePage() {
     { name: "Mediterranean", country: "Europe", photo: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=500&h=320&fit=crop&auto=format", tag: "Luxury Cruises", href: "/cruises" },
   ];
 
-  function handleSearch(e) {
-    e.preventDefault();
-    const q = searchVal.trim() ? `?q=${encodeURIComponent(searchVal.trim())}` : "";
-    if (activeTab === "hotels") window.location.href = `/hotels${q}`;
-    else if (activeTab === "cruises") window.location.href = `/cruises${q}`;
-    else {
-      const params = new URLSearchParams();
-      if (flightFrom.trim()) params.set("from", flightFrom.trim());
-      if (flightTo.trim())   params.set("to",   flightTo.trim());
-      const qs = params.toString() ? `?${params.toString()}` : "";
-      window.location.href = `/flights${qs}`;
-    }
-  }
-
   return (
     <>
     <div style={{ minHeight: "100vh", background: "#fff", fontFamily: "system-ui, -apple-system, sans-serif" }}>
@@ -367,111 +305,40 @@ export default function HomePage() {
       <NavBar active="home" />
       <PromoBanner />
 
-      {/* HERO */}
-      <div style={{ position: "relative", height: "580px", overflow: "hidden" }}>
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&h=700&fit=crop&auto=format" alt="Tropical beach" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.6) 0%, rgba(0,15,60,0.75) 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px" }}>
-          <p style={{ color: "#93C5FD", fontSize: "12px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 14px" }}>Your trusted travel partner</p>
-          <h1 style={{ color: "#fff", fontSize: "clamp(30px, 5vw, 54px)", fontWeight: "800", textAlign: "center", margin: "0 0 10px", lineHeight: 1.15, textShadow: "0 2px 16px rgba(0,0,0,0.4)" }}>
-            Find Your Perfect Trip
+      {/* HERO — widget-first */}
+      <div style={{ position: "relative", overflow: "hidden", background: "#001E64" }}>
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&h=800&fit=crop&auto=format" alt="Luxury hotel" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.25 }} />
+        <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", padding: "52px 24px 0", textAlign: "center" }}>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 12px" }}>🏨 Powered by Expedia</p>
+          <h1 style={{ color: "#fff", fontSize: "clamp(28px, 4.5vw, 50px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.15, textShadow: "0 2px 16px rgba(0,0,0,0.4)" }}>
+            Find Your Perfect Hotel
           </h1>
-          <p style={{ color: "#BFDBFE", fontSize: "17px", textAlign: "center", margin: "0 0 32px", maxWidth: "480px", lineHeight: 1.6 }}>
-            Hotels, flights & cruises — all in one place.<br />Earn real cash back on every booking.
+          <p style={{ color: "#BFDBFE", fontSize: "16px", margin: "0 0 24px", maxWidth: "460px", lineHeight: 1.6 }}>
+            Best prices · Free cancellation · Earn cash back on every booking.
           </p>
-          {/* Search box */}
-          <div style={{ background: "#fff", borderRadius: "16px", padding: "8px", width: "100%", maxWidth: "700px", boxShadow: "0 12px 48px rgba(0,0,0,0.3)" }}>
-            <div style={{ display: "flex", gap: "2px", padding: "4px 4px 8px" }}>
-              {[["hotels", "🏨 Hotels"], ["flights", "✈️ Flights"], ["cruises", "🚢 Cruises"]].map(([tab, label]) => (
-                <button key={tab} onClick={() => { setActiveTab(tab); setSearchVal(""); setShowSugg(false); setCitySugg([]); }}
-                  style={{ padding: "8px 18px", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: "600", cursor: "pointer", background: activeTab === tab ? NAVY : "transparent", color: activeTab === tab ? "#fff" : "#6B7280", transition: "all 0.15s" }}>
-                  {label}
-                </button>
-              ))}
-            </div>
-            {activeTab === "cruises" ? (
-              <form onSubmit={e => { e.preventDefault(); const params = new URLSearchParams({ sortBy: "recommended", sortOrder: "asc", page: "1" }); if (cruiseRegion) params.set("regionIds", cruiseRegion); window.location.href = `/cruises?${params.toString()}`; }} style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
-                <select
-                  value={cruiseRegion}
-                  onChange={e => setCruiseRegion(e.target.value)}
-                  style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827", background: "#fff", cursor: "pointer" }}>
-                  <option value="">Any destination</option>
-                  <option value="10">Caribbean</option>
-                  <option value="16">Bahamas</option>
-                  <option value="26">Mexico</option>
-                  <option value="32">Alaska</option>
-                  <option value="29">Hawaii</option>
-                  <option value="5">Mediterranean</option>
-                  <option value="3">Europe</option>
-                  <option value="6">North America</option>
-                </select>
-                <button type="submit" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap" }}>Search →</button>
-              </form>
-            ) : activeTab === "flights" ? (
-              <form onSubmit={handleSearch} style={{ display: "flex", flexDirection: "column", gap: "8px", padding: "0 4px 4px" }}>
-                <div style={{ display: "flex", gap: "8px" }}>
-                {/* FROM field */}
-                <div style={{ flex: "1 1 0", position: "relative" }}>
-                  <input type="text" placeholder="Flying from…" value={flightFrom}
-                    onChange={e => { setFlightFrom(e.target.value); fetchCities(e.target.value, setFromSugg, setShowFromSugg, setLoadingFrom, fromDebounceRef); }}
-                    onBlur={() => setTimeout(() => setShowFromSugg(false), 160)}
-                    onFocus={() => flightFrom.length >= 1 && fromSugg.length > 0 && setShowFromSugg(true)}
-                    style={{ width: "100%", padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827", boxSizing: "border-box" }} />
-                  {(showFromSugg || loadingFrom) && (
-                    <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "10px", boxShadow: "0 6px 24px rgba(0,0,0,0.13)", zIndex: 200, marginTop: "4px", overflow: "hidden" }}>
-                      {loadingFrom && fromSugg.length === 0
-                        ? <div style={{ padding: "10px 14px", fontSize: "13px", color: "#9CA3AF" }}>Searching…</div>
-                        : fromSugg.map((c, i) => (
-                          <div key={i} onMouseDown={() => { setFlightFrom(c.label); setShowFromSugg(false); }}
-                            style={{ padding: "10px 14px", cursor: "pointer", display: "flex", justifyContent: "space-between", borderBottom: i < fromSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
-                            onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
-                            onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
-                            <span style={{ fontSize: "14px", color: "#111827", fontWeight: "600" }}>{c.name}</span>
-                            <span style={{ fontSize: "12px", color: "#9CA3AF" }}>{c.sub}</span>
-                          </div>
-                        ))}
-                    </div>
-                  )}
-                </div>
-                {/* TO field */}
-                <div style={{ flex: "1 1 0", position: "relative" }}>
-                  <input type="text" placeholder="Flying to…" value={flightTo}
-                    onChange={e => { setFlightTo(e.target.value); fetchCities(e.target.value, setToSugg, setShowToSugg, setLoadingTo, toDebounceRef); }}
-                    onBlur={() => setTimeout(() => setShowToSugg(false), 160)}
-                    onFocus={() => flightTo.length >= 1 && toSugg.length > 0 && setShowToSugg(true)}
-                    style={{ width: "100%", padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", outline: "none", color: "#111827", boxSizing: "border-box" }} />
-                  {(showToSugg || loadingTo) && (
-                    <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #E5E7EB", borderRadius: "10px", boxShadow: "0 6px 24px rgba(0,0,0,0.13)", zIndex: 200, marginTop: "4px", overflow: "hidden" }}>
-                      {loadingTo && toSugg.length === 0
-                        ? <div style={{ padding: "10px 14px", fontSize: "13px", color: "#9CA3AF" }}>Searching…</div>
-                        : toSugg.map((c, i) => (
-                          <div key={i} onMouseDown={() => { setFlightTo(c.label); setShowToSugg(false); }}
-                            style={{ padding: "10px 14px", cursor: "pointer", display: "flex", justifyContent: "space-between", borderBottom: i < toSugg.length - 1 ? "1px solid #F3F4F6" : "none" }}
-                            onMouseEnter={e => e.currentTarget.style.background = "#EBF3FF"}
-                            onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
-                            <span style={{ fontSize: "14px", color: "#111827", fontWeight: "600" }}>{c.name}</span>
-                            <span style={{ fontSize: "12px", color: "#9CA3AF" }}>{c.sub}</span>
-                          </div>
-                        ))}
-                    </div>
-                  )}
-                </div>
-                </div>
-                <button type="submit" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", width: "100%" }}>Search →</button>
-              </form>
-            ) : (
-              <div style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
-                <div onClick={() => window.location.href = "/hotels"}
-                  style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", color: "#9CA3AF", cursor: "pointer", background: "#fff", display: "flex", alignItems: "center", gap: "8px", userSelect: "none" }}>
-                  <span>🔍</span><span>Where are you going?</span>
-                </div>
-                <button onClick={() => window.location.href = "/hotels"}
-                  style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap" }}>
-                  Search →
-                </button>
-              </div>
-            )}
+
+          {/* Flights & Cruises pills — above the widget */}
+          <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+            <a href="/flights" style={{ display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,255,255,0.13)", border: "1.5px solid rgba(255,255,255,0.28)", color: "#fff", borderRadius: "999px", padding: "9px 20px", fontSize: "13px", fontWeight: "600", textDecoration: "none", backdropFilter: "blur(6px)", whiteSpace: "nowrap" }}>
+              ✈️ Search Flights
+            </a>
+            <a href="/cruises" style={{ display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,255,255,0.13)", border: "1.5px solid rgba(255,255,255,0.28)", color: "#fff", borderRadius: "999px", padding: "9px 20px", fontSize: "13px", fontWeight: "600", textDecoration: "none", backdropFilter: "blur(6px)", whiteSpace: "nowrap" }}>
+              🚢 Search Cruises
+            </a>
           </div>
+
+          {/* Expedia widget */}
+          <div style={{ width: "475px", maxWidth: "100%", borderRadius: "16px", overflow: "hidden", boxShadow: "0 16px 56px rgba(0,0,0,0.5)" }}>
+            <iframe
+              src="/hotel-search.html?v=5"
+              title="Hotel Search"
+              scrolling="no"
+              style={{ border: "none", width: "100%", height: "285px", display: "block" }}
+            />
+          </div>
+
+          {/* Fade into trust bar */}
+          <div style={{ height: "36px" }} />
         </div>
       </div>
 
