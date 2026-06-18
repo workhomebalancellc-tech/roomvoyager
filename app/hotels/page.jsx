@@ -20,17 +20,6 @@ function HotelsContent() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Auto-resize iframe to fit widget
-  useEffect(() => {
-    const handleMsg = (e) => {
-      if (e.data?.egWidgetHeight) {
-        const iframe = document.getElementById("eg-iframe");
-        if (iframe) iframe.style.height = e.data.egWidgetHeight + "px";
-      }
-    };
-    window.addEventListener("message", handleMsg);
-    return () => window.removeEventListener("message", handleMsg);
-  }, []);
 
 
   function openDest(destName) {
@@ -91,7 +80,7 @@ function HotelsContent() {
               style={{
                 border: "none",
                 width: "100%",
-                height: "228px",
+                height: "212px",
                 display: "block",
               }}
             />
