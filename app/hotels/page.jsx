@@ -80,7 +80,7 @@ function HotelsContent() {
               style={{
                 border: "none",
                 width: "100%",
-                height: "212px",
+                height: "222px",
                 display: "block",
               }}
             />
