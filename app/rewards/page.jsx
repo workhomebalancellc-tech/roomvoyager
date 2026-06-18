@@ -409,10 +409,10 @@ export default function RewardsPage() {
       </div>
 
       {/* TRUST BAR */}
-      <div style={{ background: NAVY, padding: "14px 24px" }}>
+      <div style={{ background: LIGHT_BLUE, borderBottom: "1px solid #BFDBFE", padding: "14px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto", display: "flex", flexWrap: "nowrap", gap: "20px", justifyContent: "center", overflowX: "auto" }}>
           {[["✅","Free to join"],["💵","Real cash payouts"],["🔥","Hotels & cruises eligible for double pts"],["🚫","No blackout dates"],["⏰","45 days post-travel"],["📲","Zelle · Cash App · Venmo"]].map(([icon,text],i) => (
-            <div key={i} style={{ display:"flex", alignItems:"center", gap:"5px", fontSize:"12px", color:"#BFDBFE", fontWeight: "500", whiteSpace: "nowrap" }}><span>{icon}</span><span>{text}</span></div>
+            <div key={i} style={{ display:"flex", alignItems:"center", gap:"5px", fontSize:"12px", color: NAVY, fontWeight: "600", whiteSpace: "nowrap" }}><span>{icon}</span><span>{text}</span></div>
           ))}
         </div>
       </div>
