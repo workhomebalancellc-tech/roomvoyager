@@ -827,7 +827,7 @@ function FlightsContent() {
       </div>
 
       {/* ── TRUST BAR ────────────────────────────────────────────────── */}
-      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
+      <div style={{ background: LIGHT_BLUE, borderBottom: "1px solid #BFDBFE", padding: "14px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
           {[
             ["🔍", "500+ airlines compared"],
@@ -836,7 +836,7 @@ function FlightsContent() {
             ["🔄", "Free cancellation options"],
             ["📱", "Book in under 2 minutes"],
           ].map(([icon, text], i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#374151" }}>
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: NAVY, fontWeight: "600" }}>
               <span>{icon}</span><span>{text}</span>
             </div>
           ))}
