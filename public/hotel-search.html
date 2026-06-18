@@ -9,6 +9,7 @@
   </style>
 </head>
 <body>
+
   <div
     class="eg-widget"
     data-widget="search"
@@ -18,9 +19,24 @@
     data-camref="1110l8R3Z"
     data-pubref="">
   </div>
+
+  <!-- Tell parent iframe how tall we are once widget renders -->
+  <script>
+    var checks = 0;
+    var timer = setInterval(function () {
+      var h = document.body.scrollHeight;
+      if (h > 20 || ++checks > 30) {
+        window.parent.postMessage({ egWidgetHeight: h }, '*');
+        clearInterval(timer);
+      }
+    }, 100);
+  </script>
+
+  <!-- Expedia widget script MUST come after the div -->
   <script
     class="eg-widgets-script"
     src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js">
   </script>
+
 </body>
 </html>

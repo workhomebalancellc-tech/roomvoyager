@@ -20,6 +20,18 @@ function HotelsContent() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Auto-resize iframe to fit widget
+  useEffect(() => {
+    const handleMsg = (e) => {
+      if (e.data?.egWidgetHeight) {
+        const iframe = document.getElementById("eg-iframe");
+        if (iframe) iframe.style.height = e.data.egWidgetHeight + "px";
+      }
+    };
+    window.addEventListener("message", handleMsg);
+    return () => window.removeEventListener("message", handleMsg);
+  }, []);
+
 
   function openDest(destName) {
     const expediaUrl = `https://www.expedia.com/Hotel-Search?destination=${encodeURIComponent(destName)}&camref=1110l8R3Z`;
@@ -65,6 +77,7 @@ function HotelsContent() {
       <div id="hotel-search-form" style={{ background: NAVY, padding: "32px 24px" }}>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <iframe
+            id="eg-iframe"
             src="/hotel-search.html"
             title="Hotel Search"
             scrolling="no"
@@ -72,7 +85,7 @@ function HotelsContent() {
               border: "none",
               width: "475px",
               maxWidth: "100%",
-              height: "230px",
+              height: "240px",
               display: "block",
             }}
           />
