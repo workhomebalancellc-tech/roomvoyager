@@ -20,13 +20,16 @@
     data-pubref="">
   </div>
 
-  <!-- Tell parent iframe how tall we are once widget renders -->
+  <!-- Auto-resize: tell parent our height once widget fully renders -->
   <script>
     var checks = 0;
     var timer = setInterval(function () {
       var h = document.body.scrollHeight;
-      if (h > 20 || ++checks > 30) {
-        window.parent.postMessage({ egWidgetHeight: h }, '*');
+      if (h > 200) {
+        window.parent.postMessage({ egWidgetHeight: h + 16 }, '*');
+        clearInterval(timer);
+      } else if (++checks > 60) {
+        window.parent.postMessage({ egWidgetHeight: 280 }, '*');
         clearInterval(timer);
       }
     }, 100);

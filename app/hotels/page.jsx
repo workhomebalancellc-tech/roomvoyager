@@ -74,21 +74,32 @@ function HotelsContent() {
       </div>
 
       {/* EXPEDIA WIDGET */}
-      <div id="hotel-search-form" style={{ background: NAVY, padding: "32px 24px" }}>
+      <div id="hotel-search-form" style={{ background: NAVY, padding: "40px 24px 48px" }}>
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          <p style={{ color: "#BFDBFE", fontSize: "13px", fontWeight: "600", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.1em" }}>Powered by Expedia</p>
+          <h2 style={{ color: "#fff", fontSize: "22px", fontWeight: "800", margin: 0 }}>Where are you staying next?</h2>
+        </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <iframe
-            id="eg-iframe"
-            src="/hotel-search.html"
-            title="Hotel Search"
-            scrolling="no"
-            style={{
-              border: "none",
-              width: "475px",
-              maxWidth: "100%",
-              height: "240px",
-              display: "block",
-            }}
-          />
+          <div style={{
+            width: "475px",
+            maxWidth: "100%",
+            borderRadius: "16px",
+            overflow: "hidden",
+            boxShadow: "0 12px 48px rgba(0,0,0,0.35)",
+          }}>
+            <iframe
+              id="eg-iframe"
+              src="/hotel-search.html"
+              title="Hotel Search"
+              scrolling="no"
+              style={{
+                border: "none",
+                width: "100%",
+                height: "280px",
+                display: "block",
+              }}
+            />
+          </div>
         </div>
       </div>
 
