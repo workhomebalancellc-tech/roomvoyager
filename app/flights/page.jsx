@@ -669,13 +669,16 @@ function FlightsContent() {
       // Nothing resolved — send to Kiwi homepage
       kiwiUrl = "https://www.kiwi.com/en/";
     } else {
-      const params = new URLSearchParams();
-      if (slugFrom) params.set("origin", slugFrom);
-      if (slugTo)   params.set("destination", slugTo);
-      if (depart) params.set("outboundDate", depart);
-      if (tripType === "round" && ret) params.set("inboundDate", ret);
-      if (pax > 1) params.set("adults", String(pax));
-      kiwiUrl = `https://www.kiwi.com/en/?${params.toString()}`;
+      // Build direct results URL so TravelPayouts affiliate cookie fires on the right
+      // page and isn't lost when Kiwi navigates from its landing page to /search/results/
+      const origin = slugFrom || "anywhere";
+      const destination = slugTo || "anywhere";
+      const outbound = depart || "anytime";
+      const inbound = (tripType === "round" && ret) ? ret : "no-return";
+      let path = `/en/search/results/${origin}/${destination}/${outbound}/${inbound}/`;
+      const qp = new URLSearchParams();
+      if (pax > 1) qp.set("adults", String(pax));
+      kiwiUrl = `https://www.kiwi.com${path}${qp.toString() ? `?${qp.toString()}` : ""}`;
     }
     const tpUrl = `https://c111.travelpayouts.com/click?shmarker=722477&promo_id=3791&source_type=customlink&type=click&custom_url=${encodeURIComponent(kiwiUrl)}`;
     const dest = `/redirect?to=${encodeURIComponent(tpUrl)}&partner=Kiwi.com&product=flight`;
