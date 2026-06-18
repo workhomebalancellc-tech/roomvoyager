@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import Script from "next/script";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import FloatingChat from "../components/FloatingChat";
@@ -29,6 +28,18 @@ function HotelsContent() {
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+
+  // Inject Expedia widget script after the div is in the DOM
+  useEffect(() => {
+    const existing = document.querySelector(".eg-widgets-script");
+    if (existing) existing.remove();
+    const script = document.createElement("script");
+    script.src = "https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js";
+    script.className = "eg-widgets-script";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => { script.remove(); };
+  }, []);
   const today = mounted ? new Date().toISOString().split("T")[0] : "";
   const minCheckOut = checkIn
     ? (() => { const d = new Date(checkIn + "T12:00:00"); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; })()
@@ -119,9 +130,8 @@ function HotelsContent() {
 
       {/* SEARCH — Expedia widget (tracked via Partnerize) */}
       <div id="hotel-search-form" style={{ background: NAVY, padding: "32px 24px" }}>
-        <div style={{ maxWidth: "960px", margin: "0 auto" }}>
-          <div className="eg-widget" data-widget="search" data-program="us-expedia" data-lobs="stays" data-network="pz" data-camref="1110l8R3Z" data-pubref="" />
-          <Script src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js" strategy="afterInteractive" />
+        <div style={{ maxWidth: "960px", margin: "0 auto", background: "#fff", borderRadius: "18px", overflow: "hidden", minHeight: "80px" }}>
+          <div className="eg-widget" data-widget="search" data-program="us-expedia" data-lobs="stays" data-network="pz" data-camref="1110l8R3Z" data-pubref="hotels-page"></div>
         </div>
       </div>
 
