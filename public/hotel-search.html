@@ -27,7 +27,7 @@
       var el = document.querySelector('.eg-widget');
       var h = el ? el.getBoundingClientRect().height : 0;
       if (h > 150) {
-        window.parent.postMessage({ egWidgetHeight: h + 8 }, '*');
+        window.parent.postMessage({ egWidgetHeight: h - 2 }, '*');
         clearInterval(timer);
       } else if (++checks > 60) {
         window.parent.postMessage({ egWidgetHeight: 240 }, '*');
