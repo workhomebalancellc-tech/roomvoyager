@@ -460,10 +460,14 @@ export default function HomePage() {
                 <button type="submit" style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", width: "100%" }}>Search →</button>
               </form>
             ) : (
-              <div style={{ padding: "0 4px 4px" }}>
+              <div style={{ display: "flex", gap: "8px", padding: "0 4px 4px" }}>
+                <div onClick={() => window.location.href = "/hotels"}
+                  style={{ flex: 1, padding: "12px 16px", border: "1.5px solid #E5E7EB", borderRadius: "10px", fontSize: "15px", color: "#9CA3AF", cursor: "pointer", background: "#fff", display: "flex", alignItems: "center", gap: "8px", userSelect: "none" }}>
+                  <span>🔍</span><span>Where are you going?</span>
+                </div>
                 <button onClick={() => window.location.href = "/hotels"}
-                  style={{ width: "100%", background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "14px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer" }}>
-                  Find Hotels →
+                  style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontSize: "15px", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap" }}>
+                  Search →
                 </button>
               </div>
             )}
