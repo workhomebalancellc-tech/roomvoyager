@@ -150,9 +150,7 @@ function CruiseboundSearchInner() {
   const lbl = { display: "block", fontSize: "11px", fontWeight: "700", color: "#93C5FD", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" };
 
   return (
-    <div style={{ background: NAVY, padding: "32px 24px" }}>
-      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
-        <div style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }}>
+    <div style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 16px 56px rgba(0,0,0,0.45)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px", marginBottom: "12px" }}>
             <div>
               <label style={lbl}>Destination</label>
@@ -193,8 +191,6 @@ function CruiseboundSearchInner() {
             </button>
           </div>
         </div>
-      </div>
-    </div>
   );
 }
 
@@ -492,15 +488,19 @@ export default function CruisesPage() {
       <NavBar active="cruises" />
       <PromoBanner />
 
-      {/* HERO */}
-      <div style={{ position: "relative", height: "320px", overflow: "hidden" }}>
-        <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1600&h=500&fit=crop&auto=format" alt="Cruise ship at sea"
-          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }} />
+      {/* HERO + SEARCH */}
+      <div style={{ position: "relative", background: "#001233" }}>
+        <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1600&h=800&fit=crop&auto=format" alt="Cruise ship at sea"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", opacity: 0.28 }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.65) 0%, rgba(0,15,60,0.82) 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
-          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🚢 Powered by Cruisebound</p>
+        <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", padding: "52px 24px 0", textAlign: "center" }}>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 12px" }}>🚢 Powered by Cruisebound</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(26px, 4vw, 44px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>Find Your Perfect Cruise</h1>
-          <p style={{ color: "#BFDBFE", fontSize: "16px", margin: 0, maxWidth: "480px" }}>Search live inventory across all major cruise lines</p>
+          <p style={{ color: "#BFDBFE", fontSize: "16px", margin: "0 0 28px", maxWidth: "480px" }}>Search live inventory across all major cruise lines</p>
+          <div style={{ width: "100%", maxWidth: "900px" }}>
+            <CruiseboundSearch />
+          </div>
+          <div style={{ height: "36px" }} />
         </div>
       </div>
 
@@ -514,10 +514,6 @@ export default function CruisesPage() {
           ))}
         </div>
       </div>
-
-
-      {/* ── SEARCH FORM ── */}
-      <CruiseboundSearch />
 
       {/* MAIN */}
       <div style={{ maxWidth: "1140px", margin: "0 auto", padding: isMobile ? "24px 16px 60px" : "48px 24px 80px" }}>

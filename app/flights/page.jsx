@@ -719,42 +719,20 @@ function FlightsContent() {
       <NavBar active="flights" />
       <PromoBanner />
 
-      {/* ── HERO ─────────────────────────────────────────────────────── */}
-      <div style={{ position: "relative", height: "320px", overflow: "hidden" }}>
+      {/* ── HERO + SEARCH ─────────────────────────────────────────────── */}
+      <div style={{ position: "relative", background: "#001E46" }}>
         <img
-          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&h=500&fit=crop&auto=format"
+          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&h=800&fit=crop&auto=format"
           alt="Airplane wing above clouds"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.28 }}
         />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.60) 0%, rgba(0,15,60,0.85) 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
-          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>✈️ Powered by Kiwi.com</p>
+        <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", padding: "52px 24px 0", textAlign: "center" }}>
+          <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 12px" }}>✈️ Powered by Kiwi.com</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(26px, 4vw, 44px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>Find the best flight deals</h1>
-          <p style={{ color: "#BFDBFE", fontSize: "16px", margin: 0, maxWidth: "480px" }}>Search 500+ airlines — no hidden fees, earn rewards on every booking.</p>
-        </div>
-      </div>
-
-      {/* ── TRUST BAR ────────────────────────────────────────────────── */}
-      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
-          {[
-            ["🔍", "500+ airlines compared"],
-            ["💰", "No hidden fees"],
-            ["🏆", "Earn 5 pts per $1"],
-            ["🔄", "Free cancellation options"],
-            ["📱", "Book in under 2 minutes"],
-          ].map(([icon, text], i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#374151" }}>
-              <span>{icon}</span><span>{text}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ── SEARCH FORM ──────────────────────────────────────────────── */}
-      <div style={{ background: NAVY, padding: "32px 24px" }}>
-        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <form onSubmit={handleSearch} style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 8px 40px rgba(0,0,0,0.18)" }} noValidate>
+          <p style={{ color: "#BFDBFE", fontSize: "16px", margin: "0 0 28px", maxWidth: "480px" }}>Search 500+ airlines — no hidden fees, earn rewards on every booking.</p>
+          <div style={{ width: "100%", maxWidth: "800px" }}>
+            <form onSubmit={handleSearch} style={{ background: "#fff", borderRadius: "18px", padding: "28px 28px 24px", boxShadow: "0 16px 56px rgba(0,0,0,0.45)", textAlign: "left" }} noValidate>
             <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
               {["round", "oneway"].map(t => (
                 <button key={t} type="button" onClick={() => setTripType(t)}
@@ -842,7 +820,26 @@ function FlightsContent() {
                 Search Flights
               </button>
             </div>
-          </form>
+            </form>
+          </div>
+          <div style={{ height: "36px" }} />
+        </div>
+      </div>
+
+      {/* ── TRUST BAR ────────────────────────────────────────────────── */}
+      <div style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "14px 24px" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
+          {[
+            ["🔍", "500+ airlines compared"],
+            ["💰", "No hidden fees"],
+            ["🏆", "Earn 5 pts per $1"],
+            ["🔄", "Free cancellation options"],
+            ["📱", "Book in under 2 minutes"],
+          ].map(([icon, text], i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#374151" }}>
+              <span>{icon}</span><span>{text}</span>
+            </div>
+          ))}
         </div>
       </div>
 
