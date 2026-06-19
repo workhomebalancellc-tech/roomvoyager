@@ -280,14 +280,39 @@ function NewsletterPopup() {
 }
 
 export default function HomePage() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [isMobile, setIsMobile] = useState(false);
+  const [widgetEmail, setWidgetEmail]     = useState("");
+  const [widgetUnlocked, setWidgetUnlocked] = useState(false);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
+  // Auto-unlock widget once auth resolves for logged-in users
+  useEffect(() => {
+    if (!authLoading && user?.email) setWidgetUnlocked(true);
+  }, [authLoading, user]);
+
+  function handleWidgetEmail(e) {
+    e.preventDefault();
+    if (!widgetEmail.trim()) return;
+    setWidgetUnlocked(true);
+    // Log to Airtable
+    fetch("/api/link-clicks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        partner: "Expedia",
+        product: "hotel",
+        url: "widget-search",
+        userEmail: widgetEmail.trim(),
+        userName: "",
+      }),
+    }).catch(() => {});
+  }
 
   function openDest(destName) {
     const expediaUrl = `https://www.expedia.com/Hotel-Search?destination=${encodeURIComponent(destName)}&camref=1110l8R3Z`;
@@ -332,14 +357,39 @@ export default function HomePage() {
             </a>
           </div>
 
-          {/* Expedia widget */}
-          <div style={{ width: "475px", maxWidth: "100%", borderRadius: "16px", overflow: "hidden", boxShadow: "0 16px 56px rgba(0,0,0,0.5)" }}>
+          {/* Expedia widget + email gate overlay */}
+          <div style={{ width: "475px", maxWidth: "100%", borderRadius: "16px", overflow: "hidden", boxShadow: "0 16px 56px rgba(0,0,0,0.5)", position: "relative" }}>
             <iframe
               src="/hotel-search.html?v=5"
               title="Hotel Search"
               scrolling="no"
               style={{ border: "none", width: "100%", height: "285px", display: "block" }}
             />
+            {/* Email gate — sits on top of widget for guests */}
+            {!authLoading && !widgetUnlocked && (
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #001E64ee 0%, #003B95ee 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px", backdropFilter: "blur(4px)" }}>
+                <div style={{ fontSize: "32px", marginBottom: "8px" }}>🏆</div>
+                <p style={{ color: "#fff", fontWeight: "800", fontSize: "17px", margin: "0 0 4px", textAlign: "center" }}>Enter your email to search</p>
+                <p style={{ color: "#BFDBFE", fontSize: "12px", margin: "0 0 16px", textAlign: "center" }}>Earn 5 pts per $1 — redeemable for cash back</p>
+                <form onSubmit={handleWidgetEmail} style={{ width: "100%", display: "flex", flexDirection: "column", gap: "10px" }}>
+                  <input
+                    type="email"
+                    required
+                    autoFocus
+                    placeholder="you@example.com"
+                    value={widgetEmail}
+                    onChange={e => setWidgetEmail(e.target.value)}
+                    style={{ width: "100%", padding: "12px 14px", fontSize: "14px", borderRadius: "9px", border: "none", outline: "none", boxSizing: "border-box", fontFamily: "system-ui, sans-serif" }}
+                  />
+                  <button type="submit" style={{ width: "100%", padding: "12px", background: "#FF6600", color: "#fff", border: "none", borderRadius: "9px", fontSize: "14px", fontWeight: "800", cursor: "pointer" }}>
+                    Search Hotels →
+                  </button>
+                </form>
+                <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px", margin: "10px 0 0", textAlign: "center" }}>
+                  No spam. <a href="/account/signin" style={{ color: "#93C5FD" }}>Already have an account?</a>
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Fade into trust bar */}
