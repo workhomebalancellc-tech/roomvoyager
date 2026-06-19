@@ -18,8 +18,8 @@ const PRODUCT_META = {
 const COUNTDOWN_SECS = 5;
 
 function RedirectContent() {
-  const params      = useSearchParams();
-  const { user }    = useAuth();
+  const params                  = useSearchParams();
+  const { user, loading: authLoading } = useAuth();
 
   const to       = params.get("to")      || "";
   const partner  = params.get("partner") || "Our Partner";
@@ -33,22 +33,23 @@ function RedirectContent() {
   const [gone,        setGone]        = useState(false);
   const [logged,      setLogged]      = useState(false);
   const [emailInput,  setEmailInput]  = useState("");
-  const [emailReady,  setEmailReady]  = useState(false); // true once email submitted or skipped
+  const [emailReady,  setEmailReady]  = useState(false);
   const loggedRef = useRef(false);
 
-  // If already logged in, skip the email capture step
   const resolvedEmail = user?.email || emailInput || "Guest";
   const resolvedName  = user?.name  || "";
+
+  // Once auth finishes loading, if user is logged in, skip the email gate
+  useEffect(() => {
+    if (!authLoading && user?.email) {
+      setEmailReady(true);
+    }
+  }, [authLoading, user]);
 
   function handleEmailSubmit(e) {
     e && e.preventDefault();
     if (!emailInput.trim()) return;
     setEmailReady(true);
-  }
-
-  // Skip only available if already logged in (guests must enter email)
-  function handleSkip() {
-    if (user?.email) setEmailReady(true);
   }
 
   // Log click to Airtable once (after email is ready)
@@ -90,6 +91,18 @@ function RedirectContent() {
   function goNow() {
     setGone(true);
     window.location.href = to;
+  }
+
+  // Wait for Firebase to resolve before deciding which screen to show
+  if (authLoading) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#F8FAFF" }}>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: "48px", marginBottom: "16px" }}>✈️</div>
+          <p style={{ fontSize: "16px", color: "#6B7280", fontFamily: "system-ui, sans-serif" }}>Loading…</p>
+        </div>
+      </div>
+    );
   }
 
   // Email capture gate — shown to guests before countdown
