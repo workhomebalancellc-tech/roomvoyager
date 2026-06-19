@@ -2213,6 +2213,72 @@ export default function AdminDashboard() {
           <ReferralsPanel />
         </div>
 
+        {/* PLATFORM RESOURCES */}
+        <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px", marginBottom: "20px" }}>
+          <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 16px" }}>🔗 Platform Resources & Maintenance Links</p>
+          {[
+            {
+              category: "Hosting & Code",
+              links: [
+                { label: "Vercel", desc: "Site hosting & deployments", href: "https://vercel.com", icon: "▲" },
+                { label: "GitHub", desc: "Code repository", href: "https://github.com", icon: "🐙" },
+              ],
+            },
+            {
+              category: "Affiliate Dashboards",
+              links: [
+                { label: "Impact.com", desc: "Cruisebound affiliate tracking & reporting", href: "https://app.impact.com", icon: "📊" },
+                { label: "TravelPayouts", desc: "Kiwi.com flights tracking (marker 722477)", href: "https://travelpayouts.com", icon: "✈️" },
+                { label: "CJ Affiliate", desc: "Cruise line affiliates (Royal Caribbean, Carnival, NCL, etc.)", href: "https://cj.com", icon: "🚢" },
+                { label: "PHG / Expedia", desc: "Expedia hotel affiliate (CJ partner hub)", href: "https://phg.com", icon: "🏨" },
+              ],
+            },
+            {
+              category: "Backend & Database",
+              links: [
+                { label: "Firebase Console", desc: "Auth, Firestore database, storage", href: "https://console.firebase.google.com", icon: "🔥" },
+                { label: "Airtable", desc: "Link click tracking & quote logs", href: "https://airtable.com", icon: "📋" },
+                { label: "EmailJS", desc: "Contact forms & newsletter", href: "https://emailjs.com", icon: "📧" },
+              ],
+            },
+            {
+              category: "Video & Automation",
+              links: [
+                { label: "Fliki", desc: "Deal of the Week video creation", href: "https://app.fliki.ai", icon: "🎬" },
+                { label: "Make", desc: "Automation (Sheets → Fliki pipeline)", href: "https://us2.make.com", icon: "⚙️" },
+                { label: "TikTok Studio", desc: "Video publishing", href: "https://studio.tiktok.com", icon: "🎵" },
+              ],
+            },
+            {
+              category: "Widget Partners",
+              links: [
+                { label: "Expedia", desc: "Hotel search widget source", href: "https://expedia.com", icon: "🏨" },
+                { label: "Kiwi.com", desc: "Flight search", href: "https://kiwi.com", icon: "✈️" },
+                { label: "Cruisebound", desc: "Cruise search widget", href: "https://cruisebound.com", icon: "🚢" },
+                { label: "Unsplash", desc: "Stock photos used throughout the site", href: "https://unsplash.com", icon: "📷" },
+              ],
+            },
+          ].map((section, si) => (
+            <div key={si} style={{ marginBottom: si < 4 ? "18px" : 0 }}>
+              <p style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 8px" }}>{section.category}</p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                {section.links.map((link, li) => (
+                  <a key={li} href={link.href} target="_blank" rel="noopener noreferrer"
+                    style={{ display: "flex", alignItems: "center", gap: "7px", background: "#F8FAFF", border: "1px solid #E5E7EB", borderRadius: "8px", padding: "8px 12px", textDecoration: "none", color: "#111827" }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = NAVY; e.currentTarget.style.background = LIGHT_BLUE; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = "#E5E7EB"; e.currentTarget.style.background = "#F8FAFF"; }}>
+                    <span style={{ fontSize: "14px" }}>{link.icon}</span>
+                    <div>
+                      <p style={{ fontSize: "12px", fontWeight: "700", color: NAVY, margin: 0 }}>{link.label} ↗</p>
+                      <p style={{ fontSize: "10px", color: "#6B7280", margin: 0 }}>{link.desc}</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
         {/* RATES REFERENCE */}
         <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
           <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>📊 Program Rates At-a-Glance</p>
