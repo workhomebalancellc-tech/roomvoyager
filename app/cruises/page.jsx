@@ -124,7 +124,7 @@ function getMonthOptions() {
   return opts;
 }
 const MONTH_OPTIONS = getMonthOptions();
-const CB_AFFILIATE = "https://cruisebound.sjv.io/c/7402959/3242486/40968";
+const CB_AFFILIATE = "https://cruisebound.sjv.io/c/7402959/3242485/40968";
 
 function CruiseboundSearchInner() {
   const searchParams = useSearchParams();
