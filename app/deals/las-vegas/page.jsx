@@ -79,32 +79,48 @@ export default function LasVegasDealsPage() {
             </p>
           </div>
 
-          {/* Hotel cards */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "28px", marginBottom: "32px" }}>
+          {/* Side-by-side hotel photos with affiliate links */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "36px" }}>
             {HOTELS.map((hotel, i) => (
-              <div key={i} style={{ background: "#fff", borderRadius: "18px", overflow: "hidden", border: "1px solid #E5E7EB", boxShadow: "0 4px 20px rgba(0,59,149,0.07)" }}>
-                <div style={{ position: "relative", height: "200px" }}>
-                  <img src={hotel.photo} alt={hotel.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 55%)" }} />
-                  <div style={{ position: "absolute", bottom: "14px", left: "18px", right: "18px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-                    <div>
-                      <p style={{ color: "#fff", fontWeight: "800", fontSize: "18px", margin: 0, textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>{hotel.emoji} {hotel.name}</p>
-                      <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "12px", margin: "2px 0 0" }}>{hotel.vibe}</p>
-                    </div>
-                    <span style={{ background: ORANGE, color: "#fff", fontSize: "13px", fontWeight: "700", padding: "5px 12px", borderRadius: "8px", flexShrink: 0 }}>{hotel.price}</span>
+              <div key={i} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                <button
+                  onClick={() => openHotel(hotel.link)}
+                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer", borderRadius: "14px", overflow: "hidden", display: "block", position: "relative", width: "100%" }}
+                >
+                  <img
+                    src={hotel.photo}
+                    alt={hotel.name}
+                    style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", display: "block" }}
+                  />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%)" }} />
+                  <div style={{ position: "absolute", bottom: "12px", left: "14px", right: "14px" }}>
+                    <p style={{ color: "#fff", fontWeight: "800", fontSize: "15px", margin: 0, textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}>{hotel.emoji} {hotel.name}</p>
+                    <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "12px", margin: "3px 0 0" }}>{hotel.vibe}</p>
                   </div>
-                </div>
-                <div style={{ padding: "20px 22px 22px" }}>
-                  <p style={{ fontSize: "14px", color: "#374151", lineHeight: 1.75, margin: "0 0 16px" }}>{hotel.blurb}</p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "18px" }}>
-                    {hotel.perks.map((perk, j) => (
-                      <span key={j} style={{ background: LIGHT_BLUE, color: NAVY, fontSize: "12px", fontWeight: "600", padding: "4px 10px", borderRadius: "6px" }}>✓ {perk}</span>
-                    ))}
-                  </div>
-                  <button onClick={() => openHotel(hotel.link)}
-                    style={{ width: "100%", background: NAVY, color: "#fff", border: "none", borderRadius: "10px", padding: "13px", fontSize: "14px", fontWeight: "700", cursor: "pointer", boxShadow: "0 4px 14px rgba(0,59,149,0.2)" }}>
-                    View Rates on Expedia →
-                  </button>
+                </button>
+                <button
+                  onClick={() => openHotel(hotel.link)}
+                  style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "10px", padding: "11px", fontSize: "13px", fontWeight: "700", cursor: "pointer", width: "100%" }}
+                >
+                  Book Now — {hotel.price} →
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Hotel descriptions in paragraph form */}
+          <div style={{ marginBottom: "32px" }}>
+            {HOTELS.map((hotel, i) => (
+              <div key={i} style={{ marginBottom: "28px" }}>
+                <h3 style={{ fontSize: "20px", fontWeight: "800", color: "#111827", margin: "0 0 10px", display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+                  {hotel.emoji} {hotel.name}
+                  <span style={{ background: ORANGE, color: "#fff", fontSize: "12px", fontWeight: "700", padding: "3px 9px", borderRadius: "6px" }}>{hotel.price}</span>
+                </h3>
+                <p style={{ fontSize: "15px", color: "#374151", lineHeight: 1.8, margin: "0 0 12px" }}>{hotel.blurb}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                  {hotel.perks.map((perk, j) => (
+                    <span key={j} style={{ background: LIGHT_BLUE, color: NAVY, fontSize: "12px", fontWeight: "600", padding: "4px 10px", borderRadius: "6px" }}>✓ {perk}</span>
+                  ))}
                 </div>
               </div>
             ))}
