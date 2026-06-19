@@ -29,15 +29,31 @@ function RedirectContent() {
   const meta     = PRODUCT_META[product] || PRODUCT_META.cruise;
   const estPts   = amount ? amount * (meta.ptsDbl ?? meta.ptsStd) : null;
 
-  const [count,    setCount]    = useState(COUNTDOWN_SECS);
-  const [gone,     setGone]     = useState(false);
-  const [logged,   setLogged]   = useState(false);
+  const [count,       setCount]       = useState(COUNTDOWN_SECS);
+  const [gone,        setGone]        = useState(false);
+  const [logged,      setLogged]      = useState(false);
+  const [emailInput,  setEmailInput]  = useState("");
+  const [emailReady,  setEmailReady]  = useState(false); // true once email submitted or skipped
   const loggedRef = useRef(false);
 
+  // If already logged in, skip the email capture step
+  const resolvedEmail = user?.email || emailInput || "Guest";
+  const resolvedName  = user?.name  || "";
 
-  // Log click to Airtable once
+  function handleEmailSubmit(e) {
+    e && e.preventDefault();
+    if (!emailInput.trim()) return;
+    setEmailReady(true);
+  }
+
+  // Skip only available if already logged in (guests must enter email)
+  function handleSkip() {
+    if (user?.email) setEmailReady(true);
+  }
+
+  // Log click to Airtable once (after email is ready)
   useEffect(() => {
-    if (!to || loggedRef.current) return;
+    if (!to || !emailReady || loggedRef.current) return;
     loggedRef.current = true;
     fetch("/api/link-clicks", {
       method:  "POST",
@@ -46,17 +62,17 @@ function RedirectContent() {
         partner,
         product,
         url:       to,
-        userEmail: user?.email || "Guest",
-        userName:  user?.name  || "",
+        userEmail: resolvedEmail,
+        userName:  resolvedName,
       }),
     })
       .then(() => setLogged(true))
       .catch(() => setLogged(true));
-  }, [to, partner, product, user]);
+  }, [to, partner, product, emailReady, resolvedEmail, resolvedName]);
 
-  // Countdown
+  // Countdown — only starts after email step is done
   useEffect(() => {
-    if (!to) return;
+    if (!to || !emailReady) return;
     const t = setInterval(() => {
       setCount(c => {
         if (c <= 1) {
@@ -69,11 +85,60 @@ function RedirectContent() {
       });
     }, 1000);
     return () => clearInterval(t);
-  }, [to]);
+  }, [to, emailReady]);
 
   function goNow() {
     setGone(true);
     window.location.href = to;
+  }
+
+  // Email capture gate — shown to guests before countdown
+  if (!user && !emailReady) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
+        <div style={{ background: NAVY, padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <a href="/" style={{ fontSize: "18px", fontWeight: "800", color: "#fff", textDecoration: "none" }}>
+            Room<span style={{ color: ORANGE }}>Voyager</span>
+          </a>
+          <span style={{ fontSize: "12px", color: "#93C5FD" }}>Secure redirect</span>
+        </div>
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "32px 16px" }}>
+          <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 8px 40px rgba(0,0,0,0.10)", maxWidth: "440px", width: "100%", overflow: "hidden" }}>
+            <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${meta.color} 100%)`, padding: "32px 24px 28px", textAlign: "center" }}>
+              <div style={{ fontSize: "48px", marginBottom: "10px" }}>🏆</div>
+              <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: "0 0 6px" }}>Earn rewards on this booking</p>
+              <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "14px", margin: 0 }}>
+                Enter your email to earn {meta.ptsStd} pts per $1 — redeemable for cash back.
+              </p>
+            </div>
+            <form onSubmit={handleEmailSubmit} style={{ padding: "28px 24px" }}>
+              <label style={{ display: "block", fontSize: "13px", fontWeight: "700", color: "#374151", marginBottom: "8px" }}>
+                Your email address
+              </label>
+              <input
+                type="email"
+                required
+                placeholder="you@example.com"
+                value={emailInput}
+                onChange={e => setEmailInput(e.target.value)}
+                style={{ width: "100%", padding: "13px 14px", fontSize: "15px", border: "1.5px solid #D1D5DB", borderRadius: "10px", outline: "none", marginBottom: "14px", boxSizing: "border-box", fontFamily: "system-ui, sans-serif" }}
+                autoFocus
+              />
+              <button
+                type="submit"
+                style={{ width: "100%", padding: "14px", background: ORANGE, color: "#fff", border: "none", borderRadius: "12px", fontSize: "15px", fontWeight: "800", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.3)" }}
+              >
+                Continue to {partner} →
+              </button>
+              <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "14px 0 0", lineHeight: 1.5 }}>
+                We'll use this to award your points. No spam — ever.{" "}
+                <a href="/rewards" style={{ color: NAVY }}>How rewards work →</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (!to) {
