@@ -385,8 +385,11 @@ export default function HomePage() {
                     Search Hotels →
                   </button>
                 </form>
-                <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px", margin: "10px 0 0", textAlign: "center" }}>
-                  No spam. <a href="/account/signin" style={{ color: "#93C5FD" }}>Already have an account?</a>
+                <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "11px", margin: "12px 0 0", textAlign: "center", lineHeight: 1.6 }}>
+                  No spam, ever. · Skip this step by{" "}
+                  <a href="/account/signin" style={{ color: "#93C5FD", fontWeight: "700" }}>signing in</a>
+                  {" "}or{" "}
+                  <a href="/account/signup" style={{ color: "#93C5FD", fontWeight: "700" }}>creating a free account</a>
                 </p>
               </div>
             )}
