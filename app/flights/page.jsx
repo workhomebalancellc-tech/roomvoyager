@@ -666,8 +666,8 @@ function FlightsContent() {
     const slugTo   = toKiwi   || resolveKiwi(to)   || toKiwiSlug(to)   || "";
     let kiwiUrl;
     if (!slugFrom && !slugTo) {
-      // Nothing resolved — send to Kiwi homepage
-      kiwiUrl = "https://www.kiwi.com/en/";
+      // Nothing resolved — send to Kiwi results with open-ended search
+      kiwiUrl = "https://www.kiwi.com/en/search/results/anywhere/anywhere/anytime/no-return/";
     } else {
       // Build direct results URL so TravelPayouts affiliate cookie fires on the right
       // page and isn't lost when Kiwi navigates from its landing page to /search/results/
@@ -703,7 +703,7 @@ function FlightsContent() {
       }).catch(() => {}); // never block navigation
     }
 
-    window.open(dest, "_blank");
+    window.location.href = dest;
   }
 
   function pickDest(dest) {

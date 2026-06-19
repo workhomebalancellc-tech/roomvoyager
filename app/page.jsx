@@ -367,7 +367,7 @@ export default function HomePage() {
             />
             {/* Email gate — sits on top of widget for guests */}
             {!authLoading && !widgetUnlocked && (
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #001E64ee 0%, #003B95ee 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px", backdropFilter: "blur(4px)" }}>
+              <div style={{ position: "absolute", inset: "-8px", background: "linear-gradient(135deg, #001E64ee 0%, #003B95ee 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px", backdropFilter: "blur(4px)", borderRadius: "16px" }}>
                 <div style={{ fontSize: "32px", marginBottom: "8px" }}>🏆</div>
                 <p style={{ color: "#fff", fontWeight: "800", fontSize: "17px", margin: "0 0 4px", textAlign: "center" }}>Enter your email to search</p>
                 <p style={{ color: "#BFDBFE", fontSize: "12px", margin: "0 0 16px", textAlign: "center" }}>Earn 5 pts per $1 — redeemable for cash back</p>
@@ -379,7 +379,7 @@ export default function HomePage() {
                     placeholder="you@example.com"
                     value={widgetEmail}
                     onChange={e => setWidgetEmail(e.target.value)}
-                    style={{ width: "100%", padding: "12px 14px", fontSize: "14px", borderRadius: "9px", border: "none", outline: "none", boxSizing: "border-box", fontFamily: "system-ui, sans-serif" }}
+                    style={{ width: "100%", padding: "12px 14px", fontSize: "14px", borderRadius: "9px", border: "2px solid rgba(255,255,255,0.4)", outline: "none", boxSizing: "border-box", fontFamily: "system-ui, sans-serif", background: "#fff", color: "#111827" }}
                   />
                   <button type="submit" style={{ width: "100%", padding: "12px", background: "#FF6600", color: "#fff", border: "none", borderRadius: "9px", fontSize: "14px", fontWeight: "800", cursor: "pointer" }}>
                     Search Hotels →

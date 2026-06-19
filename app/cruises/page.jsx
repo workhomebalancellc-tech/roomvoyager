@@ -143,7 +143,7 @@ function CruiseboundSearchInner() {
     if (mo.firstDay) { params.set("firstDepartDate", mo.firstDay); params.set("lastDepartDate", mo.lastDay); }
     const searchUrl = `https://www.cruisebound.com/Searches?${params.toString()}`;
     const affiliateUrl = `${CB_AFFILIATE}?u=${encodeURIComponent(searchUrl)}`;
-    window.location.href = `/redirect?to=${encodeURIComponent(affiliateUrl)}&partner=Cruisebound&product=cruise`;
+    window.open(`/redirect?to=${encodeURIComponent(affiliateUrl)}&partner=Cruisebound&product=cruise`, "_blank", "noopener,noreferrer");
   }
 
   const inp = { width: "100%", padding: "10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", boxSizing: "border-box", outline: "none", cursor: "pointer", height: "42px" };
