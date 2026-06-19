@@ -2279,6 +2279,31 @@ export default function AdminDashboard() {
           ))}
         </div>
 
+        {/* AIRTABLE TABLES REFERENCE */}
+        <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px", marginBottom: "20px" }}>
+          <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>📋 Airtable Tables Reference</p>
+          <p style={{ fontSize: "11px", color: "#EF4444", fontWeight: "600", margin: "0 0 14px" }}>⚠️ Do not rename these in Airtable — names are hardcoded in the site API</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            {[
+              { table: "Link Clicks",              when: "Automatically on every redirect page visit", what: "Every click to Expedia, Kiwi, or Cruisebound — captures email, partner, product, timestamp" },
+              { table: "Bookings",                 when: "When you parse the Expedia CSV in admin", what: "Confirmed hotel/flight bookings imported from Expedia or logged manually" },
+              { table: "Booking Review Requests",  when: "When admin awards points with no auto-match", what: "Bookings flagged for manual points review (no matching click found within 72hrs)" },
+              { table: "Redemptions",              when: "When a member submits a cash-out request", what: "Points redemption requests — amount, method (Zelle/Cash App/Venmo), status" },
+              { table: "Quotes",                   when: "When a visitor submits the quote form", what: "Travel quote requests from the site" },
+              { table: "Phone Call Requests",      when: "When a visitor requests a call-back", what: "Call-back requests submitted through the site" },
+              { table: "Contact Messages",         when: "When a visitor submits the contact form", what: "General contact form submissions" },
+            ].map((row, i) => (
+              <div key={i} style={{ display: "flex", gap: "12px", alignItems: "flex-start", background: "#F8FAFF", borderRadius: "8px", padding: "10px 14px" }}>
+                <div style={{ minWidth: "180px" }}>
+                  <p style={{ fontSize: "12px", fontWeight: "800", color: NAVY, margin: 0 }}>{row.table}</p>
+                  <p style={{ fontSize: "10px", color: ORANGE, fontWeight: "600", margin: "2px 0 0" }}>Written: {row.when}</p>
+                </div>
+                <p style={{ fontSize: "11px", color: "#6B7280", margin: 0, lineHeight: 1.5 }}>{row.what}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* RATES REFERENCE */}
         <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
           <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 14px" }}>📊 Program Rates At-a-Glance</p>
