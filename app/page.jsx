@@ -282,8 +282,9 @@ function NewsletterPopup() {
 export default function HomePage() {
   const { user, loading: authLoading } = useAuth();
   const [isMobile, setIsMobile] = useState(false);
-  const [widgetEmail, setWidgetEmail]     = useState("");
+  const [widgetEmail, setWidgetEmail]       = useState("");
   const [widgetUnlocked, setWidgetUnlocked] = useState(false);
+  const [widgetHovered, setWidgetHovered]   = useState(false);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
@@ -358,7 +359,11 @@ export default function HomePage() {
           </div>
 
           {/* Expedia widget + email gate overlay */}
-          <div style={{ width: "475px", maxWidth: "100%", borderRadius: "16px", overflow: "hidden", boxShadow: "0 16px 56px rgba(0,0,0,0.5)", position: "relative" }}>
+          <div
+            style={{ width: "475px", maxWidth: "100%", borderRadius: "16px", overflow: "hidden", boxShadow: "0 16px 56px rgba(0,0,0,0.5)", position: "relative" }}
+            onMouseEnter={() => { if (!widgetUnlocked) setWidgetHovered(true); }}
+            onMouseLeave={() => setWidgetHovered(false)}
+          >
             <iframe
               src="/hotel-search.html?v=5"
               title="Hotel Search"
@@ -366,7 +371,7 @@ export default function HomePage() {
               style={{ border: "none", width: "100%", height: "285px", display: "block" }}
             />
             {/* Email gate — sits on top of widget for guests */}
-            {!authLoading && !widgetUnlocked && (
+            {!authLoading && !widgetUnlocked && widgetHovered && (
               <div style={{ position: "absolute", inset: "-8px", background: "linear-gradient(135deg, #001E64ee 0%, #003B95ee 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px", backdropFilter: "blur(4px)", borderRadius: "16px" }}>
                 <div style={{ fontSize: "32px", marginBottom: "8px" }}>🏆</div>
                 <p style={{ color: "#fff", fontWeight: "800", fontSize: "17px", margin: "0 0 4px", textAlign: "center" }}>Enter your email to search</p>
