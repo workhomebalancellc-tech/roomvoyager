@@ -279,83 +279,6 @@ function NewsletterPopup() {
   );
 }
 
-function HotelSearchForm() {
-  const today     = new Date();
-  const tomorrow  = new Date(today); tomorrow.setDate(today.getDate() + 1);
-  const nextWeek  = new Date(today); nextWeek.setDate(today.getDate() + 7);
-  const fmt = (d) => d.toISOString().split("T")[0];
-
-  const [dest,     setDest]     = useState("");
-  const [checkIn,  setCheckIn]  = useState(fmt(tomorrow));
-  const [checkOut, setCheckOut] = useState(fmt(nextWeek));
-  const [rooms,    setRooms]    = useState("1");
-  const [adults,   setAdults]   = useState("2");
-
-  function handleSearch(e) {
-    e.preventDefault();
-    if (!dest.trim()) return;
-    const url = new URL("https://www.expedia.com/Hotel-Search");
-    url.searchParams.set("destination", dest.trim());
-    url.searchParams.set("startDate",   checkIn);
-    url.searchParams.set("endDate",     checkOut);
-    url.searchParams.set("adults",      adults);
-    url.searchParams.set("rooms",       rooms);
-    url.searchParams.set("camref",      "1110l8R3Z");
-    window.location.href = `/redirect?to=${encodeURIComponent(url.toString())}&partner=Expedia&product=hotel`;
-  }
-
-  const inp = {
-    width: "100%", padding: "11px 13px", fontSize: "14px", border: "none",
-    borderRadius: "8px", outline: "none", background: "#fff", color: "#111827",
-    boxSizing: "border-box", fontFamily: "system-ui, sans-serif",
-  };
-  const label = { fontSize: "11px", fontWeight: "700", color: "rgba(255,255,255,0.75)", textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: "5px", textAlign: "left" };
-
-  return (
-    <form onSubmit={handleSearch} style={{ width: "500px", maxWidth: "100%", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(12px)", borderRadius: "16px", padding: "20px", boxShadow: "0 16px 56px rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.18)" }}>
-      <div style={{ marginBottom: "12px" }}>
-        <label style={label}>Where to?</label>
-        <input
-          style={{ ...inp, fontSize: "15px", padding: "13px 14px" }}
-          type="text"
-          placeholder="City, hotel, or destination"
-          value={dest}
-          onChange={e => setDest(e.target.value)}
-          required
-          autoComplete="off"
-        />
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "12px" }}>
-        <div>
-          <label style={label}>Check-in</label>
-          <input style={inp} type="date" value={checkIn} min={fmt(tomorrow)} onChange={e => setCheckIn(e.target.value)} required />
-        </div>
-        <div>
-          <label style={label}>Check-out</label>
-          <input style={inp} type="date" value={checkOut} min={checkIn} onChange={e => setCheckOut(e.target.value)} required />
-        </div>
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "16px" }}>
-        <div>
-          <label style={label}>Rooms</label>
-          <select style={inp} value={rooms} onChange={e => setRooms(e.target.value)}>
-            {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} Room{n > 1 ? "s" : ""}</option>)}
-          </select>
-        </div>
-        <div>
-          <label style={label}>Guests</label>
-          <select style={inp} value={adults} onChange={e => setAdults(e.target.value)}>
-            {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} Guest{n > 1 ? "s" : ""}</option>)}
-          </select>
-        </div>
-      </div>
-      <button type="submit" style={{ width: "100%", padding: "14px", background: "#FF6600", color: "#fff", border: "none", borderRadius: "10px", fontSize: "16px", fontWeight: "800", cursor: "pointer", boxShadow: "0 4px 16px rgba(255,102,0,0.45)", letterSpacing: "0.01em" }}>
-        🔍 Search Hotels
-      </button>
-    </form>
-  );
-}
-
 export default function HomePage() {
   const { user } = useAuth();
   const [isMobile, setIsMobile] = useState(false);
@@ -409,8 +332,15 @@ export default function HomePage() {
             </a>
           </div>
 
-          {/* Hotel search form */}
-          <HotelSearchForm />
+          {/* Expedia widget */}
+          <div style={{ width: "475px", maxWidth: "100%", borderRadius: "16px", overflow: "hidden", boxShadow: "0 16px 56px rgba(0,0,0,0.5)" }}>
+            <iframe
+              src="/hotel-search.html?v=5"
+              title="Hotel Search"
+              scrolling="no"
+              style={{ border: "none", width: "100%", height: "285px", display: "block" }}
+            />
+          </div>
 
           {/* Fade into trust bar */}
           <div style={{ height: "36px" }} />
