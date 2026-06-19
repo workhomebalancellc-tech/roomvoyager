@@ -18,41 +18,31 @@ const PRODUCT_META = {
 const COUNTDOWN_SECS = 5;
 
 function RedirectContent() {
-  const params                  = useSearchParams();
-  const { user, loading: authLoading } = useAuth();
+  const params               = useSearchParams();
+  const { user, loading }    = useAuth();
 
-  const to       = params.get("to")      || "";
-  const partner  = params.get("partner") || "Our Partner";
-  const product  = params.get("product") || "cruise";
-  const amount   = parseInt(params.get("amount") || "0", 10); // optional estimated pts
+  const to      = params.get("to")      || "";
+  const partner = params.get("partner") || "Our Partner";
+  const product = params.get("product") || "hotel";
+  const amount  = parseInt(params.get("amount") || "0", 10);
 
-  const meta     = PRODUCT_META[product] || PRODUCT_META.cruise;
-  const estPts   = amount ? amount * (meta.ptsDbl ?? meta.ptsStd) : null;
+  const meta   = PRODUCT_META[product] || PRODUCT_META.hotel;
+  const estPts = amount ? amount * (meta.ptsDbl ?? meta.ptsStd) : null;
 
-  const [count,       setCount]       = useState(COUNTDOWN_SECS);
-  const [gone,        setGone]        = useState(false);
-  const [logged,      setLogged]      = useState(false);
-  const [emailInput,  setEmailInput]  = useState("");
-  const [emailReady,  setEmailReady]  = useState(false);
-  const loggedRef = useRef(false);
+  const [emailInput, setEmailInput] = useState("");
+  const [emailReady, setEmailReady] = useState(false);
+  const [count,      setCount]      = useState(COUNTDOWN_SECS);
+  const [gone,       setGone]       = useState(false);
+  const loggedRef                   = useRef(false);
 
-  const resolvedEmail = user?.email || emailInput || "Guest";
-  const resolvedName  = user?.name  || "";
-
-  // Once auth finishes loading, if user is logged in, skip the email gate
+  // Once auth resolves: if user is logged in, mark email ready automatically
   useEffect(() => {
-    if (!authLoading && user?.email) {
+    if (!loading && user?.email) {
       setEmailReady(true);
     }
-  }, [authLoading, user]);
+  }, [loading, user]);
 
-  function handleEmailSubmit(e) {
-    e && e.preventDefault();
-    if (!emailInput.trim()) return;
-    setEmailReady(true);
-  }
-
-  // Log click to Airtable once (after email is ready)
+  // Log to Airtable once emailReady is true
   useEffect(() => {
     if (!to || !emailReady || loggedRef.current) return;
     loggedRef.current = true;
@@ -63,15 +53,13 @@ function RedirectContent() {
         partner,
         product,
         url:       to,
-        userEmail: resolvedEmail,
-        userName:  resolvedName,
+        userEmail: user?.email || emailInput || "Guest",
+        userName:  user?.name  || "",
       }),
-    })
-      .then(() => setLogged(true))
-      .catch(() => setLogged(true));
-  }, [to, partner, product, emailReady, resolvedEmail, resolvedName]);
+    }).catch(() => {});
+  }, [to, emailReady]);
 
-  // Countdown — only starts after email step is done
+  // Countdown — only starts after emailReady
   useEffect(() => {
     if (!to || !emailReady) return;
     const t = setInterval(() => {
@@ -93,26 +81,43 @@ function RedirectContent() {
     window.location.href = to;
   }
 
-  // Wait for Firebase to resolve before deciding which screen to show
-  if (authLoading) {
+  function handleEmailSubmit(e) {
+    e.preventDefault();
+    if (!emailInput.trim()) return;
+    setEmailReady(true);
+  }
+
+  // ── No destination ──────────────────────────────────────────────────────
+  if (!to) {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#F8FAFF" }}>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "48px", marginBottom: "16px" }}>✈️</div>
-          <p style={{ fontSize: "16px", color: "#6B7280", fontFamily: "system-ui, sans-serif" }}>Loading…</p>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#F8FAFF", fontFamily: "system-ui, sans-serif" }}>
+        <div style={{ textAlign: "center", padding: "40px" }}>
+          <p style={{ fontSize: "40px", margin: "0 0 16px" }}>⚠️</p>
+          <p style={{ fontSize: "18px", fontWeight: "700", color: "#111827" }}>No destination provided.</p>
+          <a href="/" style={{ color: NAVY, fontSize: "14px" }}>← Back to RoomVoyager</a>
         </div>
       </div>
     );
   }
 
-  // Email capture gate — shown to guests before countdown
+  // ── Auth loading spinner ────────────────────────────────────────────────
+  if (loading) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#F8FAFF", fontFamily: "system-ui, sans-serif" }}>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: "48px", marginBottom: "16px" }}>✈️</div>
+          <p style={{ fontSize: "16px", color: "#6B7280" }}>Loading…</p>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Email capture gate (guests only) ───────────────────────────────────
   if (!user && !emailReady) {
     return (
       <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
         <div style={{ background: NAVY, padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <a href="/" style={{ fontSize: "18px", fontWeight: "800", color: "#fff", textDecoration: "none" }}>
-            Room<span style={{ color: ORANGE }}>Voyager</span>
-          </a>
+          <a href="/" style={{ fontSize: "18px", fontWeight: "800", color: "#fff", textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
           <span style={{ fontSize: "12px", color: "#93C5FD" }}>Secure redirect</span>
         </div>
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "32px 16px" }}>
@@ -131,11 +136,11 @@ function RedirectContent() {
               <input
                 type="email"
                 required
+                autoFocus
                 placeholder="you@example.com"
                 value={emailInput}
                 onChange={e => setEmailInput(e.target.value)}
                 style={{ width: "100%", padding: "13px 14px", fontSize: "15px", border: "1.5px solid #D1D5DB", borderRadius: "10px", outline: "none", marginBottom: "14px", boxSizing: "border-box", fontFamily: "system-ui, sans-serif" }}
-                autoFocus
               />
               <button
                 type="submit"
@@ -154,51 +159,26 @@ function RedirectContent() {
     );
   }
 
-  if (!to) {
-    return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "system-ui, sans-serif", background: "#F8FAFF" }}>
-        <div style={{ textAlign: "center", padding: "40px" }}>
-          <p style={{ fontSize: "40px", margin: "0 0 16px" }}>⚠️</p>
-          <p style={{ fontSize: "18px", fontWeight: "700", color: "#111827" }}>No destination provided.</p>
-          <a href="/" style={{ color: NAVY, fontSize: "14px" }}>← Back to RoomVoyager</a>
-        </div>
-      </div>
-    );
-  }
-
-  const circumference = 2 * Math.PI * 22; // r=22
-  const progress = ((COUNTDOWN_SECS - count) / COUNTDOWN_SECS) * circumference;
-
+  // ── Countdown / redirect page ───────────────────────────────────────────
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
 
-      {/* Top bar */}
       <div style={{ background: NAVY, padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <a href="/" style={{ fontSize: "18px", fontWeight: "800", color: "#fff", textDecoration: "none" }}>
-          Room<span style={{ color: ORANGE }}>Voyager</span>
-        </a>
+        <a href="/" style={{ fontSize: "18px", fontWeight: "800", color: "#fff", textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
         <span style={{ fontSize: "12px", color: "#93C5FD" }}>Secure redirect</span>
       </div>
 
-      {/* Card */}
       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "32px 16px" }}>
         <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 8px 40px rgba(0,0,0,0.10)", maxWidth: "440px", width: "100%", overflow: "hidden" }}>
 
-          {/* Illustration band */}
           <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${meta.color} 100%)`, padding: "32px 24px 28px", textAlign: "center" }}>
             <div style={{ fontSize: "56px", lineHeight: 1, marginBottom: "12px" }}>{meta.icon}</div>
-            <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: "0 0 4px" }}>
-              You're heading to {partner}
-            </p>
-            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "14px", margin: 0 }}>
-              RoomVoyager never adds fees to your booking
-            </p>
+            <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: "0 0 4px" }}>You're heading to {partner}</p>
+            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "14px", margin: 0 }}>RoomVoyager never adds fees to your booking</p>
           </div>
 
-          {/* Body */}
           <div style={{ padding: "28px 24px" }}>
 
-            {/* Trust bullets */}
             <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "24px" }}>
               {[
                 ["✅", "We searched the best available rates for you"],
@@ -212,18 +192,13 @@ function RedirectContent() {
               ))}
             </div>
 
-            {/* Points earned badge */}
             {estPts ? (
               <div style={{ background: "#FFF7ED", border: `1.5px solid ${ORANGE}40`, borderRadius: "12px", padding: "14px 16px", display: "flex", gap: "12px", alignItems: "center", marginBottom: "24px" }}>
                 <span style={{ fontSize: "24px" }}>🎉</span>
                 <div>
                   <p style={{ fontSize: "12px", fontWeight: "700", color: ORANGE, margin: "0 0 2px", textTransform: "uppercase" }}>Points you'll earn</p>
-                  <p style={{ fontSize: "20px", fontWeight: "800", color: NAVY, margin: "0 0 2px" }}>
-                    {estPts.toLocaleString()} pts
-                  </p>
-                  <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>
-                    = ${(estPts / 1000).toFixed(2)} cash back · available 45 days after travel
-                  </p>
+                  <p style={{ fontSize: "20px", fontWeight: "800", color: NAVY, margin: "0 0 2px" }}>{estPts.toLocaleString()} pts</p>
+                  <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>= ${(estPts / 1000).toFixed(2)} cash back · available 45 days after travel</p>
                 </div>
               </div>
             ) : (
@@ -240,12 +215,12 @@ function RedirectContent() {
               </div>
             )}
 
-            {/* Continue button + countdown */}
             <button
               onClick={goNow}
               disabled={gone}
               style={{
-                width: "100%", padding: "15px 24px", background: gone ? "#D1D5DB" : NAVY,
+                width: "100%", padding: "15px 24px",
+                background: gone ? "#D1D5DB" : NAVY,
                 color: "#fff", border: "none", borderRadius: "12px", fontSize: "16px",
                 fontWeight: "700", cursor: gone ? "default" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
@@ -256,7 +231,6 @@ function RedirectContent() {
                 <span>Redirecting…</span>
               ) : (
                 <>
-                  {/* Circular countdown */}
                   <svg width="28" height="28" style={{ transform: "rotate(-90deg)", flexShrink: 0 }}>
                     <circle cx="14" cy="14" r="11" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="2.5" />
                     <circle cx="14" cy="14" r="11" fill="none" stroke="#fff" strokeWidth="2.5"
@@ -281,7 +255,6 @@ function RedirectContent() {
         </div>
       </div>
 
-      {/* Footer */}
       <div style={{ padding: "16px 24px", textAlign: "center", borderTop: "1px solid #E5E7EB" }}>
         <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0 }}>
           RoomVoyager is your trusted travel partner. We may earn a commission when you book through our links — at no extra cost to you.{" "}
