@@ -291,7 +291,7 @@ export default function HomePage() {
 
   function openDest(destName) {
     const expediaUrl = `https://www.expedia.com/Hotel-Search?destination=${encodeURIComponent(destName)}&camref=1110l8R3Z`;
-    window.open(`/redirect?to=${encodeURIComponent(expediaUrl)}&partner=Expedia&product=hotel`, "_blank", "noopener,noreferrer");
+    window.location.href = `/redirect?to=${encodeURIComponent(expediaUrl)}&partner=Expedia&product=hotel`;
   }
 
   const hotelDestinations = [
