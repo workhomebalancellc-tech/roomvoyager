@@ -14,7 +14,7 @@ const HOTELS = [
     name: "Luxor Hotel & Casino",
     emoji: "🔺",
     vibe: "Best value on the Strip",
-    price: "From $69/night",
+    price: "From $99/night",
     photo: "/luxor1.jpg",
     blurb: "The iconic pyramid is Vegas's best-kept budget secret. You're right in the middle of the Strip, steps from MGM and Mandalay Bay, with a massive casino floor, multiple restaurants, and rooms that punch way above their price point. If you want the full Vegas experience without the luxury hotel bill, this is your spot.",
     perks: ["Center Strip location", "Large casino floor", "Multiple dining options", "Easy tram access"],
@@ -24,7 +24,7 @@ const HOTELS = [
     name: "Fontainebleau Las Vegas",
     emoji: "✨",
     vibe: "New luxury on the Strip",
-    price: "From $199/night",
+    price: "From $475/night",
     photo: "/Fontainebleau1.jpg",
     blurb: "Opened in 2023, Fontainebleau is the freshest thing on the Strip. 67 floors of panoramic views, a world-class pool complex, celebrity chef restaurants, and nightlife that rivals any Vegas staple. If you're celebrating or just ready to splurge, there's no better address in the city right now.",
     perks: ["67-story tower with Strip views", "Massive pool complex", "Celebrity chef dining", "Premium spa & nightlife"],
@@ -58,7 +58,7 @@ export default function LasVegasDealsPage() {
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
             <p style={{ color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🔥 Deal of the Week</p>
             <h1 style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 46px)", fontWeight: "800", margin: "0 0 10px", textShadow: "0 2px 14px rgba(0,0,0,0.4)" }}>Las Vegas</h1>
-            <p style={{ color: "#BFDBFE", fontSize: "15px", margin: 0 }}>Two ways to do Vegas — budget icon or luxury newcomer.</p>
+            <p style={{ color: "#BFDBFE", fontSize: "15px", margin: 0 }}>4th of July weekend on the Strip — book now before prices jump.</p>
           </div>
         </div>
 
@@ -75,7 +75,7 @@ export default function LasVegasDealsPage() {
               Luxor vs. Fontainebleau — Two Ways to Do Vegas
             </h2>
             <p style={{ fontSize: "15px", color: "#6B7280", lineHeight: 1.75, margin: 0 }}>
-              Whether you're watching your budget or ready to go all out, Las Vegas has you covered this week. We're spotlighting two Strip hotels at opposite ends of the spectrum — both worth booking right now.
+              4th of July weekend in Vegas is a different animal — fireworks over the Strip, packed pools, and energy like nowhere else. We're spotlighting two hotels at opposite ends of the budget so you can celebrate your way.
             </p>
           </div>
 
