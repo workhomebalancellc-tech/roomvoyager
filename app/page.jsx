@@ -361,8 +361,7 @@ export default function HomePage() {
           {/* Expedia widget + email gate overlay */}
           <div
             style={{ width: "475px", maxWidth: "100%", borderRadius: "16px", overflow: "hidden", boxShadow: "0 16px 56px rgba(0,0,0,0.5)", position: "relative" }}
-            onMouseEnter={() => { if (!widgetUnlocked) setWidgetHovered(true); }}
-            onMouseLeave={() => setWidgetHovered(false)}
+            onMouseLeave={() => { if (!widgetEmail) setWidgetHovered(false); }}
           >
             <iframe
               src="/hotel-search.html?v=5"
@@ -370,6 +369,14 @@ export default function HomePage() {
               scrolling="no"
               style={{ border: "none", width: "100%", height: "285px", display: "block" }}
             />
+            {/* Transparent tap/hover catcher — intercepts interaction for locked users */}
+            {!authLoading && !widgetUnlocked && !widgetHovered && (
+              <div
+                style={{ position: "absolute", inset: 0, cursor: "pointer", zIndex: 1 }}
+                onClick={() => setWidgetHovered(true)}
+                onMouseEnter={() => setWidgetHovered(true)}
+              />
+            )}
             {/* Email gate — sits on top of widget for guests */}
             {!authLoading && !widgetUnlocked && widgetHovered && (
               <div style={{ position: "absolute", inset: "-8px", background: "linear-gradient(135deg, #001E64ee 0%, #003B95ee 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px", backdropFilter: "blur(4px)", borderRadius: "16px" }}>
