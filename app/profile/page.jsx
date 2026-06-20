@@ -137,7 +137,7 @@ export default function ProfilePage() {
   }
 
   /* ── review request ── */
-  const EMPTY_REVIEW = { product: "", dateBooked: "", nights: "", destination: "", amount: "", reference: "", comment: "" };
+  const EMPTY_REVIEW = { product: "", dateBooked: "", nights: "", destination: "", amount: "", reference: "", comment: "", email: "" };
   const [reviewOpen, setReviewOpen]       = useState(false);
   const [reviewForm, setReviewForm]       = useState(EMPTY_REVIEW);
   const [reviewSent, setReviewSent]       = useState(false);
@@ -220,7 +220,7 @@ export default function ProfilePage() {
         body: JSON.stringify({
           action:      "review_request",
           uid:         user.uid,
-          email:       user.email,
+          email:       reviewForm.email || user.email,
           name:        user.name || user.email,
           message:     details,
           product:     reviewForm.product,
@@ -670,7 +670,7 @@ export default function ProfilePage() {
                 <p style={{ fontSize: "11px", fontWeight: "700", color: ORANGE, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 2px" }}>🗂️ Travel History</p>
                 <h2 style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: 0 }}>My Bookings</h2>
               </div>
-              <button onClick={() => { setReviewOpen(true); setReviewSent(false); setReviewForm(EMPTY_REVIEW); }}
+              <button onClick={() => { setReviewOpen(true); setReviewSent(false); setReviewForm({ ...EMPTY_REVIEW, email: user?.email || "" }); }}
                 style={{ background: "#FFF7ED", color: ORANGE, border: `1.5px solid #FDDCCA`, borderRadius: "10px", padding: "10px 18px", fontSize: "13px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
                 📋 Request Booking Review
               </button>
@@ -716,6 +716,14 @@ export default function ProfilePage() {
                             onChange={e => setReviewForm(f => ({ ...f, dateBooked: e.target.value }))}
                             style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
                         </div>
+                      </div>
+
+                      {/* Email used to book */}
+                      <div>
+                        <label style={{ display: "block", fontSize: "12px", fontWeight: "600", color: "#374151", marginBottom: "5px" }}>Email you used to book the trip <span style={{ color: ORANGE }}>*</span></label>
+                        <input required type="email" placeholder="e.g. you@email.com" value={reviewForm.email}
+                          onChange={e => setReviewForm(f => ({ ...f, email: e.target.value }))}
+                          style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "14px", outline: "none", boxSizing: "border-box" }} />
                       </div>
 
                       {/* Row 2: Destination + Nights (conditional) */}
@@ -799,7 +807,7 @@ export default function ProfilePage() {
                 <p style={{ fontWeight: "700", color: "#111827", margin: "0 0 6px", fontSize: "16px" }}>No bookings on file yet</p>
                 <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 8px" }}>Booked a trip through RoomVoyager? Your booking confirmation and points will appear here once verified.</p>
                 <p style={{ fontSize: "13px", color: "#6B7280", margin: "0 0 20px" }}>If it's been more than 7 days and you don't see your booking, request a review below.</p>
-                <button onClick={() => { setReviewOpen(true); setReviewSent(false); setReviewForm(EMPTY_REVIEW); }}
+                <button onClick={() => { setReviewOpen(true); setReviewSent(false); setReviewForm({ ...EMPTY_REVIEW, email: user?.email || "" }); }}
                   style={{ background: ORANGE, color: "#fff", border: "none", borderRadius: "10px", padding: "11px 24px", fontSize: "14px", fontWeight: "700", cursor: "pointer" }}>
                   📋 Request Booking Review
                 </button>
