@@ -404,6 +404,15 @@ export default function RewardsPage() {
                 Sign in
               </a>
             </div>
+            {/* Quick-stats row for new visitors */}
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", justifyContent: "center", marginTop: "24px" }}>
+              {[["5 pts / $1", "on flights & hotels"], ["10 pts / $1", "on cruises"], ["10,000 pts", "= $10 cash"], ["Paid via", "Zelle · CashApp · Venmo"]].map(([val, label], i) => (
+                <div key={i} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "10px", padding: "10px 16px", textAlign: "center", minWidth: "120px" }}>
+                  <p style={{ color: "#fff", fontWeight: "800", fontSize: "15px", margin: "0 0 2px" }}>{val}</p>
+                  <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "600", margin: 0 }}>{label}</p>
+                </div>
+              ))}
+            </div>
           )}
         </div>
       </div>
