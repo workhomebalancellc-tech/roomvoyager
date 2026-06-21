@@ -396,23 +396,25 @@ export default function RewardsPage() {
               </div>
             </div>
           ) : (
-            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
-              <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
-                Join Rewards free →
-              </a>
-              <a href="/account/signin?callbackUrl=/rewards" style={{ background: "rgba(255,255,255,0.15)", color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "600", textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)" }}>
-                Sign in
-              </a>
-            </div>
-            {/* Quick-stats row for new visitors */}
-            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", justifyContent: "center", marginTop: "24px" }}>
-              {[["5 pts / $1", "on flights & hotels"], ["10 pts / $1", "on cruises"], ["10,000 pts", "= $10 cash"], ["Paid via", "Zelle · CashApp · Venmo"]].map(([val, label], i) => (
-                <div key={i} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "10px", padding: "10px 16px", textAlign: "center", minWidth: "120px" }}>
-                  <p style={{ color: "#fff", fontWeight: "800", fontSize: "15px", margin: "0 0 2px" }}>{val}</p>
-                  <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "600", margin: 0 }}>{label}</p>
-                </div>
-              ))}
-            </div>
+            <>
+              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
+                <a href="/account/signup" style={{ background: ORANGE, color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
+                  Join Rewards free →
+                </a>
+                <a href="/account/signin?callbackUrl=/rewards" style={{ background: "rgba(255,255,255,0.15)", color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "600", textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)" }}>
+                  Sign in
+                </a>
+              </div>
+              {/* Quick-stats row for new visitors */}
+              <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", justifyContent: "center", marginTop: "24px" }}>
+                {[["5 pts / $1", "on flights & hotels"], ["10 pts / $1", "on cruises"], ["10,000 pts", "= $10 cash"], ["Paid via", "Zelle · CashApp · Venmo"]].map(([val, label], i) => (
+                  <div key={i} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "10px", padding: "10px 16px", textAlign: "center", minWidth: "120px" }}>
+                    <p style={{ color: "#fff", fontWeight: "800", fontSize: "15px", margin: "0 0 2px" }}>{val}</p>
+                    <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "600", margin: 0 }}>{label}</p>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </div>
