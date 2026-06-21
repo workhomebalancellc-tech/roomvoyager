@@ -428,7 +428,7 @@ export default function RewardsPage() {
             <video
               controls
               style={{ width: "100%", height: "100%", position: "absolute", inset: 0, objectFit: "cover", borderRadius: "16px" }}
-              src="/Final_RoomVoyagerRewardsVideo.mp4"
+              src="/Final_RoomVoyagerRewardsVideo.mp4?v=2"
             >
               Your browser does not support the video tag.
             </video>
