@@ -285,11 +285,26 @@ export default function HomePage() {
   const [widgetEmail, setWidgetEmail]       = useState("");
   const [widgetUnlocked, setWidgetUnlocked] = useState(false);
   const [widgetHovered, setWidgetHovered]   = useState(false);
+  const [isSafari, setIsSafari]             = useState(false);
+  const [widgetHeight, setWidgetHeight]     = useState(285);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
     window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    // Detect Safari (includes iOS Safari)
+    const ua = navigator.userAgent;
+    setIsSafari(/^((?!chrome|android).)*safari/i.test(ua));
+    // Listen for widget height from iframe postMessage
+    function onMessage(e) {
+      if (e.data && e.data.egWidgetHeight) {
+        setWidgetHeight(e.data.egWidgetHeight + 20); // +20px buffer so button never clips
+      }
+    }
+    window.addEventListener("message", onMessage);
+    return () => {
+      window.removeEventListener("resize", check);
+      window.removeEventListener("message", onMessage);
+    };
   }, []);
 
   // Auto-unlock widget once auth resolves for logged-in users
@@ -367,7 +382,8 @@ export default function HomePage() {
               src="/hotel-search.html?v=5"
               title="Hotel Search"
               scrolling="no"
-              style={{ border: "none", width: "100%", height: "285px", display: "block" }}
+              allow="popups"
+              style={{ border: "none", width: "100%", height: `${widgetHeight}px`, display: "block" }}
             />
             {/* Transparent tap/hover catcher — intercepts interaction for locked users */}
             {!authLoading && !widgetUnlocked && !widgetHovered && (
@@ -406,6 +422,18 @@ export default function HomePage() {
               </div>
             )}
           </div>
+
+          {/* Safari popup warning */}
+          {isSafari && widgetUnlocked && (
+            <div style={{ marginTop: "10px", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: "10px", padding: "10px 16px", display: "flex", alignItems: "center", gap: "10px", maxWidth: "475px", width: "100%", boxSizing: "border-box" }}>
+              <span style={{ fontSize: "18px", flexShrink: 0 }}>⚠️</span>
+              <p style={{ color: "#BFDBFE", fontSize: "12px", margin: 0, lineHeight: 1.5 }}>
+                <strong style={{ color: "#fff" }}>Using Safari?</strong> If search results don't open, go to{" "}
+                <strong style={{ color: "#fff" }}>Settings → Safari</strong> and turn off{" "}
+                <strong style={{ color: "#fff" }}>Block Pop-ups</strong>.
+              </p>
+            </div>
+          )}
 
           {/* Fade into trust bar */}
           <div style={{ height: "36px" }} />
