@@ -297,7 +297,9 @@ export default function HomePage() {
     // Listen for widget height from iframe postMessage
     function onMessage(e) {
       if (e.data && e.data.egWidgetHeight) {
-        setWidgetHeight(e.data.egWidgetHeight + 20); // +20px buffer so button never clips
+        const reported = e.data.egWidgetHeight + 20; // +20px buffer so button never clips
+        const maxH = window.innerWidth < 768 ? 420 : 320; // cap on desktop
+        setWidgetHeight(Math.min(reported, maxH));
       }
     }
     window.addEventListener("message", onMessage);
