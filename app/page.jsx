@@ -309,9 +309,22 @@ export default function HomePage() {
     };
   }, []);
 
-  // Auto-unlock widget once auth resolves for logged-in users
+  // Auto-unlock widget once auth resolves for logged-in users + log to Airtable
   useEffect(() => {
-    if (!authLoading && user?.email) setWidgetUnlocked(true);
+    if (!authLoading && user?.email) {
+      setWidgetUnlocked(true);
+      fetch("/api/link-clicks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          partner:   "Expedia",
+          product:   "hotel",
+          url:       "widget-search",
+          userEmail: user.email,
+          userName:  user.name || "",
+        }),
+      }).catch(() => {});
+    }
   }, [authLoading, user]);
 
   function handleWidgetEmail(e) {
