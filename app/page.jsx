@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -287,6 +287,8 @@ export default function HomePage() {
   const [widgetHovered, setWidgetHovered]   = useState(false);
   const [isSafari, setIsSafari]             = useState(false);
   const [widgetHeight, setWidgetHeight]     = useState(285);
+  const iframeRef                           = useRef(null);
+  const iframeLoadCount                     = useRef(0);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
@@ -309,28 +311,46 @@ export default function HomePage() {
     };
   }, []);
 
-  // Auto-unlock widget once auth resolves for logged-in users + log to Airtable
+  // Auto-unlock widget once auth resolves for logged-in users
   useEffect(() => {
     if (!authLoading && user?.email) {
       setWidgetUnlocked(true);
+    }
+  }, [authLoading, user]);
+
+  // Log to Airtable when user actually clicks Search in the widget (iframe load event)
+  useEffect(() => {
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+
+    function onIframeLoad() {
+      iframeLoadCount.current += 1;
+      // Skip the first load (initial widget render), only log on subsequent loads (Search clicks)
+      if (iframeLoadCount.current < 2) return;
+      const email = user?.email || sessionStorage.getItem("rv_widget_email") || "Guest";
+      const name  = user?.name  || "";
       fetch("/api/link-clicks", {
-        method: "POST",
+        method:  "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           partner:   "Expedia",
           product:   "hotel",
-          url:       "widget-search",
-          userEmail: user.email,
-          userName:  user.name || "",
+          url:       "widget-search-click",
+          userEmail: email,
+          userName:  name,
         }),
       }).catch(() => {});
     }
-  }, [authLoading, user]);
+
+    iframe.addEventListener("load", onIframeLoad);
+    return () => iframe.removeEventListener("load", onIframeLoad);
+  }, [user]);
 
   function handleWidgetEmail(e) {
     e.preventDefault();
     if (!widgetEmail.trim()) return;
     setWidgetUnlocked(true);
+    sessionStorage.setItem("rv_widget_email", widgetEmail.trim());
     // Log to Airtable
     fetch("/api/link-clicks", {
       method: "POST",
@@ -394,6 +414,7 @@ export default function HomePage() {
             onMouseLeave={() => { if (!widgetEmail) setWidgetHovered(false); }}
           >
             <iframe
+              ref={iframeRef}
               src="/hotel-search.html?v=5"
               title="Hotel Search"
               scrolling="no"
