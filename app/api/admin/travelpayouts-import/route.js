@@ -255,6 +255,25 @@ export async function POST(req) {
         matchedAt:     FieldValue.serverTimestamp(),
       });
 
+      // Email customer
+      const siteUrl    = process.env.NEXTAUTH_URL || "https://www.roomvoyagertravel.com";
+      const userSnap   = await adminDb.collection("users").doc(click.uid).get().catch(() => null);
+      const newBalance = userSnap?.data()?.points || pts;
+      await fetch(`${siteUrl}/api/booking-points-notify`, {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email:      click.email,
+          name:       click.name || "",
+          product:    "Flight",
+          amount:     booking.commissionUSD.toFixed(2),
+          pts,
+          cash:       (pts / 1000).toFixed(2),
+          newBalance,
+          notes:      `${click.from || "?"} → ${click.to || "?"} via Kiwi.com`,
+        }),
+      }).catch(e => console.warn("Email notify error:", e));
+
       awarded.push({
         uid:    click.uid,
         email:  click.email,
