@@ -206,42 +206,25 @@ function ManualBookingLog() {
     setSubmitting(true); setResult(null);
 
     try {
-      // 1. Award points server-side
-      const ptRes = await fetch("/api/admin/firestore", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "addPoints", email: form.guestEmail, amount: pts }),
-      });
-      const ptData = await ptRes.json();
-      if (!ptRes.ok) throw new Error(ptData.error || "Points award failed");
-
-      // 2. Log to Airtable
-      await fetch("/api/link-clicks", {
+      const res = await fetch("/api/admin/manual-award", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          partner:   "Manual booking",
-          product:   form.product,
-          url:       "",
-          userEmail: form.guestEmail,
-          userName:  `${preview?.memberName || form.guestEmail} — $${form.amount} ${form.product} — ${pts.toLocaleString()} pts awarded${form.notes ? ` — ${form.notes}` : ""}`,
-        }),
-      });
-
-      // 3. Email customer
-      await fetch("/api/booking-points-notify", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email:      form.guestEmail,
-          name:       preview?.memberName || "",
-          product:    PRODUCT_TYPES.find(p => p.id === form.product)?.label || form.product,
-          amount:     form.amount,
+          adminEmail:   adminEmail,
+          guestEmail:   form.guestEmail,
+          name:         preview?.memberName || "",
+          product:      form.product,
+          productLabel: PRODUCT_TYPES.find(p => p.id === form.product)?.label || form.product,
+          amount:       form.amount,
           pts,
           cash,
-          newBalance: ptData.points,
-          notes:      form.notes,
+          double:       form.double,
+          notes:        form.notes,
         }),
       });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Award failed");
 
-      setResult({ ok: true, pts, name: preview?.memberName || form.guestEmail, newBalance: ptData.points });
+      setResult({ ok: true, pts, name: preview?.memberName || form.guestEmail, newBalance: data.points });
       setForm({ guestEmail: "", product: "cruise", amount: "", double: false, notes: "" });
       setPreview(null);
     } catch (err) {
