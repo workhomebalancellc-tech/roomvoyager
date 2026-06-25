@@ -25,8 +25,8 @@ export async function POST(req) {
         from_name:   "RoomVoyager Rewards",
         from_email:  "roomvoyager@protonmail.com",
         name:        name || "there",
-        pts:         Number(pts).toLocaleString(),
-        notes:       `Great news! You've earned ${Number(pts).toLocaleString()} points ($${cash}) on your recent ${product} booking of $${Number(amount).toFixed(2)} through RoomVoyager.\n\nYour new points balance: ${Number(newBalance).toLocaleString()} pts\n\nPlease note: points may take up to 7 days to appear in your account after your booking is confirmed in our system. If you don't see them after 7 days, reply to this email and we'll look into it.\n\nThank you for booking with RoomVoyager!\n\n${notes ? `Booking notes: ${notes}` : ""}`,
+        pts:         `+${Number(pts).toLocaleString()}`,
+        notes:       `Your RoomVoyager Rewards balance has been updated.\n\nPoints added: +${Number(pts).toLocaleString()} pts\nNew balance: ${Number(newBalance).toLocaleString()} pts\n\nBooking: ${product}${amount ? ` — $${Number(amount).toFixed(2)}` : ""}${notes ? `\nNote: ${notes}` : ""}\n\nPoints may take up to 7 days to appear after your booking is confirmed. If you have questions, reply to this email.\n\nThank you for booking with RoomVoyager!`,
       },
     };
 
