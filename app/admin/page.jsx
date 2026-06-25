@@ -1586,7 +1586,7 @@ function AdminLogin() {
   );
 }
 
-function AwardPoints() {
+function AwardPoints({ adminEmail }) {
   const [email, setEmail]       = useState("");
   const [found, setFound]       = useState(null);
   const [notFound, setNotFound] = useState(false);
@@ -1642,6 +1642,22 @@ function AwardPoints() {
       setFound(prev => ({ ...prev, points: data.points }));
       setStatus(`✅ Done! ${found.name || found.email} now has ${data.points.toLocaleString()} pts.`);
       setAmount("");
+
+      // Fire email + Airtable notification when adding points
+      if (action === "add" && adminEmail) {
+        fetch("/api/admin/manual-award-notify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            adminEmail,
+            guestEmail:   found.email,
+            name:         found.name || "",
+            pts,
+            newBalance:   data.points,
+            notes:        `Manual point adjustment via Award/Adjust form`,
+          }),
+        }).catch(() => {});
+      }
     } else {
       setStatus("❌ " + data.error);
     }
@@ -2326,7 +2342,7 @@ export default function AdminDashboard() {
         {/* MAIN TOOLS GRID */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "20px" }}>
           <CommissionCalc />
-          <ManualBookingLog />
+          <ManualBookingLog adminEmail={user.email} />
         </div>
 
         {/* BOOKING CREATION */}
@@ -2336,7 +2352,7 @@ export default function AdminDashboard() {
 
         {/* POINTS MANAGEMENT */}
         <div style={{ marginBottom: "20px" }}>
-          <AwardPoints />
+          <AwardPoints adminEmail={user.email} />
         </div>
 
         {/* MANAGE BOOKINGS */}
