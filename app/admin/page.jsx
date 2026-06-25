@@ -1643,18 +1643,19 @@ function AwardPoints({ adminEmail }) {
       setStatus(`✅ Done! ${found.name || found.email} now has ${data.points.toLocaleString()} pts.`);
       setAmount("");
 
-      // Fire email + Airtable notification when adding points
-      if (action === "add" && adminEmail) {
+      // Fire email notification for all point changes
+      if (adminEmail) {
+        const actionLabel = action === "add" ? `+${pts.toLocaleString()} pts added` : action === "deduct" ? `-${pts.toLocaleString()} pts removed` : `Balance set to ${data.points.toLocaleString()} pts`;
         fetch("/api/admin/manual-award-notify", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             adminEmail,
-            guestEmail:   found.email,
-            name:         found.name || "",
+            guestEmail: found.email,
+            name:       found.name || "",
             pts,
-            newBalance:   data.points,
-            notes:        `Manual point adjustment via Award/Adjust form`,
+            newBalance: data.points,
+            notes:      actionLabel,
           }),
         }).catch(() => {});
       }

@@ -40,8 +40,8 @@ export async function POST(req) {
           from_name:  "RoomVoyager Rewards",
           from_email: "roomvoyager@protonmail.com",
           name:       name || "there",
-          pts:        `+${Number(pts).toLocaleString()}`,
-          notes:      `Your RoomVoyager Rewards balance has been updated.\n\nPoints added: +${Number(pts).toLocaleString()} pts\nNew balance: ${balance.toLocaleString()} pts\n\n${notes ? `Note: ${notes}` : ""}\n\nThank you for booking with RoomVoyager!`,
+          pts:        Number(pts).toLocaleString(),
+          notes:      `Your RoomVoyager Rewards balance has been updated.\n\n${notes || `Points changed: ${Number(pts).toLocaleString()} pts`}\nNew balance: ${balance.toLocaleString()} pts\n\nThank you for booking with RoomVoyager!`,
         },
       };
 
