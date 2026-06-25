@@ -149,7 +149,7 @@ const PTS_RATES = {
   flight:  { std: 5,  dbl: null },
 };
 
-function ManualBookingLog() {
+function ManualBookingLog({ adminEmail }) {
   const [promoActive, setPromoActive] = useState(false);
   const [form, setForm] = useState({ guestEmail: "", product: "cruise", amount: "", double: false, notes: "" });
 
