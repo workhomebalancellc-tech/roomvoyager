@@ -16,9 +16,10 @@ export async function POST(req) {
     }
 
     const payload = {
-      service_id:  EJ_SERVICE,
-      template_id: EJ_TEMPLATE,
-      user_id:     EJ_PUBLIC,
+      service_id:   EJ_SERVICE,
+      template_id:  EJ_TEMPLATE,
+      user_id:      EJ_PUBLIC,
+      ...(EJ_PRIVATE ? { accessToken: EJ_PRIVATE } : {}),
       template_params: {
         to_email:    email,
         from_name:   "RoomVoyager Rewards",

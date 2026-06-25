@@ -41,32 +41,19 @@ export async function POST(req) {
 
     const updated = (await ref.get()).data().points || 0;
 
-    // ── 2. Log to Airtable ──────────────────────────────────────────────────
-    const siteUrl = process.env.NEXTAUTH_URL || "https://www.roomvoyagertravel.com";
-
-    await fetch(`${siteUrl}/api/link-clicks`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        partner:   "Manual booking",
-        product:   body.product || "hotel",
-        url:       "",
-        userEmail: normalizedEmail,
-        userName:  `${name || normalizedEmail} — $${amount} ${productLabel} — ${Number(pts).toLocaleString()} pts awarded${notes ? ` — ${notes}` : ""}`,
-      }),
-    }).catch(e => console.warn("Airtable log error:", e));
-
-    // ── 3. Send email via EmailJS ────────────────────────────────────────────
+    // ── 2. Send email via EmailJS ────────────────────────────────────────────
     const EJ_SERVICE  = process.env.EMAILJS_SERVICE_ID;
     const EJ_TEMPLATE = process.env.EMAILJS_TEMPLATE_ID;
     const EJ_PUBLIC   = process.env.EMAILJS_PUBLIC_KEY;
+    const EJ_PRIVATE  = process.env.EMAILJS_PRIVATE_KEY;
 
     let emailOk = false;
     if (EJ_SERVICE && EJ_TEMPLATE && EJ_PUBLIC) {
       const emailPayload = {
-        service_id:  EJ_SERVICE,
-        template_id: EJ_TEMPLATE,
-        user_id:     EJ_PUBLIC,
+        service_id:   EJ_SERVICE,
+        template_id:  EJ_TEMPLATE,
+        user_id:      EJ_PUBLIC,
+        ...(EJ_PRIVATE ? { accessToken: EJ_PRIVATE } : {}),
         template_params: {
           to_email:  normalizedEmail,
           from_name: "RoomVoyager Rewards",
