@@ -328,7 +328,7 @@ export default function HomePage() {
           body: JSON.stringify({
             partner:   "Expedia",
             product:   "hotel",
-            url:       "widget-unlocked",
+            url:       "widget-loggedin",
             userEmail: user.email,
             userName:  user.name || "",
           }),
@@ -387,7 +387,7 @@ export default function HomePage() {
       body: JSON.stringify({
         partner:   "Expedia",
         product:   "hotel",
-        url:       "widget-unlocked",
+        url:       "widget-guest",
         userEmail: widgetEmail.trim(),
         userName:  "",
       }),
