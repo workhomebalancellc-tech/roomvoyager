@@ -315,6 +315,35 @@ export default function HomePage() {
   useEffect(() => {
     if (!authLoading && user?.email) {
       setWidgetUnlocked(true);
+      // Track widget unlock once per 24 hours per user
+      const storageKey = `rv_widget_tracked_${user.uid}`;
+      const lastTracked = localStorage.getItem(storageKey);
+      const twentyFourHours = 24 * 60 * 60 * 1000;
+      const shouldTrack = !lastTracked || (Date.now() - parseInt(lastTracked, 10)) > twentyFourHours;
+      if (shouldTrack) {
+        localStorage.setItem(storageKey, Date.now().toString());
+        fetch("/api/link-clicks", {
+          method:  "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            partner:   "Expedia",
+            product:   "hotel",
+            url:       "widget-unlocked",
+            userEmail: user.email,
+            userName:  user.name || "",
+          }),
+        }).catch(() => {});
+        fetch("/api/track/hotel-click", {
+          method:  "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            uid:         user.uid,
+            email:       user.email,
+            name:        user.name || "",
+            destination: "",
+          }),
+        }).catch(() => {});
+      }
     }
   }, [authLoading, user]);
 
@@ -356,11 +385,11 @@ export default function HomePage() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        partner: "Expedia",
-        product: "hotel",
-        url: "widget-search",
+        partner:   "Expedia",
+        product:   "hotel",
+        url:       "widget-unlocked",
         userEmail: widgetEmail.trim(),
-        userName: "",
+        userName:  "",
       }),
     }).catch(() => {});
   }
