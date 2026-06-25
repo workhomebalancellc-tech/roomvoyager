@@ -1281,6 +1281,151 @@ function ExpediaImport({ adminEmail }) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
+/* ── Expedia Cancellation Import ───────────────────────────────────────────── */
+function ExpediaCancelImport({ adminEmail }) {
+  const [csvText,    setCsvText]    = useState("");
+  const [rows,       setRows]       = useState([]);
+  const [loading,    setLoading]    = useState(false);
+  const [retracting, setRetracting] = useState(null); // dedupKey being retracted
+  const [msg,        setMsg]        = useState("");
+
+  function handleFile(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => setCsvText(ev.target.result);
+    reader.readAsText(file);
+  }
+
+  async function parseCSV() {
+    if (!csvText.trim()) { setMsg("Please upload a CSV file first."); return; }
+    setLoading(true); setMsg(""); setRows([]);
+    const res  = await fetch("/api/admin/expedia-cancel", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ adminEmail, csvText }),
+    });
+    const data = await res.json();
+    if (!res.ok) { setMsg("Error: " + (data.error || "Unknown")); setLoading(false); return; }
+    setRows(data.rows || []);
+    if ((data.rows || []).length === 0) setMsg("No lodging cancellations found in this CSV.");
+    setLoading(false);
+  }
+
+  async function retractRow(row) {
+    setRetracting(row.dedupKey);
+    const res = await fetch("/api/admin/expedia-cancel", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        adminEmail, action: "retract",
+        dedupKey: row.dedupKey,
+        uid:      row.uid,
+        email:    row.email,
+        name:     row.name,
+        pts:      row.pts,
+        importId: row.importId,
+      }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setRows(prev => prev.map(r => r.dedupKey === row.dedupKey ? { ...r, alreadyRetracted: true } : r));
+      setMsg(`✓ ${row.pts?.toLocaleString()} pts retracted from ${row.email}`);
+    } else {
+      setMsg("Error: " + (data.error || "Unknown"));
+    }
+    setRetracting(null);
+  }
+
+  const awardedRows    = rows.filter(r => r.awarded && !r.alreadyRetracted);
+  const retractedRows  = rows.filter(r => r.alreadyRetracted);
+  const noPointsRows   = rows.filter(r => !r.awarded);
+
+  return (
+    <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
+      <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
+        🚫 Expedia Cancellation Import
+      </p>
+      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 14px" }}>
+        Upload a canceled bookings CSV to identify and retract points for canceled trips.
+      </p>
+
+      <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", marginBottom: "12px" }}>
+        <input type="file" accept=".csv" onChange={handleFile}
+          style={{ fontSize: "12px", color: "#374151" }} />
+        <button onClick={parseCSV} disabled={loading || !csvText}
+          style={{ padding: "8px 18px", background: loading ? "#D1D5DB" : NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: loading || !csvText ? "not-allowed" : "pointer" }}>
+          {loading ? "Checking…" : "Check Cancellations"}
+        </button>
+      </div>
+
+      {msg && (
+        <p style={{ fontSize: "12px", color: msg.startsWith("✓") ? GREEN : "#DC2626", margin: "0 0 12px", fontWeight: "600" }}>
+          {msg}
+        </p>
+      )}
+
+      {/* Rows with points to retract */}
+      {awardedRows.length > 0 && (
+        <div style={{ marginBottom: "14px" }}>
+          <p style={{ fontSize: "12px", fontWeight: "700", color: "#DC2626", margin: "0 0 8px" }}>
+            ⚠️ Points to retract ({awardedRows.length}):
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {awardedRows.map(row => (
+              <div key={row.dedupKey} style={{ border: "1.5px solid #FECACA", borderRadius: "10px", padding: "12px 14px", background: "#FEF2F2" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "8px" }}>
+                  <div>
+                    <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 2px" }}>{row.product}</p>
+                    <p style={{ fontSize: "11px", color: "#6B7280", margin: "0 0 2px" }}>
+                      {row.destinationCity} · Booked {row.bookedDate?.split(" ")[0]} · Stay {row.startDate} → {row.endDate}
+                    </p>
+                    <p style={{ fontSize: "12px", color: "#374151", margin: 0 }}>
+                      <strong>{row.name || row.email}</strong>{row.name ? ` · ${row.email}` : ""}
+                    </p>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <p style={{ fontSize: "14px", fontWeight: "800", color: "#DC2626", margin: "0 0 6px" }}>
+                      −{row.pts?.toLocaleString()} pts
+                    </p>
+                    <button onClick={() => retractRow(row)} disabled={retracting === row.dedupKey}
+                      style={{ padding: "7px 16px", background: retracting === row.dedupKey ? "#D1D5DB" : "#DC2626", color: "#fff", border: "none", borderRadius: "7px", fontSize: "12px", fontWeight: "700", cursor: retracting === row.dedupKey ? "not-allowed" : "pointer" }}>
+                      {retracting === row.dedupKey ? "Retracting…" : "Retract pts →"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Already retracted */}
+      {retractedRows.length > 0 && (
+        <div style={{ marginBottom: "14px", padding: "10px 14px", background: "#F0FDF4", borderRadius: "8px" }}>
+          <p style={{ fontSize: "11px", fontWeight: "700", color: "#15803D", margin: "0 0 4px" }}>✓ Already retracted ({retractedRows.length}):</p>
+          {retractedRows.map(r => (
+            <p key={r.dedupKey} style={{ fontSize: "11px", color: "#374151", margin: "2px 0" }}>
+              {r.product} · {r.destinationCity} · {r.bookedDate?.split(" ")[0]} · {r.email}
+            </p>
+          ))}
+        </div>
+      )}
+
+      {/* No points awarded — nothing to do */}
+      {noPointsRows.length > 0 && (
+        <div style={{ padding: "10px 14px", background: "#F8FAFF", borderRadius: "8px" }}>
+          <p style={{ fontSize: "11px", fontWeight: "700", color: "#6B7280", margin: "0 0 4px" }}>No points on file ({noPointsRows.length}):</p>
+          {noPointsRows.map(r => (
+            <p key={r.dedupKey} style={{ fontSize: "11px", color: "#9CA3AF", margin: "2px 0" }}>
+              {r.product} · {r.destinationCity} · {r.bookedDate?.split(" ")[0]}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 // ── Manage / Delete Bookings ──────────────────────────────────────────────────
 function ManageBookings({ adminEmail }) {
   const [email,    setEmail]    = useState("");
@@ -2219,6 +2364,11 @@ export default function AdminDashboard() {
         {/* EXPEDIA CSV IMPORT */}
         <div style={{ marginBottom: "20px" }}>
           <ExpediaImport adminEmail={user.email} />
+        </div>
+
+        {/* EXPEDIA CANCELLATION IMPORT */}
+        <div style={{ marginBottom: "20px" }}>
+          <ExpediaCancelImport adminEmail={user.email} />
         </div>
 
         {/* TRAVELPAYOUTS FLIGHT IMPORT */}
