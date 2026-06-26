@@ -95,7 +95,7 @@ export async function POST(req) {
         template_params: {
           to_email:    email,
           from_name:   "RoomVoyager Rewards",
-          from_email:  "roomvoyager@protonmail.com",
+          from_email:  "admin@roomvoyagertravel.com",
           destination: `💸 Your ${cashFormatted} payment has been sent!`,
           travelers:   name || email,
           budget:      cashFormatted,

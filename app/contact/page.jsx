@@ -14,7 +14,7 @@ const FAQS = [
   { q: ["tiers", "tier", "explorer", "voyager", "navigator", "admiral", "levels"], a: "We have 4 tiers: Explorer (0–9,999 pts), Voyager (10,000–49,999), Navigator (50,000–99,999), and Admiral (100,000+). Higher tiers unlock better perks and auto payouts." },
   { q: ["cancel", "cancellation", "refund"], a: "Cancellation policies vary by provider (hotel, airline, or cruise line). Most hotels booked through RoomVoyager offer free cancellation options — check the listing details before booking." },
   { q: ["how to book", "book a cruise", "book a hotel", "book flights", "booking"], a: "Browse our Hotels, Flights, or Cruises pages, choose your option, and you'll be directed to our trusted partner to complete the booking securely. Points are credited after your trip." },
-  { q: ["contact", "email", "phone", "reach you", "support"], a: "You can email us at roomvoyager@protonmail.com or use the contact form on this page. We respond within 24 hours on business days." },
+  { q: ["contact", "email", "phone", "reach you", "support"], a: "You can email us at admin@roomvoyagertravel.com or use the contact form on this page. We respond within 24 hours on business days." },
   { q: ["group", "group booking", "group rate"], a: "We offer special group rates for cruises, hotels, and packages. Use the contact form and select 'Group Booking' as your subject, or email us directly." },
   { q: ["referral", "refer a friend", "referrals"], a: "Yes! Refer a friend and both of you earn bonus points: 200 pts for flights, 350 pts for hotels, and 500 pts for cruises or packages — credited after their first booking." },
   { q: ["sign up", "create account", "join", "register", "free"], a: "Creating an account is free — no credit card required. Sign up at roomvoyager.com/account/signup to start earning points right away." },
@@ -26,7 +26,7 @@ function getBotReply(input) {
   for (const faq of FAQS) {
     if (faq.q.some(k => lower.includes(k))) return faq.a;
   }
-  return "I'm not sure about that one! Please use the contact form below or email us at roomvoyager@protonmail.com and our team will get back to you within 24 hours.";
+  return "I'm not sure about that one! Please use the contact form below or email us at admin@roomvoyagertravel.com and our team will get back to you within 24 hours.";
 }
 
 function ChatBot() {
@@ -161,7 +161,7 @@ export default function ContactPage() {
       <div style={{ maxWidth: "960px", margin: "0 auto", padding: "48px 24px 0" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px", marginBottom: "40px" }}>
           {[
-            { icon: "✉️", title: "Email Us", lines: ["roomvoyager@protonmail.com"] },
+            { icon: "✉️", title: "Email Us", lines: ["admin@roomvoyagertravel.com"] },
             { icon: "📞", title: "Call Us", lines: ["1-800-VOYAGER", "Mon–Fri 9am–6pm EST"] },
           ].map((card, i) => (
             <div key={i} style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "16px" }}>

@@ -111,16 +111,16 @@ export default function PrivacyPage() {
               {s.contact && (
                 <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: "1.7", margin: 0 }}>
                   To exercise these rights, contact us at{" "}
-                  <a href="mailto:roomvoyager@protonmail.com" style={{ color: NAVY, fontWeight: "600", textDecoration: "none" }}>
-                    roomvoyager@protonmail.com
+                  <a href="mailto:admin@roomvoyagertravel.com" style={{ color: NAVY, fontWeight: "600", textDecoration: "none" }}>
+                    admin@roomvoyagertravel.com
                   </a>.
                 </p>
               )}
               {s.contactFull && (
                 <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: "1.7", margin: 0 }}>
                   Questions about this Privacy Policy? Contact us at{" "}
-                  <a href="mailto:roomvoyager@protonmail.com" style={{ color: NAVY, fontWeight: "600", textDecoration: "none" }}>
-                    roomvoyager@protonmail.com
+                  <a href="mailto:admin@roomvoyagertravel.com" style={{ color: NAVY, fontWeight: "600", textDecoration: "none" }}>
+                    admin@roomvoyagertravel.com
                   </a>{" "}or visit our{" "}
                   <a href="/contact" style={{ color: NAVY, fontWeight: "600", textDecoration: "none" }}>Contact page</a>.
                 </p>

@@ -334,7 +334,7 @@ export default function RewardsPage() {
       setUserPoints(newPoints);
       setRedeemSubmitted(true);
     } catch (err) {
-      setRedeemError("Something went wrong. Please email us at roomvoyager@protonmail.com to request your redemption.");
+      setRedeemError("Something went wrong. Please email us at admin@roomvoyagertravel.com to request your redemption.");
     } finally {
       setRedeemLoading(false);
     }

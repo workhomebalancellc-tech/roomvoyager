@@ -256,7 +256,7 @@ export default function CruisesPage() {
       if (!res.ok) throw new Error("Submission failed");
       setSubmitted(true);
     } catch {
-      setSubmitError("Something went wrong. Please try again or email us at roomvoyager@protonmail.com.");
+      setSubmitError("Something went wrong. Please try again or email us at admin@roomvoyagertravel.com.");
     } finally {
       setSubmitting(false);
     }

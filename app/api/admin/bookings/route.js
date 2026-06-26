@@ -120,7 +120,7 @@ export async function POST(req) {
         template_id: EMAILJS_TEMPLATE,
         user_id:     EMAILJS_KEY,
         template_params: {
-          to_email:    "workhomebalancellc@gmail.com",
+          to_email:    "admin@roomvoyagertravel.com",
           from_name:   name || email,
           from_email:  email,
           subject:     "📋 Booking Review Request",

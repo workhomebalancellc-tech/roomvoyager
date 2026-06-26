@@ -62,13 +62,13 @@ const KB = [
   {
     id: "posting",
     triggers: ["when do points post", "points credited", "how long points", "pending points", "points post", "when will i get my points", "points take", "points show up"],
-    answer: "Points may take up to 7 days to appear after your booking is confirmed in our system — due to affiliate tracking timelines on our end. If it's been longer than 7 days after booking, email us at roomvoyager@protonmail.com and we'll look into it manually.",
+    answer: "Points may take up to 7 days to appear after your booking is confirmed in our system — due to affiliate tracking timelines on our end. If it's been longer than 7 days after booking, email us at admin@roomvoyagertravel.com and we'll look into it manually.",
     follow: ["earn", "redeem"],
   },
   {
     id: "cancel",
     triggers: ["cancel", "cancellation", "refund", "cancel booking", "cancel reservation", "can i cancel", "cancel my booking", "get a refund", "money back"],
-    answer: "Cancellation policies are set by the hotel, airline, or cruise line — they vary by provider. Most hotels offer free cancellation if you cancel before the deadline shown at booking.\n\nFor booking-specific help, email us at roomvoyager@protonmail.com.",
+    answer: "Cancellation policies are set by the hotel, airline, or cruise line — they vary by provider. Most hotels offer free cancellation if you cancel before the deadline shown at booking.\n\nFor booking-specific help, email us at admin@roomvoyagertravel.com.",
     follow: ["contact", "book"],
   },
   {
@@ -80,7 +80,7 @@ const KB = [
   {
     id: "group",
     triggers: ["group booking", "group rate", "group travel", "group trip", "group", "family trip", "large group", "corporate travel", "team travel"],
-    answer: "We love group travel! We offer special rates for groups booking cruises, hotels, or packages. Email us at roomvoyager@protonmail.com with:\n• Your destination & dates\n• Number of travelers\n• Type of travel (hotel / cruise / package)\n\nWe'll get back to you with options.",
+    answer: "We love group travel! We offer special rates for groups booking cruises, hotels, or packages. Email us at admin@roomvoyagertravel.com with:\n• Your destination & dates\n• Number of travelers\n• Type of travel (hotel / cruise / package)\n\nWe'll get back to you with options.",
     follow: ["contact", "book"],
   },
   {
@@ -98,7 +98,7 @@ const KB = [
   {
     id: "contact",
     triggers: ["contact", "email", "phone", "reach you", "talk to someone", "customer service", "customer support", "speak to someone", "human", "agent", "help me", "need help"],
-    answer: "Our team is happy to help!\n• 📧 Email: roomvoyager@protonmail.com\n• 📞 Phone: 1-800-VOYAGER (Mon–Fri, 9am–6pm EST)\n• 💬 Contact form: roomvoyager.com/contact\n\nWe respond within 24 hours on business days.",
+    answer: "Our team is happy to help!\n• 📧 Email: admin@roomvoyagertravel.com\n• 📞 Phone: 1-800-VOYAGER (Mon–Fri, 9am–6pm EST)\n• 💬 Contact form: roomvoyager.com/contact\n\nWe respond within 24 hours on business days.",
     follow: ["group", "cancel"],
   },
   {

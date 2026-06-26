@@ -45,7 +45,7 @@ const faqs = [
     questions: [
       {
         q: "How do I earn Rewards points?",
-        a: "You earn points on every booking made through RoomVoyager — 5 pts per $1 on flights and hotels, 10 pts per $1 on cruises. Hotels and cruises are eligible for double points when promotions apply. Standard points apply to all bookings unless a double points promotion is explicitly stated on our website or communicated via email. Points may take up to 7 days to appear in your account after your booking is confirmed in our system. If you don't see them after 7 days, contact us at roomvoyager@protonmail.com.",
+        a: "You earn points on every booking made through RoomVoyager — 5 pts per $1 on flights and hotels, 10 pts per $1 on cruises. Hotels and cruises are eligible for double points when promotions apply. Standard points apply to all bookings unless a double points promotion is explicitly stated on our website or communicated via email. Points may take up to 7 days to appear in your account after your booking is confirmed in our system. If you don't see them after 7 days, contact us at admin@roomvoyagertravel.com.",
       },
       {
         q: "When do double points apply?",
@@ -74,7 +74,7 @@ const faqs = [
     questions: [
       {
         q: "I'm not receiving emails from RoomVoyager. What should I do?",
-        a: "First, check your spam or junk folder — our emails sometimes land there. If you find them, mark them as 'Not Spam' so future emails go to your inbox. If you still don't see anything, contact us at roomvoyager@protonmail.com.",
+        a: "First, check your spam or junk folder — our emails sometimes land there. If you find them, mark them as 'Not Spam' so future emails go to your inbox. If you still don't see anything, contact us at admin@roomvoyagertravel.com.",
       },
       {
         q: "How do I create an account?",

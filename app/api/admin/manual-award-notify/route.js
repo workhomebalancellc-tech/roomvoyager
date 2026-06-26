@@ -38,7 +38,7 @@ export async function POST(req) {
         template_params: {
           to_email:   normalizedEmail,
           from_name:  "RoomVoyager Rewards",
-          from_email: "roomvoyager@protonmail.com",
+          from_email: "admin@roomvoyagertravel.com",
           name:       name || "there",
           pts:        Number(pts).toLocaleString(),
           notes:      `Your RoomVoyager Rewards balance has been updated.\n\n${notes || `Points changed: ${Number(pts).toLocaleString()} pts`}\nNew balance: ${balance.toLocaleString()} pts\n\nThank you for booking with RoomVoyager!`,

@@ -41,7 +41,7 @@ export async function GET(req) {
     });
   } catch (err) {
     console.error("Unsubscribe error:", err);
-    return new Response(html("Something went wrong. Please email us at roomvoyager@protonmail.com to unsubscribe.", false), {
+    return new Response(html("Something went wrong. Please email us at admin@roomvoyagertravel.com to unsubscribe.", false), {
       headers: { "Content-Type": "text/html" },
     });
   }

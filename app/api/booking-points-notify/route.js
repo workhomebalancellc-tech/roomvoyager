@@ -23,7 +23,7 @@ export async function POST(req) {
       template_params: {
         to_email:    email,
         from_name:   "RoomVoyager Rewards",
-        from_email:  "roomvoyager@protonmail.com",
+        from_email:  "admin@roomvoyagertravel.com",
         name:        name || "there",
         pts:         `+${Number(pts).toLocaleString()}`,
         notes:       `Your RoomVoyager Rewards balance has been updated.\n\nPoints added: +${Number(pts).toLocaleString()} pts\nNew balance: ${Number(newBalance).toLocaleString()} pts\n\nBooking: ${product}${amount ? ` — $${Number(amount).toFixed(2)}` : ""}${notes ? `\nNote: ${notes}` : ""}\n\nPoints may take up to 7 days to appear after your booking is confirmed. If you have questions, reply to this email.\n\nThank you for booking with RoomVoyager!`,

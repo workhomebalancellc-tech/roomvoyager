@@ -258,7 +258,7 @@ export default function ProfilePage() {
       await logout();
       window.location.href = "/?deleted=1";
     } catch {
-      setDeleteError("Something went wrong. Please contact us at roomvoyager@protonmail.com.");
+      setDeleteError("Something went wrong. Please contact us at admin@roomvoyagertravel.com.");
       setDeleting(false);
     }
   }
