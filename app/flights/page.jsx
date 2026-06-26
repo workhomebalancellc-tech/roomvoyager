@@ -703,7 +703,7 @@ function FlightsContent() {
       }).catch(() => {}); // never block navigation
     }
 
-    window.location.href = dest;
+    window.open(dest, "_blank", "noopener,noreferrer");
   }
 
   function pickDest(dest) {
