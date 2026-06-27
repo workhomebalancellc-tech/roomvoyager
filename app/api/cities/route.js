@@ -62,10 +62,15 @@ export async function GET(request) {
     if (!res.ok) return Response.json([]);
     const raw = await res.json();
 
+    const ALLOWED_TYPES = new Set(["city", "town", "village", "hamlet", "municipality"]);
     const seen = new Set();
     const results = [];
 
     for (const item of raw) {
+      // Only include actual place settlements — skip counties, regions, boundaries
+      if (item.class !== "place") continue;
+      if (!ALLOWED_TYPES.has(item.type)) continue;
+
       const addr = item.address || {};
       const city =
         addr.city || addr.town || addr.village || addr.hamlet ||
