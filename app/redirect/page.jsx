@@ -31,7 +31,6 @@ function RedirectContent() {
 
   const [emailInput, setEmailInput] = useState("");
   const [emailReady, setEmailReady] = useState(false);
-  const [count,      setCount]      = useState(COUNTDOWN_SECS);
   const [gone,       setGone]       = useState(false);
   const loggedRef                   = useRef(false);
 
@@ -59,22 +58,6 @@ function RedirectContent() {
     }).catch(() => {});
   }, [to, emailReady]);
 
-  // Countdown — only starts after emailReady
-  useEffect(() => {
-    if (!to || !emailReady) return;
-    const t = setInterval(() => {
-      setCount(c => {
-        if (c <= 1) {
-          clearInterval(t);
-          setGone(true);
-          window.location.href = to;
-          return 0;
-        }
-        return c - 1;
-      });
-    }, 1000);
-    return () => clearInterval(t);
-  }, [to, emailReady]);
 
   function goNow() {
     setGone(true);
@@ -231,17 +214,6 @@ function RedirectContent() {
                 <span>Redirecting…</span>
               ) : (
                 <>
-                  <svg width="28" height="28" style={{ transform: "rotate(-90deg)", flexShrink: 0 }}>
-                    <circle cx="14" cy="14" r="11" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="2.5" />
-                    <circle cx="14" cy="14" r="11" fill="none" stroke="#fff" strokeWidth="2.5"
-                      strokeDasharray={`${2 * Math.PI * 11}`}
-                      strokeDashoffset={`${2 * Math.PI * 11 * (count / COUNTDOWN_SECS)}`}
-                      style={{ transition: "stroke-dashoffset 1s linear" }} />
-                    <text x="14" y="14" textAnchor="middle" dominantBaseline="central"
-                      style={{ transform: "rotate(90deg)", transformOrigin: "14px 14px", fill: "#fff", fontSize: "9px", fontWeight: "800" }}>
-                      {count}
-                    </text>
-                  </svg>
                   <span>Continue to {partner}</span>
                   <span style={{ fontSize: "18px", marginLeft: "auto" }}>→</span>
                 </>
@@ -249,7 +221,7 @@ function RedirectContent() {
             </button>
 
             <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "12px 0 0" }}>
-              Auto-redirecting in {count}s · <a href="/" style={{ color: "#9CA3AF" }}>Cancel and go back</a>
+              <a href="/" style={{ color: "#9CA3AF" }}>Cancel and go back</a>
             </p>
           </div>
         </div>

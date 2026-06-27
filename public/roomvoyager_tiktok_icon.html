@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head><title>Download TikTok Icon</title></head>
+<body style="font-family:sans-serif; display:flex; flex-direction:column; align-items:center; padding:40px;">
+  <h2>RoomVoyager TikTok Profile Picture</h2>
+  <canvas id="c" width="500" height="500" style="border-radius:50%; margin:20px;"></canvas>
+  <button onclick="download()" style="padding:12px 28px; background:#1E3A8A; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer;">Download PNG</button>
+
+  <script>
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="500" height="500">
+      <circle cx="50" cy="50" r="50" fill="#1E3A8A"/>
+      <circle cx="50" cy="50" r="48" fill="none" stroke="white" stroke-width="3"/>
+      <circle cx="50" cy="50" r="42" fill="#1D4ED8"/>
+      <text x="50" y="24" font-family="Georgia, serif" font-size="16" font-weight="700" fill="none" stroke="white" stroke-width="3" stroke-linejoin="round" text-anchor="middle" letter-spacing="2">RV</text>
+      <text x="50" y="24" font-family="Georgia, serif" font-size="16" font-weight="700" fill="#F97316" text-anchor="middle" letter-spacing="2">RV</text>
+      <polygon points="50,30 55,50 50,44 45,50" fill="white"/>
+      <polygon points="50,72 55,52 50,60 45,52" fill="#93C5FD"/>
+      <polygon points="72,56 52,61 60,56 52,51" fill="#93C5FD"/>
+      <polygon points="28,56 48,61 40,56 48,51" fill="#93C5FD"/>
+      <circle cx="50" cy="56" r="5" fill="white"/>
+      <circle cx="50" cy="56" r="2.5" fill="#F97316"/>
+    </svg>`;
+
+    const img = new Image();
+    const blob = new Blob([svg], {type: 'image/svg+xml'});
+    const url = URL.createObjectURL(blob);
+    img.onload = () => {
+      const ctx = document.getElementById('c').getContext('2d');
+      ctx.drawImage(img, 0, 0, 500, 500);
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
+
+    function download() {
+      const a = document.createElement('a');
+      a.download = 'roomvoyager_tiktok_500x500.png';
+      a.href = document.getElementById('c').toDataURL('image/png');
+      a.click();
+    }
+  </script>
+</body>
+</html>

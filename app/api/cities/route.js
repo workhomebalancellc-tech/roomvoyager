@@ -1,6 +1,8 @@
 // /api/cities — proxies OpenStreetMap Nominatim for city autocomplete
 // US results show "City, ST" · International show "City, Country"
 // Simple in-memory cache so repeated queries don't re-hit Nominatim
+// Filters out administrative areas (County, Parish, Region, etc.) using a name-based blacklist
+// ⚠️ DO NOT change the flights search logic — this API is frozen except for display filters
 
 const cache = new Map();
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
