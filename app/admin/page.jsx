@@ -2437,8 +2437,8 @@ export default function AdminDashboard() {
             {
               category: "Video & Automation",
               links: [
-                { label: "Fliki", desc: "Deal of the Week video creation", href: "https://app.fliki.ai", icon: "🎬" },
-                { label: "Make", desc: "Automation (Sheets → Fliki pipeline)", href: "https://us2.make.com", icon: "⚙️" },
+                { label: "Creatomate", desc: "Deal of the Week video creation", href: "https://app.creatomate.com", icon: "🎬" },
+                { label: "Make", desc: "Automation (Sheets → Creatomate pipeline)", href: "https://us2.make.com", icon: "⚙️" },
                 { label: "TikTok Studio", desc: "Video publishing", href: "https://studio.tiktok.com", icon: "🎵" },
               ],
             },
