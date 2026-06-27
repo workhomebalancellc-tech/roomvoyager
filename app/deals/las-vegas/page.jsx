@@ -29,6 +29,7 @@ const DEALS = [
         blurb: "Circus Circus is the ultimate family-friendly Vegas hotel — and at $41/night for July 4th weekend, it's an absolute steal. The kids will go wild at the Adventure Dome (Vegas's only indoor theme park), the midway carnival games, and the nightly acrobat shows. You're right on the Strip with easy access to everything, and you won't break the bank getting there.",
         perks: ["Adventure Dome indoor theme park", "Nightly circus acts & acrobatics", "Multiple restaurants & food court", "Right on the Las Vegas Strip"],
         link: "https://expedia.com/affiliates/workhomebalance_llc/hotel1dealsweek2",
+        articlePhoto: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=400&h=400&fit=crop&auto=format",
       },
       {
         name: "Planet Hollywood Resort & Casino",
@@ -39,6 +40,7 @@ const DEALS = [
         blurb: "Planet Hollywood puts you dead center on the Strip in a Hollywood-themed paradise. The rooms are spacious, the pool is stunning, and you're steps from the best shopping and dining in Vegas. With a rooftop pool, a packed events calendar, and the Miracle Mile Shops right inside the hotel — the 4th of July fireworks from here are going to be unforgettable.",
         perks: ["Center Strip location", "Rooftop pool & spa", "Miracle Mile Shops on-site", "World-class dining & nightlife"],
         link: "https://expedia.com/affiliates/workhomebalance_llc/hotel2dealsweek2",
+        articlePhoto: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400&h=400&fit=crop&auto=format",
       },
     ],
   },
@@ -60,6 +62,7 @@ const DEALS = [
         blurb: "The iconic pyramid is Vegas's best-kept budget secret. You're right in the middle of the Strip, steps from MGM and Mandalay Bay, with a massive casino floor, multiple restaurants, and rooms that punch way above their price point. If you want the full Vegas experience without the luxury hotel bill, this is your spot.",
         perks: ["Center Strip location", "Large casino floor", "Multiple dining options", "Easy tram access"],
         link: "https://expedia.com/affiliates/workhomebalance_llc/vegasdeal1_99",
+        articlePhoto: "https://images.unsplash.com/photo-1568084680786-a84f91d1153c?w=400&h=400&fit=crop&auto=format",
       },
       {
         name: "Fontainebleau Las Vegas",
@@ -70,6 +73,7 @@ const DEALS = [
         blurb: "Opened in 2023, Fontainebleau is the freshest thing on the Strip. 67 floors of panoramic views, a world-class pool complex, celebrity chef restaurants, and nightlife that rivals any Vegas staple. If you're celebrating or just ready to splurge, there's no better address in the city right now.",
         perks: ["67-story tower with Strip views", "Massive pool complex", "Celebrity chef dining", "Premium spa & nightlife"],
         link: "https://expedia.com/affiliates/workhomebalance_llc/vegasdeal1_470",
+        articlePhoto: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400&h=400&fit=crop&auto=format",
       },
     ],
   },
@@ -153,16 +157,23 @@ function DealCard({ deal }) {
           {/* Hotel descriptions */}
           <div style={{ marginBottom: "28px" }}>
             {deal.hotels.map((hotel, i) => (
-              <div key={i} style={{ marginBottom: "24px" }}>
-                <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px", display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-                  {hotel.emoji} {hotel.name}
-                  <span style={{ background: ORANGE, color: "#fff", fontSize: "12px", fontWeight: "700", padding: "3px 9px", borderRadius: "6px" }}>{hotel.price}</span>
-                </h3>
-                <p style={{ fontSize: "15px", color: "#374151", lineHeight: 1.8, margin: "0 0 10px" }}>{hotel.blurb}</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                  {hotel.perks.map((perk, j) => (
-                    <span key={j} style={{ background: LIGHT_BLUE, color: NAVY, fontSize: "12px", fontWeight: "600", padding: "4px 10px", borderRadius: "6px" }}>✓ {perk}</span>
-                  ))}
+              <div key={i} style={{ marginBottom: "28px", display: "flex", gap: "16px", alignItems: "flex-start" }}>
+                <img
+                  src={hotel.articlePhoto}
+                  alt={hotel.name}
+                  style={{ width: "120px", height: "120px", objectFit: "cover", borderRadius: "12px", flexShrink: 0 }}
+                />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px", display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+                    {hotel.emoji} {hotel.name}
+                    <span style={{ background: ORANGE, color: "#fff", fontSize: "12px", fontWeight: "700", padding: "3px 9px", borderRadius: "6px" }}>{hotel.price}</span>
+                  </h3>
+                  <p style={{ fontSize: "15px", color: "#374151", lineHeight: 1.8, margin: "0 0 10px" }}>{hotel.blurb}</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {hotel.perks.map((perk, j) => (
+                      <span key={j} style={{ background: LIGHT_BLUE, color: NAVY, fontSize: "12px", fontWeight: "600", padding: "4px 10px", borderRadius: "6px" }}>✓ {perk}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
