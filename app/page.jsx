@@ -373,7 +373,7 @@ export default function HomePage() {
 
     iframe.addEventListener("load", onIframeLoad);
     return () => iframe.removeEventListener("load", onIframeLoad);
-  }, [user]);
+  }, [user, widgetUnlocked]); // widgetUnlocked needed so effect re-runs after iframe enters DOM for logged-in users
 
   function handleWidgetEmail(e) {
     e.preventDefault();
