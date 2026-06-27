@@ -62,10 +62,14 @@ export async function GET(request) {
     if (!res.ok) return Response.json([]);
     const raw = await res.json();
 
+    const BLOCKED_WORDS = /\b(county|parish|region|district|township|borough|territory|province|prefecture)\b/i;
     const seen = new Set();
     const results = [];
 
     for (const item of raw) {
+      // Skip results that are clearly administrative areas, not cities
+      if (BLOCKED_WORDS.test(item.name || "")) continue;
+
       const addr = item.address || {};
       const city =
         addr.city || addr.town || addr.village || addr.hamlet ||
