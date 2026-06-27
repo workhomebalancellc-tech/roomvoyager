@@ -16,7 +16,7 @@ const WEEK3_HOTELS = [
     emoji: "🎪",
     vibe: "Best family value on the Strip",
     price: "From $41/night",
-    photo: "https://images.unsplash.com/photo-1605833556294-ea5c2a603e88?w=800&h=600&fit=crop&auto=format",
+    photo: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&h=600&fit=crop&auto=format",
     blurb: "Circus Circus is the ultimate family-friendly Vegas hotel — and at $41/night for July 4th weekend, it's an absolute steal. The kids will go wild at the Adventure Dome (Vegas's only indoor theme park), the midway carnival games, and the nightly acrobat shows. You're right on the Strip with easy access to everything, and you won't break the bank getting there.",
     perks: ["Adventure Dome indoor theme park", "Nightly circus acts & acrobatics", "Multiple restaurants & food court", "Right on the Las Vegas Strip"],
     link: "https://expedia.com/affiliates/workhomebalance_llc/hotel1dealsweek2",
@@ -177,13 +177,13 @@ export default function LasVegasDealsPage() {
           {/* ── WEEK 2 POST (COLLAPSIBLE) ── */}
           <button
             onClick={() => setOldPostOpen(!oldPostOpen)}
-            style={{ width: "100%", background: LIGHT_BLUE, border: `1.5px solid ${NAVY}20`, borderRadius: "12px", padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", marginBottom: oldPostOpen ? "24px" : "0" }}
+            style={{ width: "100%", background: "linear-gradient(135deg, #FF6600 0%, #FF8C00 100%)", border: "none", borderRadius: "12px", padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", marginBottom: oldPostOpen ? "24px" : "0", boxShadow: "0 4px 14px rgba(255,102,0,0.3)" }}
           >
             <div style={{ textAlign: "left" }}>
-              <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "0 0 2px", textTransform: "uppercase", fontWeight: "600" }}>Previous Deal · June 18, 2026</p>
-              <p style={{ fontSize: "16px", fontWeight: "800", color: NAVY, margin: 0 }}>Luxor vs. Fontainebleau — Two Ways to Do Vegas</p>
+              <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.8)", margin: "0 0 2px", textTransform: "uppercase", fontWeight: "600", letterSpacing: "0.1em" }}>📂 Previous Deal · June 18, 2026</p>
+              <p style={{ fontSize: "16px", fontWeight: "800", color: "#fff", margin: 0 }}>Luxor vs. Fontainebleau — Two Ways to Do Vegas</p>
             </div>
-            <span style={{ fontSize: "22px", color: NAVY, transform: oldPostOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease", flexShrink: 0, marginLeft: "12px" }}>⌄</span>
+            <span style={{ fontSize: "22px", color: "#fff", transform: oldPostOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease", flexShrink: 0, marginLeft: "12px" }}>⌄</span>
           </button>
 
           {oldPostOpen && (
