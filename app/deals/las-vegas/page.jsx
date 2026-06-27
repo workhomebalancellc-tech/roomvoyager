@@ -80,7 +80,7 @@ const DEALS = [
 ];
 
 function openHotel(link) {
-  window.location.href = `/redirect?to=${encodeURIComponent(link)}&partner=Expedia&product=hotel`;
+  window.open(`/redirect?to=${encodeURIComponent(link)}&partner=Expedia&product=hotel`, "_blank", "noopener,noreferrer");
 }
 
 function DealCard({ deal }) {
