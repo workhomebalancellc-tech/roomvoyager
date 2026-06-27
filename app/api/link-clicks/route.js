@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    const { partner, product, url, userEmail, userName } = await request.json();
+    const { partner, product, url, userEmail, userName, utmSource, utmMedium, utmCampaign } = await request.json();
 
     const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
     const AIRTABLE_BASE  = process.env.AIRTABLE_BASE_ID;
@@ -13,13 +13,16 @@ export async function POST(request) {
     }
 
     const fields = {
-      "Partner":     partner || "Unknown",
-      "Product":     product || "Unknown",
-      "Destination URL": url || "",
-      "User Email":  userEmail || "Guest",
-      "User Name":   userName  || "",
-      "Clicked At":  new Date().toISOString(),
-      "Status":      "Clicked",
+      "Partner":        partner    || "Unknown",
+      "Product":        product    || "Unknown",
+      "Destination URL": url       || "",
+      "User Email":     userEmail  || "Guest",
+      "User Name":      userName   || "",
+      "Clicked At":     new Date().toISOString(),
+      "Status":         "Clicked",
+      "UTM Source":     utmSource  || "",
+      "UTM Medium":     utmMedium  || "",
+      "UTM Campaign":   utmCampaign || "",
     };
 
     const res = await fetch(

@@ -296,6 +296,11 @@ export default function HomePage() {
     // Detect Safari (includes iOS Safari)
     const ua = navigator.userAgent;
     setIsSafari(/^((?!chrome|android).)*safari/i.test(ua));
+    // Capture UTM params from URL and persist in sessionStorage for the session
+    const sp = new URLSearchParams(window.location.search);
+    ["utm_source", "utm_medium", "utm_campaign"].forEach(key => {
+      if (sp.get(key)) sessionStorage.setItem(key, sp.get(key));
+    });
     // Listen for widget height from iframe postMessage
     function onMessage(e) {
       if (e.data && e.data.egWidgetHeight) {
@@ -380,16 +385,19 @@ export default function HomePage() {
     if (!widgetEmail.trim()) return;
     setWidgetUnlocked(true);
     sessionStorage.setItem("rv_widget_email", widgetEmail.trim());
-    // Log to Airtable
+    // Log to Airtable with UTM params
     fetch("/api/link-clicks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        partner:   "Expedia",
-        product:   "hotel",
-        url:       "widget-guest",
-        userEmail: widgetEmail.trim(),
-        userName:  "",
+        partner:      "Expedia",
+        product:      "hotel",
+        url:          "widget-guest",
+        userEmail:    widgetEmail.trim(),
+        userName:     "",
+        utmSource:    sessionStorage.getItem("utm_source")   || "",
+        utmMedium:    sessionStorage.getItem("utm_medium")   || "",
+        utmCampaign:  sessionStorage.getItem("utm_campaign") || "",
       }),
     }).catch(() => {});
   }

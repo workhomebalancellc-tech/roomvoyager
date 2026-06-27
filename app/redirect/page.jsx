@@ -41,7 +41,7 @@ function RedirectContent() {
     }
   }, [loading, user]);
 
-  // Log to Airtable once emailReady is true
+  // Log to Airtable once emailReady is true (logged-in users)
   useEffect(() => {
     if (!to || !emailReady || loggedRef.current) return;
     loggedRef.current = true;
@@ -51,9 +51,12 @@ function RedirectContent() {
       body: JSON.stringify({
         partner,
         product,
-        url:       to,
-        userEmail: user?.email || emailInput || "Guest",
-        userName:  user?.name  || "",
+        url:         to,
+        userEmail:   user?.email || emailInput || "Guest",
+        userName:    user?.name  || "",
+        utmSource:   sessionStorage.getItem("utm_source")   || "",
+        utmMedium:   sessionStorage.getItem("utm_medium")   || "",
+        utmCampaign: sessionStorage.getItem("utm_campaign") || "",
       }),
     }).catch(() => {});
   }, [to, emailReady]);
@@ -74,9 +77,12 @@ function RedirectContent() {
       body: JSON.stringify({
         partner,
         product,
-        url:       to,
-        userEmail: emailInput,
-        userName:  "",
+        url:         to,
+        userEmail:   emailInput,
+        userName:    "",
+        utmSource:   sessionStorage.getItem("utm_source")   || "",
+        utmMedium:   sessionStorage.getItem("utm_medium")   || "",
+        utmCampaign: sessionStorage.getItem("utm_campaign") || "",
       }),
     }).catch(() => {});
     window.location.href = to;
