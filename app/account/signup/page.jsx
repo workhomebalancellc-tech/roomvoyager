@@ -79,6 +79,15 @@ function SignUpContent() {
       setError(null);
       const firebaseUser = await signInWithGoogle();
       if (referralCode) await applyReferralCode(firebaseUser.uid, referralCode);
+      // Only add to Brevo if this is a brand new account (creation time ≈ last sign-in time)
+      const isNewUser = firebaseUser.metadata.creationTime === firebaseUser.metadata.lastSignInTime;
+      if (isNewUser) {
+        fetch("/api/brevo/add-contact", {
+          method:  "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: firebaseUser.email, firstName: firebaseUser.displayName?.split(" ")[0] || "" }),
+        }).catch(() => {});
+      }
       router.push("/profile");
     } catch (err) {
       if (err.code === "auth/popup-blocked") {
@@ -102,6 +111,12 @@ function SignUpContent() {
     try {
       const firebaseUser = await signUpWithEmail(name, email, password);
       if (referralCode) await applyReferralCode(firebaseUser.uid, referralCode);
+      // Add to Brevo "Account Created — No Booking" sequence
+      fetch("/api/brevo/add-contact", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: firebaseUser.email, firstName: name.split(" ")[0] || "" }),
+      }).catch(() => {});
       router.push("/profile");
     } catch (err) {
       if (err.code === "auth/email-already-in-use") setError("An account with this email already exists.");
