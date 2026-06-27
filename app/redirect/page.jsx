@@ -67,7 +67,19 @@ function RedirectContent() {
   function handleEmailSubmit(e) {
     e.preventDefault();
     if (!emailInput.trim()) return;
-    setEmailReady(true);
+    // Log to Airtable (fire and forget) then go directly to partner
+    fetch("/api/link-clicks", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        partner,
+        product,
+        url:       to,
+        userEmail: emailInput,
+        userName:  "",
+      }),
+    }).catch(() => {});
+    window.location.href = to;
   }
 
   // ── No destination ──────────────────────────────────────────────────────
@@ -95,7 +107,7 @@ function RedirectContent() {
     );
   }
 
-  // ── Email capture gate (guests only) ───────────────────────────────────
+  // ── Email capture gate + disclosure (guests only) ─────────────────────
   if (!user && !emailReady) {
     return (
       <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
@@ -105,44 +117,87 @@ function RedirectContent() {
         </div>
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "32px 16px" }}>
           <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 8px 40px rgba(0,0,0,0.10)", maxWidth: "440px", width: "100%", overflow: "hidden" }}>
-            <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${meta.color} 100%)`, padding: "32px 24px 28px", textAlign: "center" }}>
-              <div style={{ fontSize: "48px", marginBottom: "10px" }}>🏆</div>
-              <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: "0 0 6px" }}>Earn rewards on this booking</p>
-              <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "14px", margin: 0 }}>
-                Enter your email to earn {meta.ptsStd} pts per $1 — redeemable for cash back.
-              </p>
+
+            {/* Header */}
+            <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${meta.color} 100%)`, padding: "28px 24px 24px", textAlign: "center" }}>
+              <div style={{ fontSize: "44px", marginBottom: "8px" }}>{meta.icon}</div>
+              <p style={{ color: "#fff", fontSize: "19px", fontWeight: "800", margin: "0 0 4px" }}>You're heading to {partner}</p>
+              <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "13px", margin: 0 }}>RoomVoyager never adds fees to your booking</p>
             </div>
-            <form onSubmit={handleEmailSubmit} style={{ padding: "28px 24px" }}>
-              <label style={{ display: "block", fontSize: "13px", fontWeight: "700", color: "#374151", marginBottom: "8px" }}>
-                Your email address
-              </label>
-              <input
-                type="email"
-                required
-                autoFocus
-                placeholder="you@example.com"
-                value={emailInput}
-                onChange={e => setEmailInput(e.target.value)}
-                style={{ width: "100%", padding: "13px 14px", fontSize: "15px", border: "1.5px solid #D1D5DB", borderRadius: "10px", outline: "none", marginBottom: "14px", boxSizing: "border-box", fontFamily: "system-ui, sans-serif" }}
-              />
-              <button
-                type="submit"
-                style={{ width: "100%", padding: "14px", background: ORANGE, color: "#fff", border: "none", borderRadius: "12px", fontSize: "15px", fontWeight: "800", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.3)" }}
-              >
-                Continue to {partner} →
-              </button>
-              <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "14px 0 0", lineHeight: 1.5 }}>
-                We'll use this to award your points. No spam — ever.{" "}
-                <a href="/rewards" style={{ color: NAVY }}>How rewards work →</a>
-              </p>
-            </form>
+
+            <div style={{ padding: "24px 24px 28px" }}>
+
+              {/* Disclosure bullets */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
+                {[
+                  ["✅", "We searched the best available rates for you"],
+                  ["🔒", "Your booking is made directly with " + partner],
+                  ["💵", "No markups — RoomVoyager earns a small commission from the partner, not you"],
+                ].map(([icon, text], i) => (
+                  <div key={i} style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                    <span style={{ fontSize: "14px", flexShrink: 0, marginTop: "1px" }}>{icon}</span>
+                    <span style={{ fontSize: "13px", color: "#374151", lineHeight: 1.5 }}>{text}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Rewards blurb */}
+              <div style={{ background: LIGHT_BLUE, borderRadius: "12px", padding: "12px 14px", display: "flex", gap: "10px", alignItems: "center", marginBottom: "20px" }}>
+                <span style={{ fontSize: "20px" }}>🏆</span>
+                <div>
+                  <p style={{ fontSize: "13px", fontWeight: "700", color: NAVY, margin: "0 0 2px" }}>Earn rewards on this booking</p>
+                  <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>
+                    {meta.ptsDbl
+                      ? `Earn up to ${meta.ptsDbl} pts per $1 on ${meta.label.toLowerCase()}s`
+                      : `Earn ${meta.ptsStd} pts per $1 on ${meta.label.toLowerCase()}s`}
+                  </p>
+                </div>
+              </div>
+
+              {/* Email form */}
+              <form onSubmit={handleEmailSubmit}>
+                <label style={{ display: "block", fontSize: "13px", fontWeight: "700", color: "#374151", marginBottom: "8px" }}>
+                  Enter your email to claim your points
+                </label>
+                <input
+                  type="email"
+                  required
+                  autoFocus
+                  placeholder="you@example.com"
+                  value={emailInput}
+                  onChange={e => setEmailInput(e.target.value)}
+                  style={{ width: "100%", padding: "13px 14px", fontSize: "15px", border: "1.5px solid #D1D5DB", borderRadius: "10px", outline: "none", marginBottom: "12px", boxSizing: "border-box", fontFamily: "system-ui, sans-serif" }}
+                />
+                <button
+                  type="submit"
+                  style={{ width: "100%", padding: "14px", background: NAVY, color: "#fff", border: "none", borderRadius: "12px", fontSize: "15px", fontWeight: "800", cursor: "pointer", boxShadow: "0 4px 14px rgba(0,59,149,0.25)" }}
+                >
+                  Continue to {partner} →
+                </button>
+                <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "12px 0 0", lineHeight: 1.5 }}>
+                  We'll use this to award your points. No spam — ever.{" "}
+                  <a href="/rewards" style={{ color: NAVY }}>How rewards work →</a>
+                </p>
+                <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "8px 0 0" }}>
+                  <a href="/" style={{ color: "#9CA3AF" }}>Cancel and go back</a>
+                </p>
+              </form>
+
+            </div>
           </div>
+        </div>
+
+        <div style={{ padding: "16px 24px", textAlign: "center", borderTop: "1px solid #E5E7EB" }}>
+          <p style={{ fontSize: "11px", color: "#9CA3AF", margin: 0 }}>
+            RoomVoyager is your trusted travel partner. We may earn a commission when you book through our links — at no extra cost to you.{" "}
+            <a href="/rewards" style={{ color: "#9CA3AF" }}>Learn about Rewards →</a>
+          </p>
         </div>
       </div>
     );
   }
 
-  // ── Countdown / redirect page ───────────────────────────────────────────
+  // ── Logged-in: disclosure + continue (matches guest page layout) ────────
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
 
@@ -154,30 +209,33 @@ function RedirectContent() {
       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "32px 16px" }}>
         <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 8px 40px rgba(0,0,0,0.10)", maxWidth: "440px", width: "100%", overflow: "hidden" }}>
 
-          <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${meta.color} 100%)`, padding: "32px 24px 28px", textAlign: "center" }}>
-            <div style={{ fontSize: "56px", lineHeight: 1, marginBottom: "12px" }}>{meta.icon}</div>
-            <p style={{ color: "#fff", fontSize: "20px", fontWeight: "800", margin: "0 0 4px" }}>You're heading to {partner}</p>
-            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "14px", margin: 0 }}>RoomVoyager never adds fees to your booking</p>
+          {/* Header — matches guest page */}
+          <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${meta.color} 100%)`, padding: "28px 24px 24px", textAlign: "center" }}>
+            <div style={{ fontSize: "44px", marginBottom: "8px" }}>{meta.icon}</div>
+            <p style={{ color: "#fff", fontSize: "19px", fontWeight: "800", margin: "0 0 4px" }}>You're heading to {partner}</p>
+            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "13px", margin: 0 }}>RoomVoyager never adds fees to your booking</p>
           </div>
 
-          <div style={{ padding: "28px 24px" }}>
+          <div style={{ padding: "24px 24px 28px" }}>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "24px" }}>
+            {/* Disclosure bullets */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
               {[
                 ["✅", "We searched the best available rates for you"],
                 ["🔒", "Your booking is made directly with " + partner],
                 ["💵", "No markups — RoomVoyager earns a small commission from the partner, not you"],
               ].map(([icon, text], i) => (
                 <div key={i} style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
-                  <span style={{ fontSize: "15px", flexShrink: 0, marginTop: "1px" }}>{icon}</span>
+                  <span style={{ fontSize: "14px", flexShrink: 0, marginTop: "1px" }}>{icon}</span>
                   <span style={{ fontSize: "13px", color: "#374151", lineHeight: 1.5 }}>{text}</span>
                 </div>
               ))}
             </div>
 
+            {/* Rewards — matches guest page */}
             {estPts ? (
-              <div style={{ background: "#FFF7ED", border: `1.5px solid ${ORANGE}40`, borderRadius: "12px", padding: "14px 16px", display: "flex", gap: "12px", alignItems: "center", marginBottom: "24px" }}>
-                <span style={{ fontSize: "24px" }}>🎉</span>
+              <div style={{ background: "#FFF7ED", border: `1.5px solid ${ORANGE}40`, borderRadius: "12px", padding: "12px 14px", display: "flex", gap: "10px", alignItems: "center", marginBottom: "20px" }}>
+                <span style={{ fontSize: "20px" }}>🎉</span>
                 <div>
                   <p style={{ fontSize: "12px", fontWeight: "700", color: ORANGE, margin: "0 0 2px", textTransform: "uppercase" }}>Points you'll earn</p>
                   <p style={{ fontSize: "20px", fontWeight: "800", color: NAVY, margin: "0 0 2px" }}>{estPts.toLocaleString()} pts</p>
@@ -185,8 +243,8 @@ function RedirectContent() {
                 </div>
               </div>
             ) : (
-              <div style={{ background: LIGHT_BLUE, borderRadius: "12px", padding: "14px 16px", display: "flex", gap: "12px", alignItems: "center", marginBottom: "24px" }}>
-                <span style={{ fontSize: "22px" }}>⭐</span>
+              <div style={{ background: LIGHT_BLUE, borderRadius: "12px", padding: "12px 14px", display: "flex", gap: "10px", alignItems: "center", marginBottom: "20px" }}>
+                <span style={{ fontSize: "20px" }}>🏆</span>
                 <div>
                   <p style={{ fontSize: "13px", fontWeight: "700", color: NAVY, margin: "0 0 2px" }}>Earn rewards on this booking</p>
                   <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>
@@ -198,26 +256,19 @@ function RedirectContent() {
               </div>
             )}
 
+            {/* Continue button */}
             <button
               onClick={goNow}
               disabled={gone}
               style={{
-                width: "100%", padding: "15px 24px",
+                width: "100%", padding: "14px",
                 background: gone ? "#D1D5DB" : NAVY,
-                color: "#fff", border: "none", borderRadius: "12px", fontSize: "16px",
-                fontWeight: "700", cursor: gone ? "default" : "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
-                boxShadow: gone ? "none" : "0 4px 16px rgba(0,59,149,0.25)",
+                color: "#fff", border: "none", borderRadius: "12px", fontSize: "15px",
+                fontWeight: "800", cursor: gone ? "default" : "pointer",
+                boxShadow: gone ? "none" : "0 4px 14px rgba(0,59,149,0.25)",
                 transition: "background 0.2s",
               }}>
-              {gone ? (
-                <span>Redirecting…</span>
-              ) : (
-                <>
-                  <span>Continue to {partner}</span>
-                  <span style={{ fontSize: "18px", marginLeft: "auto" }}>→</span>
-                </>
-              )}
+              {gone ? "Redirecting…" : `Continue to ${partner} →`}
             </button>
 
             <p style={{ textAlign: "center", fontSize: "11px", color: "#9CA3AF", margin: "12px 0 0" }}>
