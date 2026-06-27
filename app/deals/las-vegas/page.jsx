@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import FloatingChat from "../../components/FloatingChat";
@@ -9,7 +10,30 @@ const NAVY       = "#003B95";
 const ORANGE     = "#FF6600";
 const LIGHT_BLUE = "#EBF3FF";
 
-const HOTELS = [
+const WEEK3_HOTELS = [
+  {
+    name: "Circus Circus Hotel, Casino & Theme Park",
+    emoji: "🎪",
+    vibe: "Best family value on the Strip",
+    price: "From $41/night",
+    photo: "https://images.unsplash.com/photo-1605833556294-ea5c2a603e88?w=800&h=600&fit=crop&auto=format",
+    blurb: "Circus Circus is the ultimate family-friendly Vegas hotel — and at $41/night for July 4th weekend, it's an absolute steal. The kids will go wild at the Adventure Dome (Vegas's only indoor theme park), the midway carnival games, and the nightly acrobat shows. You're right on the Strip with easy access to everything, and you won't break the bank getting there.",
+    perks: ["Adventure Dome indoor theme park", "Nightly circus acts & acrobatics", "Multiple restaurants & food court", "Right on the Las Vegas Strip"],
+    link: "https://expedia.com/affiliates/workhomebalance_llc/hotel1dealsweek2",
+  },
+  {
+    name: "Planet Hollywood Resort & Casino",
+    emoji: "🎬",
+    vibe: "Hollywood glam meets the Strip",
+    price: "From $130/night",
+    photo: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&h=600&fit=crop&auto=format",
+    blurb: "Planet Hollywood puts you dead center on the Strip in a Hollywood-themed paradise. The rooms are spacious, the pool is stunning, and you're steps from the best shopping and dining in Vegas. With a rooftop pool, a packed events calendar, and the Miracle Mile Shops right inside the hotel — the 4th of July fireworks from here are going to be unforgettable.",
+    perks: ["Center Strip location", "Rooftop pool & spa", "Miracle Mile Shops on-site", "World-class dining & nightlife"],
+    link: "https://expedia.com/affiliates/workhomebalance_llc/hotel2dealsweek2",
+  },
+];
+
+const WEEK2_HOTELS = [
   {
     name: "Luxor Hotel & Casino",
     emoji: "🔺",
@@ -36,7 +60,60 @@ function openHotel(link) {
   window.location.href = `/redirect?to=${encodeURIComponent(link)}&partner=Expedia&product=hotel`;
 }
 
+function HotelGrid({ hotels }) {
+  return (
+    <>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "36px" }}>
+        {hotels.map((hotel, i) => (
+          <div key={i} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <button
+              onClick={() => openHotel(hotel.link)}
+              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", borderRadius: "14px", overflow: "hidden", display: "block", position: "relative", width: "100%" }}
+            >
+              <img
+                src={hotel.photo}
+                alt={hotel.name}
+                style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", display: "block" }}
+              />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%)" }} />
+              <div style={{ position: "absolute", bottom: "12px", left: "14px", right: "14px" }}>
+                <p style={{ color: "#fff", fontWeight: "800", fontSize: "15px", margin: 0, textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}>{hotel.emoji} {hotel.name}</p>
+                <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "12px", margin: "3px 0 0" }}>{hotel.vibe}</p>
+              </div>
+            </button>
+            <button
+              onClick={() => openHotel(hotel.link)}
+              style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "10px", padding: "11px", fontSize: "13px", fontWeight: "700", cursor: "pointer", width: "100%" }}
+            >
+              Book Now — {hotel.price} →
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ marginBottom: "32px" }}>
+        {hotels.map((hotel, i) => (
+          <div key={i} style={{ marginBottom: "28px" }}>
+            <h3 style={{ fontSize: "20px", fontWeight: "800", color: "#111827", margin: "0 0 10px", display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+              {hotel.emoji} {hotel.name}
+              <span style={{ background: ORANGE, color: "#fff", fontSize: "12px", fontWeight: "700", padding: "3px 9px", borderRadius: "6px" }}>{hotel.price}</span>
+            </h3>
+            <p style={{ fontSize: "15px", color: "#374151", lineHeight: 1.8, margin: "0 0 12px" }}>{hotel.blurb}</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+              {hotel.perks.map((perk, j) => (
+                <span key={j} style={{ background: LIGHT_BLUE, color: NAVY, fontSize: "12px", fontWeight: "600", padding: "4px 10px", borderRadius: "6px" }}>✓ {perk}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
 export default function LasVegasDealsPage() {
+  const [oldPostOpen, setOldPostOpen] = useState(false);
+
   return (
     <>
       <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
@@ -61,77 +138,32 @@ export default function LasVegasDealsPage() {
         {/* ARTICLE */}
         <div style={{ maxWidth: "860px", margin: "0 auto", padding: "48px 24px 80px" }}>
 
-          {/* Intro */}
+          {/* ── WEEK 3 POST (NEW) ── */}
           <div style={{ marginBottom: "36px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px", flexWrap: "wrap" }}>
               <span style={{ background: ORANGE, color: "#fff", fontSize: "11px", fontWeight: "700", padding: "4px 10px", borderRadius: "6px", textTransform: "uppercase" }}>Deal of the Week</span>
-              <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Las Vegas · Hotels · June 18, 2026</span>
+              <span style={{ fontSize: "12px", color: "#9CA3AF" }}>Las Vegas · Hotels · June 26, 2026</span>
             </div>
             <h2 style={{ fontSize: "clamp(22px, 3vw, 30px)", fontWeight: "800", color: "#111827", margin: "0 0 14px", lineHeight: 1.25 }}>
-              Luxor vs. Fontainebleau — Two Ways to Do Vegas
+              🎆 Quick Family Getaway for the 4th — Circus Circus vs. Planet Hollywood
             </h2>
             <p style={{ fontSize: "15px", color: "#6B7280", lineHeight: 1.75, margin: 0 }}>
-              4th of July weekend in Vegas is a different animal — fireworks over the Strip, packed pools, and energy like nowhere else. We're spotlighting two hotels at opposite ends of the budget so you can celebrate your way.
+              July 3–6 in Las Vegas means fireworks, pool parties, and nonstop energy on the Strip. Whether you're bringing the whole family or planning a grown-up escape, we've found two hotels that deliver — at very different price points. Circus Circus starts at just $41/night, making it one of the best family deals in Vegas this holiday weekend. Planet Hollywood comes in at $130/night for those who want a little more glam with their 4th of July celebration.
             </p>
           </div>
 
-          {/* Side-by-side hotel photos with affiliate links */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "36px" }}>
-            {HOTELS.map((hotel, i) => (
-              <div key={i} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                <button
-                  onClick={() => openHotel(hotel.link)}
-                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer", borderRadius: "14px", overflow: "hidden", display: "block", position: "relative", width: "100%" }}
-                >
-                  <img
-                    src={hotel.photo}
-                    alt={hotel.name}
-                    style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", display: "block" }}
-                  />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%)" }} />
-                  <div style={{ position: "absolute", bottom: "12px", left: "14px", right: "14px" }}>
-                    <p style={{ color: "#fff", fontWeight: "800", fontSize: "15px", margin: 0, textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}>{hotel.emoji} {hotel.name}</p>
-                    <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "12px", margin: "3px 0 0" }}>{hotel.vibe}</p>
-                  </div>
-                </button>
-                <button
-                  onClick={() => openHotel(hotel.link)}
-                  style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "10px", padding: "11px", fontSize: "13px", fontWeight: "700", cursor: "pointer", width: "100%" }}
-                >
-                  Book Now — {hotel.price} →
-                </button>
-              </div>
-            ))}
-          </div>
-
-          {/* Hotel descriptions in paragraph form */}
-          <div style={{ marginBottom: "32px" }}>
-            {HOTELS.map((hotel, i) => (
-              <div key={i} style={{ marginBottom: "28px" }}>
-                <h3 style={{ fontSize: "20px", fontWeight: "800", color: "#111827", margin: "0 0 10px", display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-                  {hotel.emoji} {hotel.name}
-                  <span style={{ background: ORANGE, color: "#fff", fontSize: "12px", fontWeight: "700", padding: "3px 9px", borderRadius: "6px" }}>{hotel.price}</span>
-                </h3>
-                <p style={{ fontSize: "15px", color: "#374151", lineHeight: 1.8, margin: "0 0 12px" }}>{hotel.blurb}</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                  {hotel.perks.map((perk, j) => (
-                    <span key={j} style={{ background: LIGHT_BLUE, color: NAVY, fontSize: "12px", fontWeight: "600", padding: "4px 10px", borderRadius: "6px" }}>✓ {perk}</span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          <HotelGrid hotels={WEEK3_HOTELS} />
 
           {/* Pro tip */}
           <div style={{ background: "#FFF7ED", border: `1.5px solid ${ORANGE}40`, borderRadius: "14px", padding: "18px 20px", display: "flex", gap: "12px", alignItems: "flex-start", marginBottom: "28px" }}>
             <span style={{ fontSize: "22px", flexShrink: 0 }}>💡</span>
             <p style={{ fontSize: "14px", color: "#374151", margin: 0, lineHeight: 1.7 }}>
-              <strong>Pro tip:</strong> Split your stay — Luxor for the first two nights, Fontainebleau for the last. You get the full Vegas experience without blowing your whole budget on one hotel.
+              <strong>Pro tip:</strong> Circus Circus is perfect if you're traveling with kids — the Adventure Dome alone is worth the trip. Planet Hollywood is the move if you want to be in the heart of the action for the 4th of July fireworks show on the Strip.
             </p>
           </div>
 
-          {/* Rewards + back */}
-          <div style={{ background: LIGHT_BLUE, borderRadius: "14px", padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
+          {/* Rewards */}
+          <div style={{ background: LIGHT_BLUE, borderRadius: "14px", padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px", marginBottom: "48px" }}>
             <div>
               <p style={{ fontWeight: "700", color: NAVY, fontSize: "14px", margin: "0 0 2px" }}>🏆 Earn rewards on these bookings</p>
               <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>5 pts per $1 · Cash back via Zelle, Cash App, or Venmo</p>
@@ -139,7 +171,49 @@ export default function LasVegasDealsPage() {
             <a href="/rewards" style={{ background: NAVY, color: "#fff", textDecoration: "none", fontSize: "13px", fontWeight: "700", padding: "9px 18px", borderRadius: "8px", whiteSpace: "nowrap" }}>Learn more →</a>
           </div>
 
-          <p style={{ textAlign: "center", marginTop: "32px", fontSize: "13px", color: "#9CA3AF" }}>
+          {/* ── DIVIDER ── */}
+          <div style={{ borderTop: "1.5px solid #E5E7EB", marginBottom: "32px" }} />
+
+          {/* ── WEEK 2 POST (COLLAPSIBLE) ── */}
+          <button
+            onClick={() => setOldPostOpen(!oldPostOpen)}
+            style={{ width: "100%", background: LIGHT_BLUE, border: `1.5px solid ${NAVY}20`, borderRadius: "12px", padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", marginBottom: oldPostOpen ? "24px" : "0" }}
+          >
+            <div style={{ textAlign: "left" }}>
+              <p style={{ fontSize: "11px", color: "#9CA3AF", margin: "0 0 2px", textTransform: "uppercase", fontWeight: "600" }}>Previous Deal · June 18, 2026</p>
+              <p style={{ fontSize: "16px", fontWeight: "800", color: NAVY, margin: 0 }}>Luxor vs. Fontainebleau — Two Ways to Do Vegas</p>
+            </div>
+            <span style={{ fontSize: "22px", color: NAVY, transform: oldPostOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease", flexShrink: 0, marginLeft: "12px" }}>⌄</span>
+          </button>
+
+          {oldPostOpen && (
+            <div>
+              <div style={{ marginBottom: "36px" }}>
+                <p style={{ fontSize: "15px", color: "#6B7280", lineHeight: 1.75, margin: 0 }}>
+                  4th of July weekend in Vegas is a different animal — fireworks over the Strip, packed pools, and energy like nowhere else. We're spotlighting two hotels at opposite ends of the budget so you can celebrate your way.
+                </p>
+              </div>
+
+              <HotelGrid hotels={WEEK2_HOTELS} />
+
+              <div style={{ background: "#FFF7ED", border: `1.5px solid ${ORANGE}40`, borderRadius: "14px", padding: "18px 20px", display: "flex", gap: "12px", alignItems: "flex-start", marginBottom: "28px" }}>
+                <span style={{ fontSize: "22px", flexShrink: 0 }}>💡</span>
+                <p style={{ fontSize: "14px", color: "#374151", margin: 0, lineHeight: 1.7 }}>
+                  <strong>Pro tip:</strong> Split your stay — Luxor for the first two nights, Fontainebleau for the last. You get the full Vegas experience without blowing your whole budget on one hotel.
+                </p>
+              </div>
+
+              <div style={{ background: LIGHT_BLUE, borderRadius: "14px", padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
+                <div>
+                  <p style={{ fontWeight: "700", color: NAVY, fontSize: "14px", margin: "0 0 2px" }}>🏆 Earn rewards on these bookings</p>
+                  <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>5 pts per $1 · Cash back via Zelle, Cash App, or Venmo</p>
+                </div>
+                <a href="/rewards" style={{ background: NAVY, color: "#fff", textDecoration: "none", fontSize: "13px", fontWeight: "700", padding: "9px 18px", borderRadius: "8px", whiteSpace: "nowrap" }}>Learn more →</a>
+              </div>
+            </div>
+          )}
+
+          <p style={{ textAlign: "center", marginTop: "40px", fontSize: "13px", color: "#9CA3AF" }}>
             ← <a href="/deals" style={{ color: NAVY, fontWeight: "600" }}>Back to all deals</a>
           </p>
 
