@@ -668,7 +668,6 @@ export default function HomePage() {
     </div>
     <FloatingChat />
     <Footer />
-    <NewsletterPopup />
     </>
   );
 }
