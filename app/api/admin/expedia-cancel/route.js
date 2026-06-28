@@ -172,12 +172,29 @@ export async function POST(req) {
       retractedBy:   body.adminEmail || "admin",
     });
 
-    // Update the original import record to mark as canceled
+    // Update the original import record to mark as canceled + grab Airtable record ID
+    let airtableBookingsLogId = null;
     if (importId) {
+      const importSnap = await adminDb.collection("expedia_imports").doc(importId).get().catch(() => null);
+      airtableBookingsLogId = importSnap?.data()?.airtableBookingsLogId || null;
       await adminDb.collection("expedia_imports").doc(importId).update({
         canceled: true,
         canceledAt: FieldValue.serverTimestamp(),
       }).catch(() => {});
+    }
+
+    // Update Airtable Bookings Log status to Cancelled
+    const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
+    const AIRTABLE_BASE    = process.env.AIRTABLE_BASE_ID;
+    if (AIRTABLE_API_KEY && AIRTABLE_BASE && airtableBookingsLogId) {
+      await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Bookings%20Log/${airtableBookingsLogId}`, {
+        method: "PATCH",
+        headers: {
+          "Authorization": `Bearer ${AIRTABLE_API_KEY}`,
+          "Content-Type":  "application/json",
+        },
+        body: JSON.stringify({ fields: { "Status": "Cancelled" } }),
+      }).catch(e => console.warn("[expedia-cancel] Airtable update error:", e));
     }
 
     // Get updated balance for response

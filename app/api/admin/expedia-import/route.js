@@ -357,8 +357,8 @@ export async function POST(req) {
       createdAt:    FieldValue.serverTimestamp(),
     });
 
-    // Log the import
-    await adminDb.collection("expedia_imports").add({
+    // Log the import — capture doc ref so we can attach Airtable record ID
+    const importRef = await adminDb.collection("expedia_imports").add({
       dedupKey:    row.dedupKey,
       uid,
       email,
@@ -368,6 +368,7 @@ export async function POST(req) {
       destination: row.destinationCity,
       bookingAmount: row.bookingAmount,
       commission:  row.commission,
+      bookingRef,
       pts,
       importedAt:  FieldValue.serverTimestamp(),
     });
@@ -381,11 +382,11 @@ export async function POST(req) {
       }).catch(() => {});
     }
 
-    // Log to Airtable Bookings Log
+    // Log to Airtable Bookings Log + store returned record ID for cancel lookups
     const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
     const AIRTABLE_BASE    = process.env.AIRTABLE_BASE_ID;
     if (AIRTABLE_API_KEY && AIRTABLE_BASE) {
-      await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Bookings%20Log`, {
+      const atRes = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Bookings%20Log`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${AIRTABLE_API_KEY}`,
@@ -401,12 +402,22 @@ export async function POST(req) {
             "Commission Earned":  row.commission    || 0,
             "Points Awarded":     pts,
             "Points Mode":        isDouble ? "Double" : "Standard",
+            "Booking Number":     bookingRef,
+            "Status":             "Awarded",
             "Date Awarded":       new Date().toISOString(),
             "Notes":              `Expedia: ${row.product || ""}${row.company ? ` · ${row.company}` : ""}`,
             "Awarded By":         body.adminEmail || "expedia-import",
           },
         }),
-      }).catch(e => console.warn("[expedia-import] Airtable log error:", e));
+      }).catch(e => { console.warn("[expedia-import] Airtable log error:", e); return null; });
+
+      // Store Airtable record ID on the import doc for cancel updates
+      if (atRes?.ok) {
+        const atData = await atRes.json().catch(() => null);
+        if (atData?.id) {
+          await importRef.update({ airtableBookingsLogId: atData.id }).catch(() => {});
+        }
+      }
     }
 
     // Email customer
