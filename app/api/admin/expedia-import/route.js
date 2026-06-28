@@ -381,6 +381,34 @@ export async function POST(req) {
       }).catch(() => {});
     }
 
+    // Log to Airtable Bookings Log
+    const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
+    const AIRTABLE_BASE    = process.env.AIRTABLE_BASE_ID;
+    if (AIRTABLE_API_KEY && AIRTABLE_BASE) {
+      await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Bookings%20Log`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${AIRTABLE_API_KEY}`,
+          "Content-Type":  "application/json",
+        },
+        body: JSON.stringify({
+          fields: {
+            "Customer Email":     email,
+            "Customer Name":      name || "",
+            "Product Type":       "Hotel",
+            "Partner / Property": row.product || row.destinationCity || "",
+            "Booking Amount":     row.bookingAmount || 0,
+            "Commission Earned":  row.commission    || 0,
+            "Points Awarded":     pts,
+            "Points Mode":        isDouble ? "Double" : "Standard",
+            "Date Awarded":       new Date().toISOString(),
+            "Notes":              `Expedia: ${row.product || ""}${row.company ? ` · ${row.company}` : ""}`,
+            "Awarded By":         body.adminEmail || "expedia-import",
+          },
+        }),
+      }).catch(e => console.warn("[expedia-import] Airtable log error:", e));
+    }
+
     // Email customer
     const siteUrl = process.env.NEXTAUTH_URL || "https://www.roomvoyagertravel.com";
     const userSnap = await adminDb.collection("users").doc(uid).get().catch(() => null);

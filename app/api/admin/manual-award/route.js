@@ -77,6 +77,35 @@ export async function POST(req) {
       console.warn("[manual-award] EmailJS not configured — skipping email");
     }
 
+    // ── 3. Log to Airtable Bookings Log ─────────────────────────────────────
+    const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
+    const AIRTABLE_BASE    = process.env.AIRTABLE_BASE_ID;
+    if (AIRTABLE_API_KEY && AIRTABLE_BASE) {
+      const commission = Math.round((parseFloat(amount) || 0) * 0.03 * 100) / 100;
+      await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Bookings%20Log`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${AIRTABLE_API_KEY}`,
+          "Content-Type":  "application/json",
+        },
+        body: JSON.stringify({
+          fields: {
+            "Customer Email":   normalizedEmail,
+            "Customer Name":    name || "",
+            "Product Type":     productLabel || "",
+            "Partner / Property": notes || "",
+            "Booking Amount":   parseFloat(amount) || 0,
+            "Commission Earned": commission,
+            "Points Awarded":   pts,
+            "Points Mode":      body.double ? "Double" : "Standard",
+            "Date Awarded":     new Date().toISOString(),
+            "Notes":            notes || "",
+            "Awarded By":       adminEmail,
+          },
+        }),
+      }).catch(e => console.warn("[manual-award] Airtable log error:", e));
+    }
+
     return Response.json({ ok: true, points: updated, emailOk });
 
   } catch (e) {
