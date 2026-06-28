@@ -88,6 +88,7 @@ function RedirectContent() {
     // Add to the right Brevo searcher list based on product
     const listTypeMap = { hotel: "searcher-hotel", flight: "searcher-flight", cruise: "searcher-cruise" };
     const listType = listTypeMap[product] || "searcher-hotel";
+    sessionStorage.setItem("rv_interest", product); // store for signup upgrade flow
     fetch("/api/brevo/add-contact", {
       method:  "POST",
       headers: { "Content-Type": "application/json" },

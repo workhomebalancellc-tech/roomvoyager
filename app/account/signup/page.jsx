@@ -82,10 +82,13 @@ function SignUpContent() {
       // Only add to Brevo if this is a brand new account (creation time ≈ last sign-in time)
       const isNewUser = firebaseUser.metadata.creationTime === firebaseUser.metadata.lastSignInTime;
       if (isNewUser) {
+        const interest = sessionStorage.getItem("rv_interest") || "";
+        const accountListMap = { hotel: "account-hotel", flight: "account-flight", cruise: "account-cruise" };
+        const listType = accountListMap[interest] || "account-created";
         fetch("/api/brevo/add-contact", {
           method:  "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: firebaseUser.email, firstName: firebaseUser.displayName?.split(" ")[0] || "" }),
+          body: JSON.stringify({ email: firebaseUser.email, firstName: firebaseUser.displayName?.split(" ")[0] || "", listType, upgrade: true }),
         }).catch(() => {});
       }
       router.push("/profile");
@@ -111,11 +114,14 @@ function SignUpContent() {
     try {
       const firebaseUser = await signUpWithEmail(name, email, password);
       if (referralCode) await applyReferralCode(firebaseUser.uid, referralCode);
-      // Add to Brevo "Account Created — No Booking" sequence
+      // Move to the right account list and remove from searcher lists
+      const interest = sessionStorage.getItem("rv_interest") || "";
+      const accountListMap = { hotel: "account-hotel", flight: "account-flight", cruise: "account-cruise" };
+      const listType = accountListMap[interest] || "account-created";
       fetch("/api/brevo/add-contact", {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: firebaseUser.email, firstName: name.split(" ")[0] || "" }),
+        body: JSON.stringify({ email: firebaseUser.email, firstName: name.split(" ")[0] || "", listType, upgrade: true }),
       }).catch(() => {});
       router.push("/profile");
     } catch (err) {
