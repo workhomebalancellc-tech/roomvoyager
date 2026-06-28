@@ -20,9 +20,11 @@ export async function POST(request) {
       "User Name":      userName   || "",
       "Clicked At":     new Date().toISOString(),
       "Status":         "Clicked",
-      "UTM Source":     utmSource  || "",
-      "UTM Medium":     utmMedium  || "",
-      "UTM Campaign":   utmCampaign || "",
+      // Only include UTM fields if they have values — avoids Airtable rejecting
+      // the record if the columns don't exist yet in the table
+      ...(utmSource   ? { "UTM Source":   utmSource }   : {}),
+      ...(utmMedium   ? { "UTM Medium":   utmMedium }   : {}),
+      ...(utmCampaign ? { "UTM Campaign": utmCampaign } : {}),
     };
 
     const res = await fetch(
