@@ -151,7 +151,18 @@ const PTS_RATES = {
 
 function ManualBookingLog({ adminEmail }) {
   const [promoActive, setPromoActive] = useState(false);
-  const [form, setForm] = useState({ guestEmail: "", product: "cruise", amount: "", double: false, notes: "" });
+  const [form, setForm] = useState({ guestEmail: "", product: "cruise", amount: "", double: false, notes: "", bookingDate: "" });
+  const [autoDouble, setAutoDouble] = useState(null); // null=unchecked, true=auto-double, false=auto-standard
+
+  async function checkPromoDate(date) {
+    if (!date) { setAutoDouble(null); return; }
+    try {
+      const res  = await fetch(`/api/admin/settings?checkDate=${date}`);
+      const data = await res.json();
+      setAutoDouble(!!data.doublePoints);
+      setForm(f => ({ ...f, double: !!data.doublePoints }));
+    } catch { setAutoDouble(null); }
+  }
 
   useEffect(() => {
     fetch("/api/admin/settings")
@@ -218,14 +229,16 @@ function ManualBookingLog({ adminEmail }) {
           pts,
           cash,
           double:       form.double,
+          bookingDate:  form.bookingDate || "",
           notes:        form.notes,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Award failed");
 
-      setResult({ ok: true, pts, name: preview?.memberName || form.guestEmail, newBalance: data.points });
-      setForm({ guestEmail: "", product: "cruise", amount: "", double: false, notes: "" });
+      setResult({ ok: true, pts: data.pts || pts, name: preview?.memberName || form.guestEmail, newBalance: data.points });
+      setForm({ guestEmail: "", product: "cruise", amount: "", double: false, notes: "", bookingDate: "" });
+      setAutoDouble(null);
       setPreview(null);
     } catch (err) {
       setResult({ ok: false, error: err.message });
@@ -279,6 +292,16 @@ function ManualBookingLog({ adminEmail }) {
             )}
           </div>
 
+          {/* Booking Date — auto-detects double points */}
+          <div>
+            <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Booking Date</label>
+            <input type="date" value={form.bookingDate}
+              onChange={e => { setForm(f => ({ ...f, bookingDate: e.target.value })); checkPromoDate(e.target.value); }}
+              style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "13px", boxSizing: "border-box", outline: "none" }} />
+            {autoDouble === true  && <p style={{ marginTop: "5px", fontSize: "12px", color: ORANGE, fontWeight: "700", margin: "5px 0 0" }}>🔥 Auto-detected: Double Points was active on this date</p>}
+            {autoDouble === false && <p style={{ marginTop: "5px", fontSize: "12px", color: "#6B7280", fontWeight: "600", margin: "5px 0 0" }}>✓ Standard points rate for this date</p>}
+          </div>
+
           {/* Product + Double */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
             <div>
@@ -289,13 +312,13 @@ function ManualBookingLog({ adminEmail }) {
               </select>
             </div>
             <div>
-              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Points Mode</label>
+              <label style={{ fontSize: "11px", fontWeight: "600", color: "#6B7280", display: "block", marginBottom: "3px" }}>Points Mode {autoDouble !== null && <span style={{ fontWeight: "400", color: "#9CA3AF" }}>(auto-set · override below)</span>}</label>
               <div style={{ display: "flex", gap: "6px", height: "36px", alignItems: "center" }}>
-                <button type="button" onClick={() => setForm(f => ({ ...f, double: false }))}
+                <button type="button" onClick={() => { setForm(f => ({ ...f, double: false })); setAutoDouble(null); }}
                   style={{ flex: 1, height: "36px", borderRadius: "8px", border: `1.5px solid ${!form.double ? NAVY : "#E5E7EB"}`, background: !form.double ? "#EBF3FF" : "#fff", fontSize: "12px", fontWeight: "700", cursor: "pointer", color: !form.double ? NAVY : "#6B7280" }}>
                   Standard
                 </button>
-                <button type="button" onClick={() => { if (canDbl) setForm(f => ({ ...f, double: true })); }} disabled={!canDbl}
+                <button type="button" onClick={() => { if (canDbl) { setForm(f => ({ ...f, double: true })); setAutoDouble(null); } }} disabled={!canDbl}
                   style={{ flex: 1, height: "36px", borderRadius: "8px", border: `1.5px solid ${form.double ? ORANGE : "#E5E7EB"}`, background: form.double ? "#FFF7ED" : "#F9FAFB", fontSize: "12px", fontWeight: "700", cursor: canDbl ? "pointer" : "not-allowed", color: form.double ? ORANGE : "#9CA3AF", opacity: canDbl ? 1 : 0.5 }}>
                   Double 🔥
                 </button>

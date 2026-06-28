@@ -6,7 +6,14 @@ import { adminDb } from "../../../../lib/firebase-admin";
 
 const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
 
-export async function GET() {
+export async function GET(req) {
+  // Optional ?checkDate=YYYY-MM-DD — returns whether double points was active on that date
+  const { searchParams } = new URL(req.url);
+  const checkDate = searchParams.get("checkDate");
+  if (checkDate) {
+    const isDouble = await isPromoActiveAt(new Date(checkDate + "T12:00:00"));
+    return Response.json({ doublePoints: isDouble });
+  }
   const doc = await adminDb.collection("settings").doc("promo").get();
   return Response.json(doc.exists ? doc.data() : { doublePointsOn: false, bookingTracking: true });
 }

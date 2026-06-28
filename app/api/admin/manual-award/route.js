@@ -4,6 +4,7 @@
 
 import { adminDb } from "../../../../lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
+import { isPromoActiveAt } from "../settings/route";
 
 const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
 
@@ -12,7 +13,18 @@ export const dynamic = "force-dynamic";
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { adminEmail, guestEmail, name, productLabel, amount, pts, cash, notes } = body;
+    const { adminEmail, guestEmail, name, productLabel, amount, pts: clientPts, cash, notes, bookingDate, double: clientDouble } = body;
+
+    // Server-side double-points check — overrides client if promo was active on booking date
+    let isDouble = !!clientDouble;
+    if (bookingDate) {
+      isDouble = await isPromoActiveAt(new Date(bookingDate + "T12:00:00"));
+    }
+    const rates     = { cruise: { std: 10, dbl: 20 }, hotel: { std: 5, dbl: 10 }, package: { std: 10, dbl: 20 }, flight: { std: 5, dbl: null } };
+    const product   = body.product || "hotel";
+    const rateObj   = rates[product] || rates.hotel;
+    const rate      = isDouble && rateObj.dbl ? rateObj.dbl : rateObj.std;
+    const pts       = bookingDate ? Math.round((parseFloat(amount) || 0) * rate) : (clientPts || 0);
 
     if (!ALLOWED_EMAILS.includes(adminEmail)) {
       return Response.json({ error: "Not authorized" }, { status: 403 });
@@ -106,7 +118,7 @@ export async function POST(req) {
       }).catch(e => console.warn("[manual-award] Airtable log error:", e));
     }
 
-    return Response.json({ ok: true, points: updated, emailOk });
+    return Response.json({ ok: true, points: updated, pts, emailOk });
 
   } catch (e) {
     console.error("[manual-award] error:", e);
