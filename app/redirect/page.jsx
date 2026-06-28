@@ -17,6 +17,15 @@ const PRODUCT_META = {
 
 const COUNTDOWN_SECS = 5;
 
+const pulseStyle = `
+  @keyframes rv-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(255,102,0,0.55); }
+    70%  { box-shadow: 0 0 0 12px rgba(255,102,0,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,102,0,0); }
+  }
+  .rv-pulse-btn { animation: rv-pulse 1.6s ease-out infinite; }
+`;
+
 function RedirectContent() {
   const params               = useSearchParams();
   const { user, loading }    = useAuth();
@@ -41,7 +50,7 @@ function RedirectContent() {
     }
   }, [loading, user]);
 
-  // Log to Airtable once emailReady is true (logged-in users)
+  // Log to Airtable + add to Brevo account list once emailReady is true (logged-in users)
   useEffect(() => {
     if (!to || !emailReady || loggedRef.current) return;
     loggedRef.current = true;
@@ -59,6 +68,20 @@ function RedirectContent() {
         utmCampaign: sessionStorage.getItem("utm_campaign") || "",
       }),
     }).catch(() => {});
+    // Add logged-in user to the account-specific Brevo list for the "no booking" re-engagement sequence
+    if (user?.email) {
+      const accountListMap = { hotel: "account-hotel", flight: "account-flight", cruise: "account-cruise" };
+      const listType = accountListMap[product] || "account-created";
+      fetch("/api/brevo/add-contact", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email:     user.email,
+          firstName: user.name?.split(" ")[0] || "",
+          listType,
+        }),
+      }).catch(() => {});
+    }
   }, [to, emailReady]);
 
 
@@ -126,6 +149,7 @@ function RedirectContent() {
   if (!user && !emailReady) {
     return (
       <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
+        <style>{pulseStyle}</style>
         <div style={{ background: NAVY, padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <a href="/" style={{ fontSize: "18px", fontWeight: "800", color: "#fff", textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
           <span style={{ fontSize: "12px", color: "#93C5FD" }}>Secure redirect</span>
@@ -185,6 +209,7 @@ function RedirectContent() {
                 />
                 <button
                   type="submit"
+                  className="rv-pulse-btn"
                   style={{ width: "100%", padding: "14px", background: NAVY, color: "#fff", border: "none", borderRadius: "12px", fontSize: "15px", fontWeight: "800", cursor: "pointer", boxShadow: "0 4px 14px rgba(0,59,149,0.25)" }}
                 >
                   Continue to {partner} →
@@ -215,6 +240,7 @@ function RedirectContent() {
   // ── Logged-in: disclosure + continue (matches guest page layout) ────────
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
+      <style>{pulseStyle}</style>
 
       <div style={{ background: NAVY, padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <a href="/" style={{ fontSize: "18px", fontWeight: "800", color: "#fff", textDecoration: "none" }}>Room<span style={{ color: ORANGE }}>Voyager</span></a>
@@ -275,6 +301,7 @@ function RedirectContent() {
             <button
               onClick={goNow}
               disabled={gone}
+              className={gone ? "" : "rv-pulse-btn"}
               style={{
                 width: "100%", padding: "14px",
                 background: gone ? "#D1D5DB" : NAVY,
