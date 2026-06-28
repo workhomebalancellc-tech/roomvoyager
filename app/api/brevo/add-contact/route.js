@@ -79,7 +79,7 @@ export async function POST(request) {
         email,
         attributes:    { FIRSTNAME: firstName || "" },
         listIds:       [targetList],
-        updateEnabled: false,
+        updateEnabled: true, // add to list even if contact already exists
       }),
     });
 
