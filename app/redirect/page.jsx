@@ -85,6 +85,14 @@ function RedirectContent() {
         utmCampaign: sessionStorage.getItem("utm_campaign") || "",
       }),
     }).catch(() => {});
+    // Add to the right Brevo searcher list based on product
+    const listTypeMap = { hotel: "searcher-hotel", flight: "searcher-flight", cruise: "searcher-cruise" };
+    const listType = listTypeMap[product] || "searcher-hotel";
+    fetch("/api/brevo/add-contact", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: emailInput, listType }),
+    }).catch(() => {});
     window.location.href = to;
   }
 

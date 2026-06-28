@@ -400,6 +400,12 @@ export default function HomePage() {
         utmCampaign:  sessionStorage.getItem("utm_campaign") || "",
       }),
     }).catch(() => {});
+    // Add to Brevo Hotel Searchers list
+    fetch("/api/brevo/add-contact", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: widgetEmail.trim(), listType: "searcher-hotel" }),
+    }).catch(() => {});
   }
 
   function openDest(destName) {
