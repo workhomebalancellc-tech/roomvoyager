@@ -502,19 +502,18 @@ export default function HomePage() {
                 </p>
               </div>
             )}
+            {/* Safari popup warning — overlays bottom of widget */}
+            {isSafari && widgetUnlocked && (
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "linear-gradient(135deg, #B45309 0%, #D97706 100%)", padding: "12px 16px", display: "flex", alignItems: "center", gap: "12px", zIndex: 10 }}>
+                <span style={{ fontSize: "22px", flexShrink: 0 }}>⚠️</span>
+                <p style={{ color: "#fff", fontSize: "13px", margin: 0, lineHeight: 1.5, fontWeight: "600" }}>
+                  <strong style={{ fontSize: "14px" }}>Results not opening?</strong> Go to{" "}
+                  <strong>Settings → Safari</strong> and turn off{" "}
+                  <strong>Block Pop-ups</strong>, then search again.
+                </p>
+              </div>
+            )}
           </div>
-
-          {/* Safari popup warning */}
-          {isSafari && widgetUnlocked && (
-            <div style={{ marginTop: "10px", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: "10px", padding: "10px 16px", display: "flex", alignItems: "center", gap: "10px", maxWidth: "475px", width: "100%", boxSizing: "border-box" }}>
-              <span style={{ fontSize: "18px", flexShrink: 0 }}>⚠️</span>
-              <p style={{ color: "#BFDBFE", fontSize: "12px", margin: 0, lineHeight: 1.5 }}>
-                <strong style={{ color: "#fff" }}>Using Safari?</strong> If search results don't open, go to{" "}
-                <strong style={{ color: "#fff" }}>Settings → Safari</strong> and turn off{" "}
-                <strong style={{ color: "#fff" }}>Block Pop-ups</strong>.
-              </p>
-            </div>
-          )}
 
           {/* Fade into trust bar */}
           <div style={{ height: "36px" }} />
