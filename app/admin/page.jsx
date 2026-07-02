@@ -1118,6 +1118,12 @@ function ExpediaImport({ adminEmail }) {
   const [awarding,  setAwarding]  = useState(null); // dedupKey being awarded
   // Per-row selected user (uid) — key = dedupKey
   const [selected,  setSelected]  = useState({});
+  const fileInputRef = useRef(null);
+
+  function clearAll() {
+    setCsvText(""); setRows([]); setMsg(""); setSelected({});
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
 
   function handleFile(e) {
     const file = e.target.files?.[0];
@@ -1190,12 +1196,18 @@ function ExpediaImport({ adminEmail }) {
       </div>
 
       <div style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "14px", flexWrap: "wrap" }}>
-        <input type="file" accept=".csv" onChange={handleFile}
+        <input ref={fileInputRef} type="file" accept=".csv" onChange={handleFile}
           style={{ fontSize: "12px", color: "#374151", border: "1.5px solid #D1D5DB", borderRadius: "8px", padding: "6px 10px", background: "#F9FAFB" }} />
         <button onClick={parseCSV} disabled={loading || !csvText.trim()}
           style={{ padding: "8px 16px", background: NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", opacity: loading || !csvText.trim() ? 0.6 : 1 }}>
           {loading ? "Parsing…" : "Parse CSV"}
         </button>
+        {(csvText || rows.length > 0) && (
+          <button onClick={clearAll}
+            style={{ padding: "8px 14px", background: "#F9FAFB", color: "#6B7280", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
+            ✕ Clear
+          </button>
+        )}
         {rows.length > 0 && (
           <span style={{ fontSize: "11px", color: "#6B7280" }}>
             {pendingRows.length} pending · {doneRows.length} already imported
@@ -1307,6 +1319,12 @@ function ExpediaCancelImport({ adminEmail }) {
   const [loading,    setLoading]    = useState(false);
   const [retracting, setRetracting] = useState(null); // dedupKey being retracted
   const [msg,        setMsg]        = useState("");
+  const fileInputRef = useRef(null);
+
+  function clearAll() {
+    setCsvText(""); setRows([]); setMsg("");
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
 
   function handleFile(e) {
     const file = e.target.files?.[0];
@@ -1371,12 +1389,18 @@ function ExpediaCancelImport({ adminEmail }) {
       </div>
 
       <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", marginBottom: "12px" }}>
-        <input type="file" accept=".csv" onChange={handleFile}
+        <input ref={fileInputRef} type="file" accept=".csv" onChange={handleFile}
           style={{ fontSize: "12px", color: "#374151", border: "1.5px solid #D1D5DB", borderRadius: "8px", padding: "6px 10px", background: "#F9FAFB" }} />
         <button onClick={parseCSV} disabled={loading || !csvText}
           style={{ padding: "8px 18px", background: loading ? "#D1D5DB" : NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: loading || !csvText ? "not-allowed" : "pointer" }}>
           {loading ? "Checking…" : "Check Cancellations"}
         </button>
+        {(csvText || rows.length > 0) && (
+          <button onClick={clearAll}
+            style={{ padding: "8px 14px", background: "#F9FAFB", color: "#6B7280", border: "1.5px solid #E5E7EB", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>
+            ✕ Clear
+          </button>
+        )}
       </div>
 
       {msg && (
