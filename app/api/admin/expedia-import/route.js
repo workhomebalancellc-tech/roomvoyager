@@ -389,7 +389,7 @@ export async function POST(req) {
     const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
     const AIRTABLE_BASE    = process.env.AIRTABLE_BASE_ID;
     if (AIRTABLE_API_KEY && AIRTABLE_BASE) {
-      const atRes = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Bookings%20Log`, {
+      const atRes = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Booking%20Logs`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${AIRTABLE_API_KEY}`,
@@ -412,7 +412,7 @@ export async function POST(req) {
             "Awarded By":         body.adminEmail || "expedia-import",
           },
         }),
-      }).catch(e => { console.warn("[expedia-import] Airtable log error:", e); return null; });
+      }).catch(e => { console.warn("[expedia-import] Airtable network error:", e); return null; });
 
       // Store Airtable record ID on the import doc for cancel updates
       if (atRes?.ok) {
@@ -420,6 +420,11 @@ export async function POST(req) {
         if (atData?.id) {
           await importRef.update({ airtableBookingsLogId: atData.id }).catch(() => {});
         }
+      } else if (atRes) {
+        const errBody = await atRes.json().catch(() => null);
+        console.error("[expedia-import] Airtable error:", atRes.status, JSON.stringify(errBody));
+        // Surface the error in the response so admin can see it
+        return Response.json({ ok: true, pts, bookingRef, airtableError: errBody?.error?.message || `Airtable ${atRes.status}` });
       }
     }
 

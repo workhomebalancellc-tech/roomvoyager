@@ -94,7 +94,7 @@ export async function POST(req) {
     const AIRTABLE_BASE    = process.env.AIRTABLE_BASE_ID;
     if (AIRTABLE_API_KEY && AIRTABLE_BASE) {
       const commission = Math.round((parseFloat(amount) || 0) * 0.03 * 100) / 100;
-      await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Bookings%20Log`, {
+      await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Booking%20Logs`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${AIRTABLE_API_KEY}`,

@@ -290,7 +290,12 @@ export default function HomePage() {
   const iframeRef                           = useRef(null);
   const iframeLoadCount                     = useRef(0);
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    const check = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      // Set a taller default on mobile so widget isn't cut off before postMessage fires
+      setWidgetHeight(h => h === 285 || h < 340 ? (mobile ? 400 : 285) : h);
+    };
     check();
     window.addEventListener("resize", check);
     // Detect Safari (includes iOS Safari)

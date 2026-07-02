@@ -187,7 +187,7 @@ export async function POST(req) {
     const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
     const AIRTABLE_BASE    = process.env.AIRTABLE_BASE_ID;
     if (AIRTABLE_API_KEY && AIRTABLE_BASE && airtableBookingsLogId) {
-      await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Bookings%20Log/${airtableBookingsLogId}`, {
+      await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/Booking%20Logs/${airtableBookingsLogId}`, {
         method: "PATCH",
         headers: {
           "Authorization": `Bearer ${AIRTABLE_API_KEY}`,

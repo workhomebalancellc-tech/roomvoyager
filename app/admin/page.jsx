@@ -1162,7 +1162,11 @@ function ExpediaImport({ adminEmail }) {
     const data = await res.json();
     if (res.ok) {
       setRows(prev => prev.map(r => r.dedupKey === row.dedupKey ? { ...r, alreadyImported: true } : r));
-      setMsg(`✓ ${row.pts?.toLocaleString()} pts awarded to ${click?.email || uid}`);
+      if (data.airtableError) {
+        setMsg(`✓ ${row.pts?.toLocaleString()} pts awarded to ${click?.email || uid} — ⚠️ Airtable log failed: ${data.airtableError}`);
+      } else {
+        setMsg(`✓ ${row.pts?.toLocaleString()} pts awarded to ${click?.email || uid}`);
+      }
     } else {
       setMsg("Error: " + (data.error || "Unknown"));
     }
