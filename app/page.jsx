@@ -617,7 +617,7 @@ export default function HomePage() {
 
       {/* REWARDS BANNER */}
       <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, #0052CC 100%)`, padding: "64px 24px", position: "relative", overflow: "hidden" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: "40px", alignItems: "center", position: "relative" }}>
+        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 2fr", gap: "48px", alignItems: "center", position: "relative" }}>
           {/* Left — copy */}
           <div>
             <p style={{ color: "#FFA366", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 14px" }}>💰 RoomVoyager Rewards</p>
@@ -626,23 +626,13 @@ export default function HomePage() {
             <p style={{ color: "#93C5FD", fontSize: "13px", margin: "0 0 28px" }}>Redeem for real money via Zelle, Cash App, or Venmo — no blackout dates</p>
             <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", display: "inline-block" }}>View Rewards Program →</a>
           </div>
-          {/* Center — video placeholder */}
+          {/* Right — video placeholder */}
           <div id="rewards-video" style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.4)", background: "rgba(0,0,0,0.35)", aspectRatio: "16/9", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", border: "2px dashed rgba(255,255,255,0.25)", cursor: "pointer" }}>
-            <div style={{ width: "56px", height: "56px", background: ORANGE, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "14px", boxShadow: "0 4px 20px rgba(255,102,0,0.5)" }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+            <div style={{ width: "72px", height: "72px", background: ORANGE, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "16px", boxShadow: "0 4px 20px rgba(255,102,0,0.5)" }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
             </div>
-            <p style={{ color: "#fff", fontSize: "14px", fontWeight: "700", margin: "0 0 4px" }}>How RoomVoyager Rewards Works</p>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "12px", margin: 0 }}>Video coming soon</p>
-          </div>
-          {/* Right — tiers */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-            {[["🧭","Explorer","0–9,999 pts","#6B7280"],["🌊","Voyager","10,000–24,999 pts","#3B82F6"],["⚓","Navigator","25,000–49,999 pts","#8B5CF6"],["⭐","Admiral","50,000+ pts",ORANGE]].map(([icon,tier,range,color],i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: "12px", background: "rgba(255,255,255,0.08)", borderRadius: "10px", padding: "10px 16px" }}>
-                <span style={{ fontSize: "20px" }}>{icon}</span>
-                <span style={{ color: "#fff", fontSize: "14px", fontWeight: "700", minWidth: "80px" }}>{tier}</span>
-                <span style={{ color: "#93C5FD", fontSize: "13px" }}>{range}</span>
-              </div>
-            ))}
+            <p style={{ color: "#fff", fontSize: "16px", fontWeight: "700", margin: "0 0 6px" }}>How RoomVoyager Rewards Works</p>
+            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "13px", margin: 0 }}>Video coming soon</p>
           </div>
         </div>
       </div>
