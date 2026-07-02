@@ -250,6 +250,9 @@ export async function POST(req) {
       // Skip flights (Air) — only process Lodging
       if (tripElement === "Air") continue;
 
+      // Skip cancelled bookings — no points should be awarded for cancelled trips
+      if (tripStatus === "CANCELED") continue;
+
       // Build a dedup key: bookedDate + product (so we don't re-import)
       const dedupKey = `${bookedDate}__${product}`;
       const existing = await adminDb.collection("expedia_imports")
