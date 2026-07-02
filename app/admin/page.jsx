@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 // Points management now goes through /api/admin/firestore (server-side, bypasses CSP/extensions)
 
