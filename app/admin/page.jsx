@@ -1243,7 +1243,9 @@ function ExpediaImport({ adminEmail }) {
                             <strong>{c.name || c.email}</strong>
                             {c.name ? ` · ${c.email}` : ""}
                             {c.destination ? ` · searched "${c.destination}"` : ""}
-                            <span style={{ color: "#9CA3AF", marginLeft: "6px" }}>{c.clickedAt?.split("T")[0]}</span>
+                            <span style={{ color: "#9CA3AF", marginLeft: "6px" }}>
+                              {c.clickedAt ? new Date(c.clickedAt).toLocaleString("en-US", { month: "2-digit", day: "2-digit", year: "numeric", hour: "numeric", minute: "2-digit", hour12: true }) : ""}
+                            </span>
                           </span>
                         </label>
                         );
