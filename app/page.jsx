@@ -449,13 +449,17 @@ export default function HomePage() {
           </p>
 
           {/* Flights & Cruises pills — above the widget */}
-          <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+          <div style={{ display: "flex", gap: "10px", marginBottom: "20px", flexWrap: "wrap", justifyContent: "center" }}>
             <a href="/flights" style={{ display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,255,255,0.13)", border: "1.5px solid rgba(255,255,255,0.28)", color: "#fff", borderRadius: "999px", padding: "9px 20px", fontSize: "13px", fontWeight: "600", textDecoration: "none", backdropFilter: "blur(6px)", whiteSpace: "nowrap" }}>
               ✈️ Search Flights
             </a>
             <a href="/cruises" style={{ display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,255,255,0.13)", border: "1.5px solid rgba(255,255,255,0.28)", color: "#fff", borderRadius: "999px", padding: "9px 20px", fontSize: "13px", fontWeight: "600", textDecoration: "none", backdropFilter: "blur(6px)", whiteSpace: "nowrap" }}>
               🚢 Search Cruises
             </a>
+            <button onClick={() => document.getElementById("rewards-video")?.scrollIntoView({ behavior: "smooth", block: "center" })}
+              style={{ display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,102,0,0.25)", border: "1.5px solid rgba(255,102,0,0.6)", color: "#FFA366", borderRadius: "999px", padding: "9px 20px", fontSize: "13px", fontWeight: "600", backdropFilter: "blur(6px)", whiteSpace: "nowrap", cursor: "pointer" }}>
+              ▶ How Rewards Work
+            </button>
           </div>
 
           {/* Expedia widget + email gate overlay */}
@@ -622,7 +626,7 @@ export default function HomePage() {
             <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", display: "inline-block" }}>View Rewards Program →</a>
           </div>
           {/* Center — video placeholder */}
-          <div style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.4)", background: "rgba(0,0,0,0.35)", aspectRatio: "16/9", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", border: "2px dashed rgba(255,255,255,0.25)", cursor: "pointer" }}>
+          <div id="rewards-video" style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.4)", background: "rgba(0,0,0,0.35)", aspectRatio: "16/9", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", border: "2px dashed rgba(255,255,255,0.25)", cursor: "pointer" }}>
             <div style={{ width: "56px", height: "56px", background: ORANGE, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "14px", boxShadow: "0 4px 20px rgba(255,102,0,0.5)" }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
             </div>
