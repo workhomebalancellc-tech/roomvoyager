@@ -1187,7 +1187,7 @@ function ExpediaImport({ adminEmail }) {
 
       <div style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "14px", flexWrap: "wrap" }}>
         <input type="file" accept=".csv" onChange={handleFile}
-          style={{ fontSize: "12px", color: "#374151" }} />
+          style={{ fontSize: "12px", color: "#374151", border: "1.5px solid #D1D5DB", borderRadius: "8px", padding: "6px 10px", background: "#F9FAFB" }} />
         <button onClick={parseCSV} disabled={loading || !csvText.trim()}
           style={{ padding: "8px 16px", background: NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", opacity: loading || !csvText.trim() ? 0.6 : 1 }}>
           {loading ? "Parsing…" : "Parse CSV"}
@@ -1368,7 +1368,7 @@ function ExpediaCancelImport({ adminEmail }) {
 
       <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", marginBottom: "12px" }}>
         <input type="file" accept=".csv" onChange={handleFile}
-          style={{ fontSize: "12px", color: "#374151" }} />
+          style={{ fontSize: "12px", color: "#374151", border: "1.5px solid #D1D5DB", borderRadius: "8px", padding: "6px 10px", background: "#F9FAFB" }} />
         <button onClick={parseCSV} disabled={loading || !csvText}
           style={{ padding: "8px 18px", background: loading ? "#D1D5DB" : NAVY, color: "#fff", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: loading || !csvText ? "not-allowed" : "pointer" }}>
           {loading ? "Checking…" : "Check Cancellations"}
