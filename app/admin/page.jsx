@@ -1175,12 +1175,15 @@ function ExpediaImport({ adminEmail }) {
   return (
     <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px" }}>
       <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>📥 Expedia Bookings Import</p>
-      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 16px" }}>
+      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 8px" }}>
         Download your bookings CSV from{" "}
         <a href="https://creator.expediagroup.com/app/performance" target="_blank" rel="noopener noreferrer"
           style={{ color: NAVY, fontWeight: "600" }}>Expedia Creator → Performance</a>
         , then upload it here. Only Lodging rows are processed (flights are skipped).
       </p>
+      <div style={{ marginBottom: "16px", padding: "8px 12px", background: "#FFF7ED", borderRadius: "8px", border: "1px solid #FED7AA", fontSize: "12px", color: "#92400E" }}>
+        ⏱️ <strong>Heads up:</strong> Expedia logs bookings approximately 5 hours after the customer actually books. When matching clicks, expect the user's click time to be ~5 hours <em>before</em> the booked timestamp in this file.
+      </div>
 
       <div style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "14px", flexWrap: "wrap" }}>
         <input type="file" accept=".csv" onChange={handleFile}
@@ -1356,9 +1359,12 @@ function ExpediaCancelImport({ adminEmail }) {
       <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 4px" }}>
         🚫 Expedia Cancellation Import
       </p>
-      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 14px" }}>
+      <p style={{ fontSize: "12px", color: "#6B7280", margin: "0 0 8px" }}>
         Upload a canceled bookings CSV to identify and retract points for canceled trips.
       </p>
+      <div style={{ marginBottom: "14px", padding: "8px 12px", background: "#FFF7ED", borderRadius: "8px", border: "1px solid #FED7AA", fontSize: "12px", color: "#92400E" }}>
+        ⏱️ <strong>Heads up:</strong> Expedia logs bookings approximately 5 hours after the customer actually books. Booked timestamps in this file will be ~5 hours later than the actual booking time.
+      </div>
 
       <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", marginBottom: "12px" }}>
         <input type="file" accept=".csv" onChange={handleFile}
