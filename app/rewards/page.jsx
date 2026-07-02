@@ -374,7 +374,7 @@ export default function RewardsPage() {
                 </div>
               </div>
               {/* Row 2 — secondary stats + redeem */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px", alignItems: "center" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px", alignItems: "center", marginBottom: pendingPoints > 0 ? "20px" : 0, paddingBottom: pendingPoints > 0 ? "20px" : 0, borderBottom: pendingPoints > 0 ? "1px solid rgba(255,255,255,0.15)" : "none" }}>
                 <div>
                   <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Lifetime Earned</p>
                   <p style={{ color: "#fff", fontSize: "22px", fontWeight: "800", margin: 0 }}>{lifetimePoints.toLocaleString()} pts</p>
@@ -394,6 +394,17 @@ export default function RewardsPage() {
                   )}
                 </div>
               </div>
+              {/* Row 3 — Pending Points (only shown when > 0) */}
+              {pendingPoints > 0 && (
+                <div style={{ display: "flex", alignItems: "center", gap: "14px", background: "rgba(251,191,36,0.12)", border: "1px solid rgba(251,191,36,0.35)", borderRadius: "12px", padding: "14px 20px" }}>
+                  <span style={{ fontSize: "22px", flexShrink: 0 }}>⏳</span>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ color: "#FCD34D", fontSize: "11px", fontWeight: "700", margin: "0 0 2px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Pending Points</p>
+                    <p style={{ color: "#fff", fontSize: "18px", fontWeight: "800", margin: 0 }}>{pendingPoints.toLocaleString()} pts · ${(pendingPoints / 1000).toFixed(2)} coming</p>
+                  </div>
+                  <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "12px", margin: 0, textAlign: "right", flexShrink: 0 }}>Available 45 days<br />after checkout</p>
+                </div>
+              )}
             </div>
           ) : (
             <>
