@@ -1142,10 +1142,11 @@ function ExpediaImport({ adminEmail }) {
   }
 
   async function awardRow(row) {
-    const uid = selected[row.dedupKey];
-    if (!uid) { setMsg("Select a user for this row first."); return; }
-    // Find the click record for context
-    const click = row.matchingClicks.find(c => c.uid === uid);
+    const clickKey = selected[row.dedupKey];
+    if (!clickKey) { setMsg("Select a user for this row first."); return; }
+    // Find the click record by clickId or uid+date combo
+    const click = row.matchingClicks.find(c => (c.clickId || `${c.uid}_${c.clickedAt}`) === clickKey);
+    const uid = click?.uid || clickKey;
     setAwarding(row.dedupKey);
     const res = await fetch("/api/admin/expedia-import", {
       method: "POST", headers: { "Content-Type": "application/json" },
@@ -1231,11 +1232,13 @@ function ExpediaImport({ adminEmail }) {
                       🔍 {row.matchingClicks.length} matching user click{row.matchingClicks.length !== 1 ? "s" : ""} found:
                     </p>
                     <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                      {row.matchingClicks.map(c => (
-                        <label key={c.uid} style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
-                          <input type="radio" name={row.dedupKey} value={c.uid}
-                            checked={selected[row.dedupKey] === c.uid}
-                            onChange={() => setSelected(s => ({ ...s, [row.dedupKey]: c.uid }))} />
+                      {row.matchingClicks.map(c => {
+                        const clickKey = c.clickId || `${c.uid}_${c.clickedAt}`;
+                        return (
+                        <label key={clickKey} style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
+                          <input type="radio" name={row.dedupKey} value={clickKey}
+                            checked={selected[row.dedupKey] === clickKey}
+                            onChange={() => setSelected(s => ({ ...s, [row.dedupKey]: clickKey }))} />
                           <span style={{ fontSize: "12px", color: "#111827" }}>
                             <strong>{c.name || c.email}</strong>
                             {c.name ? ` · ${c.email}` : ""}
@@ -1243,7 +1246,8 @@ function ExpediaImport({ adminEmail }) {
                             <span style={{ color: "#9CA3AF", marginLeft: "6px" }}>{c.clickedAt?.split("T")[0]}</span>
                           </span>
                         </label>
-                      ))}
+                        );
+                      })}
                     </div>
                   </>
                 ) : (
