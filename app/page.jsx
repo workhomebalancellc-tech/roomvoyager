@@ -308,6 +308,11 @@ export default function HomePage() {
     });
     // Listen for widget height from iframe postMessage
     function onMessage(e) {
+      // TEMP: log all messages from the widget iframe to discover what Expedia sends
+      if (iframeRef.current && e.source === iframeRef.current.contentWindow) {
+        console.log("[RV iframe msg]", JSON.stringify(e.data));
+      }
+
       if (e.data && e.data.egWidgetHeight) {
         const reported = e.data.egWidgetHeight + 20; // +20px buffer so button never clips
         const maxH = window.innerWidth < 768 ? 420 : 320; // cap on desktop
