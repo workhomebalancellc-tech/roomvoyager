@@ -626,14 +626,14 @@ export default function HomePage() {
             <p style={{ color: "#93C5FD", fontSize: "13px", margin: "0 0 28px" }}>Redeem for real money via Zelle, Cash App, or Venmo — no blackout dates</p>
             <a href="/rewards" style={{ background: ORANGE, color: "#fff", padding: "13px 28px", borderRadius: "10px", fontSize: "15px", fontWeight: "700", textDecoration: "none", display: "inline-block" }}>View Rewards Program →</a>
           </div>
-          {/* Right — video placeholder */}
-          <div id="rewards-video" style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.4)", background: "rgba(0,0,0,0.35)", aspectRatio: "16/9", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", border: "2px dashed rgba(255,255,255,0.25)", cursor: "pointer" }}>
-            <div style={{ width: "72px", height: "72px", background: ORANGE, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "16px", boxShadow: "0 4px 20px rgba(255,102,0,0.5)" }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <p style={{ color: "#fff", fontSize: "16px", fontWeight: "700", margin: "0 0 6px" }}>How RoomVoyager Rewards Works</p>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "13px", margin: 0 }}>Video coming soon</p>
-          </div>
+          {/* Right — rewards explainer video */}
+          <video
+            id="rewards-video"
+            src="/RoomVoyager%20Explained.mp4"
+            controls
+            playsInline
+            style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.4)", width: "100%", display: "block" }}
+          />
         </div>
       </div>
 
