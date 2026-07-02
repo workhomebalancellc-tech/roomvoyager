@@ -629,7 +629,7 @@ export default function HomePage() {
           {/* Right — rewards explainer video */}
           <video
             id="rewards-video"
-            src="/RoomVoyager%20Explained.mp4"
+            src="/Final_RoomVoyagerExplained.mp4"
             controls
             playsInline
             style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.4)", width: "100%", display: "block" }}
