@@ -1214,7 +1214,7 @@ function ExpediaImport({ adminEmail }) {
                     {row.destinationCity}{row.country ? ` · ${row.country}` : ""} · {row.startDate}{row.endDate ? ` → ${row.endDate}` : ""} · {row.travelers} guest{row.travelers !== 1 ? "s" : ""}
                   </p>
                   <p style={{ fontSize: "11px", color: "#6B7280", margin: "2px 0 0" }}>
-                    Booked: {row.bookedDate?.split(" ")[0]} · Status: <strong>{row.tripStatus}</strong>
+                    Booked: {row.bookedDate ? new Date(row.bookedDate).toLocaleString("en-US", { month: "2-digit", day: "2-digit", year: "numeric", hour: "numeric", minute: "2-digit", hour12: true }) : ""} · Status: <strong>{row.tripStatus}</strong>
                   </p>
                 </div>
                 <div style={{ textAlign: "right" }}>
