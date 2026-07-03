@@ -19,11 +19,16 @@ const COUNTDOWN_SECS = 5;
 
 const pulseStyle = `
   @keyframes rv-pulse {
-    0%   { box-shadow: 0 0 0 0 rgba(255,102,0,0.55); }
-    70%  { box-shadow: 0 0 0 12px rgba(255,102,0,0); }
-    100% { box-shadow: 0 0 0 0 rgba(255,102,0,0); }
+    0%   { box-shadow: 0 0 0 0 rgba(255,102,0,0.85), 0 0 0 0 rgba(255,102,0,0.4); }
+    50%  { box-shadow: 0 0 0 14px rgba(255,102,0,0.3), 0 0 0 28px rgba(255,102,0,0.1); }
+    100% { box-shadow: 0 0 0 28px rgba(255,102,0,0), 0 0 0 52px rgba(255,102,0,0); }
   }
-  .rv-pulse-btn { animation: rv-pulse 1.6s ease-out infinite; }
+  .rv-pulse-btn {
+    animation: rv-pulse 1.4s ease-out infinite;
+    border: 3px solid ${ORANGE} !important;
+    outline: 2px solid rgba(255,102,0,0.4);
+    outline-offset: 3px;
+  }
 `;
 
 function RedirectContent() {
