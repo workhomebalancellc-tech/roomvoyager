@@ -442,11 +442,13 @@ export default function HomePage() {
       {/* HERO — widget-first */}
       <div style={{ position: "relative", overflow: "hidden", background: "#001E64" }}>
         <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&h=800&fit=crop&auto=format" alt="Luxury hotel" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.25 }} />
-        {/* How Rewards Work — bottom right corner */}
-        <button onClick={() => document.getElementById("rewards-video")?.scrollIntoView({ behavior: "smooth", block: "center" })}
-          style={{ position: "absolute", bottom: "16px", right: "16px", zIndex: 10, display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,102,0,0.85)", border: "none", color: "#fff", borderRadius: "999px", padding: "9px 18px", fontSize: "13px", fontWeight: "700", backdropFilter: "blur(6px)", whiteSpace: "nowrap", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
-          ▶ How Rewards Work
-        </button>
+        {/* How Rewards Work — bottom right corner (desktop only) */}
+        {!isMobile && (
+          <button onClick={() => document.getElementById("rewards-video")?.scrollIntoView({ behavior: "smooth", block: "center" })}
+            style={{ position: "absolute", bottom: "16px", right: "16px", zIndex: 10, display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,102,0,0.85)", border: "none", color: "#fff", borderRadius: "999px", padding: "9px 18px", fontSize: "13px", fontWeight: "700", backdropFilter: "blur(6px)", whiteSpace: "nowrap", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
+            ▶ How Rewards Work
+          </button>
+        )}
         <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", padding: "52px 24px 0", textAlign: "center" }}>
           <p style={{ color: "#93C5FD", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 12px" }}>🏨 Powered by Expedia</p>
           <h1 style={{ color: "#fff", fontSize: "clamp(28px, 4.5vw, 50px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.15, textShadow: "0 2px 16px rgba(0,0,0,0.4)" }}>
@@ -513,6 +515,15 @@ export default function HomePage() {
                   {" "}or{" "}
                   <a href="/account/signup" style={{ color: "#93C5FD", fontWeight: "700" }}>creating a free account</a>
                 </p>
+              </div>
+            )}
+            {/* How Rewards Work — mobile only, sits in widget white space */}
+            {isMobile && (
+              <div style={{ background: "#fff", padding: "10px 16px 12px", display: "flex", justifyContent: "center" }}>
+                <button onClick={() => document.getElementById("rewards-video")?.scrollIntoView({ behavior: "smooth", block: "center" })}
+                  style={{ display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,102,0,0.85)", border: "none", color: "#fff", borderRadius: "999px", padding: "9px 20px", fontSize: "13px", fontWeight: "700", whiteSpace: "nowrap", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
+                  ▶ How Rewards Work
+                </button>
               </div>
             )}
             {/* Safari popup warning — overlays bottom of widget */}
