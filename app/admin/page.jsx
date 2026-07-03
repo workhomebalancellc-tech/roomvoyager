@@ -2504,6 +2504,7 @@ export default function AdminDashboard() {
                 { label: "Creatomate", desc: "Deal of the Week video creation", href: "https://app.creatomate.com", icon: "🎬" },
                 { label: "Make", desc: "Automation (Sheets → Creatomate pipeline)", href: "https://us2.make.com", icon: "⚙️" },
                 { label: "TikTok Studio", desc: "Video publishing", href: "https://studio.tiktok.com", icon: "🎵" },
+                { label: "Unsplash", desc: "Stock photos used throughout the site", href: "https://unsplash.com", icon: "📷" },
               ],
             },
             {
@@ -2512,7 +2513,6 @@ export default function AdminDashboard() {
                 { label: "Expedia", desc: "Hotel search widget source", href: "https://expedia.com", icon: "🏨" },
                 { label: "Kiwi.com", desc: "Flight search", href: "https://kiwi.com", icon: "✈️" },
                 { label: "Cruisebound", desc: "Cruise search widget", href: "https://cruisebound.com", icon: "🚢" },
-                { label: "Unsplash", desc: "Stock photos used throughout the site", href: "https://unsplash.com", icon: "📷" },
               ],
             },
           ].map((section, si) => (
