@@ -517,15 +517,6 @@ export default function HomePage() {
                 </p>
               </div>
             )}
-            {/* How Rewards Work — mobile only, sits in widget white space */}
-            {isMobile && (
-              <div style={{ background: "#fff", padding: "10px 16px 12px", display: "flex", justifyContent: "center" }}>
-                <button onClick={() => document.getElementById("rewards-video")?.scrollIntoView({ behavior: "smooth", block: "center" })}
-                  style={{ display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,102,0,0.85)", border: "none", color: "#fff", borderRadius: "999px", padding: "9px 20px", fontSize: "13px", fontWeight: "700", whiteSpace: "nowrap", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
-                  ▶ How Rewards Work
-                </button>
-              </div>
-            )}
             {/* Safari popup warning — overlays bottom of widget */}
             {isSafari && widgetUnlocked && (
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "linear-gradient(135deg, #B45309 0%, #D97706 100%)", padding: "12px 16px", display: "flex", alignItems: "center", gap: "12px", zIndex: 10 }}>
@@ -538,6 +529,16 @@ export default function HomePage() {
               </div>
             )}
           </div>
+
+          {/* How Rewards Work — mobile only, below widget */}
+          {isMobile && (
+            <div style={{ marginTop: "14px", display: "flex", justifyContent: "center" }}>
+              <button onClick={() => document.getElementById("rewards-video")?.scrollIntoView({ behavior: "smooth", block: "center" })}
+                style={{ display: "flex", alignItems: "center", gap: "7px", background: "rgba(255,102,0,0.85)", border: "none", color: "#fff", borderRadius: "999px", padding: "9px 20px", fontSize: "13px", fontWeight: "700", whiteSpace: "nowrap", cursor: "pointer", boxShadow: "0 4px 14px rgba(255,102,0,0.4)" }}>
+                ▶ How Rewards Work
+              </button>
+            </div>
+          )}
 
           {/* Fade into trust bar */}
           <div style={{ height: "36px" }} />
