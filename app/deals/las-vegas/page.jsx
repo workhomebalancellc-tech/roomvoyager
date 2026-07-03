@@ -28,7 +28,7 @@ const DEALS = [
         photo: "/sahara1.jpg",
         blurb: "Don't let the price fool you — the SAHARA is a full resort experience at a fraction of the cost. Sitting at the north end of the Strip, it's got pools, a casino, multiple restaurants, and a retro-cool vibe that feels genuinely fresh. At $157/night for the 4th of July weekend, it's one of the best deals in Vegas right now. Three nights under $500 while the rest of the Strip charges double.",
         perks: ["Pool parties & entertainment", "Full casino floor", "Multiple dining options", "Easy Strip access"],
-        link: "https://expedia.com/affiliates/workhomebalance_llc/hotel1dealsweek3",
+        link: "https://expedia.com/affiliates/workhomebalance_llc/vegasdeals3_2",
         articlePhoto: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400&h=400&fit=crop&auto=format",
       },
       {
@@ -39,7 +39,7 @@ const DEALS = [
         photo: "/cosmopolitan1.jpg",
         blurb: "The Cosmopolitan sits dead center on the Strip between Bellagio and Aria — there is no better address for the 4th of July. The rooms are stunning, the Boulevard Pool is legendary, and the dining lineup is world-class: Eggslut, Wicked Spoon, Momofuku, and more. Watching fireworks from this property on Independence Day is the kind of memory that sticks. Three nights earns you over 8,000 RoomVoyager points — that's $8.25 in real cash back.",
         perks: ["Center Strip location", "Boulevard Pool — legendary on the 4th", "World-class dining on-site", "Unforgettable fireworks views"],
-        link: "https://expedia.com/affiliates/workhomebalance_llc/hotel2dealsweek3",
+        link: "https://expedia.com/affiliates/workhomebalance_llc/vegasdeal3_1",
         articlePhoto: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400&h=400&fit=crop&auto=format",
       },
     ],
