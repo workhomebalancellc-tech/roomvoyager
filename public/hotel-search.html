@@ -20,6 +20,17 @@
     data-pubref="">
   </div>
 
+  <!-- Set pubref from URL param before widget initializes -->
+  <script>
+    (function () {
+      var pubref = new URLSearchParams(window.location.search).get('pubref') || '';
+      if (pubref) {
+        var w = document.querySelector('.eg-widget');
+        if (w) w.setAttribute('data-pubref', pubref);
+      }
+    })();
+  </script>
+
   <!-- Auto-resize: measure the widget element itself, not body -->
   <script>
     var checks = 0;

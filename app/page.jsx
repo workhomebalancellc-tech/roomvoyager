@@ -284,6 +284,7 @@ export default function HomePage() {
   const [isMobile, setIsMobile] = useState(false);
   const [widgetEmail, setWidgetEmail]       = useState("");
   const [widgetUnlocked, setWidgetUnlocked] = useState(false);
+  const [iframePubref, setIframePubref]     = useState("");
   const [widgetHovered, setWidgetHovered]   = useState(false);
   const [isSafari, setIsSafari]             = useState(false);
   const [widgetHeight, setWidgetHeight]     = useState(285);
@@ -325,6 +326,7 @@ export default function HomePage() {
   useEffect(() => {
     if (!authLoading && user?.email) {
       setWidgetUnlocked(true);
+      setIframePubref(user.email);
       // Track widget unlock once per 24 hours per user
       const storageKey = `rv_widget_tracked_${user.uid}`;
       const lastTracked = localStorage.getItem(storageKey);
@@ -389,6 +391,7 @@ export default function HomePage() {
     e.preventDefault();
     if (!widgetEmail.trim()) return;
     setWidgetUnlocked(true);
+    setIframePubref(widgetEmail.trim());
     sessionStorage.setItem("rv_widget_email", widgetEmail.trim());
     // Log to Airtable with UTM params
     fetch("/api/link-clicks", {
@@ -470,7 +473,7 @@ export default function HomePage() {
           >
             <iframe
               ref={iframeRef}
-              src="/hotel-search.html?v=5"
+              src={`/hotel-search.html?v=5${iframePubref ? `&pubref=${encodeURIComponent(iframePubref)}` : ""}`}
               title="Hotel Search"
               scrolling="no"
               allow="popups"
