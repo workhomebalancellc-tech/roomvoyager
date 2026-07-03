@@ -289,7 +289,6 @@ export default function HomePage() {
   const [widgetHeight, setWidgetHeight]     = useState(285);
   const iframeRef                           = useRef(null);
   const iframeLoadCount                     = useRef(0);
-  const widgetSearchData                    = useRef({});
   useEffect(() => {
     const check = () => {
       const mobile = window.innerWidth < 768;
@@ -313,10 +312,6 @@ export default function HomePage() {
         const reported = e.data.egWidgetHeight + 20; // +20px buffer so button never clips
         const maxH = window.innerWidth < 768 ? 420 : 320; // cap on desktop
         setWidgetHeight(Math.min(reported, maxH));
-      }
-      // Capture widget search intent (destination, dates, guests)
-      if (e.data && e.data.rvWidgetInput) {
-        widgetSearchData.current = e.data.rvWidgetInput;
       }
     }
     window.addEventListener("message", onMessage);
@@ -377,12 +372,11 @@ export default function HomePage() {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          partner:    "Expedia",
-          product:    "hotel",
-          url:        "widget-search-click",
-          userEmail:  email,
-          userName:   name,
-          searchData: widgetSearchData.current,
+          partner:   "Expedia",
+          product:   "hotel",
+          url:       "widget-search-click",
+          userEmail: email,
+          userName:  name,
         }),
       }).catch(() => {});
     }

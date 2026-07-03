@@ -36,35 +36,8 @@
     }, 100);
   </script>
 
-  <!-- Capture widget keystrokes and send to parent page -->
-  <script>
-    (function () {
-      var captured = {};
 
-      function send(key, val) {
-        if (!key || val === undefined) return;
-        captured[key] = val;
-        window.parent.postMessage({ rvWidgetInput: Object.assign({}, captured) }, '*');
-      }
-
-      function attach(el) {
-        if (el.dataset.rvTracked) return;
-        el.dataset.rvTracked = '1';
-        var key = el.name || el.getAttribute('aria-label') || el.placeholder || el.id || el.type;
-        el.addEventListener('input',  function () { send(key, el.value); });
-        el.addEventListener('change', function () { send(key, el.value); });
-      }
-
-      function scan() {
-        document.querySelectorAll('input, select, textarea').forEach(attach);
-      }
-
-      new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
-      scan();
-    })();
-  </script>
-
-  <!-- Expedia widget script MUST come after the div -->
+<!-- Expedia widget script MUST come after the div -->
   <script
     class="eg-widgets-script"
     src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js">
