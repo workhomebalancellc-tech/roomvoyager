@@ -2501,7 +2501,7 @@ export default function AdminDashboard() {
             {
               category: "Video & Automation",
               links: [
-                { label: "Creatomate", desc: "Deal of the Week video creation", href: "https://app.creatomate.com", icon: "🎬" },
+                { label: "Creatomate", desc: "Deal of the Week video creation", href: "https://creatomate.com/sign-in", icon: "🎬" },
                 { label: "Make", desc: "Automation (Sheets → Creatomate pipeline)", href: "https://us2.make.com", icon: "⚙️" },
                 { label: "TikTok Studio", desc: "Video publishing", href: "https://studio.tiktok.com", icon: "🎵" },
                 { label: "Unsplash", desc: "Stock photos used throughout the site", href: "https://unsplash.com", icon: "📷" },
