@@ -31,12 +31,6 @@ const TOOLS = [
   { icon: "📊", label: "Airtable",             href: "https://airtable.com", desc: "Quotes · Call Requests · Link Clicks · Redemptions", external: true },
   { icon: "🌐", label: "Live Site",             href: "https://www.roomvoyagertravel.com", desc: "Open your live website", external: true },
   { icon: "💳", label: "Virtual Card",          href: "https://privacy.com", desc: "Create a virtual card for demo bookings", external: true },
-  { icon: "⚙️", label: "Make.com",             href: "https://us2.make.com/2463991", desc: "Automation scenarios — video rendering pipeline", external: true },
-  { icon: "🎬", label: "Firebase Storage",      href: "https://console.firebase.google.com/project/roomvoyager-46b98/storage", desc: "Rendered MP4 videos (motionmint/ folder)", external: true },
-  { icon: "🚂", label: "Railway",               href: "https://railway.app", desc: "MotionMint AI server hosting — video render API", external: true },
-  { icon: "📋", label: "Google Sheets",         href: "https://docs.google.com/spreadsheets", desc: "Deal data sheet — hotel photos, cities, scripts", external: true },
-  { icon: "💻", label: "Google Apps Script",    href: "https://script.google.com", desc: "Automation scripts — photo URL updates, row triggers", external: true },
-  { icon: "🐙", label: "GitHub",                href: "https://github.com", desc: "RoomVoyager source code & Deals photo hosting", external: true },
 ];
 
 // basePts = standard pts/$1 · baseDoublePts = double pts/$1 (null = not eligible)
@@ -2498,7 +2492,7 @@ export default function AdminDashboard() {
             {
               category: "Backend & Database",
               links: [
-                { label: "Firebase Console", desc: "Auth, Firestore database, storage", href: "https://console.firebase.google.com", icon: "🔥" },
+                { label: "Firebase Console", desc: "Auth, Firestore database, storage (motionmint/ = rendered MP4 videos)", href: "https://console.firebase.google.com/project/roomvoyager-46b98/storage", icon: "🔥" },
                 { label: "Airtable", desc: "Link click tracking & quote logs", href: "https://airtable.com", icon: "📋" },
                 { label: "EmailJS", desc: "Contact forms & newsletter", href: "https://emailjs.com", icon: "📧" },
                 { label: "Zoho Mail", desc: "admin@roomvoyagertravel.com inbox", href: "https://mail.zoho.com", icon: "📬" },
@@ -2508,7 +2502,10 @@ export default function AdminDashboard() {
               category: "Video & Automation",
               links: [
                 { label: "Creatomate", desc: "Deal of the Week video creation", href: "https://creatomate.com/sign-in", icon: "🎬" },
-                { label: "Make", desc: "Automation (Sheets → Creatomate pipeline)", href: "https://us2.make.com", icon: "⚙️" },
+                { label: "Make", desc: "Automation — Sheets → MotionMint AI pipeline (scenario 5567560)", href: "https://us2.make.com/2463991", icon: "⚙️" },
+                { label: "Railway", desc: "MotionMint AI server — video render API", href: "https://railway.app", icon: "🚂" },
+                { label: "Google Sheets", desc: "Deal data — hotel photos, city info, video scripts", href: "https://docs.google.com/spreadsheets", icon: "📋" },
+                { label: "Google Apps Script", desc: "Automation scripts — photo URL updates, row triggers", href: "https://script.google.com", icon: "💻" },
                 { label: "TikTok Studio", desc: "Video publishing", href: "https://studio.tiktok.com", icon: "🎵" },
                 { label: "Unsplash", desc: "Stock photos used throughout the site", href: "https://unsplash.com", icon: "📷" },
               ],
