@@ -2506,6 +2506,8 @@ export default function AdminDashboard() {
                 { label: "Railway", desc: "MotionMint AI server — video render API", href: "https://railway.app", icon: "🚂" },
                 { label: "Google Sheets", desc: "Deal data — hotel photos, city info, video scripts", href: "https://docs.google.com/spreadsheets", icon: "📋" },
                 { label: "Google Apps Script", desc: "Automation scripts — photo URL updates, row triggers", href: "https://script.google.com", icon: "💻" },
+                { label: "OpenAI", desc: "GPT script generation for MotionMint AI videos", href: "https://platform.openai.com", icon: "🤖" },
+                { label: "ElevenLabs", desc: "AI voiceover / text-to-speech for video narration", href: "https://elevenlabs.io", icon: "🎙️" },
                 { label: "TikTok Studio", desc: "Video publishing", href: "https://studio.tiktok.com", icon: "🎵" },
                 { label: "Unsplash", desc: "Stock photos used throughout the site", href: "https://unsplash.com", icon: "📷" },
               ],
