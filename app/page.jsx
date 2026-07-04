@@ -284,7 +284,7 @@ export default function HomePage() {
   const [isMobile, setIsMobile] = useState(false);
   const [widgetEmail, setWidgetEmail]       = useState("");
   const [widgetUnlocked, setWidgetUnlocked] = useState(false);
-  const [iframePubref, setIframePubref]     = useState("");
+  const [iframePubref, setIframePubref]     = useState(null); // null = waiting for auth; "" = guest no email yet; "email" = ready
   const [widgetHovered, setWidgetHovered]   = useState(false);
   const [isSafari, setIsSafari]             = useState(false);
   const [widgetHeight, setWidgetHeight]     = useState(285);
@@ -322,40 +322,45 @@ export default function HomePage() {
     };
   }, []);
 
-  // Auto-unlock widget once auth resolves for logged-in users
+  // Auto-unlock widget once auth resolves
   useEffect(() => {
-    if (!authLoading && user?.email) {
-      setWidgetUnlocked(true);
-      setIframePubref(user.email);
-      // Track widget unlock once per 24 hours per user
-      const storageKey = `rv_widget_tracked_${user.uid}`;
-      const lastTracked = localStorage.getItem(storageKey);
-      const twentyFourHours = 24 * 60 * 60 * 1000;
-      const shouldTrack = !lastTracked || (Date.now() - parseInt(lastTracked, 10)) > twentyFourHours;
-      if (shouldTrack) {
-        localStorage.setItem(storageKey, Date.now().toString());
-        fetch("/api/link-clicks", {
-          method:  "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            partner:   "Expedia",
-            product:   "hotel",
-            url:       "widget-loggedin",
-            userEmail: user.email,
-            userName:  user.name || "",
-          }),
-        }).catch(() => {});
-        fetch("/api/track/hotel-click", {
-          method:  "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            uid:         user.uid,
-            email:       user.email,
-            name:        user.name || "",
-            destination: "",
-          }),
-        }).catch(() => {});
-      }
+    if (authLoading) return; // wait for auth to finish
+    if (!user?.email) {
+      // Guest — render the widget (behind gate) but with no pubref yet
+      setIframePubref(prev => prev === null ? "" : prev);
+      return;
+    }
+    // Logged-in user — unlock immediately with their email as pubref
+    setWidgetUnlocked(true);
+    setIframePubref(user.email);
+    // Track widget unlock once per 24 hours per user
+    const storageKey = `rv_widget_tracked_${user.uid}`;
+    const lastTracked = localStorage.getItem(storageKey);
+    const twentyFourHours = 24 * 60 * 60 * 1000;
+    const shouldTrack = !lastTracked || (Date.now() - parseInt(lastTracked, 10)) > twentyFourHours;
+    if (shouldTrack) {
+      localStorage.setItem(storageKey, Date.now().toString());
+      fetch("/api/link-clicks", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          partner:   "Expedia",
+          product:   "hotel",
+          url:       "widget-loggedin",
+          userEmail: user.email,
+          userName:  user.name || "",
+        }),
+      }).catch(() => {});
+      fetch("/api/track/hotel-click", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uid:         user.uid,
+          email:       user.email,
+          name:        user.name || "",
+          destination: "",
+        }),
+      }).catch(() => {});
     }
   }, [authLoading, user]);
 
@@ -473,14 +478,22 @@ export default function HomePage() {
             style={{ width: "475px", maxWidth: "100%", borderRadius: "16px", overflow: "hidden", boxShadow: "0 16px 56px rgba(0,0,0,0.5)", position: "relative" }}
             onMouseLeave={() => { if (!widgetEmail) setWidgetHovered(false); }}
           >
-            <iframe
-              ref={iframeRef}
-              src={`/hotel-search.html?v=5${iframePubref ? `&pubref=${encodeURIComponent(iframePubref)}` : ""}`}
-              title="Hotel Search"
-              scrolling="no"
-              allow="popups"
-              style={{ border: "none", width: "100%", height: `${widgetHeight}px`, display: "block" }}
-            />
+            {iframePubref === null ? (
+              /* Auth still resolving — block the widget entirely so it doesn't init without pubref */
+              <div style={{ height: `${widgetHeight}px`, display: "flex", alignItems: "center", justifyContent: "center", background: "#fff" }}>
+                <div style={{ width: "28px", height: "28px", border: "3px solid #E5E7EB", borderTopColor: "#003B95", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+              </div>
+            ) : (
+              <iframe
+                ref={iframeRef}
+                src={`/hotel-search.html?v=5${iframePubref ? `&pubref=${encodeURIComponent(iframePubref)}` : ""}`}
+                title="Hotel Search"
+                scrolling="no"
+                allow="popups"
+                style={{ border: "none", width: "100%", height: `${widgetHeight}px`, display: "block" }}
+              />
+            )}
             {/* Transparent tap/hover catcher — intercepts interaction for locked users */}
             {!authLoading && !widgetUnlocked && !widgetHovered && (
               <div
