@@ -13,7 +13,6 @@ const DOMESTIC = [
     city: "Las Vegas",
     img: "https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=600&h=900&fit=crop&auto=format",
     link: "/deals/las-vegas",
-    dealOfWeek: true,
   },
   {
     city: "Orlando",
@@ -63,8 +62,8 @@ const INTERNATIONAL = [
   {
     city: "Paris",
     img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&h=900&fit=crop&auto=format",
-    link: "/packages",
-    locked: true,
+    link: "/blog/paris-deal-1",
+    dealOfWeek: true,
   },
   {
     city: "Punta Cana",
