@@ -2499,14 +2499,6 @@ export default function AdminDashboard() {
                 { label: "Unsplash", desc: "Stock photos used throughout the site", href: "https://unsplash.com", icon: "📷" },
               ],
             },
-            {
-              category: "Widget Partners",
-              links: [
-                { label: "Expedia", desc: "Hotel search widget source", href: "https://expedia.com", icon: "🏨" },
-                { label: "Kiwi.com", desc: "Flight search", href: "https://kiwi.com", icon: "✈️" },
-                { label: "Cruisebound", desc: "Cruise search widget", href: "https://cruisebound.com", icon: "🚢" },
-              ],
-            },
           ].map((section, si) => (
             <div key={si} style={{ marginBottom: si < 4 ? "18px" : 0 }}>
               <p style={{ fontSize: "10px", fontWeight: "700", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 8px" }}>{section.category}</p>
