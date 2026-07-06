@@ -243,7 +243,11 @@ export default function ParisDealsPage() {
 
           <p style={{ fontSize: "13px", color: "#9CA3AF", marginBottom: "24px", textAlign: "center" }}>Click any deal below to expand the full post</p>
 
-          {DEALS.filter(d => new Date(d.publishDate) <= new Date()).map((deal, i) => (
+          {DEALS.filter(d => {
+            const t = new Date();
+            const today = `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
+            return d.publishDate <= today;
+          }).map((deal, i) => (
             <DealCard key={i} deal={deal} isLatest={i === 0} />
           ))}
 
