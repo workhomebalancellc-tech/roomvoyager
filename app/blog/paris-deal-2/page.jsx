@@ -50,7 +50,7 @@ export default function ParisDeal2Blog() {
               💰 The Smart Pick
             </div>
             <img
-              src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=900&h=500&fit=crop&auto=format"
+              src="/blog-photos/paris-deal-2/hotelpetit1.jpg"
               alt="Hotel Petit Vix"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -84,7 +84,7 @@ export default function ParisDeal2Blog() {
               ✨ The Splurge
             </div>
             <img
-              src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=900&h=500&fit=crop&auto=format"
+              src="/blog-photos/paris-deal-2/parkhyattparis1.jpg"
               alt="Park Hyatt Paris-Vendôme"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />

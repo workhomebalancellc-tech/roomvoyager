@@ -7,7 +7,7 @@ import FloatingChat from "../../components/FloatingChat";
 const NAVY   = "#003B95";
 const ORANGE = "#FF6600";
 
-export default function ParisDealBlog() {
+export default function ParisDeal3Blog() {
   return (
     <>
       <div style={{ minHeight: "100vh", background: "#F8FAFF", fontFamily: "system-ui, -apple-system, sans-serif" }}>
@@ -24,10 +24,10 @@ export default function ParisDealBlog() {
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
             <p style={{ color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🔥 Deal of the Week</p>
             <h1 style={{ color: "#fff", fontSize: "clamp(22px, 4vw, 42px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.15, textShadow: "0 2px 14px rgba(0,0,0,0.4)" }}>
-              Paris in July
+              Hidden Gem Paris
             </h1>
             <p style={{ color: "#BFDBFE", fontSize: "clamp(13px, 1.5vw, 16px)", maxWidth: "520px", margin: 0, lineHeight: 1.6 }}>
-              Two hotels that make the City of Light feel like home
+              Two boutique hotels that feel like a local secret
             </p>
           </div>
         </div>
@@ -35,11 +35,11 @@ export default function ParisDealBlog() {
         {/* Content */}
         <div style={{ maxWidth: "780px", margin: "0 auto", padding: "52px 24px 80px" }}>
 
-          <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "32px" }}>
-            There's no better time to visit Paris than July. The sun sets after 10 PM, the terraces are packed with rosé and laughter, and on the 14th — Bastille Day — the Eiffel Tower lights up the sky with fireworks that stop you dead in your tracks. If you've been waiting for the right moment to finally book that Paris trip, this is it.
+          <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "20px" }}>
+            Paris doesn't have to cost a fortune to feel incredible. This week we're spotlighting two boutique hotels that prove you can stay somewhere with real personality — great location, genuine charm — without blowing your budget before you've even had your first croissant.
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
-            We've hand-picked two hotels for this week's deal that cover two very different sides of Paris — and both will have you waking up excited about the day ahead.
+            Both are under the radar. Both are worth every euro. And neither one is the hotel everyone else is staying at.
           </p>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
@@ -47,29 +47,29 @@ export default function ParisDealBlog() {
           {/* Hotel 1 */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/paris-deal-1/nouvel1.jpg"
-              alt="Nouvel Hôtel Paris"
+              src="/blog-photos/paris-deal-3/Timhotel1.jpg"
+              alt="Timhotel Opéra Blanche Fontaine"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
             <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 16px" }}>
-              Nouvel Hôtel Paris — Charm in the 12th
+              Timhotel Opéra Blanche Fontaine — Classic Paris at the Opera
             </h2>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Tucked into a quiet street in the 12th arrondissement, Nouvel Hôtel Paris is one of those finds that makes you feel like a local the moment you check in. Originally built as a boarding school for girls, the building has held onto its old-world Parisian character — think high ceilings, warm interiors, and a calm that's surprisingly rare in the heart of the city.
+              Steps from the Palais Garnier and the grand boulevards of the 9th arrondissement, Timhotel Opéra Blanche Fontaine puts you at the heart of classic Paris. This is the neighborhood of Haussmann-era architecture, café terraces that spill onto wide sidewalks, and the kind of streets that make you slow down and look up.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              The 12th is a neighborhood that visitors often overlook, and that's exactly what makes it special. You're far enough from the tourist crowds to breathe, but close enough to everything that matters. The Bel-Air metro stop is a three-minute walk from the front door, putting the Eiffel Tower, the Marais, and the Seine all within easy reach.
+              You're close to everything — the Louvre, the Marais, Montmartre — without paying the tourist-corridor prices that come with those addresses. The Opera district has a rhythm of its own: department stores, bookshops, brasseries that have been open for a hundred years. It's a great base for a first-time visitor and a quietly satisfying choice for anyone who's been before.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> First-time visitors who want a peaceful base, solo travelers, and anyone who prefers a quiet neighborhood over a busy tourist corridor.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> First-time Paris visitors, couples who want to walk everywhere, and anyone who wants to be close to the city's biggest sights without staying right on top of them.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/parisdeal1_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/parisdeal3_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
             >
-              Book Nouvel Hôtel Paris →
+              Book Timhotel Opéra →
             </a>
           </div>
 
@@ -78,73 +78,66 @@ export default function ParisDealBlog() {
           {/* Hotel 2 */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/paris-deal-1/artemisia1.jpg"
-              alt="Artemisia Montmartre"
+              src="/blog-photos/paris-deal-3/1er1.jpg"
+              alt="1er Étage Sopi"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
             <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: "0 0 16px" }}>
-              Artemisia Montmartre — Art Deco in the Shadow of Sacré-Cœur
+              1er Étage Sopi — The Paris That Parisians Actually Live In
             </h2>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              If Nouvel Hôtel is about understated Parisian living, Artemisia Montmartre is about the full romantic experience. Set just 656 feet from the Moulin Rouge and steps from the winding cobblestone streets of the Butte Montmartre, this boutique hotel sits in one of the most iconic neighborhoods on earth.
+              South Pigalle — SoPi — is the Paris neighborhood that locals actually live in right now. Wine bars with handwritten menus, independent coffee shops, vintage stores, and restaurants that don't exist on any tourist map. 1er Étage Sopi sits right in the middle of it.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Renovated in 2023, the Artemisia leans fully into its Art Deco and Art Nouveau bones — think ornate ironwork, warm lighting, and rooms that feel like they belong in a film. Guests rate it 8.8 out of 10 on Booking.com and 9.2 on Hotels.com. Montmartre itself is worth the trip alone — once you've climbed the steps to Sacré-Cœur and looked out over the city at sunset, you'll understand why artists have been coming here for over a century.
+              This is the Paris that doesn't perform for visitors — it just exists, and it's brilliant. Stay here and you'll spend your evenings exactly where locals spend theirs: at the zinc bar of a neighborhood wine cave, at a table outside a bistro that only has eight seats, or wandering streets that feel genuinely alive in a way that the big tourist boulevards stopped being a long time ago.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Couples, design lovers, anyone who wants the classic "movie Paris" experience, and return visitors ready to go deeper into the city's soul.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Return visitors ready to go deeper, solo travelers, anyone who wants to feel like a local rather than a tourist, and people who already know the Eiffel Tower exists and don't need to be near it.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/parisdeal1_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/parisdeal3_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
             >
-              Book Artemisia Montmartre →
+              Book 1er Étage Sopi →
             </a>
           </div>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
-          {/* Which one */}
+          {/* Bottom line */}
           <div style={{ background: "#EBF3FF", borderRadius: "20px", padding: "36px 32px", marginBottom: "48px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>Which One Should You Choose?</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Here's the honest answer: it depends on what kind of Paris you're after.
-            </p>
+            <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>The Bottom Line</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "12px" }}>
-              Choose <strong>Nouvel Hôtel</strong> if you want value, quiet, and easy metro access without sacrificing charm. It's the smart pick for budget-conscious travelers who still want a real Parisian experience.
+              Choose <strong>Timhotel Opéra Blanche Fontaine</strong> if you want to walk to the Palais Garnier, the grands boulevards, and the city's most iconic sights from a home base that feels properly Parisian without being in the thick of the tourist crowd.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "28px" }}>
-              Choose <strong>Artemisia Montmartre</strong> if you want to be fully immersed in the romance and energy of Paris — waking up in Montmartre, watching the Moulin Rouge light up at night, and feeling like you're living inside a postcard.
-            </p>
-            <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "28px" }}>
-              Both are available to book now through Expedia with your RoomVoyager rewards points eligible on every night you stay.
+              Choose <strong>1er Étage Sopi</strong> if you want to skip the postcard version of Paris entirely and spend your trip in the neighborhood where the city actually lives right now.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
               <a
-                href="https://expedia.com/affiliates/workhomebalance_llc/parisdeal1_1"
+                href="https://expedia.com/affiliates/workhomebalance_llc/parisdeal3_1"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}
               >
-                Nouvel Hôtel Paris →
+                Timhotel Opéra →
               </a>
               <a
-                href="https://expedia.com/affiliates/workhomebalance_llc/parisdeal1_2"
+                href="https://expedia.com/affiliates/workhomebalance_llc/parisdeal3_2"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}
               >
-                Artemisia Montmartre →
+                1er Étage Sopi →
               </a>
             </div>
           </div>
 
-          {/* Rewards callout */}
           <div style={{ textAlign: "center", padding: "12px 0" }}>
             <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>
-              Earn points. See Paris. Come home richer. 🗼
+              Earn points. See Paris. Come home changed. 🗼
             </p>
             <a href="/rewards" style={{ color: ORANGE, fontWeight: "700", fontSize: "14px", textDecoration: "none" }}>
               Learn about RoomVoyager Rewards →
