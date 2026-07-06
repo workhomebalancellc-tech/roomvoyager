@@ -2460,21 +2460,6 @@ export default function AdminDashboard() {
           <SendBlast adminEmail={user.email} />
         </div>
 
-        {/* AIRPORT CODE TESTER */}
-        <div style={{ marginBottom: "20px" }}>
-          <AirportCodeTester />
-        </div>
-
-        {/* AIRPORT SLUG DIRECTORY */}
-        <div style={{ marginBottom: "20px" }}>
-          <AirportSlugDirectory />
-        </div>
-
-        {/* INTERNATIONAL SLUG DIRECTORY */}
-        <div style={{ marginBottom: "20px" }}>
-          <InternationalSlugDirectory />
-        </div>
-
         {/* PLATFORM RESOURCES */}
         <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: "14px", padding: "20px", marginBottom: "20px" }}>
           <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 16px" }}>🔗 Platform Resources & Maintenance Links</p>
@@ -2551,6 +2536,21 @@ export default function AdminDashboard() {
         {/* AIRTABLE TABLES REFERENCE */}
         <div style={{ marginBottom: "20px" }}>
           <AirtableTablesReference />
+        </div>
+
+        {/* AIRPORT CODE TESTER */}
+        <div style={{ marginBottom: "20px" }}>
+          <AirportCodeTester />
+        </div>
+
+        {/* AIRPORT SLUG DIRECTORY */}
+        <div style={{ marginBottom: "20px" }}>
+          <AirportSlugDirectory />
+        </div>
+
+        {/* INTERNATIONAL SLUG DIRECTORY */}
+        <div style={{ marginBottom: "20px" }}>
+          <InternationalSlugDirectory />
         </div>
 
         {/* REFERRALS */}
