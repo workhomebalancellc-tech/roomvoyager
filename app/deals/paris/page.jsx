@@ -12,10 +12,9 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-07",
     date: "July 7, 2026",
     label: "Timhotel Opéra vs. 1er Étage Sopi",
-    badge: "🔥 Latest Deal",
-    badgeColor: ORANGE,
     intro: `Paris doesn't have to cost a fortune to feel incredible. This week we're spotlighting two boutique hotels that prove you can stay somewhere with real personality — great location, genuine charm — without blowing your budget before you've even had your first croissant. Both are under the radar. Both are worth every euro.`,
     headline: "🗼 Hidden Gem Paris — Timhotel Opéra vs. 1er Étage Sopi",
     protip: "Timhotel Opéra puts you steps from the Palais Garnier and the grands boulevards — great if you want to walk everywhere. 1er Étage Sopi drops you into South Pigalle, Paris's most up-and-coming neighborhood — great if you want to feel like a local.",
@@ -43,10 +42,9 @@ const DEALS = [
     ],
   },
   {
+    publishDate: "2026-07-06",
     date: "July 6, 2026",
     label: "Hotel Petit Vix vs. Park Hyatt Paris-Vendôme",
-    badge: "Previous Deal",
-    badgeColor: "#6B7280",
     intro: `Bastille Day is Paris at its absolute peak. The Champs-Élysées fills with one of the world's great military parades, the Seine glows with open-air concerts, and when night falls, the Eiffel Tower erupts in fireworks that light up the entire city. We found two hotels that represent completely opposite ways to experience it — one that lets you spend your money on the city, and one that turns the whole week into a once-in-a-lifetime memory.`,
     headline: "🇫🇷 Bastille Day — Hotel Petit Vix vs. Park Hyatt Paris-Vendôme",
     protip: "Hotel Petit Vix is the right call if you want to stretch your budget and spend your money on the city itself — the food, the day trips, the wine. Park Hyatt Paris-Vendôme is the move if this is the trip. If you've been waiting for the right reason to do Paris properly, Bastille Day is as right as it gets.",
@@ -74,10 +72,9 @@ const DEALS = [
     ],
   },
   {
+    publishDate: "2026-07-05",
     date: "July 5, 2026",
     label: "Nouvel Hôtel vs. Artemisia Montmartre",
-    badge: "Previous Deal",
-    badgeColor: "#6B7280",
     intro: `There's no better time to visit Paris than July. The sun sets after 10 PM, the terraces are packed with rosé and laughter, and on the 14th — Bastille Day — the Eiffel Tower lights up the sky with fireworks that stop you dead in your tracks. We've hand-picked two hotels for this week's deal that cover two very different sides of Paris — and both will have you waking up excited about the day ahead.`,
     headline: "🗼 Paris in July — Nouvel Hôtel vs. Artemisia Montmartre",
     protip: "Choose Nouvel Hôtel if you want value, quiet, and easy metro access without sacrificing charm. Choose Artemisia Montmartre if you want to be fully immersed in the romance and energy of Paris — waking up in Montmartre, watching the Moulin Rouge light up at night, and feeling like you're living inside a postcard.",
@@ -110,9 +107,9 @@ function openHotel(link) {
   window.open(`/redirect?to=${encodeURIComponent(link)}&partner=Expedia&product=hotel`, "_blank", "noopener,noreferrer");
 }
 
-function DealCard({ deal }) {
+function DealCard({ deal, isLatest }) {
   const [open, setOpen] = useState(false);
-  const isLatest = deal.badge === "🔥 Latest Deal";
+  const badge = isLatest ? "🔥 Latest Deal" : "Previous Deal";
 
   return (
     <div style={{ marginBottom: "16px", borderRadius: "14px", overflow: "hidden", border: `1.5px solid ${isLatest ? ORANGE : "#E5E7EB"}`, boxShadow: isLatest ? "0 4px 16px rgba(255,102,0,0.15)" : "0 2px 8px rgba(0,0,0,0.06)" }}>
@@ -124,7 +121,7 @@ function DealCard({ deal }) {
       >
         <div style={{ textAlign: "left", flex: 1, minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px", flexWrap: "wrap" }}>
-            <span style={{ background: isLatest ? "rgba(255,255,255,0.25)" : "#E5E7EB", color: isLatest ? "#fff" : "#6B7280", fontSize: "10px", fontWeight: "700", padding: "3px 8px", borderRadius: "5px", textTransform: "uppercase", letterSpacing: "0.08em" }}>{deal.badge}</span>
+            <span style={{ background: isLatest ? "rgba(255,255,255,0.25)" : "#E5E7EB", color: isLatest ? "#fff" : "#6B7280", fontSize: "10px", fontWeight: "700", padding: "3px 8px", borderRadius: "5px", textTransform: "uppercase", letterSpacing: "0.08em" }}>{badge}</span>
             <span style={{ fontSize: "12px", color: isLatest ? "rgba(255,255,255,0.8)" : "#9CA3AF", fontWeight: "500" }}>{deal.date}</span>
           </div>
           <p style={{ fontSize: "17px", fontWeight: "800", color: isLatest ? "#fff" : "#111827", margin: 0 }}>{deal.label}</p>
@@ -246,8 +243,8 @@ export default function ParisDealsPage() {
 
           <p style={{ fontSize: "13px", color: "#9CA3AF", marginBottom: "24px", textAlign: "center" }}>Click any deal below to expand the full post</p>
 
-          {DEALS.map((deal, i) => (
-            <DealCard key={i} deal={deal} />
+          {DEALS.filter(d => new Date(d.publishDate) <= new Date()).map((deal, i) => (
+            <DealCard key={i} deal={deal} isLatest={i === 0} />
           ))}
 
           <p style={{ textAlign: "center", marginTop: "40px", fontSize: "13px", color: "#9CA3AF" }}>
