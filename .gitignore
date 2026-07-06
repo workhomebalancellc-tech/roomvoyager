@@ -43,3 +43,6 @@ next-env.d.ts
 # Expedia session cookies — never commit
 scripts/expedia-cookies.json
 tmp-downloads/
+
+# Google Apps Script — contains API tokens, managed separately
+Code.gs
