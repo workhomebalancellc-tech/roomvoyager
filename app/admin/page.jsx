@@ -1253,12 +1253,18 @@ function ExpediaImport({ adminEmail }) {
                     <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                       {row.matchingClicks.map(c => {
                         const clickKey = c.clickId || `${c.uid}_${c.clickedAt}`;
+                        // Highlight clicks within 5-hour window before the booked timestamp
+                        const bookedMs  = row.bookedDate ? new Date(row.bookedDate).getTime() : null;
+                        const clickedMs = c.clickedAt   ? new Date(c.clickedAt).getTime()   : null;
+                        const inWindow  = bookedMs && clickedMs
+                          && clickedMs <= bookedMs
+                          && clickedMs >= bookedMs - 5 * 60 * 60 * 1000;
                         return (
-                        <label key={clickKey} style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
+                        <label key={clickKey} style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", padding: "6px 8px", borderRadius: "7px", background: inWindow ? "#F0FDF4" : "transparent", border: inWindow ? "1px solid #86EFAC" : "1px solid transparent" }}>
                           <input type="radio" name={row.dedupKey} value={clickKey}
                             checked={selected[row.dedupKey] === clickKey}
                             onChange={() => setSelected(s => ({ ...s, [row.dedupKey]: clickKey }))} />
-                          <span style={{ fontSize: "12px", color: "#111827" }}>
+                          <span style={{ fontSize: "12px", color: "#111827", flex: 1 }}>
                             <strong>{c.name || c.email}</strong>
                             {c.name ? ` · ${c.email}` : ""}
                             {c.destination ? ` · searched "${c.destination}"` : ""}
@@ -1266,6 +1272,11 @@ function ExpediaImport({ adminEmail }) {
                               {c.clickedAt ? new Date(c.clickedAt).toLocaleString("en-US", { month: "2-digit", day: "2-digit", year: "numeric", hour: "numeric", minute: "2-digit", hour12: true }) : ""}
                             </span>
                           </span>
+                          {inWindow && (
+                            <span style={{ fontSize: "10px", fontWeight: "700", color: "#15803D", background: "#DCFCE7", padding: "2px 7px", borderRadius: "5px", whiteSpace: "nowrap", flexShrink: 0 }}>
+                              ✓ Within 5hr window
+                            </span>
+                          )}
                         </label>
                         );
                       })}
