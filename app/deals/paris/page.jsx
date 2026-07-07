@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-08",
+    date: "July 8, 2026",
+    label: "Hotel Saint Louis Pigalle vs. Hotel Korner Etoile",
+    intro: `Paris has many personalities — and this week's deal captures two of the best. One hotel sits in the heart of Pigalle, one of the city's most vibrant and fast-evolving neighborhoods. The other puts you steps from the Arc de Triomphe, in the grand 8th arrondissement where Paris does its most impressive impression of itself.`,
+    headline: "🗼 Two Sides of Paris — Saint Louis Pigalle vs. Korner Etoile",
+    protip: "Choose Hotel Saint Louis Pigalle if you want to stay somewhere with real energy — a neighborhood alive at midnight, full of great food and drink. Choose Hotel Korner Etoile if you want the grand Paris experience — big boulevards, iconic landmarks, and the Arc de Triomphe on your doorstep.",
+    hotels: [
+      {
+        name: "Hotel Saint Louis Pigalle",
+        emoji: "🎨",
+        vibe: "Vibrant Pigalle neighborhood",
+        price: "Great value",
+        photo: "/blog-photos/paris-deal-4/hotelsaintlouisp1.jpg",
+        blurb: "Pigalle has had a glow-up. Natural wine bars, chef-driven bistros, record shops, and cocktail bars that don't close until the early hours — Pigalle is where the city's creative energy has landed. Montmartre is a short walk uphill, the Moulin Rouge is practically on your doorstep, and the metro connections put all of Paris within easy reach.",
+        perks: ["Heart of Pigalle", "Walk to Montmartre", "Steps from Moulin Rouge", "Thriving food & bar scene"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/parisdeal4_1",
+      },
+      {
+        name: "Hotel Korner Etoile",
+        emoji: "🏛️",
+        vibe: "Grand 8th arrondissement",
+        price: "Excellent value for location",
+        photo: "/blog-photos/paris-deal-4/hotelkorner1.jpg",
+        blurb: "The 8th arrondissement is where Paris puts its best foot forward — the Champs-Élysées, the Arc de Triomphe, Haussmann boulevards that make you feel like you've walked into a painting. Hotel Korner Etoile delivers style and comfort in one of the best locations in Paris without the usual eye-watering price tag.",
+        perks: ["Near Arc de Triomphe", "Walk to Champs-Élysées", "Design-forward boutique", "8th arrondissement address"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/parisdeal4_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-07",
     date: "July 7, 2026",
     label: "Timhotel Opéra vs. 1er Étage Sopi",
