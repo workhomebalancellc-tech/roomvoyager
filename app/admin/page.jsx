@@ -2489,8 +2489,7 @@ export default function AdminDashboard() {
             {
               category: "Video & Automation",
               links: [
-                { label: "Creatomate", desc: "Deal of the Week video creation", href: "https://creatomate.com/sign-in", icon: "🎬" },
-                { label: "Make", desc: "Automation — Sheets → MotionMint AI pipeline (scenario 5567560)", href: "https://us2.make.com/2463991", icon: "⚙️" },
+{ label: "Make", desc: "Automation — Sheets → MotionMint AI pipeline (scenario 5567560)", href: "https://us2.make.com/2463991", icon: "⚙️" },
                 { label: "Railway", desc: "MotionMint AI server — video render API", href: "https://railway.app", icon: "🚂" },
                 { label: "Google Sheets", desc: "Deal data — hotel photos, city info, video scripts", href: "https://docs.google.com/spreadsheets", icon: "📋" },
                 { label: "Google Apps Script", desc: "Automation scripts — photo URL updates, row triggers", href: "https://script.google.com", icon: "💻" },
