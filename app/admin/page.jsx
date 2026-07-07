@@ -2462,13 +2462,13 @@ export default function AdminDashboard() {
             {
               category: "Video & Automation",
               links: [
-                { label: "Make", desc: "Automation — Sheets → MotionMint AI pipeline (scenario 5567560)", href: "https://us2.make.com/2463991", icon: "⚙️" },
-                { label: "Railway", desc: "MotionMint AI server — video render API", href: "https://railway.app", icon: "🚂" },
                 { label: "Google Sheets", desc: "Deal data — hotel photos, city info, video scripts", href: "https://docs.google.com/spreadsheets", icon: "📋" },
+                { label: "Make", desc: "Automation — Sheets → MotionMint AI pipeline (scenario 5567560)", href: "https://us2.make.com/2463991", icon: "⚙️" },
                 { label: "Google Apps Script", desc: "Automation scripts — photo URL updates, row triggers", href: "https://script.google.com", icon: "💻" },
+                { label: "Railway", desc: "MotionMint AI server — video render API", href: "https://railway.app", icon: "🚂" },
+                { label: "TikTok Studio", desc: "Video publishing", href: "https://studio.tiktok.com", icon: "🎵" },
                 { label: "OpenAI", desc: "GPT script generation for MotionMint AI videos", href: "https://platform.openai.com", icon: "🤖" },
                 { label: "ElevenLabs", desc: "AI voiceover / text-to-speech for video narration", href: "https://elevenlabs.io", icon: "🎙️" },
-                { label: "TikTok Studio", desc: "Video publishing", href: "https://studio.tiktok.com", icon: "🎵" },
                 { label: "Unsplash", desc: "Stock photos used throughout the site", href: "https://unsplash.com", icon: "📷" },
               ],
             },
