@@ -2460,6 +2460,29 @@ export default function AdminDashboard() {
           <p style={{ fontSize: "13px", fontWeight: "700", color: "#111827", margin: "0 0 16px" }}>🔗 Platform Resources & Maintenance Links</p>
           {[
             {
+              category: "Video & Automation",
+              links: [
+                { label: "Make", desc: "Automation — Sheets → MotionMint AI pipeline (scenario 5567560)", href: "https://us2.make.com/2463991", icon: "⚙️" },
+                { label: "Railway", desc: "MotionMint AI server — video render API", href: "https://railway.app", icon: "🚂" },
+                { label: "Google Sheets", desc: "Deal data — hotel photos, city info, video scripts", href: "https://docs.google.com/spreadsheets", icon: "📋" },
+                { label: "Google Apps Script", desc: "Automation scripts — photo URL updates, row triggers", href: "https://script.google.com", icon: "💻" },
+                { label: "OpenAI", desc: "GPT script generation for MotionMint AI videos", href: "https://platform.openai.com", icon: "🤖" },
+                { label: "ElevenLabs", desc: "AI voiceover / text-to-speech for video narration", href: "https://elevenlabs.io", icon: "🎙️" },
+                { label: "TikTok Studio", desc: "Video publishing", href: "https://studio.tiktok.com", icon: "🎵" },
+                { label: "Unsplash", desc: "Stock photos used throughout the site", href: "https://unsplash.com", icon: "📷" },
+              ],
+            },
+            {
+              category: "Backend & Database",
+              links: [
+                { label: "Firebase Console", desc: "Auth, Firestore database, storage (motionmint/ = rendered MP4 videos)", href: "https://console.firebase.google.com/project/roomvoyager-46b98/storage", icon: "🔥" },
+                { label: "Airtable", desc: "Link click tracking & quote logs", href: "https://airtable.com", icon: "📋" },
+                { label: "EmailJS", desc: "Contact forms & newsletter", href: "https://emailjs.com", icon: "📧" },
+                { label: "Zoho Mail", desc: "admin@roomvoyagertravel.com inbox", href: "https://mail.zoho.com", icon: "📬" },
+                { label: "Google Docs", desc: "Documents, notes & shared resources", href: "https://docs.google.com/document", icon: "📄" },
+              ],
+            },
+            {
               category: "Hosting & Code",
               links: [
                 { label: "Vercel", desc: "Site hosting & deployments", href: "https://vercel.com", icon: "▲" },
@@ -2474,29 +2497,6 @@ export default function AdminDashboard() {
                 { label: "CJ Affiliate", desc: "Cruise line affiliates (Royal Caribbean, Carnival, NCL, etc.)", href: "https://cj.com", icon: "🚢" },
                 { label: "PHG / Expedia", desc: "Expedia hotel affiliate (CJ partner hub)", href: "https://phg.com", icon: "🏨" },
                 { label: "Partnerize", desc: "Expedia conversion postbacks & pubref tracking (approval pending)", href: "https://console.partnerize.com", icon: "🔁" },
-              ],
-            },
-            {
-              category: "Backend & Database",
-              links: [
-                { label: "Firebase Console", desc: "Auth, Firestore database, storage (motionmint/ = rendered MP4 videos)", href: "https://console.firebase.google.com/project/roomvoyager-46b98/storage", icon: "🔥" },
-                { label: "Airtable", desc: "Link click tracking & quote logs", href: "https://airtable.com", icon: "📋" },
-                { label: "EmailJS", desc: "Contact forms & newsletter", href: "https://emailjs.com", icon: "📧" },
-                { label: "Zoho Mail", desc: "admin@roomvoyagertravel.com inbox", href: "https://mail.zoho.com", icon: "📬" },
-                { label: "Google Docs", desc: "Documents, notes & shared resources", href: "https://docs.google.com/document", icon: "📄" },
-              ],
-            },
-            {
-              category: "Video & Automation",
-              links: [
-{ label: "Make", desc: "Automation — Sheets → MotionMint AI pipeline (scenario 5567560)", href: "https://us2.make.com/2463991", icon: "⚙️" },
-                { label: "Railway", desc: "MotionMint AI server — video render API", href: "https://railway.app", icon: "🚂" },
-                { label: "Google Sheets", desc: "Deal data — hotel photos, city info, video scripts", href: "https://docs.google.com/spreadsheets", icon: "📋" },
-                { label: "Google Apps Script", desc: "Automation scripts — photo URL updates, row triggers", href: "https://script.google.com", icon: "💻" },
-                { label: "OpenAI", desc: "GPT script generation for MotionMint AI videos", href: "https://platform.openai.com", icon: "🤖" },
-                { label: "ElevenLabs", desc: "AI voiceover / text-to-speech for video narration", href: "https://elevenlabs.io", icon: "🎙️" },
-                { label: "TikTok Studio", desc: "Video publishing", href: "https://studio.tiktok.com", icon: "🎵" },
-                { label: "Unsplash", desc: "Stock photos used throughout the site", href: "https://unsplash.com", icon: "📷" },
               ],
             },
           ].map((section, si) => (
