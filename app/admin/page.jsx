@@ -2483,6 +2483,7 @@ export default function AdminDashboard() {
                 { label: "Airtable", desc: "Link click tracking & quote logs", href: "https://airtable.com", icon: "📋" },
                 { label: "EmailJS", desc: "Contact forms & newsletter", href: "https://emailjs.com", icon: "📧" },
                 { label: "Zoho Mail", desc: "admin@roomvoyagertravel.com inbox", href: "https://mail.zoho.com", icon: "📬" },
+                { label: "Google Docs", desc: "Documents, notes & shared resources", href: "https://docs.google.com/document", icon: "📄" },
               ],
             },
             {
