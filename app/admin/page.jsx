@@ -1639,7 +1639,7 @@ function AdminLogin() {
                 style={{ width: "100%", padding: "10px 40px 10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", boxSizing: "border-box", outline: "none" }} />
               <button type="button" onClick={() => setShowPass(v => !v)}
                 style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", fontSize: "16px", color: "#6B7280", padding: 0, lineHeight: 1 }}>
-                {showPass ? "🙈" : "👁️"}
+                {showPass ? "Hide" : "Show"}
               </button>
             </div>
           </div>
