@@ -1590,6 +1590,7 @@ function AdminLogin() {
   const { signInWithEmail, signInWithGoogle } = useAuth();
   const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
   const [error, setError]       = useState(null);
   const [loading, setLoading]   = useState(false);
 
@@ -1633,8 +1634,14 @@ function AdminLogin() {
           </div>
           <div>
             <label style={{ fontSize: "12px", fontWeight: "600", color: "#374151", display: "block", marginBottom: "4px" }}>Password</label>
-            <input type="password" required value={password} onChange={e => setPassword(e.target.value)}
-              style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", boxSizing: "border-box", outline: "none" }} />
+            <div style={{ position: "relative" }}>
+              <input type={showPass ? "text" : "password"} required value={password} onChange={e => setPassword(e.target.value)}
+                style={{ width: "100%", padding: "10px 40px 10px 12px", border: "1.5px solid #D1D5DB", borderRadius: "8px", fontSize: "14px", boxSizing: "border-box", outline: "none" }} />
+              <button type="button" onClick={() => setShowPass(v => !v)}
+                style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", fontSize: "16px", color: "#6B7280", padding: 0, lineHeight: 1 }}>
+                {showPass ? "🙈" : "👁️"}
+              </button>
+            </div>
           </div>
           {error && <p style={{ fontSize: "12px", color: "#DC2626", margin: 0, textAlign: "center" }}>{error}</p>}
           <button type="submit" disabled={loading}
