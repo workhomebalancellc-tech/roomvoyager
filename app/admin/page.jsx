@@ -2503,7 +2503,6 @@ export default function AdminDashboard() {
                 { label: "TravelPayouts", desc: "Kiwi.com flights tracking (marker 722477)", href: "https://travelpayouts.com", icon: "✈️" },
                 { label: "CJ Affiliate", desc: "Cruise line affiliates (Royal Caribbean, Carnival, NCL, etc.)", href: "https://cj.com", icon: "🚢" },
                 { label: "PHG / Expedia", desc: "Expedia hotel affiliate (CJ partner hub)", href: "https://creator.expediagroup.com/", icon: "🏨" },
-                { label: "Partnerize", desc: "Expedia conversion postbacks & pubref tracking (approval pending)", href: "https://console.partnerize.com", icon: "🔁" },
               ],
             },
           ].map((section, si) => (
