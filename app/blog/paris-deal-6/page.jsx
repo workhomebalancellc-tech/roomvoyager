@@ -47,7 +47,7 @@ export default function ParisDeal6Blog() {
           {/* Hotel 1 — Hotel Albert 1er */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/paris-deal-6/albert1.jpg"
+              src="/blog-photos/paris-deal-6/hotelalbert1er1.jpg"
               alt="Hotel Albert 1er Paris Lafayette"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -81,7 +81,7 @@ export default function ParisDeal6Blog() {
           {/* Hotel 2 — Hôtel Pastel Paris */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/paris-deal-6/pastel1.jpg"
+              src="/blog-photos/paris-deal-6/hotelpastelparis1.jpg"
               alt="Hôtel Pastel Paris"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
