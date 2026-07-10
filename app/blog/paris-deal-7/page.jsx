@@ -47,7 +47,7 @@ export default function ParisDeal7Blog() {
           {/* Hotel 1 — Hotel Clauzel */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/paris-deal-7/clauzel1.jpg"
+              src="/blog-photos/paris-deal-7/hotelclauzel1.jpg"
               alt="Hotel Clauzel"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -81,7 +81,7 @@ export default function ParisDeal7Blog() {
           {/* Hotel 2 — Hôtel Atlas */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/paris-deal-7/atlas1.jpg"
+              src="/blog-photos/paris-deal-7/hotelatlas1.jpg"
               alt="Hôtel Atlas"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
