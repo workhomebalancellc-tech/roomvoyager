@@ -47,7 +47,7 @@ export default function OrlandoDeal2Blog() {
           {/* Hotel 1 — Rosen Inn Lake Buena Vista */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/orlando-deal-2/roseninn1.jpg"
+              src="/blog-photos/orlando-deal-2/roseninnlakebuenavista1.jpg"
               alt="Rosen Inn Lake Buena Vista"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -81,7 +81,7 @@ export default function OrlandoDeal2Blog() {
           {/* Hotel 2 — DASKK Orlando */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/orlando-deal-2/daskk1.jpg"
+              src="/blog-photos/orlando-deal-2/daskkorlando1.jpg"
               alt="DASKK Orlando Hotel near Universal Blvd"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
