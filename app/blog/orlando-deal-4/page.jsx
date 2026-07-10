@@ -47,7 +47,7 @@ export default function OrlandoDeal4Blog() {
           {/* Hotel 1 — Walt Disney World Swan Reserve */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/orlando-deal-4/swanreserve1.jpg"
+              src="/Deals/13/swanreserve1.jpg"
               alt="Walt Disney World Swan Reserve"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -81,7 +81,7 @@ export default function OrlandoDeal4Blog() {
           {/* Hotel 2 — Signia by Hilton Orlando */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/orlando-deal-4/signia1.jpg"
+              src="/Deals/13/signia1.jpg"
               alt="Signia by Hilton Orlando"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
