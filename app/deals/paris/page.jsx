@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-09",
+    date: "July 9, 2026",
+    label: "Hotel Albert 1er Paris Lafayette vs. Hôtel Pastel Paris",
+    intro: `July 13–16 is the Bastille Day long weekend — three nights to experience Paris at its most festive. The fireworks, the parade, the café terraces spilling onto sidewalks, the whole city celebrating together. This week's deal is a $100-a-night choice: a sharp, well-located base near Galeries Lafayette, or a boutique stay worth every extra dollar.`,
+    headline: "🗼 Bastille Day Weekend — Albert 1er vs. Hôtel Pastel Paris",
+    protip: "Choose Hotel Albert 1er if you want a smart, well-connected base for the long weekend without the hefty price tag — and spend that extra $100 on experiences. Choose Hôtel Pastel Paris if this trip deserves the boutique treatment — the kind of hotel that makes the whole weekend feel like an occasion.",
+    hotels: [
+      {
+        name: "Hotel Albert 1er Paris Lafayette",
+        emoji: "🏨",
+        vibe: "Smart base near Galeries Lafayette",
+        price: "$110 / night",
+        photo: "/blog-photos/paris-deal-6/albert1.jpg",
+        blurb: "Steps from Galeries Lafayette and the Opéra Garnier, Hotel Albert 1er puts you in the 9th arrondissement — one of Paris's most connected and underrated neighborhoods. The Champs-Élysées parade is a short metro ride, the Seine is easily reachable for fireworks, and you're linked to every corner of the city. At $110 a night, you've got real budget left over for dinners, museum tickets, and the Seine cruise you've been thinking about.",
+        perks: ["Near Galeries Lafayette", "9th arrondissement", "Short metro to Champs-Élysées", "Best value for location"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/parisdeal6_2",
+      },
+      {
+        name: "Hôtel Pastel Paris",
+        emoji: "🎨",
+        vibe: "Boutique design hotel",
+        price: "$210 / night",
+        photo: "/blog-photos/paris-deal-6/pastel1.jpg",
+        blurb: "There's a category of Paris hotel that's neither grand palace nor budget chain — it's the intimate boutique, where every detail has been considered. Hôtel Pastel Paris is squarely in that category. Design-forward, thoughtfully decorated, the kind of place you actually want to come back to after a long day walking the city. The Bastille Day weekend is exactly the kind of trip that earns a splurge.",
+        perks: ["Boutique design hotel", "Intimate & memorable", "Perfect for couples", "Worth the splurge"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/parisdeal6_1",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-08",
     date: "July 8, 2026",
     label: "Hotel Saint Louis Pigalle vs. Hotel Korner Etoile",
