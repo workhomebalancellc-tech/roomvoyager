@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-18",
+    date: "July 18, 2026",
+    label: "Orlando World Center Marriott vs. staySky Suites I Drive Orlando",
+    intro: `August 8th through the 16th — peak summer Orlando and $71 a night separating two very different stays. Orlando World Center Marriott is one of the largest hotels in the US: 200 acres, a resort-scale pool complex with waterslides, and Disney on your doorstep at $176 a night. staySky Suites on I-Drive gives you a full suite — living space, a kitchen, and the entire I-Drive entertainment corridor outside your door — at $105 a night. Over a week, that gap adds up to nearly $500.`,
+    headline: "🏨 Resort Scale vs. Suite Value — Orlando World Center Marriott vs. staySky Suites",
+    protip: "Choose Orlando World Center Marriott if the resort is part of the vacation — 200 acres, a waterslide pool complex, and Disney proximity at $176/night is genuinely competitive for what it delivers. Choose staySky Suites I Drive Orlando if the parks are the trip and you want spacious suite living at $105/night — and nearly $500 more in your pocket over the week.",
+    hotels: [
+      {
+        name: "Orlando World Center Marriott",
+        emoji: "🏨",
+        vibe: "200 acres — one of the largest hotels in the US",
+        price: "$176 / night",
+        photo: "/Deals/16/orlandoworldcenter1.jpg",
+        blurb: "Orlando World Center Marriott isn't a hotel — it's a destination. Spread across 200 acres near Walt Disney World with over 2,000 rooms, the resort infrastructure is the point: multiple pools, a lazy river, waterslides, a full spa, a golf course, and multiple restaurants. Near Disney, well-priced for what it delivers, and the kind of property where you could spend an entire day without leaving. If the hotel is part of the vacation, this earns every dollar at $176/night.",
+        perks: ["200 acres near Disney", "Resort pool with waterslides", "Golf course & full spa", "Multiple on-site restaurants"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando7_1",
+      },
+      {
+        name: "staySky Suites I Drive Orlando",
+        emoji: "🛋️",
+        vibe: "Full suite on I-Drive — $71 cheaper per night",
+        price: "$105 / night",
+        photo: "/Deals/16/staysky1.jpg",
+        blurb: "International Drive is Orlando's entertainment backbone — restaurants, mini-golf, dinner shows, the Orlando Eye, and easy access to both Universal Studios and the convention center. staySky Suites puts you right in the middle of it in a full suite with living space and a kitchen at $105/night. The $71/night you save over the World Center Marriott adds up to nearly $500 over the week — that's a Universal Express Pass, a Disney character dining experience, or simply more breathing room.",
+        perks: ["Full suite with living space & kitchen", "I-Drive entertainment corridor", "Close to Universal Studios", "Nearly $500 savings over a week"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando7_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-17",
     date: "July 17, 2026",
     label: "Disney's Yacht Club Resort vs. Marriott's Imperial Palm Villas",
