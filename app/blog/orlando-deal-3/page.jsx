@@ -47,7 +47,7 @@ export default function OrlandoDeal3Blog() {
           {/* Hotel 1 — Evermore Orlando Resort */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/orlando-deal-3/evermore1.jpg"
+              src="/blog-photos/orlando-deal-3/Evermoreorlando1.jpg"
               alt="Evermore Orlando Resort"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -81,7 +81,7 @@ export default function OrlandoDeal3Blog() {
           {/* Hotel 2 — The Ritz-Carlton Orlando */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/orlando-deal-3/ritzcarlton1.jpg"
+              src="/blog-photos/orlando-deal-3/theritzcarltonorlando1.jpg"
               alt="The Ritz-Carlton Orlando Grande Lakes"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
