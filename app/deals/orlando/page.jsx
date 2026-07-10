@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-14",
+    date: "July 14, 2026",
+    label: "Evermore Orlando Resort vs. The Ritz-Carlton Orlando, Grande Lakes",
+    intro: `August 20th through the 22nd — this is the luxury edition. Two nights, two world-class resorts, and a $262-a-night gap that flips everything you'd expect. The Ritz-Carlton comes in at $387/night. Evermore Orlando Resort — the newer, splashier contender — runs $649. The name you know costs less. The name you're still learning about costs more.`,
+    headline: "✨ The New Luxury vs. The Gold Standard — Evermore vs. Ritz-Carlton Orlando",
+    protip: "Choose Evermore if you want the resort to be the destination — the lagoon, the beach, the water park, the full experience without leaving the property. Choose The Ritz-Carlton if you want the gold standard of luxury at the more reasonable rate — $387/night for service and refinement that the brand has spent a century perfecting.",
+    hotels: [
+      {
+        name: "Evermore Orlando Resort",
+        emoji: "🏖️",
+        vibe: "20-acre lagoon, beach & water park",
+        price: "$649 / night",
+        photo: "/blog-photos/orlando-deal-3/evermore1.jpg",
+        blurb: "Evermore is what happens when someone builds a resort from the ground up with no compromises — a 20-acre crystalline lagoon with white sand beaches, a water park, private cabanas, and hundreds of acres of resort community built to be the most complete Orlando experience outside the theme parks. At $649/night, the resort itself is the attraction. If you want to spend a full day at the lagoon and never leave the property, this is the move.",
+        perks: ["20-acre crystalline lagoon", "On-site water park", "White sand beach", "Resort is the destination"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando3_1",
+      },
+      {
+        name: "The Ritz-Carlton Orlando, Grande Lakes",
+        emoji: "✨",
+        vibe: "Timeless luxury on 500 acres",
+        price: "$387 / night",
+        photo: "/blog-photos/orlando-deal-3/ritzcarlton1.jpg",
+        blurb: "The Ritz-Carlton Grande Lakes delivers the full Ritz experience — impeccable service, a world-class spa, championship golf, fine dining, and quiet refined luxury on 500 acres of Central Florida landscape. Here's the twist: at $387/night, the Ritz is actually the more affordable option in this deal. That's $524 less than Evermore over two nights — enough for a spa day, a tee time, or a dinner at Norman's you'll still be talking about on the flight home.",
+        perks: ["World-class spa", "Championship golf", "Fine dining at Norman's", "$524 savings vs. Evermore"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando3_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-13",
     date: "July 13, 2026",
     label: "Rosen Inn Lake Buena Vista vs. DASKK Orlando Hotel near Universal Blvd",
