@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-13",
+    date: "July 13, 2026",
+    label: "Rosen Inn Lake Buena Vista vs. DASKK Orlando Hotel near Universal Blvd",
+    intro: `August 13th through the 15th in Orlando. At just $14 a night apart, this deal is really about one thing: where are you spending your days? Lake Buena Vista puts you in Disney's backyard. Universal Blvd puts you at the doorstep of Universal Studios. Pick your park — the hotel follows.`,
+    headline: "🎢 Disney or Universal? — Rosen Inn Lake Buena Vista vs. DASKK Orlando",
+    protip: "Choose Rosen Inn Lake Buena Vista if your trip is built around Disney — the location is perfect and $66/night keeps your park budget intact. Choose DASKK Orlando if Universal Studios and International Drive are where you're spending your days — the extra $14/night puts you exactly where you need to be.",
+    hotels: [
+      {
+        name: "Rosen Inn Lake Buena Vista",
+        emoji: "🏰",
+        vibe: "Disney's backyard — Lake Buena Vista",
+        price: "$66 / night",
+        photo: "/blog-photos/orlando-deal-2/roseninn1.jpg",
+        blurb: "Lake Buena Vista is where families who are serious about Disney stay. Magic Kingdom, EPCOT, Hollywood Studios, and Animal Kingdom are all within easy reach, and Disney Springs is just minutes away. Rosen isn't a chain — it's an Orlando institution with decades of experience knowing what park guests need. At $66 a night, you're keeping the budget tight for everything the Disney bubble costs, and the location does the rest.",
+        perks: ["Lake Buena Vista location", "Minutes from Disney Springs", "Orlando institution", "Best price for Disney side"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando2_1",
+      },
+      {
+        name: "DASKK Orlando Hotel near Universal Blvd",
+        emoji: "🎢",
+        vibe: "Universal Blvd — parks & International Drive",
+        price: "$80 / night",
+        photo: "/blog-photos/orlando-deal-2/daskk1.jpg",
+        blurb: "Universal Blvd is the right address if Universal Studios, Islands of Adventure, and Volcano Bay are on the itinerary. DASKK Orlando Hotel puts you right in that corridor — easy access to the parks, close to International Drive's restaurants and entertainment. At $80 a night, you're paying $14 more than the Rosen Inn, but the Universal Blvd address and everything that comes with it is worth it if that's where your days are headed.",
+        perks: ["Universal Blvd location", "Close to Islands of Adventure", "International Drive access", "Strong value for location"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando2_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-12",
     date: "July 12, 2026",
     label: "Grand Hotel Orlando at Universal Blvd vs. Travelodge by Wyndham Orlando",
