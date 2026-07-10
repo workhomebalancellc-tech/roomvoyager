@@ -47,7 +47,7 @@ export default function OrlandoDeal1Blog() {
           {/* Hotel 1 — Grand Hotel Orlando */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/orlando-deal-1/grandhotel1.jpg"
+              src="/blog-photos/orlando-deal-1/grandhotelorlandoatuniversal1.jpg"
               alt="Grand Hotel Orlando at Universal Blvd"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -81,7 +81,7 @@ export default function OrlandoDeal1Blog() {
           {/* Hotel 2 — Travelodge by Wyndham */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/orlando-deal-1/travelodge1.jpg"
+              src="/blog-photos/orlando-deal-1/travellodgebywyndamorlandoheart1.jpg"
               alt="Travelodge by Wyndham Orlando"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
