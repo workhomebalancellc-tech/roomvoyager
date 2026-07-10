@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-15",
+    date: "July 15, 2026",
+    label: "Walt Disney World Swan Reserve vs. Signia by Hilton Orlando",
+    intro: `August 27th through the 29th — both the Walt Disney World Swan Reserve and the Signia by Hilton Orlando are official Disney World hotels. That means both get you Early Theme Park Entry, Disney transportation, and the full on-property experience. The difference is $89 a night, $178 over two nights. So what does the upgrade actually buy you?`,
+    headline: "🏰 Same Disney Perks, Very Different Price — Swan Reserve vs. Signia by Hilton",
+    protip: "Choose Walt Disney World Swan Reserve if you want every Disney perk at the smarter price — $233/night with $178 more to spend in the parks over two nights. Choose Signia by Hilton if you want the full resort upgrade — more pools, more dining, more amenities — alongside every official Disney benefit.",
+    hotels: [
+      {
+        name: "Walt Disney World Swan Reserve",
+        emoji: "🦢",
+        vibe: "Official Disney hotel — smart value",
+        price: "$233 / night",
+        photo: "/blog-photos/orlando-deal-4/swanreserve1.jpg",
+        blurb: "Steps from EPCOT and Hollywood Studios, the Swan Reserve delivers everything that matters for a Disney trip — Early Theme Park Entry, Disney transportation, and modern luxury that the Swan & Dolphin complex has quietly perfected over decades. At $233/night you get the full official Disney hotel experience for $89 less per night than the Signia. Over two nights, that's $178 back in your pocket — which, at Disney, is real money.",
+        perks: ["Steps from EPCOT", "Early Theme Park Entry", "Disney transportation", "$178 savings vs. Signia"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando4_1",
+      },
+      {
+        name: "Signia by Hilton Orlando",
+        emoji: "✨",
+        vibe: "Official Disney hotel — full resort upgrade",
+        price: "$322 / night",
+        photo: "/blog-photos/orlando-deal-4/signia1.jpg",
+        blurb: "Signia is Hilton's premium resort brand and an official Walt Disney World hotel — same Disney perks as the Swan Reserve, plus a step up in scale. Multiple pools, upscale dining, a spa, and a resort feel that makes late August feel like a genuine getaway. The $89/night premium buys you more of everything — more dining, more pool space, and a stay that holds its own alongside the parks.",
+        perks: ["Official Disney World hotel", "Multiple pools & spa", "Upscale dining on-site", "Full resort experience"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando4_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-14",
     date: "July 14, 2026",
     label: "Evermore Orlando Resort vs. The Ritz-Carlton Orlando, Grande Lakes",
