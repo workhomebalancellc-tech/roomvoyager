@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-17",
+    date: "July 17, 2026",
+    label: "Disney's Yacht Club Resort vs. Marriott's Imperial Palm Villas",
+    intro: `August 20th through the 23rd — three nights, $309 a night apart. Disney's Yacht Club Resort is EPCOT's most elegant neighbor, walkable to the park with one of the best hotel pools in the US. Marriott's Imperial Palm Villas gives you full villa space, a kitchen, and $927 in savings over three nights. Here's how to decide.`,
+    headline: "🏰 Disney Magic or Villa Space? — Yacht Club vs. Imperial Palm Villas",
+    protip: "Choose Disney's Yacht Club Resort if EPCOT is the heart of your trip — the walkability, Stormalong Bay pool, and full Disney resort experience are worth it. Choose Marriott's Imperial Palm Villas if $927 in savings sounds better than a walk to EPCOT — villa space and a kitchen near all the same parks at $284/night.",
+    hotels: [
+      {
+        name: "Disney's Yacht Club Resort",
+        emoji: "⚓",
+        vibe: "Steps from EPCOT — full Disney deluxe experience",
+        price: "$593 / night",
+        photo: "/Deals/15/disneyyachtclub1.jpg",
+        blurb: "Sitting on Crescent Lake with a walk to EPCOT's International Gateway, the Yacht Club delivers Early Theme Park Entry, Disney transportation, and Stormalong Bay — widely considered one of the best hotel pools in the US. A 230-foot waterslide, sandy-bottom lagoon, and nautical New England elegance. At $593/night this is the full Disney deluxe experience with zero compromises.",
+        perks: ["Walk to EPCOT", "Early Theme Park Entry", "Stormalong Bay pool", "Disney resort transportation"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando6_1",
+      },
+      {
+        name: "Marriott's Imperial Palm Villas",
+        emoji: "🌴",
+        vibe: "Villa space, full kitchen, $927 in savings",
+        price: "$284 / night",
+        photo: "/Deals/15/marriottimperialpalm1.jpg",
+        blurb: "Villa-style rooms with full kitchens and separate living areas near the Disney corridor — comfort and space at $284/night. You're saving $927 over three nights compared to the Yacht Club. That money buys park tickets, character dining, or simply more freedom throughout the trip. No EPCOT walk, but a kitchen to make breakfast and a living room to actually decompress in.",
+        perks: ["Full kitchen in every villa", "Separate living area", "Near Disney parks", "$927 savings vs. Yacht Club"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando6_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-16",
     date: "July 16, 2026",
     label: "Element by Marriott Orlando vs. Aloft by Marriott Orlando Downtown",
