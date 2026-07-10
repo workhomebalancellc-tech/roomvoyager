@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-16",
+    date: "July 16, 2026",
+    label: "Element by Marriott Orlando vs. Aloft by Marriott Orlando Downtown",
+    intro: `Both Marriott. $14 apart. But the real question is which Orlando you're going to — Universal Blvd and extended-stay comfort, or Downtown Orlando's arts and nightlife scene. Element gives you more room and a kitchen near the parks. Aloft puts you in the city locals actually love.`,
+    headline: "🏙️ Same Family, Two Different Orlandos — Element vs. Aloft by Marriott",
+    protip: "Choose Element by Marriott if you're staying a while and want kitchen facilities and more space near Universal. Choose Aloft Downtown if the city is the plan — walkable, design-forward, and right in the heart of Orlando beyond the tourist trail.",
+    hotels: [
+      {
+        name: "Element by Marriott Orlando",
+        emoji: "🏨",
+        vibe: "Extended-stay comfort near Universal",
+        price: "$163 / night",
+        photo: "/Deals/14/element1.jpg",
+        blurb: "Element is Marriott's extended-stay brand — full kitchenettes, more living space, and a design that accounts for longer visits. Near Universal Studios and International Drive, you're well-positioned for the parks without being trapped in the tourist bubble. At $163/night, the $14 premium over Aloft disappears fast when you're making breakfast in your room instead of paying resort prices for eggs.",
+        perks: ["Full kitchenette", "More living space", "Near Universal Studios", "Great for longer stays"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando5_1",
+      },
+      {
+        name: "Aloft by Marriott Orlando Downtown",
+        emoji: "🌆",
+        vibe: "Boutique energy in Downtown Orlando",
+        price: "$149 / night",
+        photo: "/Deals/14/aloft1.jpg",
+        blurb: "Aloft is Marriott's design-forward boutique brand, and Downtown Orlando is a different city from the theme park corridor — Lake Eola Park, the Dr. Phillips Center, restaurants and bars that locals actually go to. At $149/night, Aloft is the value pick and the better address if you want Orlando beyond the tourist trail. The WXYZ Bar, loft-style rooms, and walkable city access seal the deal.",
+        perks: ["Downtown Orlando location", "Walkable to Lake Eola", "Design-forward boutique style", "Best value in this matchup"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/orlando5_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-15",
     date: "July 15, 2026",
     label: "Walt Disney World Swan Reserve vs. Signia by Hilton Orlando",
