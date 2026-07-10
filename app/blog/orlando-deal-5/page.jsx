@@ -47,7 +47,7 @@ export default function OrlandoDeal5Blog() {
           {/* Hotel 1 — Element by Marriott Orlando */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/Deals/14/element1.jpg"
+              src="/Deals/14/elementbymarriottorlando1.jpg"
               alt="Element by Marriott Orlando"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -81,7 +81,7 @@ export default function OrlandoDeal5Blog() {
           {/* Hotel 2 — Aloft by Marriott Orlando Downtown */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/Deals/14/aloft1.jpg"
+              src="/Deals/14/Aloftbymarriottorlando1.jpg"
               alt="Aloft by Marriott Orlando Downtown"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
