@@ -65,11 +65,23 @@ const sections = [
     body: "RoomVoyager shall not be liable for any indirect, incidental, or consequential damages arising from your use of our services or from bookings made through our platform. Our total liability shall not exceed the amount you paid us in the 12 months preceding the claim.",
   },
   {
-    title: "9. Changes to Terms",
+    title: "9. Third-Party Sites",
+    body: "RoomVoyager links to third-party booking platforms including Expedia, Kiwi.com, CruiseDirect, and CruiseBound. We are not responsible for the content, accuracy, or privacy practices of those sites. Your use of third-party platforms is governed by their own terms and policies.",
+  },
+  {
+    title: "10. Indemnification",
+    body: "You agree to indemnify and hold harmless RoomVoyager Travel, its owners, employees, and affiliates from any claims, damages, losses, or expenses (including legal fees) arising from your use of our services, your violation of these Terms, or your violation of any rights of a third party.",
+  },
+  {
+    title: "11. Governing Law",
+    body: "These Terms of Service are governed by and construed in accordance with the laws of the State of Indiana, without regard to its conflict of law provisions. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the courts located in Indiana.",
+  },
+  {
+    title: "12. Changes to Terms",
     body: "We may update these Terms of Service at any time. Continued use of our services after changes constitutes acceptance of the revised terms.",
   },
   {
-    title: "10. Contact",
+    title: "13. Contact",
     body: null,
     contact: true,
   },
