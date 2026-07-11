@@ -17,7 +17,7 @@ const sections = [
     list: [
       "Hotel bookings via Expedia affiliate network",
       "Flight bookings via Kiwi.com (powered by Travelpayouts) — flights are booked directly through Kiwi.com and its airline partners, not through RoomVoyager",
-      "Cruise bookings via CruiseDirect and partner networks",
+      "Cruise bookings via CruiseDirect, CruiseBound, and partner networks",
       "Vacation packages via our travel partners",
     ],
     footer: "RoomVoyager acts as an intermediary and is not itself a hotel, airline, or cruise line.",
