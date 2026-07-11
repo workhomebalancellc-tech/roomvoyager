@@ -19,7 +19,7 @@ import { FieldValue } from "firebase-admin/firestore";
 export const dynamic = "force-dynamic";
 
 const IMPORT_SECRET  = process.env.EXPEDIA_IMPORT_SECRET;
-const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
+const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com", "rhemaleverett@protonmail.com"];
 
 function isAuthorized(body, headers) {
   if (body.adminEmail && ALLOWED_EMAILS.includes(body.adminEmail)) return true;

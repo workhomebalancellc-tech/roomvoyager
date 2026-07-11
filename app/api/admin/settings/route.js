@@ -4,7 +4,7 @@
 
 import { adminDb } from "../../../../lib/firebase-admin";
 
-const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
+const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com", "rhemaleverett@protonmail.com"];
 
 export async function GET(req) {
   // Optional ?checkDate=YYYY-MM-DD — returns whether double points was active on that date

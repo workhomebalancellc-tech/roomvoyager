@@ -6,7 +6,7 @@ import { adminDb } from "../../../../lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
 import { isPromoActive } from "../settings/route";
 
-const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
+const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com", "rhemaleverett@protonmail.com"];
 
 const PTS_RATES = {
   cruise:  { std: 10, dbl: 20 },

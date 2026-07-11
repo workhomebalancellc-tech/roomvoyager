@@ -6,7 +6,7 @@ import { adminDb } from "../../../../lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
 import { isPromoActiveAt } from "../settings/route";
 
-const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
+const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com", "rhemaleverett@protonmail.com"];
 
 export const dynamic = "force-dynamic";
 

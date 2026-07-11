@@ -33,7 +33,7 @@ function isAuthorized(body) {
   return false;
 }
 
-const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
+const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com", "rhemaleverett@protonmail.com"];
 
 // Points rate for hotels
 const PTS_PER_DOLLAR = 5;

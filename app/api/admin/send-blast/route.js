@@ -24,7 +24,7 @@ const SENDGRID_KEY  = process.env.SENDGRID_API_KEY;
 const FROM_EMAIL    = process.env.SENDGRID_FROM_EMAIL || "noreply@roomvoyagertravel.com";
 const FROM_NAME     = "RoomVoyager Rewards";
 
-const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com"];
+const ALLOWED_EMAILS = ["workhomebalancellc@gmail.com", "roomvoyager@protonmail.com", "rhemaleverett@protonmail.com"];
 
 function isAuthorized(body, headers) {
   if (body.adminEmail && ALLOWED_EMAILS.includes(body.adminEmail)) return true;
