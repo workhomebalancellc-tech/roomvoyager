@@ -25,6 +25,7 @@ const sections = [
       "Process bookings and provide travel services",
       "Manage your rewards account and track points",
       "Send booking confirmations and important account updates",
+      "Send marketing emails and travel deal newsletters (you can opt out at any time)",
       "Respond to your questions and support requests",
       "Improve our website and services",
       "Comply with legal obligations",
@@ -34,7 +35,8 @@ const sections = [
     title: "3. Sharing Your Information",
     body: "We do not sell your personal information. We may share your information with:",
     list: [
-      "Travel partners (Expedia, Travelpayouts, CruiseDirect) to fulfill bookings",
+      "Travel partners (Expedia, Travelpayouts, CruiseDirect, CruiseBound) to fulfill bookings",
+      "Analytics providers (Google Analytics) to understand how visitors use our site",
       "Service providers who help us operate our website",
       "Law enforcement when required by law",
     ],
@@ -60,7 +62,7 @@ const sections = [
   },
   {
     title: "7. Third-Party Links",
-    body: "Our site contains links to third-party booking platforms (Expedia, Travelpayouts, CruiseDirect). These sites have their own privacy policies, and we are not responsible for their practices.",
+    body: "Our site contains links to third-party booking platforms (Expedia, Travelpayouts, CruiseDirect, CruiseBound). These sites have their own privacy policies, and we are not responsible for their practices.",
   },
   {
     title: "8. Children's Privacy",
