@@ -2477,6 +2477,8 @@ export default function AdminDashboard() {
                 { label: "OpenAI", desc: "GPT script generation for MotionMint AI videos", href: "https://platform.openai.com", icon: "🤖" },
                 { label: "ElevenLabs", desc: "AI voiceover / text-to-speech for video narration", href: "https://elevenlabs.io", icon: "🎙️" },
                 { label: "Unsplash", desc: "Stock photos used throughout the site", href: "https://unsplash.com", icon: "📷" },
+                { label: "Pexels", desc: "Free stock video footage for MotionMint city clips", href: "https://www.pexels.com/videos", icon: "🎬" },
+                { label: "Pixabay", desc: "Free stock video footage (alternative to Pexels)", href: "https://pixabay.com/videos", icon: "🎥" },
               ],
             },
             {
