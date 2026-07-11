@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-11",
+    date: "July 11, 2026",
+    label: "Hotel Clauzel vs. Hôtel Atlas",
+    intro: `July 13th into July 14th — Bastille Day eve straight into the big day itself. One night in Paris, fireworks over the Eiffel Tower, the city electric with celebration. This week's deal is for the smart traveler: two well-located Paris hotels at prices that leave you with real money for the dinners, the wine, and the late-night wandering that make Bastille Day worth the trip.`,
+    headline: "🗼 One Night in Paris — Hotel Clauzel vs. Hôtel Atlas",
+    protip: "Choose Hotel Clauzel if $85 sounds like a win and you'd rather spend the savings on a great Bastille Day dinner and a bottle of wine on the Seine. Choose Hôtel Atlas if you want the room to feel like part of the celebration — a step up in comfort for not a lot more money.",
+    hotels: [
+      {
+        name: "Hotel Clauzel",
+        emoji: "🏨",
+        vibe: "Unbeatable value in the 9th",
+        price: "$85 / night",
+        photo: "/blog-photos/paris-deal-7/clauzel1.jpg",
+        blurb: "At $85 a night, Hotel Clauzel is the kind of Paris find that makes you feel like you've cracked the code. Tucked into the 9th arrondissement, you're close to South Pigalle's wine bars and restaurants, a short walk from the grands boulevards, and well-connected to everything Bastille Day has to offer. The math works beautifully — $85 for the room means the rest of your budget goes straight into the experience.",
+        perks: ["9th arrondissement location", "Best value in Paris", "Near South Pigalle", "Easy metro access"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/parisdeal7_1",
+      },
+      {
+        name: "Hôtel Atlas",
+        emoji: "✨",
+        vibe: "A step up for Bastille Day",
+        price: "$133 / night",
+        photo: "/blog-photos/paris-deal-7/atlas1.jpg",
+        blurb: "Hôtel Atlas steps it up without breaking the bank. At $133 for the night, you're getting more comfort, more character, and still a price that leaves the evening's budget intact. This is the sweet spot between budget and boutique — the kind of hotel where the room is actually part of the experience. For a one-night Bastille Day stay, it hits exactly right.",
+        perks: ["Boutique comfort", "Perfect for couples", "Great Bastille Day base", "Sweet spot pricing"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/parisdeal7_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-09",
     date: "July 9, 2026",
     label: "Hotel Albert 1er Paris Lafayette vs. Hôtel Pastel Paris",
