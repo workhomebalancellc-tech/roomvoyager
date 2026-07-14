@@ -174,7 +174,7 @@ export default function PuntaCanaDealsPage() {
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
             <p style={{ color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🔥 Deals of the Week</p>
             <h1 style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 46px)", fontWeight: "800", margin: "0 0 10px", textShadow: "0 2px 14px rgba(0,0,0,0.4)" }}>Punta Cana</h1>
-            <p style={{ color: "#BFDBFE", fontSize: "15px", margin: 0 }}>White sand, turquoise water, all-inclusive bliss — the Dominican Republic's finest stretch of coast.</p>
+            <p style={{ color: "#BFDBFE", fontSize: "15px", margin: 0 }}>The Caribbean's most famous beach. Two very different ways to enjoy it.</p>
           </div>
         </div>
 
