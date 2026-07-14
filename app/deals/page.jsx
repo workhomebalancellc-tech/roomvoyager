@@ -66,9 +66,9 @@ const INTERNATIONAL = [
   },
   {
     city: "Punta Cana",
-    img: "https://images.unsplash.com/photo-1590523278191-995cbcda646b?w=600&h=900&fit=crop&auto=format",
-    link: "/packages",
-    locked: true,
+    img: "/Deals/17/puntacana_destination.jpg",
+    link: "/deals/punta-cana",
+    liveDate: "2026-07-19",
   },
   {
     city: "Bali",
@@ -172,6 +172,14 @@ function DealTile({ city, img, dealOfWeek, link, locked }) {
   );
 }
 
+// Auto-unlock destinations on their liveDate (checked fresh in the browser on every visit)
+function resolveDate(d) {
+  if (!d.liveDate) return d;
+  const today = new Date().toISOString().split("T")[0];
+  const live = today >= d.liveDate;
+  return { ...d, locked: !live, dealOfWeek: live };
+}
+
 const sortDeals = (list) => [...list].sort((a, b) => (b.dealOfWeek ? 1 : 0) - (a.dealOfWeek ? 1 : 0));
 
 export default function DealsPage() {
@@ -243,7 +251,7 @@ export default function DealsPage() {
 
           {isMobile ? (
             <div style={mobileStrip}>
-              {sortDeals(DOMESTIC).map((d, i) => (
+              {sortDeals(DOMESTIC.map(resolveDate)).map((d, i) => (
                 <div key={i} style={mobileTileWrap}>
                   <DealTile {...d} />
                 </div>
@@ -251,7 +259,7 @@ export default function DealsPage() {
             </div>
           ) : (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "12px" }}>
-              {sortDeals(DOMESTIC).map((d, i) => (
+              {sortDeals(DOMESTIC.map(resolveDate)).map((d, i) => (
                 <DealTile key={i} {...d} />
               ))}
             </div>
@@ -267,7 +275,7 @@ export default function DealsPage() {
 
           {isMobile ? (
             <div style={mobileStrip}>
-              {sortDeals(INTERNATIONAL).map((d, i) => (
+              {sortDeals(INTERNATIONAL.map(resolveDate)).map((d, i) => (
                 <div key={i} style={mobileTileWrap}>
                   <DealTile {...d} />
                 </div>
@@ -275,7 +283,7 @@ export default function DealsPage() {
             </div>
           ) : (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "12px" }}>
-              {sortDeals(INTERNATIONAL).map((d, i) => (
+              {sortDeals(INTERNATIONAL.map(resolveDate)).map((d, i) => (
                 <DealTile key={i} {...d} />
               ))}
             </div>
