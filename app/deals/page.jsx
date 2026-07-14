@@ -63,6 +63,7 @@ const INTERNATIONAL = [
     city: "Paris",
     img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&h=900&fit=crop&auto=format",
     link: "/deals/paris",
+    dealOfWeekUntil: "2026-07-18",
   },
   {
     city: "Punta Cana",
@@ -174,10 +175,15 @@ function DealTile({ city, img, dealOfWeek, link, locked }) {
 
 // Auto-unlock destinations on their liveDate (checked fresh in the browser on every visit)
 function resolveDate(d) {
-  if (!d.liveDate) return d;
   const today = new Date().toISOString().split("T")[0];
-  const live = today >= d.liveDate;
-  return { ...d, locked: !live, dealOfWeek: live };
+  if (d.liveDate) {
+    const live = today >= d.liveDate;
+    return { ...d, locked: !live, dealOfWeek: live };
+  }
+  if (d.dealOfWeekUntil) {
+    return { ...d, dealOfWeek: today <= d.dealOfWeekUntil };
+  }
+  return d;
 }
 
 const sortDeals = (list) => [...list].sort((a, b) => (b.dealOfWeek ? 1 : 0) - (a.dealOfWeek ? 1 : 0));
