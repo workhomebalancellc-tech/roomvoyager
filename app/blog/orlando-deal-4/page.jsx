@@ -16,7 +16,7 @@ export default function OrlandoDeal4Blog() {
         {/* Hero */}
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
           <img
-            src="https://images.unsplash.com/photo-1627035983655-0ceec61bb733?w=1600&h=700&fit=crop&auto=format"
+            src="/Deals/13/Orlando_destination.jpg"
             alt="Walt Disney World Orlando"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 50%" }}
           />
@@ -47,7 +47,7 @@ export default function OrlandoDeal4Blog() {
           {/* Hotel 1 — Walt Disney World Swan Reserve */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/Deals/13/swanreserve1.jpg"
+              src="/Deals/13/waltdisneyworldswan1.jpg"
               alt="Walt Disney World Swan Reserve"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -81,7 +81,7 @@ export default function OrlandoDeal4Blog() {
           {/* Hotel 2 — Signia by Hilton Orlando */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/Deals/13/signia1.jpg"
+              src="/Deals/13/signiabyhilton1.jpg"
               alt="Signia by Hilton Orlando"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
