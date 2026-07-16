@@ -364,9 +364,9 @@ export default function OrlandoDealsPage() {
           <p style={{ fontSize: "13px", color: "#9CA3AF", marginBottom: "24px", textAlign: "center" }}>Click any deal below to expand the full post</p>
 
           {DEALS.filter(d => {
-            const t = new Date();
-            const today = `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
-            return d.publishDate <= today;
+            const now = new Date();
+            const [y, mo, day] = d.publishDate.split("-").map(Number);
+            return now >= new Date(y, mo - 1, day, 10, 0, 0);
           }).map((deal, i) => (
             <DealCard key={i} deal={deal} isLatest={i === 0} />
           ))}

@@ -175,13 +175,18 @@ function DealTile({ city, img, dealOfWeek, link, locked }) {
 
 // Auto-unlock destinations on their liveDate (checked fresh in the browser on every visit)
 function resolveDate(d) {
-  const today = new Date().toISOString().split("T")[0];
+  const now = new Date();
+  const isLive = (dateStr) => {
+    const [y, m, day] = dateStr.split("-").map(Number);
+    return now >= new Date(y, m - 1, day, 10, 0, 0);
+  };
+  const todayStr = now.toISOString().split("T")[0];
   if (d.liveDate) {
-    const live = today >= d.liveDate;
+    const live = isLive(d.liveDate);
     return { ...d, locked: !live, dealOfWeek: live };
   }
   if (d.dealOfWeekUntil) {
-    return { ...d, dealOfWeek: today <= d.dealOfWeekUntil };
+    return { ...d, dealOfWeek: todayStr <= d.dealOfWeekUntil };
   }
   return d;
 }
