@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-20",
+    date: "July 20, 2026",
+    label: "Brisas Tropical Playa Los Corales vs. The Patio",
+    intro: `Punta Cana delivers on the beach every time — but where you stay changes everything about the trip. This week's deal puts two very different properties side by side: a classic Caribbean resort right on Los Corales beach, versus a boutique option that strips things back and keeps it simple at a price that's hard to argue with.`,
+    headline: "🌴 Punta Cana Deal #2 — Brisas Tropical Playa Los Corales vs. The Patio",
+    protip: "Choose Brisas Tropical if you want the full Caribbean resort experience — beach access, pools, and everything on-site. Choose The Patio if you're keeping the budget tight and want a clean, comfortable base to explore from without paying for amenities you won't use.",
+    hotels: [
+      {
+        name: "Brisas Tropical Playa Los Corales",
+        emoji: "🌊",
+        vibe: "Beachfront resort on Los Corales",
+        price: "$99/night",
+        photo: "/Deals/18/brisas1.jpg",
+        blurb: "Brisas Tropical Playa Los Corales sits directly on one of Punta Cana's most sought-after stretches of coastline. Los Corales Beach is calmer and less crowded than Bávaro, with clear water and a reef just offshore that makes it a favorite with snorkelers. The resort gives you everything you need for a proper Caribbean stay — pools, dining, beach access — at a price that still leaves room in the budget for an excursion or two. Travel dates: August 14–17.",
+        perks: ["Beachfront on Los Corales", "Snorkeling reef offshore", "Pools & on-site dining", "Aug 14–17"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana2_1",
+      },
+      {
+        name: "The Patio",
+        emoji: "🏡",
+        vibe: "Boutique stay, unbeatable price",
+        price: "$17/night",
+        photo: "/Deals/18/patio1.jpg",
+        blurb: "At $17 a night, The Patio is one of those rare finds that makes you look twice. It's a boutique property — intimate, straightforward, and without the overhead of a large resort. What you get is a clean, comfortable place to stay in Punta Cana with the freedom to spend your money on the things that actually matter: the beach, the food, the excursions. Sometimes the best travel hack is just paying less for the room. Travel dates: August 14–17.",
+        perks: ["$17/night", "Boutique & intimate", "Budget-friendly base", "Aug 14–17"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana2_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-19",
     date: "July 19, 2026",
     label: "Vik Hotel Cayena Beach vs. Whala! Bávaro",
