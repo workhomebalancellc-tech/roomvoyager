@@ -16,7 +16,7 @@ export default function ParisDeal7Blog() {
         {/* Hero */}
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
           <img
-            src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1600&h=700&fit=crop&auto=format"
+            src="/Deals/9/Paris_Destination.jpg"
             alt="Paris"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 60%" }}
           />
@@ -46,7 +46,7 @@ export default function ParisDeal7Blog() {
           {/* Hotel 1 — Hotel Clauzel */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/paris-deal-7/hotelclauzel1.jpg"
+              src="/Deals/9/hotelclauzel1.jpg"
               alt="Hotel Clauzel"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -80,7 +80,7 @@ export default function ParisDeal7Blog() {
           {/* Hotel 2 — Hôtel Atlas */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/blog-photos/paris-deal-7/hotelatlas1.jpg"
+              src="/Deals/9/hotelatlas1.jpg"
               alt="Hôtel Atlas"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
