@@ -16,7 +16,7 @@ export default function OrlandoDeal6Blog() {
         {/* Hero */}
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
           <img
-            src="https://images.unsplash.com/photo-1627035983655-0ceec61bb733?w=1600&h=700&fit=crop&auto=format"
+            src="/Deals/15/Orlando_destination.jpg"
             alt="Orlando"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 50%" }}
           />
@@ -47,7 +47,7 @@ export default function OrlandoDeal6Blog() {
           {/* Hotel 1 — Disney's Yacht Club Resort */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/Deals/15/disneyyachtclub1.jpg"
+              src="/Deals/15/disneysyachtclub1.jpg"
               alt="Disney's Yacht Club Resort"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -81,7 +81,7 @@ export default function OrlandoDeal6Blog() {
           {/* Hotel 2 — Marriott's Imperial Palm Villas */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="/Deals/15/marriottimperialpalm1.jpg"
+              src="/Deals/15/marriottsimperialpalm1.jpg"
               alt="Marriott's Imperial Palm Villas"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
