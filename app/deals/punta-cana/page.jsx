@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-24",
+    date: "July 24, 2026",
+    label: "JOIA Bávaro by Iberostar vs. The St. Regis Cap Cana Resort",
+    intro: `This week's deal is Punta Cana at its most elevated — two premium properties that represent completely different visions of what a luxury Caribbean stay looks like. JOIA Bávaro by Iberostar is adults-only, all-inclusive, and right on Bávaro Beach. The St. Regis Cap Cana is five-star luxury in the exclusive Cap Cana enclave — a different level of resort entirely. September 1st through the 8th, $30 a night apart.`,
+    headline: "🌴 Punta Cana Deal #6 — JOIA Bávaro by Iberostar vs. The St. Regis Cap Cana Resort",
+    protip: "Choose JOIA Bávaro if you want adults-only all-inclusive done at the highest level — everything covered, Iberostar quality, right on Bávaro Beach. Choose The St. Regis Cap Cana if you want the full five-star luxury experience in the most exclusive corner of Punta Cana — butler service, marina, and the kind of resort that genuinely earns the price.",
+    hotels: [
+      {
+        name: "JOIA Bávaro by Iberostar — Adults Only All Inclusive",
+        emoji: "🍹",
+        vibe: "Adults-only luxury all-inclusive",
+        price: "$389/night",
+        photo: "/Deals/22/joiabavaro1.jpg",
+        blurb: "JOIA Bávaro is Iberostar's premium adults-only concept — all-inclusive, beachfront on Bávaro, and designed for travelers who want everything taken care of without a family resort atmosphere. The quality here is a notch above the standard all-inclusive: better dining, better service, and a property that feels genuinely considered. Seven nights, September 1st through the 8th, and every meal and drink is covered from arrival to checkout.",
+        perks: ["Adults-only", "Full all-inclusive", "Iberostar premium brand", "Sep 1–8"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana6_1",
+      },
+      {
+        name: "The St. Regis Cap Cana Resort",
+        emoji: "⭐",
+        vibe: "Five-star luxury in Cap Cana",
+        price: "$419/night",
+        photo: "/Deals/22/stregiscapcana1.jpg",
+        blurb: "The St. Regis Cap Cana sits in one of the most exclusive resort developments in the Caribbean. Cap Cana is a gated community of ultra-luxury properties with a marina, championship golf, and private beach clubs — and the St. Regis is the crown jewel. Butler service, world-class dining, and a level of finish that makes every other resort in Punta Cana feel like a different category. At $419 a night — just $30 more than JOIA — this is one of the most compelling value comparisons on the entire island.",
+        perks: ["St. Regis butler service", "Exclusive Cap Cana location", "Marina & private beach", "Sep 1–8"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana6_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-23",
     date: "July 23, 2026",
     label: "Hotel Riu Palace Bávaro vs. Catalonia Punta Cana — All Inclusive",
