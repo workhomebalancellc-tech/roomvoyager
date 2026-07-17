@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-25",
+    date: "July 25, 2026",
+    label: "Hotel Casa Don Luis Cap Cana vs. Destination Jelly Playa Coral Condo",
+    intro: `Cap Cana boutique luxury versus condo-style living on Playa Coral — this week's deal is two completely different ways to do Punta Cana over Labor Day weekend. Hotel Casa Don Luis brings the intimate boutique experience to Cap Cana's exclusive enclave. Destination Jelly Playa Coral Condo gives you a full apartment setup steps from the beach at a fraction of the price.`,
+    headline: "🌴 Punta Cana Deal #7 — Hotel Casa Don Luis Cap Cana vs. Destination Jelly Playa Coral Condo",
+    protip: "Choose Hotel Casa Don Luis if you want the boutique Cap Cana experience — intimate, well-appointed, and in one of the most exclusive addresses in Punta Cana. Choose Destination Jelly Playa Coral Condo if you want apartment-style space, a kitchen, and the freedom to live like a local on Playa Coral at $139 a night.",
+    hotels: [
+      {
+        name: "Hotel Casa Don Luis Cap Cana by Faranda Boutique",
+        emoji: "🏛️",
+        vibe: "Boutique hotel in exclusive Cap Cana",
+        price: "$205/night",
+        photo: "/Deals/23/casadonluis1.jpg",
+        blurb: "Hotel Casa Don Luis is a Faranda Boutique property in Cap Cana — which means you're in the most exclusive development in Punta Cana, staying at a property designed around intimacy and character rather than scale. Boutique means fewer rooms, more attention, and a stay that actually feels personal. Cap Cana gives you access to a marina, championship golf, and private beach clubs. September 1st through the 3rd is a long weekend done right.",
+        perks: ["Faranda Boutique brand", "Exclusive Cap Cana location", "Intimate & well-appointed", "Sep 1–3"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana7_1",
+      },
+      {
+        name: "Destination Jelly Playa Coral Condo",
+        emoji: "🏠",
+        vibe: "Condo living on Playa Coral",
+        price: "$139/night",
+        photo: "/Deals/23/destinationjelly1.jpg",
+        blurb: "Destination Jelly Playa Coral Condo puts you in a full apartment on Playa Coral — kitchen, living space, and the kind of room to breathe that a standard hotel room simply can't match. At $139 a night you're saving $66 per night over Casa Don Luis, and you're getting more space for it. Playa Coral is one of Punta Cana's quieter beach stretches, which makes a Labor Day long weekend feel genuinely like an escape.",
+        perks: ["Full condo with kitchen", "Playa Coral beachside", "$66/night savings", "Sep 1–3"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana7_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-24",
     date: "July 24, 2026",
     label: "JOIA Bávaro by Iberostar vs. The St. Regis Cap Cana Resort",
