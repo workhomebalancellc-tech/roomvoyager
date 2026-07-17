@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-23",
+    date: "July 23, 2026",
+    label: "Hotel Riu Palace Bávaro vs. Catalonia Punta Cana — All Inclusive",
+    intro: `Two of Punta Cana's most popular all-inclusive resorts, side by side for Labor Day weekend. Hotel Riu Palace Bávaro and Catalonia Punta Cana both give you everything included — drinks, meals, beach, pools — but at $66 a night apart, the question is what that premium actually buys you.`,
+    headline: "🌴 Punta Cana Deal #5 — Hotel Riu Palace Bávaro vs. Catalonia Punta Cana",
+    protip: "Choose Hotel Riu Palace Bávaro if you want the full luxury all-inclusive experience — the Riu Palace brand is a step above, and at $253/night it delivers. Choose Catalonia Punta Cana if you want the same all-inclusive format at $66 less per night — solid resort, great beach, and $264 back in your pocket over four nights.",
+    hotels: [
+      {
+        name: "Hotel Riu Palace Bávaro — All Inclusive",
+        emoji: "👑",
+        vibe: "Luxury all-inclusive on Bávaro Beach",
+        price: "$253/night",
+        photo: "/Deals/21/riupalacebavaro1.jpg",
+        blurb: "Riu Palace Bávaro is the flagship of the Riu collection in Punta Cana — adults-only, beachfront on Bávaro, and all-inclusive with the kind of polish you'd expect from the Palace brand. Multiple pools, premium dining, and a beach that delivers exactly what every Punta Cana photo promises. September 1st through the 4th is shoulder season: the resort is at its most relaxed, the water is warm, and the price is as low as you'll find for this caliber of property.",
+        perks: ["Adults-only", "Beachfront on Bávaro", "Premium all-inclusive", "Sep 1–4"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana5_1",
+      },
+      {
+        name: "Catalonia Punta Cana — All Inclusive",
+        emoji: "🏖️",
+        vibe: "Full all-inclusive, great value",
+        price: "$187/night",
+        photo: "/Deals/21/cataloniapuntacana1.jpg",
+        blurb: "Catalonia Punta Cana is a well-established all-inclusive in the heart of the Bávaro resort strip — everything included, multiple pools, beach access, and the kind of resort that delivers a genuinely good Caribbean vacation without the Palace-tier price tag. At $187 a night, you're saving $264 over four nights compared to the Riu Palace. That's a spa day, a catamaran excursion, and still money left over — all while staying at a resort that consistently earns strong reviews.",
+        perks: ["Full all-inclusive", "Bávaro resort strip", "$264 savings vs. Riu Palace", "Sep 1–4"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana5_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-22",
     date: "July 22, 2026",
     label: "Palmares Suites vs. Hotel El Imperio Punta Cana",
