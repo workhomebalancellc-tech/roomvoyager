@@ -112,7 +112,14 @@ const DEALS = [
   },
 ];
 
-function openHotel(link) {
+function openHotel(link, name = "") {
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", "affiliate_click", {
+      hotel_name: name,
+      destination: "Las Vegas",
+      link_url: link,
+    });
+  }
   window.open(`/redirect?to=${encodeURIComponent(link)}&partner=Expedia&product=hotel`, "_blank", "noopener,noreferrer");
 }
 
@@ -164,7 +171,7 @@ function DealCard({ deal }) {
             {deal.hotels.map((hotel, i) => (
               <div key={i} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 <button
-                  onClick={() => openHotel(hotel.link)}
+                  onClick={() => openHotel(hotel.link, hotel.name)}
                   style={{ background: "none", border: "none", padding: 0, cursor: "pointer", borderRadius: "14px", overflow: "hidden", display: "block", position: "relative", width: "100%" }}
                 >
                   <img src={hotel.photo} alt={hotel.name} style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", display: "block" }} />
@@ -175,7 +182,7 @@ function DealCard({ deal }) {
                   </div>
                 </button>
                 <button
-                  onClick={() => openHotel(hotel.link)}
+                  onClick={() => openHotel(hotel.link, hotel.name)}
                   style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "10px", padding: "11px", fontSize: "13px", fontWeight: "700", cursor: "pointer", width: "100%" }}
                 >
                   Book Now — {hotel.price} →

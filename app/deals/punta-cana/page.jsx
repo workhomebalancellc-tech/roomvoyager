@@ -282,7 +282,7 @@ function DealCard({ deal, isLatest }) {
             {deal.hotels.map((hotel, i) => (
               <div key={i} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 <button
-                  onClick={() => openHotel(hotel.link)}
+                  onClick={() => openHotel(hotel.link, hotel.name)}
                   style={{ background: "none", border: "none", padding: 0, cursor: "pointer", borderRadius: "14px", overflow: "hidden", display: "block", position: "relative", width: "100%" }}
                 >
                   <img src={hotel.photo} alt={hotel.name} style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", display: "block" }} />
@@ -293,7 +293,7 @@ function DealCard({ deal, isLatest }) {
                   </div>
                 </button>
                 <button
-                  onClick={() => openHotel(hotel.link)}
+                  onClick={() => openHotel(hotel.link, hotel.name)}
                   style={{ background: NAVY, color: "#fff", border: "none", borderRadius: "10px", padding: "11px", fontSize: "13px", fontWeight: "700", cursor: "pointer", width: "100%" }}
                 >
                   Book Now — {hotel.price} →
