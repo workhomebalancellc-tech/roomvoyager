@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-22",
+    date: "July 22, 2026",
+    label: "Palmares Suites vs. Hotel El Imperio Punta Cana",
+    intro: `Labor Day weekend in Punta Cana — and this week's deal is two properties that keep the budget firmly in check while putting you right in the mix. Palmares Suites and Hotel El Imperio Punta Cana both deliver the Dominican Republic experience without the all-inclusive price tag. September 1st through the 5th is still warm, still beautiful, and noticeably less crowded than peak season.`,
+    headline: "🌴 Punta Cana Deal #4 — Palmares Suites vs. Hotel El Imperio Punta Cana",
+    protip: "Choose Palmares Suites if the suite-style setup and extra space are worth the $18 difference. Choose Hotel El Imperio Punta Cana if you want to go as low as possible and put the savings straight into the trip itself — excursions, beach clubs, local dining.",
+    hotels: [
+      {
+        name: "Palmares Suites",
+        emoji: "🏨",
+        vibe: "Suite-style comfort, great value",
+        price: "$48/night",
+        photo: "/Deals/20/palmaressuites1.jpg",
+        blurb: "Palmares Suites gives you the suite experience at a price that still makes sense. At $48 a night, you're getting more space than a standard room — the kind of setup that makes a four-night stay actually comfortable rather than just functional. September 1st through the 5th lands right at the start of shoulder season, when Punta Cana is at its most relaxed and the deals are at their best.",
+        perks: ["Suite-style rooms", "$48/night", "Sep 1–5", "Shoulder season value"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana4_1",
+      },
+      {
+        name: "Hotel El Imperio Punta Cana",
+        emoji: "👑",
+        vibe: "Affordable base, maximize your budget",
+        price: "$30/night",
+        photo: "/Deals/20/hotelelimperio1.jpg",
+        blurb: "Hotel El Imperio Punta Cana brings it down to $30 a night — a price that fundamentally changes what the rest of your trip can look like. Every dollar you save on the room is a dollar that goes toward a catamaran trip, a beach club day pass, or a proper dinner out. Punta Cana at $30 a night over Labor Day weekend is the kind of deal that makes the trip happen when it otherwise might not.",
+        perks: ["$30/night", "Budget-friendly base", "Sep 1–5", "More money for excursions"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana4_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-21",
     date: "July 21, 2026",
     label: "La Casona MC vs. Caribbean Sun Apart Hotel",
