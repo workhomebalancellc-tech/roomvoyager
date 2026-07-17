@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "./providers";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
+import AffiliateTracker from "./components/AffiliateTracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
             gtag('config', 'G-BPWHP94RC6');
           `}
         </Script>
+        <AffiliateTracker />
         <Providers>{children}</Providers>
         <Analytics />
       </body>

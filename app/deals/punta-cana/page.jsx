@@ -223,7 +223,14 @@ const DEALS = [
   },
 ];
 
-function openHotel(link) {
+function openHotel(link, name = "") {
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", "affiliate_click", {
+      hotel_name: name,
+      destination: "Punta Cana",
+      link_url: link,
+    });
+  }
   window.open(`/redirect?to=${encodeURIComponent(link)}&partner=Expedia&product=hotel`, "_blank", "noopener,noreferrer");
 }
 
