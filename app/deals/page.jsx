@@ -54,12 +54,6 @@ const DOMESTIC = [
 
 const INTERNATIONAL = [
   {
-    city: "Cancún",
-    img: "https://images.unsplash.com/photo-1552074284-5e88ef1aef18?w=600&h=900&fit=crop&auto=format",
-    link: "/packages",
-    locked: true,
-  },
-  {
     city: "Paris",
     img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&h=900&fit=crop&auto=format",
     link: "/deals/paris",
@@ -69,6 +63,12 @@ const INTERNATIONAL = [
     img: "/Deals/17/puntacana_destination.jpg",
     link: "/deals/punta-cana",
     liveDate: "2026-07-19",
+  },
+  {
+    city: "Cancún",
+    img: "https://images.unsplash.com/photo-1552074284-5e88ef1aef18?w=600&h=900&fit=crop&auto=format",
+    link: "/packages",
+    locked: true,
   },
   {
     city: "Bali",
