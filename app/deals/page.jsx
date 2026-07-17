@@ -63,7 +63,6 @@ const INTERNATIONAL = [
     city: "Paris",
     img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&h=900&fit=crop&auto=format",
     link: "/deals/paris",
-    dealOfWeekUntil: "2026-07-18",
   },
   {
     city: "Punta Cana",
