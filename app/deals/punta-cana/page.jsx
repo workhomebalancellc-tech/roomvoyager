@@ -34,7 +34,7 @@ const DEALS = [
         emoji: "⭐",
         vibe: "Five-star luxury in Cap Cana",
         price: "$419/night",
-        photo: "/Deals/22/stregiscapcana1.jpg",
+        photo: "/Deals/22/stregiscap1.jpg",
         blurb: "The St. Regis Cap Cana sits in one of the most exclusive resort developments in the Caribbean. Cap Cana is a gated community of ultra-luxury properties with a marina, championship golf, and private beach clubs — and the St. Regis is the crown jewel. Butler service, world-class dining, and a level of finish that makes every other resort in Punta Cana feel like a different category. At $419 a night — just $30 more than JOIA — this is one of the most compelling value comparisons on the entire island.",
         perks: ["St. Regis butler service", "Exclusive Cap Cana location", "Marina & private beach", "Sep 1–8"],
         link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana6_2",
