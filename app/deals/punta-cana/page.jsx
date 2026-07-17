@@ -34,7 +34,7 @@ const DEALS = [
         emoji: "👑",
         vibe: "Affordable base, maximize your budget",
         price: "$30/night",
-        photo: "/Deals/20/hotelelimperio1.jpg",
+        photo: "/Deals/20/hotelelimperiopunta1.jpg",
         blurb: "Hotel El Imperio Punta Cana brings it down to $30 a night — a price that fundamentally changes what the rest of your trip can look like. Every dollar you save on the room is a dollar that goes toward a catamaran trip, a beach club day pass, or a proper dinner out. Punta Cana at $30 a night over Labor Day weekend is the kind of deal that makes the trip happen when it otherwise might not.",
         perks: ["$30/night", "Budget-friendly base", "Sep 1–5", "More money for excursions"],
         link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana4_2",
