@@ -12,6 +12,36 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    publishDate: "2026-07-21",
+    date: "July 21, 2026",
+    label: "La Casona MC vs. Caribbean Sun Apart Hotel",
+    intro: `Punta Cana for Labor Day weekend — and this week's deal is two budget-friendly options that prove you don't need to spend a fortune to get to the Dominican Republic. La Casona MC and Caribbean Sun Apart Hotel both put you close to the action at prices that leave plenty left over for the beach, the food, and the excursions.`,
+    headline: "🌴 Punta Cana Deal #3 — La Casona MC vs. Caribbean Sun Apart Hotel",
+    protip: "Choose La Casona MC if you want a bit more character and don't mind spending the extra $8 a night for it. Choose Caribbean Sun Apart Hotel if you want apartment-style space — a kitchen, room to spread out — at the lowest price on the list.",
+    hotels: [
+      {
+        name: "La Casona MC",
+        emoji: "🏘️",
+        vibe: "Boutique guesthouse, great value",
+        price: "$30/night",
+        photo: "/Deals/19/lacasonamc1.jpg",
+        blurb: "La Casona MC is the kind of find that makes a Labor Day weekend trip actually affordable. At $30 a night, you're getting a clean, comfortable base in Punta Cana with the character of a boutique property — not a faceless chain. August 30th through September 2nd is shoulder season, which means the crowds are thinner, the prices are lower, and the beach is still exactly as beautiful as it is in peak season.",
+        perks: ["$30/night", "Boutique guesthouse", "Aug 30–Sep 2", "Labor Day weekend"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana3_1",
+      },
+      {
+        name: "Caribbean Sun Apart Hotel",
+        emoji: "☀️",
+        vibe: "Apart-hotel with kitchen, ultra value",
+        price: "$22/night",
+        photo: "/Deals/19/caribbeansun1.jpg",
+        blurb: "Caribbean Sun Apart Hotel goes even lower — $22 a night for apartment-style accommodations with a kitchen and real living space. This is the play for travelers who want to stretch every dollar: cook some meals in, spend the savings on a catamaran trip or a day at the beach club, and still come home having spent far less than a typical Caribbean getaway. Labor Day weekend in Punta Cana at $22 a night is a deal worth sharing.",
+        perks: ["$22/night", "Kitchen & living space", "Apart-hotel style", "Aug 30–Sep 2"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/puntacana3_2",
+      },
+    ],
+  },
+  {
     publishDate: "2026-07-20",
     date: "July 20, 2026",
     label: "Brisas Tropical Playa Los Corales vs. The Patio",
