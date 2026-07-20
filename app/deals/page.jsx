@@ -23,7 +23,7 @@ const DOMESTIC = [
     city: "New York City",
     img: "https://images.unsplash.com/photo-1546436836-07a91091f160?w=600&h=900&fit=crop&auto=format",
     link: "/deals/new-york-city",
-    liveDate: "2026-08-03",
+    liveDate: "2026-07-26",
   },
   {
     city: "Miami",
