@@ -25,22 +25,22 @@ const DEALS = [
         emoji: "🏙️",
         vibe: "Times Square energy at your doorstep",
         price: "From $166/night",
-        photo: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&h=600&fit=crop&auto=format",
+        photo: "/Deals/24/podtimessquare1.jpg",
         blurb: "Pod Times Square puts you right in the center of the action — Broadway theaters, Times Square, and the energy of Midtown Manhattan are all steps away. The hotel has a signature rooftop bar with sweeping NYC views, sleek modern rooms designed to maximize every inch, and a vibe that feels genuinely like New York. At $166/night for Labor Day weekend, this is one of the strongest value plays in Midtown. Three nights earns you over 2,400 RoomVoyager points — that's $2.40 in real cash back on your next trip.",
         perks: ["Times Square location", "Rooftop bar & NYC views", "Steps from Broadway shows", "Modern boutique style"],
         link: "https://expedia.com/affiliates/workhomebalance_llc/nyc1_2",
-        articlePhoto: "https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400&h=400&fit=crop&auto=format",
+        articlePhoto: "/Deals/24/podtimessquare2.jpg",
       },
       {
         name: "The Park Ave North",
         emoji: "🏛️",
         vibe: "Classic Midtown on Park Avenue",
         price: "From $124/night",
-        photo: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&h=600&fit=crop&auto=format",
+        photo: "/Deals/24/parkavenorth1.jpg",
         blurb: "A Park Avenue address for $124/night on Labor Day weekend is a serious deal. The Park Ave North puts you in classic Midtown — steps from Grand Central Terminal, a short walk from Bryant Park and the High Line, and close to everything without being in the middle of the tourist swarm. The neighborhood is quieter, more residential, and gives you the real NYC experience. If you want to stretch your travel budget while still staying somewhere you're proud of, this is the move.",
         perks: ["Park Avenue address", "Near Grand Central Terminal", "Classic Midtown neighborhood", "Best value for Labor Day"],
         link: "https://expedia.com/affiliates/workhomebalance_llc/nyc1_1",
-        articlePhoto: "https://images.unsplash.com/photo-1518235506717-e1ed3306a89b?w=400&h=400&fit=crop&auto=format",
+        articlePhoto: "/Deals/24/parkavenorth2.jpg",
       },
     ],
   },
@@ -176,7 +176,7 @@ export default function NewYorkCityDealsPage() {
         {/* HERO */}
         <div style={{ position: "relative", height: "320px", overflow: "hidden" }}>
           <img
-            src="https://images.unsplash.com/photo-1546436836-07a91091f160?w=1600&h=500&fit=crop&auto=format"
+            src="/Deals/24/newyork_destination.jpg"
             alt="New York City skyline"
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
