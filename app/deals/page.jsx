@@ -22,8 +22,8 @@ const DOMESTIC = [
   {
     city: "New York City",
     img: "https://images.unsplash.com/photo-1546436836-07a91091f160?w=600&h=900&fit=crop&auto=format",
-    link: "/hotels",
-    locked: true,
+    link: "/deals/new-york-city",
+    dealOfWeek: true,
   },
   {
     city: "Miami",
