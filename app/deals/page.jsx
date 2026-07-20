@@ -18,7 +18,6 @@ const DOMESTIC = [
     city: "Orlando",
     img: "https://images.unsplash.com/photo-1627035983655-0ceec61bb733?w=600&h=900&fit=crop&auto=format",
     link: "/deals/orlando",
-    dealOfWeek: true,
   },
   {
     city: "New York City",
