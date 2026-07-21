@@ -12,9 +12,44 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    date: "July 20, 2026",
+    label: "Fitzpatrick Grand Central vs. Doxie Hotel",
+    badge: "🔥 Latest Deal",
+    badgeColor: ORANGE,
+    intro: `New York Fashion Week runs September 5–12 and the city transforms — runway shows, industry events, and an energy unlike any other week of the year. We found two hotels right in the heart of Midtown that put you in the middle of it all at the same price point. Fitzpatrick Grand Central brings Irish boutique hospitality steps from Grand Central Terminal. The Doxie Hotel offers a fresh, design-forward stay for the same $254/night. Same price, two very different personalities.`,
+    headline: "👗 NYC Fashion Week — Fitzpatrick Grand Central vs. Doxie Hotel",
+    protip: "Same price, so this comes down to vibe. Fitzpatrick Grand Central gives you classic Midtown elegance and Irish hospitality — polished and refined. Doxie Hotel is the pick if you want something more design-forward and modern to match the fashion week energy.",
+    hotels: [
+      {
+        name: "Fitzpatrick Grand Central",
+        emoji: "🏛️",
+        vibe: "Irish boutique elegance near Grand Central",
+        price: "From $254/night",
+        photo: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop&auto=format",
+        blurb: "Fitzpatrick Grand Central is an Irish-owned boutique hotel steps from Grand Central Terminal — one of the most storied addresses in Midtown Manhattan. The property is known for its warm hospitality, well-appointed rooms, and classic NYC character. During Fashion Week, you're perfectly positioned for shows across Midtown and easy access to the entire city. Seven nights, September 5–12, at $254/night.",
+        perks: ["Steps from Grand Central Terminal", "Irish boutique hospitality", "Classic Midtown location", "Sep 5–12 Fashion Week"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/nyc2_2",
+        articlePhoto: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=400&h=400&fit=crop&auto=format",
+      },
+      {
+        name: "Doxie Hotel",
+        emoji: "✨",
+        vibe: "Design-forward modern stay in Midtown",
+        price: "From $254/night",
+        photo: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop&auto=format",
+        blurb: "The Doxie Hotel brings a fresh, design-forward energy to Midtown — exactly the right vibe for Fashion Week. Modern rooms, thoughtful details, and a stay that feels current without the stuffy formality of a legacy hotel. At $254/night for Fashion Week you're getting strong value in one of the busiest weeks of the NYC calendar. Seven nights, September 5–12.",
+        perks: ["Design-forward modern rooms", "Midtown Manhattan location", "Fashion Week energy", "Sep 5–12"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/nyc2_1",
+        articlePhoto: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400&h=400&fit=crop&auto=format",
+      },
+    ],
+  },
+  {
     date: "July 19, 2026",
     label: "Pod Times Square vs. The Park Ave North",
-    badge: "🔥 Latest Deal",
+    badge: "Previous Deal",
+    badgeColor: "#6B7280",
+
     badgeColor: ORANGE,
     intro: `Labor Day weekend in New York City — Aug 30 through Sep 2 — is one of the last big weekends of the summer and one of the best times to actually enjoy the city. Crowds thin out as locals flee for the Hamptons, and you get midtown Manhattan to yourself. We found two hotels that deliver the full NYC experience at two very different price points. The Park Ave North comes in at just $124/night for a classic Midtown address. Pod Times Square sits at $166/night if you want to be right in the middle of everything.`,
     headline: "🗽 Labor Day in NYC — Pod Times Square vs. The Park Ave North",
