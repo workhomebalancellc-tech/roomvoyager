@@ -12,7 +12,7 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
-    date: "July 20, 2026",
+    date: "July 27, 2026",
     label: "Fitzpatrick Grand Central vs. Doxie Hotel",
     badge: "🔥 Latest Deal",
     badgeColor: ORANGE,
