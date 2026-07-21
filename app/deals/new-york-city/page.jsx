@@ -25,22 +25,22 @@ const DEALS = [
         emoji: "🏛️",
         vibe: "Irish boutique elegance near Grand Central",
         price: "From $254/night",
-        photo: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop&auto=format",
+        photo: "/Deals/25/fitzpatrickgrandcentral1.jpg",
         blurb: "Fitzpatrick Grand Central is an Irish-owned boutique hotel steps from Grand Central Terminal — one of the most storied addresses in Midtown Manhattan. The property is known for its warm hospitality, well-appointed rooms, and classic NYC character. During Fashion Week, you're perfectly positioned for shows across Midtown and easy access to the entire city. Seven nights, September 5–12, at $254/night.",
         perks: ["Steps from Grand Central Terminal", "Irish boutique hospitality", "Classic Midtown location", "Sep 5–12 Fashion Week"],
         link: "https://expedia.com/affiliates/workhomebalance_llc/nyc2_2",
-        articlePhoto: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=400&h=400&fit=crop&auto=format",
+        articlePhoto: "/Deals/25/fitzpatrickgrandcentral2.jpg",
       },
       {
         name: "Doxie Hotel",
         emoji: "✨",
         vibe: "Design-forward modern stay in Midtown",
         price: "From $254/night",
-        photo: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop&auto=format",
+        photo: "/Deals/25/doxie1.jpg",
         blurb: "The Doxie Hotel brings a fresh, design-forward energy to Midtown — exactly the right vibe for Fashion Week. Modern rooms, thoughtful details, and a stay that feels current without the stuffy formality of a legacy hotel. At $254/night for Fashion Week you're getting strong value in one of the busiest weeks of the NYC calendar. Seven nights, September 5–12.",
         perks: ["Design-forward modern rooms", "Midtown Manhattan location", "Fashion Week energy", "Sep 5–12"],
         link: "https://expedia.com/affiliates/workhomebalance_llc/nyc2_1",
-        articlePhoto: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400&h=400&fit=crop&auto=format",
+        articlePhoto: "/Deals/25/doxie2.jpg",
       },
     ],
   },
@@ -211,7 +211,7 @@ export default function NewYorkCityDealsPage() {
         {/* HERO */}
         <div style={{ position: "relative", height: "320px", overflow: "hidden" }}>
           <img
-            src="/Deals/24/newyork_destination.jpg"
+            src="/Deals/25/newyork_destination.jpg"
             alt="New York City skyline"
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
