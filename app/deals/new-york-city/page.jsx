@@ -12,9 +12,42 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    date: "July 28, 2026",
+    label: "Sofitel New York vs. Moxy NYC Times Square",
+    badge: "🔥 Latest Deal",
+    badgeColor: ORANGE,
+    intro: `Labor Day weekend in New York City — September 4–7 — and we found two hotels that couldn't be more different. Sofitel New York brings French luxury to Midtown at $503/night. Moxy NYC Times Square delivers a fun, modern boutique stay right in the heart of Times Square at $380/night. Same weekend, $123 a night apart.`,
+    headline: "🗽 Labor Day NYC — Sofitel New York vs. Moxy NYC Times Square",
+    protip: "The $123/night gap is real money — $369 over the long weekend. Sofitel is the move if this is a special occasion and French luxury in Midtown is the vibe. Moxy wins if you want to be in Times Square with a modern, energetic hotel that doesn't take itself too seriously.",
+    hotels: [
+      {
+        name: "Sofitel New York",
+        emoji: "🇫🇷",
+        vibe: "French luxury in the heart of Midtown",
+        price: "From $503/night",
+        photo: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop&auto=format",
+        blurb: "Sofitel New York is French luxury transplanted to the middle of Midtown Manhattan — refined rooms, exceptional service, and that distinctly European attention to detail that sets Sofitel apart from every other hotel on the block. At $503/night for Labor Day weekend you're paying for one of the best hotel experiences in the city. Four nights earns you over 6,000 RoomVoyager points — that's $6 in real cash back.",
+        perks: ["French luxury brand", "Midtown Manhattan location", "Exceptional service", "Sep 4–7 Labor Day"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/nyc3_1",
+        articlePhoto: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=400&h=400&fit=crop&auto=format",
+      },
+      {
+        name: "Moxy NYC Times Square",
+        emoji: "⚡",
+        vibe: "Fun, modern boutique in Times Square",
+        price: "From $380/night",
+        photo: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=600&fit=crop&auto=format",
+        blurb: "Moxy NYC Times Square puts you dead center in the action — Times Square energy right outside your door, a hotel that leans into the fun rather than away from it, and rooms that are smartly designed to maximize every inch. At $380/night you're saving $123 a night over the Sofitel — that's $369 back in your pocket over the long weekend to spend on the city instead. Four nights earns you over 4,500 RoomVoyager points.",
+        perks: ["Times Square location", "Fun modern boutique vibe", "$123/night savings vs Sofitel", "Sep 4–7 Labor Day"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/nyc3_2",
+        articlePhoto: "https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400&h=400&fit=crop&auto=format",
+      },
+    ],
+  },
+  {
     date: "July 27, 2026",
     label: "Fitzpatrick Grand Central vs. Doxie Hotel",
-    badge: "🔥 Latest Deal",
+    badge: "Previous Deal",
     badgeColor: ORANGE,
     intro: `New York Fashion Week runs September 5–12 and the city transforms — runway shows, industry events, and an energy unlike any other week of the year. We found two hotels right in the heart of Midtown that put you in the middle of it all at the same price point. Fitzpatrick Grand Central brings Irish boutique hospitality steps from Grand Central Terminal. The Doxie Hotel offers a fresh, design-forward stay for the same $254/night. Same price, two very different personalities.`,
     headline: "👗 NYC Fashion Week — Fitzpatrick Grand Central vs. Doxie Hotel",
