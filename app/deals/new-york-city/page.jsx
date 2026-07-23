@@ -12,9 +12,43 @@ const LIGHT_BLUE = "#EBF3FF";
 
 const DEALS = [
   {
+    date: "July 29, 2026",
+    label: "The Draper New York vs. Distrikt Hotel — Both Tapestry by Hilton",
+    badge: "🔥 Latest Deal",
+    badgeColor: ORANGE,
+    intro: `Two 4-star Tapestry Collection by Hilton hotels, Fashion Week weekend September 10–12, $11 a night apart. The Draper New York at $377/night versus Distrikt Hotel New York City at $366/night. Same brand family, same quality standard, two completely different personalities. This one comes down to location and vibe.`,
+    headline: "🏨 NYC Fashion Week — The Draper vs. Distrikt Hotel (Both Tapestry by Hilton)",
+    protip: "You're splitting hairs on price — $11 a night is barely a difference. This decision is purely about which hotel's personality fits you better. The Draper brings a classic New York character. Distrikt leans into its Midtown energy with a more modern edge. Both are Hilton quality, both earn Hilton Honors points.",
+    hotels: [
+      {
+        name: "The Draper New York, Tapestry Collection by Hilton",
+        emoji: "🏛️",
+        vibe: "Classic New York character, Hilton quality",
+        price: "From $377/night",
+        photo: "/Deals/27/drapernewyork1.jpg",
+        blurb: "The Draper New York is a Tapestry Collection by Hilton property — which means boutique character backed by Hilton's service and loyalty program. The hotel has a classic New York personality: well-appointed, refined, and genuinely characterful. Fashion Week runs September 5–12 and you're right in the middle of it. Three nights September 10–12 earns you Hilton Honors points on top of your RoomVoyager cash back.",
+        perks: ["Tapestry Collection by Hilton", "Classic NYC character", "Earns Hilton Honors points", "Sep 10–12 Fashion Week"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/nyc4_1",
+        articlePhoto: "/Deals/27/drapernewyork2.jpg",
+      },
+      {
+        name: "Distrikt Hotel New York City, Tapestry Collection by Hilton",
+        emoji: "⚡",
+        vibe: "Modern Midtown energy, same Hilton standard",
+        price: "From $366/night",
+        photo: "/Deals/27/distrikhotel1.jpg",
+        blurb: "Distrikt Hotel is the same Tapestry Collection by Hilton quality standard as The Draper but with a more modern, energetic edge that fits Fashion Week perfectly. At $366/night you're saving $11 a night — $33 over the weekend — for a hotel that leans into its Midtown personality rather than away from it. Same Hilton Honors earning, same 4-star standard, slightly lower price.",
+        perks: ["Tapestry Collection by Hilton", "Modern Midtown energy", "$11/night less than The Draper", "Sep 10–12 Fashion Week"],
+        link: "https://expedia.com/affiliates/workhomebalance_llc/nyc4_2",
+        articlePhoto: "/Deals/27/distrikhotel2.jpg",
+      },
+    ],
+  },
+  {
     date: "July 28, 2026",
     label: "Sofitel New York vs. Moxy NYC Times Square",
-    badge: "🔥 Latest Deal",
+    badge: "Previous Deal",
+
     badgeColor: ORANGE,
     intro: `Labor Day weekend in New York City — September 4–7 — and we found two hotels that couldn't be more different. Sofitel New York brings French luxury to Midtown at $503/night. Moxy NYC Times Square delivers a fun, modern boutique stay right in the heart of Times Square at $380/night. Same weekend, $123 a night apart.`,
     headline: "🗽 Labor Day NYC — Sofitel New York vs. Moxy NYC Times Square",
