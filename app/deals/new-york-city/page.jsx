@@ -25,11 +25,11 @@ const DEALS = [
         emoji: "🌙",
         vibe: "Stylish boutique with rooftop bar on Broadway",
         price: "From $280/night",
-        photo: "/Deals/28/nighthotelbroadway1.jpg",
+        photo: "/Deals/28/nighthotel1.jpg",
         blurb: "Night Hotel Broadway is a boutique hotel that leans into its namesake — dark, moody, and genuinely stylish. The rooftop bar is one of its signature draws, and the rooms have a design sensibility that sets it apart from a standard Midtown stay. At $280/night for a Fashion Week weekend you're paying for personality and atmosphere. September 11–12 is still within NYC Fashion Week, so the city is running at full energy.",
         perks: ["Rooftop bar with NYC views", "Boutique design hotel", "Broadway corridor location", "Fashion Week Sep 11–12"],
         link: "https://expedia.com/affiliates/workhomebalance_llc/nyc5_1",
-        articlePhoto: "/Deals/28/nighthotelbroadway2.jpg",
+        articlePhoto: "/Deals/28/nighthotel2.jpg",
       },
       {
         name: "31 Street Broadway Hotel",
