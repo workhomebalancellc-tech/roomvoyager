@@ -4,3 +4,6 @@ Disallow: /api/
 Disallow: /profile
 
 Sitemap: https://www.roomvoyagertravel.com/sitemap.xml
+
+# LLM-friendly site summary
+LLMs-txt: https://www.roomvoyagertravel.com/llms.txt
