@@ -14,7 +14,7 @@ RoomVoyager is a travel affiliate and rewards platform designed for everyday tra
 
 - **Hotels** — Search and book via Expedia's secure platform. Wide selection of properties worldwide.
 - **Flights** — Search via Kiwi.com. Handles checkout and booking confirmation.
-- **Cruises** — Search via CruiseDirect. Access all major cruise lines.
+- **Cruises** — Search via CruiseDirect and Cruisebound. Access all major cruise lines.
 - **Vacation Packages** — Bundle hotels and flights for greater savings.
 
 ## Rewards Program
