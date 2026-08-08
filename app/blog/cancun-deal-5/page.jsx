@@ -36,10 +36,10 @@ export default function CancunDeal5Blog() {
         <div style={{ maxWidth: "780px", margin: "0 auto", padding: "52px 24px 80px" }}>
 
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "20px" }}>
-            Summer in Cancún — July 12th through the 19th — means long beach days, warm Caribbean water, and a Hotel Zone that earns its reputation. The sun is relentless in the best way, and the only thing on the agenda is making the most of every hour you're here. You've already picked the destination. Now pick the property.
+            November in Cancún is prime travel season — the summer heat has softened, the Hotel Zone is busy but not overwhelmed, and the beach is exactly what you came for. This week's deal covers two different windows in the month, which tells its own story about who each property is right for.
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
-            Krystal Cancún and Secrets The Vine represent two completely different chapters of the Hotel Zone story. Krystal is the classic — a beachfront property that's been part of the Cancún fabric for decades, no all-inclusive required, straightforward and well-priced. Secrets The Vine is the modern rewrite — a sleek adults-only all-inclusive that looks like it belongs on a design blog and delivers a level of polish that the older resorts simply don't match. Same beach, different world.
+            Krystal Cancún is available November 4th through the 7th at $208 a night — a classic beachfront hotel, no all-inclusive required. Secrets The Vine is priced at $535 a night for November 26th through the 30th — a sleek adults-only all-inclusive where everything is already handled. Different dates, different price points, completely different versions of Cancún.
           </p>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
@@ -55,13 +55,13 @@ export default function CancunDeal5Blog() {
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>
                 Krystal Cancún — The Classic That Earns It
               </h2>
-              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>~$110 / night</span>
+              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$208 / night · Nov 4–7</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
               Krystal Cancún sits on a prime stretch of Hotel Zone beachfront and has been doing so long enough to have figured out what guests actually want. Direct beach access, multiple pools, solid on-site dining, and rooms with ocean views that justify the address. There's no all-inclusive required here — you pay for what you use, which for summer travelers who want to explore the Hotel Zone's restaurants and nightlife is exactly the right setup.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              At around $110 a night, Krystal puts you on one of the best beaches in the zone without locking you into a resort bubble. July in Cancún means evenings on the strip, fresh seafood dinners off-property, and the kind of trip where the hotel is a great home base rather than the entire plan. Classic Hotel Zone energy at a price that still makes sense.
+              At $208 a night for November 4th through the 7th, Krystal puts you on one of the best beaches in the zone without locking you into a resort bubble. Early November in Cancún means evenings on the strip, fresh seafood dinners off-property, and the kind of trip where the hotel is a great home base rather than the entire plan. Classic Hotel Zone energy at a price that still makes sense.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want a well-located beachfront hotel without the all-inclusive price tag — great pools, solid beach, and the freedom to explore the Hotel Zone on your own terms.
@@ -89,16 +89,16 @@ export default function CancunDeal5Blog() {
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>
                 Secrets The Vine — Modern Cancún at Its Best
               </h2>
-              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>~$320 / night all-inclusive</span>
+              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$535 / night all-inclusive · Nov 26–30</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
               Secrets The Vine is what happens when a resort takes the all-inclusive formula and rebuilds it from scratch with contemporary design and adults-only standards. The property is clean-lined, modern, and visually striking — infinity pools, ocean-view suites, and a level of finish that makes it immediately clear this isn't your average Cancún resort. The Secrets brand has earned its reputation, and The Vine is the property that best shows why.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Everything is included and everything is done well — multiple gourmet restaurants, premium bars, a full spa, and a beach setup that feels curated rather than crowded. For summer, the adults-only environment keeps the energy sophisticated without being stuffy. At around $320 a night all-inclusive, the math works out especially well when you factor in what comparable quality dining and drinks would run off-property. This is the version of Cancún you come back bragging about.
+              Everything is included and everything is done well — multiple gourmet restaurants, premium bars, a full spa, and a beach setup that feels curated rather than crowded. For late November, the adults-only environment keeps the energy sophisticated without being stuffy. At $535 a night all-inclusive, the math works out well when you factor in what comparable quality dining and drinks would run off-property. This is the version of Cancún you come back bragging about.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Adults who want modern design, gourmet dining, and a polished all-inclusive experience — the kind of summer trip that looks as good as it feels.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Adults who want modern design, gourmet dining, and a polished all-inclusive experience — the kind of late-November trip that looks as good as it feels.
             </p>
             <a
               href="https://expedia.com/affiliates/workhomebalance_llc/cancun5_2"
@@ -143,7 +143,7 @@ export default function CancunDeal5Blog() {
 
           <div style={{ textAlign: "center", padding: "12px 0" }}>
             <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>
-              Summer in Cancún never gets old. ☀️🌊
+              November in Cancún. Pick your dates, pick your style. 🌊
             </p>
             <a href="/rewards" style={{ color: ORANGE, fontWeight: "700", fontSize: "14px", textDecoration: "none" }}>
               Learn about RoomVoyager Rewards →

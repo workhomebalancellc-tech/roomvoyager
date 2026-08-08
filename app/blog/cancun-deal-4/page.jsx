@@ -36,7 +36,7 @@ export default function CancunDeal4Blog() {
         <div style={{ maxWidth: "780px", margin: "0 auto", padding: "52px 24px 80px" }}>
 
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "20px" }}>
-            Spring break in Cancún — March 14th through the 21st — and the Hotel Zone is at its most electric. The weather is perfect, the beaches are packed with energy, and everyone on the strip made the same smart call. The all-inclusive decision is already settled. Now comes the one that actually matters: which resort?
+            Thanksgiving weekend in Cancún — November 26th through the 30th — is one of the best windows on the Hotel Zone calendar. You're already off work, the weather is excellent, and four nights in Mexico is the kind of extension that's hard to argue against. The all-inclusive decision is already settled. Now comes the one that actually matters: which resort?
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
             Iberostar Cancún and Live Aqua Beach Resort both sit in the Hotel Zone, both are adults-only, and both deliver solid all-inclusive experiences. But their personalities couldn't be more different. Iberostar is the established name — consistent, well-run, and exactly what it promises. Live Aqua is the property people are talking about right now — sensory-forward, design-driven, and built for guests who care as much about the aesthetic as the amenities.
@@ -55,13 +55,13 @@ export default function CancunDeal4Blog() {
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>
                 Iberostar Cancún — The Reliable All-Inclusive
               </h2>
-              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>~$175 / night all-inclusive</span>
+              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$384 / night all-inclusive</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
               Iberostar has been getting Cancún right for decades, and the Cancún property shows it. Beachfront location on one of the best stretches of the Hotel Zone, multiple pools, a full roster of restaurants and bars, and a level of service that comes from a brand that's had years to work out every detail. You know what you're getting — and what you're getting is genuinely good.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              At around $175 a night all-inclusive, Iberostar sits in the sweet spot where the price feels justified and the experience delivers. Spring break crowds will be here, but the property handles volume well. The beach is excellent, the food is a step above the average all-inclusive spread, and the pools stay energetic without tipping into chaos. If you want spring break done right without a single unpleasant surprise, Iberostar is the call.
+              At $384 a night all-inclusive, Iberostar sits in the sweet spot where the price feels justified and the experience delivers. The property handles holiday volume well. The beach is excellent, the food is a step above the average all-inclusive spread, and the pools stay energetic without tipping into chaos. If you want Thanksgiving weekend done right without a single unpleasant surprise, Iberostar is the call.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want a proven beachfront all-inclusive — great food, reliable service, and a property that handles spring break crowds without missing a beat.
@@ -89,13 +89,13 @@ export default function CancunDeal4Blog() {
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>
                 Live Aqua Beach Resort — Cancún's Coolest Address
               </h2>
-              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>~$300 / night all-inclusive</span>
+              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$766 / night all-inclusive</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
               Live Aqua built its reputation on a simple idea: an all-inclusive resort should engage all your senses, not just feed you and point you to the beach. The property is adults-only, design-forward, and centered around a spa concept that runs through every part of the experience — from the scented common areas to the curated music program to the zero-gravity pool experience. It's a resort that has a point of view, and that point of view is immaculate.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              For spring break, Live Aqua draws the crowd that wants the upscale version of the week — a quieter pool scene, better cocktails, restaurants that feel like actual restaurants, and a beach setup that doesn't feel like organized chaos. At around $300 a night, you're paying for the upgrade in atmosphere as much as the amenities. If the aesthetic matters and you want a spring break that looks as good as it feels, this is your property.
+              For Thanksgiving weekend, Live Aqua draws the crowd that wants the upscale version of the trip — a quieter pool scene, better cocktails, restaurants that feel like actual restaurants, and a beach setup that doesn't feel like organized chaos. At $766 a night, you're paying for the upgrade in atmosphere as much as the amenities. If the aesthetic matters and you want a long weekend that looks as good as it feels, this is your property.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Adults who want a refined, design-driven all-inclusive — spa culture, upscale dining, and a resort that's as much about the vibe as the view.
@@ -143,7 +143,7 @@ export default function CancunDeal4Blog() {
 
           <div style={{ textAlign: "center", padding: "12px 0" }}>
             <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>
-              Spring break hits different when the resort is right. 🌴
+              Thanksgiving in Cancún. Best decision you'll make this November. 🌴
             </p>
             <a href="/rewards" style={{ color: ORANGE, fontWeight: "700", fontSize: "14px", textDecoration: "none" }}>
               Learn about RoomVoyager Rewards →

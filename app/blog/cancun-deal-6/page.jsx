@@ -36,10 +36,10 @@ export default function CancunDeal6Blog() {
         <div style={{ maxWidth: "780px", margin: "0 auto", padding: "52px 24px 80px" }}>
 
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "20px" }}>
-            Labor Day week in Cancún — September 6th through the 13th — is one of the best-kept secrets in travel. Summer crowds have thinned out, the weather is still excellent, and the Hotel Zone runs at a pace that actually lets you enjoy it. Better yet, shoulder season pricing means more resort for your dollar than you'd get in peak months.
+            A mid-November trip to the Riviera Maya — November 15th through the 18th — and this week's deal offers two solid all-inclusive options in the same region. One sits in Playa del Carmen, about an hour south of the airport. The other is right on Cancún's Hotel Zone. Same general coastline, two very different settings.
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
-            This week's deal is a true head-to-head: Wyndham Alltra Cancún and Fiesta Americana Condesa Cancún. Both all-inclusive. Both well under $200 a night. Both legitimate options on the Hotel Zone. The question isn't whether either one is worth it — it's which one is worth it more for the kind of trip you have in mind.
+            Wyndham Alltra is in Playa del Carmen — more boutique in scale, walkable to 5th Avenue's restaurants and shops, with a beachfront all-inclusive setup at $262 a night. Fiesta Americana Condesa is in Cancún's Hotel Zone, a well-regarded Mexican brand with 9 restaurants and a gorgeous beach at $535 a night. The question is how much the location and the step-up in amenities matters to you.
           </p>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
@@ -53,18 +53,18 @@ export default function CancunDeal6Blog() {
             />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>
-                Wyndham Alltra Cancún — Value All-Inclusive, No Compromises
+                Wyndham Alltra Playa del Carmen — Value All-Inclusive, No Compromises
               </h2>
-              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>~$130 / night all-inclusive</span>
+              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$262 / night all-inclusive</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Wyndham Alltra is the brand's all-inclusive line, and the Cancún property makes a strong case for what the formula can deliver at the right price point. Beachfront location, multiple pools, solid dining options, and the full all-inclusive package — meals, drinks, and activities — for around $130 a night. It's not trying to out-luxury the five-star resorts. It's trying to deliver a genuinely good week at a price that makes the trip possible for a lot more people.
+              Wyndham Alltra is the brand's all-inclusive line, and the Playa del Carmen location is one of their standout properties. Beachfront access right off 5th Avenue, multiple pools, solid dining, and the full all-inclusive package — meals, drinks, and activities — for $262 a night. It's not trying to out-luxury the five-star resorts. It's trying to deliver a genuinely good stay at a price that makes the trip easy to justify, in a town with great restaurants and nightlife right outside the gates.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              The Wyndham name means something here — consistent standards, reliable service, and a property that runs smoothly. For Labor Day week when the resort isn't at peak capacity, you're getting solid all-inclusive value in a calmer environment than peak season would offer. Less crowd, same beach, better rate. That's the shoulder season advantage, and Alltra is a smart way to use it.
+              Playa del Carmen has a different energy than the Cancún Hotel Zone — more walkable, more local character, more of a town feel. The Wyndham Alltra lets you tap into that while still having an all-inclusive to come home to. November 15th through the 18th at $262 a night is solid value for what you're getting.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Budget-conscious travelers and families who want a reliable beachfront all-inclusive — solid food, great location, and a Wyndham-backed experience at a price that makes the math easy.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want an all-inclusive base in Playa del Carmen — walkable to 5th Avenue, solid beach, and a Wyndham-backed experience at a price that makes the math easy.
             </p>
             <a
               href="https://expedia.com/affiliates/workhomebalance_llc/cancun6_1"
@@ -89,13 +89,13 @@ export default function CancunDeal6Blog() {
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>
                 Fiesta Americana Condesa — Mexican Hospitality at Its Finest
               </h2>
-              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>~$175 / night all-inclusive</span>
+              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$535 / night all-inclusive</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
               Fiesta Americana is one of Mexico's most respected homegrown hospitality brands, and the Condesa property on Cancún's Hotel Zone is one of their flagship locations. The resort sits on a wide, beautiful stretch of beach with multiple pools, a full spa, several restaurants, and the kind of warm, attentive service that comes from a brand with deep roots in Mexican hospitality. It feels distinctly Mexican in a way that the international chains often don't — and that's a genuine differentiator.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              At around $175 a night all-inclusive, the step up from Alltra is real and noticeable — better dining variety, more resort amenities, and a property that carries a bit more character. For Labor Day week, the Condesa gives you a complete resort experience at a price that still qualifies as one of the better deals in the zone. If the $45-a-night difference buys you a noticeably better stay, it usually does here.
+              At $535 a night all-inclusive, the Condesa is firmly in premium territory — a fuller resort experience on Cancún's Hotel Zone beach with 9 restaurants, multiple pools, and the brand's signature Mexican hospitality. For November 15th through the 18th, this is the option if you want the Cancún Hotel Zone specifically and a resort that's built for more than just the basics.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want a step up in quality without breaking the budget — a well-regarded Mexican brand, great beach, and a full resort experience under $200 a night.
@@ -116,10 +116,10 @@ export default function CancunDeal6Blog() {
           <div style={{ background: "#EBF3FF", borderRadius: "20px", padding: "36px 32px", marginBottom: "48px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>The Bottom Line</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "12px" }}>
-              Choose <strong>Wyndham Alltra Cancún</strong> if keeping the budget tight is the priority — a reliable all-inclusive on a great beach at $130 a night is genuinely hard to beat, especially in shoulder season.
+              Choose <strong>Wyndham Alltra Playa del Carmen</strong> if you want a solid all-inclusive in a walkable beach town — $262 a night for an adults-only property steps from 5th Avenue is hard to argue with.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "28px" }}>
-              Choose <strong>Fiesta Americana Condesa</strong> if you want the best value under $200 — a beloved Mexican hospitality brand, a fuller resort experience, and the kind of warmth and character that makes Cancún feel like more than just a hotel zone.
+              Choose <strong>Fiesta Americana Condesa</strong> if you want the Hotel Zone experience — a beloved Mexican hospitality brand, 9 restaurants, a premier beach, and the kind of warmth that makes Cancún feel like more than just another resort strip.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
               <a
@@ -143,7 +143,7 @@ export default function CancunDeal6Blog() {
 
           <div style={{ textAlign: "center", padding: "12px 0" }}>
             <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>
-              Shoulder season. Full resort. Better rate. 🙌
+              Playa del Carmen or the Hotel Zone — both are a great call in November. 🌊
             </p>
             <a href="/rewards" style={{ color: ORANGE, fontWeight: "700", fontSize: "14px", textDecoration: "none" }}>
               Learn about RoomVoyager Rewards →

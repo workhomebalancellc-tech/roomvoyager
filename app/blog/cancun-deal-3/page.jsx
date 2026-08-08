@@ -36,10 +36,10 @@ export default function CancunDeal3Blog() {
         <div style={{ maxWidth: "780px", margin: "0 auto", padding: "52px 24px 80px" }}>
 
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "20px" }}>
-            Valentine's week in Cancún — February 13th through the 20th — and the Hotel Zone is full of couples who had the same idea. Warm weather, turquoise water, no kids, and a resort that sets the right mood. The only thing left to settle is what that mood actually looks like.
+            The week before Christmas in Cancún — December 18th through the 21st — is a sweet spot most travelers overlook. The full holiday crowds haven't descended yet, but the festive energy is already in the air and the weather is as close to perfect as it gets. Three nights, some sun, and a resort that handles everything while you decide how you want to spend the rest of December.
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
-            Hard Rock Hotel Cancún and Le Blanc Spa Resort are both adults-only all-inclusives on the same stretch of beach. They could not be more different. One is built around entertainment, energy, and keeping the party going. The other is built around silence, service, and the kind of luxury that asks nothing of you. Same week, same destination — the resort you pick says everything about the trip you want.
+            Hard Rock Hotel Cancún and Le Blanc Spa Resort are both adults-only all-inclusives on the same stretch of beach. They could not be more different. One is built around entertainment, energy, and keeping things moving. The other is built around silence, service, and the kind of luxury that asks nothing of you. Same three nights, same destination — the resort you pick says everything about the trip you want.
           </p>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
@@ -55,13 +55,13 @@ export default function CancunDeal3Blog() {
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>
                 Hard Rock Hotel Cancún — All-Inclusive with an Attitude
               </h2>
-              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>~$230 / night all-inclusive</span>
+              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$548 / night all-inclusive</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
               Hard Rock brings exactly what the brand promises — music, energy, and a resort that doesn't take itself too seriously. Beachfront pools with live entertainment, multiple restaurants, a full spa, and a vibe that leans into the fun. This is the Valentine's week for couples who want to dance, stay out late, and still wake up to a swim-up bar by noon. The all-inclusive handles everything; the resort handles the atmosphere.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              At around $230 a night, you're getting genuine luxury without the austere price tag of the ultra-high-end properties. The rooms are well done, the beach is excellent, and the entertainment calendar is packed. If Valentine's Day should feel like a celebration — loud, fun, and memorable in the best possible way — Hard Rock delivers that version of Cancún at a price that still makes sense.
+              At $548 a night, you're getting genuine all-inclusive luxury with entertainment built in. The rooms are well done, the beach is excellent, and the calendar stays packed. If the holiday season means celebrating loud, staying late, and making the most of every night — Hard Rock delivers that version of Cancún for these three nights.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Couples who want energy and entertainment — live music, pool parties, great food, and a resort that keeps things moving all week long.
@@ -89,13 +89,13 @@ export default function CancunDeal3Blog() {
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>
                 Le Blanc Spa Resort — The Quiet Luxury Standard
               </h2>
-              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>~$500+ / night all-inclusive</span>
+              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$1,085 / night all-inclusive</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
               Le Blanc consistently ranks as one of the best resorts in all of Cancún — not because of its size or its entertainment lineup, but because of how meticulously it takes care of its guests. Butler service. A world-class spa with a hydrotherapy circuit. Gourmet restaurants with à la carte dining included. Rooms with ocean views, pillow menus, and aromatherapy options. The property is designed to make noise disappear and let the experience take over.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              For Valentine's week, the case for Le Blanc is simple: this is the trip you remember for years. The butler handles everything before you even think to ask. The spa has couples' treatments that actually feel like a spa, not a hotel add-on. The beach is pristine and unhurried. At $500+ a night, you're paying for a resort that treats the experience as the product — and it earns every dollar of that price.
+              For December 18-21, the case for Le Blanc is simple: this is the trip you remember for years. The butler handles everything before you even think to ask. The spa has couples' treatments that actually feel like a spa, not a hotel add-on. The beach is pristine and unhurried. At $1,085 a night, you're paying for a resort that treats the experience as the product — and it earns every dollar of that price.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Couples who want pure indulgence — butler service, spa days, gourmet dining, and a resort where the whole point is that you don't have to think about anything.
@@ -143,7 +143,7 @@ export default function CancunDeal3Blog() {
 
           <div style={{ textAlign: "center", padding: "12px 0" }}>
             <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>
-              The best Valentine's Day gift is a passport stamp. 💙
+              Best pre-Christmas decision you'll make. 🌊
             </p>
             <a href="/rewards" style={{ color: ORANGE, fontWeight: "700", fontSize: "14px", textDecoration: "none" }}>
               Learn about RoomVoyager Rewards →

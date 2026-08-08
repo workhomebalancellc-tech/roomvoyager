@@ -55,7 +55,7 @@ export default function CancunDeal1Blog() {
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>
                 Aloft Cancún — The Boutique Freedom Play
               </h2>
-              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>~$127 / night</span>
+              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$113 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
               Aloft is Marriott's design-forward brand, and the Cancún location earns that reputation. You're in the heart of the Hotel Zone — rooftop pool with lagoon views, a WXYZ bar that actually draws a crowd, and rooms that feel like they belong in a boutique hotel rather than a chain. The vibe is elevated without being precious about it.
@@ -89,7 +89,7 @@ export default function CancunDeal1Blog() {
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>
                 Hyatt Ziva Cancún — All-In on Thanksgiving
               </h2>
-              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>~$400 / night all-inclusive</span>
+              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$1,319 / night all-inclusive</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
               Hyatt Ziva is what people picture when they picture Cancún. Beachfront. Multiple pools. Multiple restaurants. A full-service spa. A kids club that actually entertains the kids. Every meal, every drink, every snack — included. You check in, you put your wallet away, and you don't think about it again until it's time to leave.
