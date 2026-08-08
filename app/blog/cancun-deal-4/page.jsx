@@ -42,6 +42,10 @@ export default function CancunDeal4Blog() {
             Iberostar Cancún and Live Aqua Beach Resort both sit in the Hotel Zone, both are adults-only, and both deliver solid all-inclusive experiences. But their personalities couldn't be more different. Iberostar is the established name — consistent, well-run, and exactly what it promises. Live Aqua is the property people are talking about right now — sensory-forward, design-driven, and built for guests who care as much about the aesthetic as the amenities.
           </p>
 
+          <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
+            Thanksgiving weekend done right — whether you want reliable or effortlessly cool.
+          </p>
+
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           {/* Hotel 1 — Iberostar Cancún */}

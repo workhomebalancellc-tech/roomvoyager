@@ -42,6 +42,10 @@ export default function CancunDeal7Blog() {
             This week's comparison is at the top of the market, and the two properties couldn't approach luxury differently. The Marriott Cancún Resort is the reliable gold standard — a world-class all-inclusive on one of the best stretches of beach, with every amenity you'd expect from the name. Nizuc Resort & Spa is something else entirely: a secluded boutique property at the southern tip of the Hotel Zone with private beach access, a world-class spa, and the kind of personalized experience that only works at small scale. Same destination, completely different philosophy.
           </p>
 
+          <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
+            The gold standard or the best-kept secret. Early November, top of the market.
+          </p>
+
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           {/* Hotel 1 — Marriott Cancún Resort */}

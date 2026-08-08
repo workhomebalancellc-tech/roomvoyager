@@ -42,6 +42,10 @@ export default function CancunDeal6Blog() {
             Wyndham Alltra is in Playa del Carmen — more boutique in scale, walkable to 5th Avenue's restaurants and shops, with a beachfront all-inclusive setup at $262 a night. Fiesta Americana Condesa is in Cancún's Hotel Zone, a well-regarded Mexican brand with 9 restaurants and a gorgeous beach at $535 a night. The question is how much the location and the step-up in amenities matters to you.
           </p>
 
+          <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
+            5th Avenue or the Hotel Zone. Same coastline, completely different vibe.
+          </p>
+
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           {/* Hotel 1 — Wyndham Alltra Cancún */}

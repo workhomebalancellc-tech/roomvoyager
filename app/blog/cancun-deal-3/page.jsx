@@ -42,6 +42,10 @@ export default function CancunDeal3Blog() {
             Hard Rock Hotel Cancún and Le Blanc Spa Resort are both adults-only all-inclusives on the same stretch of beach. They could not be more different. One is built around entertainment, energy, and keeping things moving. The other is built around silence, service, and the kind of luxury that asks nothing of you. Same three nights, same destination — the resort you pick says everything about the trip you want.
           </p>
 
+          <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
+            One plays music till midnight. One has a butler. Pre-Christmas Cancún, your call.
+          </p>
+
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           {/* Hotel 1 — Hard Rock Hotel Cancún */}

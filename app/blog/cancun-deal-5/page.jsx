@@ -42,6 +42,10 @@ export default function CancunDeal5Blog() {
             Krystal Cancún is available November 4th through the 7th at $208 a night — a classic beachfront hotel, no all-inclusive required. Secrets The Vine is priced at $535 a night for November 26th through the 30th — a sleek adults-only all-inclusive where everything is already handled. Different dates, different price points, completely different versions of Cancún.
           </p>
 
+          <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
+            Classic Hotel Zone freedom or modern adults-only luxury. November has room for both.
+          </p>
+
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           {/* Hotel 1 — Krystal Cancún */}
