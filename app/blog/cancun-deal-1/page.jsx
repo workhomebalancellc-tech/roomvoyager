@@ -42,6 +42,10 @@ export default function CancunDeal1Blog() {
             This week's deal puts two completely different Cancún philosophies side by side. Aloft Cancún is the boutique move — stylish, flexible, no all-inclusive required. Hyatt Ziva Cancún is the resort life — beachfront, fully loaded, everything included. Same destination. Completely different experience.
           </p>
 
+          <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
+            $113 or $1,319 a night. One is a steal. One is a flex. Both are on the beach.
+          </p>
+
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           {/* Hotel 1 — Aloft Cancún */}

@@ -42,6 +42,10 @@ export default function CancunDeal2Blog() {
             Park Royal Beach Cancún and Moon Palace are both all-inclusive. Both cover your meals, your drinks, and your beach access. But that's roughly where the similarities end. One is a solid, well-priced property that delivers exactly what it promises. The other is a full-scale vacation destination unto itself — 2,000 rooms, a waterpark, multiple pools, and enough to keep a family busy without ever leaving the property.
           </p>
 
+          <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
+            Two nights, full all-inclusive, the whole family covered. Cancún in November hits different.
+          </p>
+
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           {/* Hotel 1 — Park Royal Beach Cancún */}
