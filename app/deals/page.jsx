@@ -24,12 +24,14 @@ const DOMESTIC = [
     img: "https://images.unsplash.com/photo-1546436836-07a91091f160?w=600&h=900&fit=crop&auto=format",
     link: "/deals/new-york-city",
     liveDate: "2026-07-26",
+    weekEnd: "2026-08-01",
   },
   {
     city: "Miami",
     img: "/Deals/38/miami_destination.jpg",
     link: "/deals/miami",
     liveDate: "2026-08-09",
+    weekEnd: "2026-08-15",
   },
   {
     city: "Honolulu",
@@ -57,6 +59,7 @@ const INTERNATIONAL = [
     img: "/Deals/31/bali_destination.jpg",
     link: "/deals/bali",
     liveDate: "2026-08-02",
+    weekEnd: "2026-08-08",
   },
   {
     city: "Paris",
@@ -73,6 +76,7 @@ const INTERNATIONAL = [
     img: "/Deals/45/cancun_destination.jpg",
     link: "/deals/cancun",
     liveDate: "2026-08-16",
+    weekEnd: "2026-08-22",
   },
   {
     city: "London",
@@ -173,14 +177,16 @@ function DealTile({ city, img, dealOfWeek, link, locked }) {
 // Auto-unlock destinations on their liveDate (checked fresh in the browser on every visit)
 function resolveDate(d) {
   const now = new Date();
-  const isLive = (dateStr) => {
+  const todayStr = now.toISOString().split("T")[0];
+  const isAfterLive = (dateStr) => {
     const [y, m, day] = dateStr.split("-").map(Number);
     return now >= new Date(y, m - 1, day, 10, 0, 0);
   };
-  const todayStr = now.toISOString().split("T")[0];
   if (d.liveDate) {
-    const live = isLive(d.liveDate);
-    return { ...d, locked: !live, dealOfWeek: live };
+    const live = isAfterLive(d.liveDate);
+    // dealOfWeek only while within the active week window
+    const inWindow = live && (!d.weekEnd || todayStr <= d.weekEnd);
+    return { ...d, locked: !live, dealOfWeek: inWindow };
   }
   if (d.dealOfWeekUntil) {
     return { ...d, dealOfWeek: todayStr <= d.dealOfWeekUntil };
