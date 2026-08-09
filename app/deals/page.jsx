@@ -67,7 +67,7 @@ const INTERNATIONAL = [
     city: "Cancún",
     img: "/Deals/45/cancun_destination.jpg",
     link: "/deals/cancun",
-    liveDate: "2026-09-19",
+    liveDate: "2026-08-16",
   },
   {
     city: "Bali",
