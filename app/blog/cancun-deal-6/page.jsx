@@ -16,7 +16,7 @@ export default function CancunDeal6Blog() {
         {/* Hero */}
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
           <img
-            src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?w=1600&h=700&fit=crop&auto=format"
+            src="/Deals/50/cancun_destination.jpg"
             alt="Cancún beach resort pool"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 50%" }}
           />
@@ -51,7 +51,7 @@ export default function CancunDeal6Blog() {
           {/* Hotel 1 — Wyndham Alltra Cancún */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1568084680786-a84f91d1153c?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/50/wyndhamalltraplaya1.jpg"
               alt="Wyndham Alltra Cancún"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -85,7 +85,7 @@ export default function CancunDeal6Blog() {
           {/* Hotel 2 — Fiesta Americana Condesa Cancún */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1586611292717-f828b167408c?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/50/fiestaamericana1.jpg"
               alt="Fiesta Americana Condesa Cancún"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
