@@ -73,7 +73,7 @@ const INTERNATIONAL = [
     city: "Bali",
     img: "/Deals/31/bali_destination.jpg",
     link: "/deals/bali",
-    liveDate: "2026-08-23",
+    liveDate: "2026-08-02",
   },
   {
     city: "London",

@@ -9,7 +9,7 @@ const ORANGE = "#FF6600";
 
 const DEALS = [
   {
-    publishDate: "2026-08-29",
+    publishDate: "2026-08-08",
     number: 7,
     label: "Legian Paradiso Hotel vs. Cara Cara Inn",
     dates: "Sept 6–10",
@@ -24,7 +24,7 @@ const DEALS = [
     link: "/blog/bali-deal-7",
   },
   {
-    publishDate: "2026-08-28",
+    publishDate: "2026-08-07",
     number: 6,
     label: "The Sebali Penida Beach Resort vs. Abisena Wellness & Resort Ubud",
     dates: "Sept 14–18",
@@ -39,7 +39,7 @@ const DEALS = [
     link: "/blog/bali-deal-6",
   },
   {
-    publishDate: "2026-08-27",
+    publishDate: "2026-08-06",
     number: 5,
     label: "AYANA Resort Bali vs. The Ritz-Carlton, Bali",
     dates: "Sept 14–18",
@@ -54,7 +54,7 @@ const DEALS = [
     link: "/blog/bali-deal-5",
   },
   {
-    publishDate: "2026-08-26",
+    publishDate: "2026-08-05",
     number: 4,
     label: "Murni's House vs. Central Lovina Hotel",
     dates: "Sept 27–30",
@@ -69,7 +69,7 @@ const DEALS = [
     link: "/blog/bali-deal-4",
   },
   {
-    publishDate: "2026-08-25",
+    publishDate: "2026-08-04",
     number: 3,
     label: "Bali Mystique Hotel and Apartments vs. Kos 168 Jimbaran",
     dates: "Sept 24–27",
@@ -84,7 +84,7 @@ const DEALS = [
     link: "/blog/bali-deal-3",
   },
   {
-    publishDate: "2026-08-24",
+    publishDate: "2026-08-03",
     number: 2,
     label: "MATHIS Retreat Ubud vs. Taksu Sanur Hotel",
     dates: "Sept 18–21",
@@ -99,7 +99,7 @@ const DEALS = [
     link: "/blog/bali-deal-2",
   },
   {
-    publishDate: "2026-08-23",
+    publishDate: "2026-08-02",
     number: 1,
     label: "Dee Mansion Bali vs. POP! Hotel Kuta Beach Bali",
     dates: "Sept 6–12",
