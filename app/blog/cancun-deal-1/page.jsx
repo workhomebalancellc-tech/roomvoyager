@@ -16,7 +16,7 @@ export default function CancunDeal1Blog() {
         {/* Hero */}
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
           <img
-            src="https://images.unsplash.com/photo-1552074284-5e88ef1aef18?w=1600&h=700&fit=crop&auto=format"
+            src="/Deals/45/cancun_destination.jpg"
             alt="Cancún"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 60%" }}
           />
@@ -51,7 +51,7 @@ export default function CancunDeal1Blog() {
           {/* Hotel 1 — Aloft Cancún */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/45/aloftbymarriottcancun1.jpg"
               alt="Aloft Cancún"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -85,7 +85,7 @@ export default function CancunDeal1Blog() {
           {/* Hotel 2 — Hyatt Ziva Cancún */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/45/hyattzivacancun1.jpg"
               alt="Hyatt Ziva Cancún"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
