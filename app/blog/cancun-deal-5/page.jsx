@@ -16,7 +16,7 @@ export default function CancunDeal5Blog() {
         {/* Hero */}
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
           <img
-            src="https://images.unsplash.com/photo-1596178060810-72f53ce9a65c?w=1600&h=700&fit=crop&auto=format"
+            src="/Deals/49/cancun_destination.jpg"
             alt="Cancún Hotel Zone beachfront"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 45%" }}
           />
@@ -51,7 +51,7 @@ export default function CancunDeal5Blog() {
           {/* Hotel 1 — Krystal Cancún */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/49/krystal1.jpg"
               alt="Krystal Cancún"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -85,7 +85,7 @@ export default function CancunDeal5Blog() {
           {/* Hotel 2 — Secrets The Vine */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/49/secretsthevine1.jpg"
               alt="Secrets The Vine Cancún"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
