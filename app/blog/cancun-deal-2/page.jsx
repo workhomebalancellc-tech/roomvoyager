@@ -16,7 +16,7 @@ export default function CancunDeal2Blog() {
         {/* Hero */}
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
           <img
-            src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1600&h=700&fit=crop&auto=format"
+            src="/Deals/46/cancun_destination.jpg"
             alt="Cancún resort pool"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 55%" }}
           />
@@ -51,7 +51,7 @@ export default function CancunDeal2Blog() {
           {/* Hotel 1 — Park Royal Beach Cancún */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/46/parkroyalbeachcancun1.jpg"
               alt="Park Royal Beach Cancún"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -85,7 +85,7 @@ export default function CancunDeal2Blog() {
           {/* Hotel 2 — Moon Palace Cancún */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/46/moonpalacecancun1.jpg"
               alt="Moon Palace Cancún"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
