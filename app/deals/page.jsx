@@ -71,9 +71,9 @@ const INTERNATIONAL = [
   },
   {
     city: "Bali",
-    img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&h=900&fit=crop&auto=format",
-    link: "/packages",
-    locked: true,
+    img: "/Deals/31/bali_destination.jpg",
+    link: "/deals/bali",
+    liveDate: "2026-08-23",
   },
   {
     city: "London",
