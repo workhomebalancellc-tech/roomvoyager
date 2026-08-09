@@ -9,7 +9,7 @@ const ORANGE = "#FF6600";
 
 const DEALS = [
   {
-    publishDate: "2026-09-26",
+    publishDate: "2026-10-31",
     number: 7,
     label: "Marriott Cancún Resort vs. Nizuc Resort & Spa",
     dates: "Nov 6–9",
@@ -24,7 +24,7 @@ const DEALS = [
     link: "/blog/cancun-deal-7",
   },
   {
-    publishDate: "2026-09-12",
+    publishDate: "2026-10-24",
     number: 6,
     label: "Wyndham Alltra Playa del Carmen vs. Fiesta Americana Condesa Cancún",
     dates: "Nov 15–18",
@@ -39,7 +39,7 @@ const DEALS = [
     link: "/blog/cancun-deal-6",
   },
   {
-    publishDate: "2026-09-05",
+    publishDate: "2026-10-17",
     number: 5,
     label: "Krystal Cancún vs. Secrets The Vine Cancún",
     dates: "Nov 4–7 / Nov 26–30",
@@ -54,7 +54,7 @@ const DEALS = [
     link: "/blog/cancun-deal-5",
   },
   {
-    publishDate: "2026-08-29",
+    publishDate: "2026-10-10",
     number: 4,
     label: "Iberostar Cancún vs. Live Aqua Beach Resort",
     dates: "Nov 26–30",
@@ -69,7 +69,7 @@ const DEALS = [
     link: "/blog/cancun-deal-4",
   },
   {
-    publishDate: "2026-08-22",
+    publishDate: "2026-10-03",
     number: 3,
     label: "Hard Rock Hotel Cancún vs. Le Blanc Spa Resort",
     dates: "Dec 18–21",
@@ -84,7 +84,7 @@ const DEALS = [
     link: "/blog/cancun-deal-3",
   },
   {
-    publishDate: "2026-08-15",
+    publishDate: "2026-09-26",
     number: 2,
     label: "Park Royal Beach Cancún vs. Moon Palace Cancún",
     dates: "Nov 12–14",
@@ -99,7 +99,7 @@ const DEALS = [
     link: "/blog/cancun-deal-2",
   },
   {
-    publishDate: "2026-08-08",
+    publishDate: "2026-09-19",
     number: 1,
     label: "Aloft Cancún vs. Hyatt Ziva Cancún",
     dates: "Nov 22–28",

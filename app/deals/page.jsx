@@ -27,9 +27,9 @@ const DOMESTIC = [
   },
   {
     city: "Miami",
-    img: "https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?w=600&h=900&fit=crop&auto=format",
-    link: "/hotels",
-    locked: true,
+    img: "/Deals/38/miami_destination.jpg",
+    link: "/deals/miami",
+    liveDate: "2026-08-01",
   },
   {
     city: "Honolulu",
@@ -67,7 +67,7 @@ const INTERNATIONAL = [
     city: "Cancún",
     img: "/Deals/45/cancun_destination.jpg",
     link: "/deals/cancun",
-    liveDate: "2026-08-08",
+    liveDate: "2026-09-19",
   },
   {
     city: "Bali",
