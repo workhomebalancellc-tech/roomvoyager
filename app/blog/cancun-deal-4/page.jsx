@@ -16,7 +16,7 @@ export default function CancunDeal4Blog() {
         {/* Hero */}
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
           <img
-            src="https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1600&h=700&fit=crop&auto=format"
+            src="/Deals/48/cancun_destination.jpg"
             alt="Cancún Hotel Zone"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }}
           />
@@ -51,7 +51,7 @@ export default function CancunDeal4Blog() {
           {/* Hotel 1 — Iberostar Cancún */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/48/iberostarselectioncancun1.jpg"
               alt="Iberostar Cancún"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -85,7 +85,7 @@ export default function CancunDeal4Blog() {
           {/* Hotel 2 — Live Aqua Beach Resort */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/48/liveaquacancun1.jpg"
               alt="Live Aqua Beach Resort Cancún"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
