@@ -9,7 +9,7 @@ const ORANGE = "#FF6600";
 
 const DEALS = [
   {
-    publishDate: "2026-09-19",
+    publishDate: "2026-09-26",
     number: 7,
     label: "Marriott Cancún Resort vs. Nizuc Resort & Spa",
     dates: "Nov 6–9",
