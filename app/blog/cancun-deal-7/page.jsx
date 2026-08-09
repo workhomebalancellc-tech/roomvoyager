@@ -16,7 +16,7 @@ export default function CancunDeal7Blog() {
         {/* Hero */}
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
           <img
-            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&h=700&fit=crop&auto=format"
+            src="/Deals/51/cancun_destination.jpg"
             alt="Cancún turquoise water and white sand"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }}
           />
