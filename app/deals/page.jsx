@@ -65,9 +65,9 @@ const INTERNATIONAL = [
   },
   {
     city: "Cancún",
-    img: "https://images.unsplash.com/photo-1552074284-5e88ef1aef18?w=600&h=900&fit=crop&auto=format",
-    link: "/packages",
-    locked: true,
+    img: "/Deals/45/cancun_destination.jpg",
+    link: "/deals/cancun",
+    liveDate: "2026-08-08",
   },
   {
     city: "Bali",
