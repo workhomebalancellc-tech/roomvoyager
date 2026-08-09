@@ -51,7 +51,7 @@ export default function CancunDeal7Blog() {
           {/* Hotel 1 — Marriott Cancún Resort */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/51/marriottcancun1.jpg"
               alt="Marriott Cancún Resort"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
@@ -85,7 +85,7 @@ export default function CancunDeal7Blog() {
           {/* Hotel 2 — Nizuc Resort & Spa */}
           <div style={{ marginBottom: "56px" }}>
             <img
-              src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200&h=520&fit=crop&auto=format"
+              src="/Deals/51/nizuc1.jpg"
               alt="Nizuc Resort & Spa Cancún"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
