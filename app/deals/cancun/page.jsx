@@ -9,7 +9,7 @@ const ORANGE = "#FF6600";
 
 const DEALS = [
   {
-    publishDate: "2026-10-31",
+    publishDate: "2026-08-22",
     number: 7,
     label: "Marriott Cancún Resort vs. Nizuc Resort & Spa",
     dates: "Nov 6–9",
@@ -24,7 +24,7 @@ const DEALS = [
     link: "/blog/cancun-deal-7",
   },
   {
-    publishDate: "2026-10-24",
+    publishDate: "2026-08-21",
     number: 6,
     label: "Wyndham Alltra Playa del Carmen vs. Fiesta Americana Condesa Cancún",
     dates: "Nov 15–18",

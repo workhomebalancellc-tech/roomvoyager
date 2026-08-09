@@ -9,7 +9,7 @@ const ORANGE = "#FF6600";
 
 const DEALS = [
   {
-    publishDate: "2026-09-12",
+    publishDate: "2026-08-15",
     number: 7,
     label: "Miami River Inn By Renzzi vs. Up Midtown",
     dates: "Oct 13–16",
@@ -23,7 +23,7 @@ const DEALS = [
     link: "/blog/miami-deal-7",
   },
   {
-    publishDate: "2026-09-05",
+    publishDate: "2026-08-14",
     number: 6,
     label: "Tucker at Palmer Dadeland Miami vs. The Elser Hotel Miami",
     dates: "Oct 28–29",
@@ -37,7 +37,7 @@ const DEALS = [
     link: "/blog/miami-deal-6",
   },
   {
-    publishDate: "2026-08-29",
+    publishDate: "2026-08-13",
     number: 5,
     label: "Atrium Design District vs. Jefferson Hotel",
     dates: "Oct 28–31",
@@ -51,7 +51,7 @@ const DEALS = [
     link: "/blog/miami-deal-5",
   },
   {
-    publishDate: "2026-08-22",
+    publishDate: "2026-08-12",
     number: 4,
     label: "The Moore Miami vs. Ludge By Eco-Shared",
     dates: "Oct 22–24",
@@ -65,7 +65,7 @@ const DEALS = [
     link: "/blog/miami-deal-4",
   },
   {
-    publishDate: "2026-08-15",
+    publishDate: "2026-08-11",
     number: 3,
     label: "The Ritz-Carlton, South Beach vs. Alexander Hotel",
     dates: "Oct 15–18",
@@ -79,7 +79,7 @@ const DEALS = [
     link: "/blog/miami-deal-3",
   },
   {
-    publishDate: "2026-08-08",
+    publishDate: "2026-08-10",
     number: 2,
     label: "enVision Hotel Miami vs. Tower Hotel By At Mine Hospitality",
     dates: "Oct 4–11",
@@ -93,7 +93,7 @@ const DEALS = [
     link: "/blog/miami-deal-2",
   },
   {
-    publishDate: "2026-08-01",
+    publishDate: "2026-08-09",
     number: 1,
     label: "The Biscayne Hotel vs. Hilton Miami Dadeland",
     dates: "Oct 1–3",

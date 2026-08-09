@@ -29,7 +29,7 @@ const DOMESTIC = [
     city: "Miami",
     img: "/Deals/38/miami_destination.jpg",
     link: "/deals/miami",
-    liveDate: "2026-08-01",
+    liveDate: "2026-08-09",
   },
   {
     city: "Honolulu",
