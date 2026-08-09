@@ -53,6 +53,12 @@ const DOMESTIC = [
 
 const INTERNATIONAL = [
   {
+    city: "Bali",
+    img: "/Deals/31/bali_destination.jpg",
+    link: "/deals/bali",
+    liveDate: "2026-08-02",
+  },
+  {
     city: "Paris",
     img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&h=900&fit=crop&auto=format",
     link: "/deals/paris",
@@ -61,19 +67,12 @@ const INTERNATIONAL = [
     city: "Punta Cana",
     img: "/Deals/17/puntacana_destination.jpg",
     link: "/deals/punta-cana",
-    liveDate: "2026-07-19",
   },
   {
     city: "Cancún",
     img: "/Deals/45/cancun_destination.jpg",
     link: "/deals/cancun",
     liveDate: "2026-08-16",
-  },
-  {
-    city: "Bali",
-    img: "/Deals/31/bali_destination.jpg",
-    link: "/deals/bali",
-    liveDate: "2026-08-02",
   },
   {
     city: "London",
