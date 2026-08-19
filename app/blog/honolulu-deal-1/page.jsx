@@ -19,10 +19,10 @@ export default function HonoluluDeal1Blog() {
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
             <p style={{ color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🔥 Deals of the Week · Honolulu</p>
             <h1 style={{ color: "#fff", fontSize: "clamp(22px, 4vw, 42px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.15, textShadow: "0 2px 14px rgba(0,0,0,0.4)" }}>
-              $45 or $129 a Night. Waikiki in December.
+              $65 or $129 a Night. Waikiki in December.
             </h1>
             <p style={{ color: "#BFDBFE", fontSize: "clamp(13px, 1.5vw, 16px)", maxWidth: "560px", margin: 0, lineHeight: 1.6 }}>
-              The same beach, the same sunset. One costs $84 less per night.
+              The same beach, the same sunset. One costs $64 less per night.
             </p>
           </div>
         </div>
@@ -32,32 +32,32 @@ export default function HonoluluDeal1Blog() {
             December 4th through the 11th — seven nights in Honolulu as the holiday season settles over Waikiki. December in Hawaii is a revelation for travelers who expect the tropics to shut down for winter: the weather stays warm, the ocean stays swimmable, and the crowds thin out just enough to make everything feel a little more personal. The island doesn't turn the lights off in December. It just turns them a different shade of gold.
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
-            This week's deal is about the simplest decision in Waikiki travel: how much of your budget goes to the room, and how much goes to everything else. Waikiki Beachside Hostel at $45 a night is the floor — a legitimate place to sleep steps from the most famous beach in America for less than a round of cocktails at a resort bar. Queen Kapiolani Hotel at $129 a night is the upgrade — a proper hotel with history, views, and Diamond Head right outside the window. The math is $84 a night. Over seven nights, that's $588 you either spend on the room or on Honolulu.
+            This week's deal is about the simplest decision in Waikiki travel: how much of your budget goes to the room, and how much goes to everything else. The Polynesian Hotel at $65 a night is the floor — a legitimate, no-frills property steps from the beach at a price that leaves your entire spending budget for the things that make Honolulu worth the flight. Queen Kapiolani Hotel at $129 a night is the upgrade — a proper hotel with history, views, and Diamond Head right outside the window. The math is $64 a night. Over seven nights, that's $448 you either spend on the room or on Honolulu.
           </p>
 
           <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
-            $45 or $129. The beach is the same. December in Waikiki — the only wrong move is staying home.
+            $65 or $129. The beach is the same. December in Waikiki — the only wrong move is staying home.
           </p>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           <div style={{ marginBottom: "56px" }}>
-            <img src="https://images.unsplash.com/photo-1455587734955-081b22074882?w=900&h=500&fit=crop&auto=format" alt="Waikiki Beachside Hostel" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
+            <img src="https://images.unsplash.com/photo-1455587734955-081b22074882?w=900&h=500&fit=crop&auto=format" alt="Polynesian Hotel Waikiki" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Waikiki Beachside Hostel — The Absolute Floor at $45</h2>
-              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$45 / night</span>
+              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>The Polynesian Hotel — Budget Waikiki at $65</h2>
+              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$65 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Waikiki Beachside Hostel is what budget travel in Hawaii actually looks like when it works: a clean, social property a literal one-minute walk from Waikiki Beach at $45 a night. Seven nights costs $315. That's the entire accommodation budget for a week in one of the most expensive tourist destinations in America — which means the remaining budget goes entirely toward the things that justify the flight: North Shore shave ice, a Pearl Harbor tour, a sunrise hike up Diamond Head, a sunset catamaran sail off Waikiki. The hostel is the base. Oahu is the experience.
+              The Polynesian Hotel is what budget travel in Hawaii looks like when it works: a clean, straightforward property in the heart of Waikiki at $65 a night. Seven nights costs $455. That's the entire accommodation budget for a week in one of the most expensive tourist destinations in America — which means the remaining budget goes entirely toward the things that justify the flight: North Shore shave ice, a Pearl Harbor tour, a sunrise hike up Diamond Head, a sunset catamaran sail off Waikiki. The hotel is the base. Oahu is the experience.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              December at the Waikiki Beachside Hostel is a social experience — the hostel draws travelers from around the world, and the shared spaces create the kind of spontaneous connections that turn solo trips into memorable ones. The beach is right outside. The savings are real. This is budget Hawaii done correctly.
+              The Polynesian is no-frills in all the right ways — private rooms, a location that keeps you steps from Waikiki Beach, and a price that makes a week-long Hawaii trip genuinely attainable. It doesn't need a rooftop bar or a resort fee to justify itself. It just needs to be clean, well-located, and affordable. All three boxes checked.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Budget travelers who want to maximize every dollar in Honolulu — $45 a night, one minute from Waikiki Beach, with the whole island within reach.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Budget travelers who want to maximize every dollar in Honolulu — $65 a night in Waikiki, with the whole island within reach.
             </p>
             <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
-              Book Waikiki Beachside Hostel →
+              Book The Polynesian Hotel →
             </a>
           </div>
 
@@ -88,13 +88,13 @@ export default function HonoluluDeal1Blog() {
           <div style={{ background: "#EBF3FF", borderRadius: "20px", padding: "36px 32px", marginBottom: "48px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>The Bottom Line</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "12px" }}>
-              Choose <strong>Waikiki Beachside Hostel</strong> if you want to spend your money on Honolulu rather than a hotel room — $45 a night, one minute from the beach, and $336 extra in your pocket over four nights.
+              Choose <strong>The Polynesian Hotel</strong> if you want to spend your money on Honolulu rather than a hotel room — $65 a night, steps from Waikiki Beach, and $448 extra in your pocket over seven nights.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "28px" }}>
-              Choose <strong>Queen Kapiolani Hotel</strong> for a proper hotel with Diamond Head views and rooftop pool at $129 a night — the best value in a private room on this end of Waikiki.
+              Choose <strong>Queen Kapiolani Hotel</strong> for a proper hotel with Diamond Head views and rooftop pool at $129 a night — the best value in a full-service property on this end of Waikiki.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Waikiki Beachside Hostel →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>The Polynesian Hotel →</a>
               <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Queen Kapiolani Hotel →</a>
             </div>
           </div>
