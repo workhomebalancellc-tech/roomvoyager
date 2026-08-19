@@ -19,24 +19,24 @@ export default function HonoluluDeal4Blog() {
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
             <p style={{ color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🔥 Deals of the Week · Honolulu</p>
             <h1 style={{ color: "#fff", fontSize: "clamp(22px, 4vw, 42px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.15, textShadow: "0 2px 14px rgba(0,0,0,0.4)" }}>
-              $199 or $265 a Night. Sheraton vs. Hyatt in December Waikiki.
+              $243 or $484 a Night. Sheraton vs. Hyatt in December Waikiki.
             </h1>
             <p style={{ color: "#BFDBFE", fontSize: "clamp(13px, 1.5vw, 16px)", maxWidth: "560px", margin: 0, lineHeight: 1.6 }}>
-              Two mid-range heavyweights. Both in the heart of Waikiki. Three nights, two very different vibes.
+              Two 4-star Waikiki institutions. Both steps from the beach. Very different prices.
             </p>
           </div>
         </div>
 
         <div style={{ maxWidth: "780px", margin: "0 auto", padding: "52px 24px 80px" }}>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "20px" }}>
-            December 6th through the 9th — three nights in Waikiki during the early-December sweet spot, when the holiday spirit has arrived but the Christmas week surge hasn't yet. This is the mid-range matchup: two well-known hotel brands, both delivering the full Waikiki experience, at prices that get you genuine amenities without requiring you to mortgage the trip.
+            December 6th through the 9th — three nights in Waikiki during the early-December sweet spot, when the holiday spirit has arrived but the Christmas week surge hasn't yet. This is the 4-star matchup: two well-established hotel brands with strong reputations, both delivering the full Waikiki experience, at prices that reflect their very different positioning on the strip.
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
-            Sheraton Princess Kaiulani at $199 a night is the classic Waikiki choice — a historic property named after the beloved Hawaiian princess, centrally located on Kalakaua Avenue with a pool, multiple dining options, and the full Sheraton infrastructure. Hyatt Regency Waikiki Beach Resort at $265 a night takes the next step up: a twin-tower property directly across from the beach with one of the most dramatic lobbies in Waikiki and the kind of ocean-view rooms that make arriving feel like an event. The gap is $66 a night — $198 over three nights.
+            Sheraton Princess Kaiulani at $243 a night sits two minutes from Waikiki Beach with a 8.6 out of 10 on Expedia from over 1,500 reviews — excellent for a busy Waikiki property. Hyatt Regency Waikiki Beach Resort & Spa at $484 a night is directly across from the beach on Kalakaua Avenue, rated 9.0 out of 10, with twin towers, ocean views, and the kind of resort scale that justifies a premium. The gap is $241 a night — over three nights, that's $724.
           </p>
 
           <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
-            $199 or $265. Sheraton history or Hyatt's beachfront towers. Both are the real deal in December Waikiki.
+            $243 or $484. Sheraton history or Hyatt's beachfront towers. $724 separates them over three nights.
           </p>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
@@ -44,17 +44,17 @@ export default function HonoluluDeal4Blog() {
           <div style={{ marginBottom: "56px" }}>
             <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&h=500&fit=crop&auto=format" alt="Sheraton Princess Kaiulani Honolulu" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Sheraton Princess Kaiulani — Waikiki Icon at $199</h2>
-              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$199 / night</span>
+              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Sheraton Princess Kaiulani — Waikiki Icon at $243</h2>
+              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$243 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              The Sheraton Princess Kaiulani occupies a spot in Waikiki history that goes beyond hotel reviews: the property sits on the former estate of Princess Ka'iulani, the last heir to the Hawaiian throne, and opened in 1955 as one of the first major postwar hotels on the strip. Today it's a full-service Sheraton with a large outdoor pool, the Pikake Pavilion restaurant, and a location on Kalakaua Avenue that puts you in the center of everything — the beach, the International Market Place, and the evening street scene that defines Waikiki December nights. At $199 a night, three nights totals $597 — competitive for what the Sheraton delivers.
+              The Sheraton Princess Kaiulani sits at 120 Kaiulani Avenue — two minutes on foot to Waikiki Beach, seven minutes to the Royal Hawaiian Center, and positioned in the heart of the strip with a 4-star rating and an 8.6 out of 10 from over 1,500 Expedia guests. The property is named after Princess Ka'iulani, the last heir to the Hawaiian throne, and has been a Waikiki fixture since 1955. It delivers the full Sheraton infrastructure — outdoor pool, fitness center, on-site dining, limo service — at a price that's nearly half the Hyatt directly across the street from the beach.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              The Sheraton Kaiulani is the dependable mid-range option for travelers who want a brand they trust, amenities they'll actually use, and a location that doesn't require planning to get anywhere. Everything in Waikiki is walking distance. December here is warm, the pools are open, and the luau scene at the neighboring Sheraton Waikiki is a five-minute walk.
+              Three nights at $243 totals $728. That's real money saved for early December in Waikiki while still staying in a trusted 4-star property two minutes from the water. The Sheraton's two-minute walk to the beach and 8.6 rating tell you everything: this is a reliable, well-run hotel in an excellent location at a price that leaves room for the rest of the trip.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want dependable Sheraton quality in the absolute center of Waikiki — history, amenities, and location at $199 a night.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want a trusted 4-star name two minutes from Waikiki Beach — 8.6-rated, well-located, and $724 less than the Hyatt over three nights.
             </p>
             <a href="https://expedia.com/affiliates/workhomebalance_llc/hono4_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Sheraton Princess Kaiulani →
@@ -66,17 +66,17 @@ export default function HonoluluDeal4Blog() {
           <div style={{ marginBottom: "56px" }}>
             <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=900&h=500&fit=crop&auto=format" alt="Hyatt Regency Waikiki Beach Resort" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Hyatt Regency Waikiki Beach Resort — Beachfront Towers at $265</h2>
-              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$265 / night</span>
+              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Hyatt Regency Waikiki Beach Resort & Spa — Beachfront Towers at $484</h2>
+              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$484 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Hyatt Regency Waikiki Beach Resort is the twin-tower landmark directly across from Waikiki Beach — and that positioning changes everything. The open-air atrium lobby rising forty stories, the rooftop pool and fitness center, the ocean-facing rooms where you can watch the sun set from the bed — the Hyatt earns its premium through location and scale in ways that most Waikiki hotels can't match. At $265 a night, three nights comes to $795, and the beachfront access makes every dollar feel justified.
+              Hyatt Regency Waikiki Beach Resort & Spa sits at 2424 Kalakaua Avenue — one minute to Waikiki Beach, three minutes to Kuhio Beach, and rated 9.0 out of 10 from over 5,300 Expedia reviews. That score on that volume is rare: the Hyatt is consistently delivering at a level that justifies its position as one of the most reviewed hotels in all of Waikiki. The twin-tower property offers ocean views, an outdoor pool, hot tub, and on-site car rental — resort infrastructure that matches the premium rate.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              The Hyatt's 1,230-room scale means the amenities are extensive: multiple restaurants including the popular Shor American Seafood Grill, a retail arcade, and the kind of staffing that keeps a property this size running smoothly. For December in Waikiki, this is the mid-range option where the property itself becomes part of the experience.
+              Three nights at $484 totals $1,452. The beachfront address, 9.0 rating, and scale of the Hyatt's amenities make it the clear upgrade — but the Sheraton's 8.6 rating two minutes away at almost half the price makes the value calculus genuinely competitive. Both are 4-star properties. The difference is location precision and resort scale.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want ocean views, beachfront access, and full resort amenities at the mid-range price point — the Hyatt's twin towers directly across from Waikiki Beach.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want one-minute beach access, a 9.0 rating from 5,300+ guests, and the full Hyatt resort experience in the heart of Waikiki.
             </p>
             <a href="https://expedia.com/affiliates/workhomebalance_llc/hono4_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Hyatt Regency Waikiki Beach Resort →
@@ -88,10 +88,10 @@ export default function HonoluluDeal4Blog() {
           <div style={{ background: "#EBF3FF", borderRadius: "20px", padding: "36px 32px", marginBottom: "48px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>The Bottom Line</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "12px" }}>
-              Choose <strong>Sheraton Princess Kaiulani</strong> for a historic Waikiki property with a central location and full Sheraton amenities at $199 a night — $198 less than the Hyatt over three nights.
+              Choose <strong>Sheraton Princess Kaiulani</strong> for a 4-star Waikiki icon two minutes from the beach — 8.6-rated, centrally located, and $724 less than the Hyatt over three nights.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "28px" }}>
-              Choose <strong>Hyatt Regency Waikiki Beach Resort</strong> for twin-tower beachfront positioning, ocean-view rooms, and the full resort experience directly across from the water at $265 a night.
+              Choose <strong>Hyatt Regency Waikiki Beach Resort & Spa</strong> for one-minute beachfront positioning, a 9.0 rating from 5,300+ guests, and the highest-rated resort experience in this price tier.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
               <a href="https://expedia.com/affiliates/workhomebalance_llc/hono4_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Sheraton Princess Kaiulani →</a>
@@ -100,7 +100,7 @@ export default function HonoluluDeal4Blog() {
           </div>
 
           <div style={{ textAlign: "center", padding: "12px 0" }}>
-            <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Early December in Waikiki. The island at its most golden. 🌺</p>
+            <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Early December in Waikiki. Before the Christmas rush. This is the window. 🌺</p>
             <a href="/rewards" style={{ color: ORANGE, fontWeight: "700", fontSize: "14px", textDecoration: "none" }}>Learn about RoomVoyager Rewards →</a>
           </div>
         </div>

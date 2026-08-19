@@ -19,7 +19,7 @@ export default function HonoluluDeal6Blog() {
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
             <p style={{ color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🔥 Deals of the Week · Honolulu</p>
             <h1 style={{ color: "#fff", fontSize: "clamp(22px, 4vw, 42px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.15, textShadow: "0 2px 14px rgba(0,0,0,0.4)" }}>
-              Marriott vs. Marriott. Same Brand, Very Different Price.
+              Marriott vs. Marriott. Same Brand, $88 Apart Per Night.
             </h1>
             <p style={{ color: "#BFDBFE", fontSize: "clamp(13px, 1.5vw, 16px)", maxWidth: "560px", margin: 0, lineHeight: 1.6 }}>
               Courtyard or Waikiki Beach Marriott. One name, two very different Waikiki experiences.
@@ -29,14 +29,14 @@ export default function HonoluluDeal6Blog() {
 
         <div style={{ maxWidth: "780px", margin: "0 auto", padding: "52px 24px 80px" }}>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "20px" }}>
-            December 12th through the 16th — four nights in Honolulu, and this week's deal is about brand loyalty put to the test. Both hotels are Marriott properties. Both are in Waikiki. Both earn the same loyalty points. But they are not the same hotel — not by $140 a night.
+            December 12th through the 16th — four nights in Waikiki, and this week's deal puts the same brand name to the test. Both hotels are Marriott properties on Expedia. Both earn you Marriott Bonvoy points. But they are not the same hotel — not by $88 a night, and not by the gap in ratings between a 7.4 and a 9.0.
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
-            Courtyard by Marriott Waikiki Beach at $189 a night is the practical Marriott: clean, reliable, points-eligible, and positioned well without the resort markup. Waikiki Beach Marriott Resort & Spa at $329 a night is the flagship version — a full-scale beachfront resort with multiple pools, a spa, rooftop bars, and ocean views that the Courtyard can't offer. The gap is $140 a night, which over four nights is $560. The question isn't which hotel is better. It's which version of the trip you want to take.
+            Courtyard by Marriott Waikiki Beach at $275 a night sits on Royal Hawaiian Avenue with white sand beach access, two outdoor pools, a hot tub, and three minutes on foot to Beach Walk. Waikiki Beach Marriott Resort & Spa at $363 a night sits on Kalakaua Avenue — two minutes from Waikiki Beach, rated 9.0 out of 10 from nearly 4,000 guests, with two pools, a spa, and the full flagship resort infrastructure. The gap is $88 a night — $352 over four nights. The question is whether the jump from a 7.4 to a 9.0 is worth it.
           </p>
 
           <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
-            Same brand, same loyalty points. $189 or $329. Marriott's two faces in December Waikiki.
+            Same brand, same points. $275 or $363. Marriott's two tiers in December Waikiki.
           </p>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
@@ -44,17 +44,17 @@ export default function HonoluluDeal6Blog() {
           <div style={{ marginBottom: "56px" }}>
             <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=900&h=500&fit=crop&auto=format" alt="Courtyard by Marriott Waikiki Beach" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Courtyard by Marriott Waikiki Beach — Smart Loyalty at $189</h2>
-              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$189 / night</span>
+              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Courtyard by Marriott Waikiki Beach — Smart Loyalty at $275</h2>
+              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$275 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Courtyard by Marriott Waikiki Beach is the points-smart choice for Marriott loyalists who want the brand without paying resort rates. At $189 a night, four nights totals $756 — you earn full Marriott Bonvoy points, get the Courtyard's reliable service and clean rooms, and keep $560 in your pocket versus the flagship resort next door. The location puts you close to the beach without the beachfront premium, and the property's amenities cover everything most travelers actually use: a pool, on-site dining, and proximity to everything in Waikiki.
+              Courtyard by Marriott Waikiki Beach sits at 400 Royal Hawaiian Avenue — three minutes to Waikiki Beach Walk, five minutes to the Royal Hawaiian Center, with white sand beach access, two outdoor pools, a hot tub, and a poolside cocktail bar. At $275 a night, four nights totals $1,101. That's a legitimate Marriott stay in central Waikiki with pools and beach access, earning full Bonvoy points, at $352 less than the flagship resort down the street.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              For Marriott Elite members, the Courtyard delivers the same status benefits at a meaningfully lower rate. If you're accumulating nights toward status, four nights here at $189 is the efficient play — same brand, same credit, significantly less spend.
+              The Courtyard's 7.4 rating from 1,000+ guests is "Good" — the property delivers on the basics without the extras that push the flagship to a 9.0. For Marriott loyalists who want the brand and the points in a solid mid-December Waikiki location, this is the efficient play. The $352 saved over four nights goes straight back into the trip.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Marriott loyalists who want the brand and the points without the resort premium — $189 a night, four nights, $560 saved versus the flagship.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Marriott loyalists who want the brand, the points, and two pools in central Waikiki — $275 a night and $352 saved versus the flagship over four nights.
             </p>
             <a href="https://expedia.com/affiliates/workhomebalance_llc/hono6_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Courtyard Waikiki Beach →
@@ -66,17 +66,17 @@ export default function HonoluluDeal6Blog() {
           <div style={{ marginBottom: "56px" }}>
             <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&h=500&fit=crop&auto=format" alt="Waikiki Beach Marriott Resort and Spa" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Waikiki Beach Marriott Resort & Spa — Flagship Beachfront at $329</h2>
-              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$329 / night</span>
+              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Waikiki Beach Marriott Resort & Spa — Flagship at $363</h2>
+              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$363 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Waikiki Beach Marriott Resort & Spa is the full version of what Marriott can offer in Hawaii: two towers on the eastern end of Waikiki Beach, directly across from the ocean, with five restaurants and bars including the rooftop Kā'ana Kitchen, a spa, multiple pools, and the kind of resort programming that makes four nights feel like a full vacation rather than just a place to sleep. At $329 a night, four nights totals $1,316.
+              Waikiki Beach Marriott Resort & Spa sits at 2552 Kalakaua Avenue — two minutes from Waikiki Beach, two minutes from the Honolulu Zoo, rated 9.0 out of 10 from nearly 4,000 Expedia guests. That score on that volume is the mark of a property consistently delivering at the flagship level. Two outdoor pools, hot tub, spa, on-site car rental, and an American restaurant — the full resort stack that justifies the premium over the Courtyard.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              The flagship delivers what the Courtyard can't: ocean-view rooms where you wake up to the Pacific, beachfront positioning at the quieter Diamond Head end of the strip, and a spa that transforms a December afternoon into something genuinely memorable. Elite members get enhanced upgrade opportunities that can push already-good ocean-view rooms into something spectacular.
+              Four nights at $363 totals $1,451. The Waikiki Beach Marriott's 9.0 rating versus the Courtyard's 7.4 is the clearest way to understand the $88 gap: guests at the flagship consistently rate it "Wonderful." For Elite members, upgrade opportunities at this property are meaningfully better than at the Courtyard, which can push already-good rooms into ocean-view territory.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the full Marriott resort experience in Waikiki — beachfront positioning, ocean views, five dining options, and a spa at $329 a night.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want Marriott's best in Waikiki — a 9.0-rated flagship with two pools, a spa, and two-minute beach access at $363 a night.
             </p>
             <a href="https://expedia.com/affiliates/workhomebalance_llc/hono6_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Waikiki Beach Marriott Resort →
@@ -88,10 +88,10 @@ export default function HonoluluDeal6Blog() {
           <div style={{ background: "#EBF3FF", borderRadius: "20px", padding: "36px 32px", marginBottom: "48px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>The Bottom Line</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "12px" }}>
-              Choose <strong>Courtyard by Marriott Waikiki Beach</strong> for the smart loyalty play — same brand, same points, $189 a night, and $560 saved over four nights to spend on Honolulu itself.
+              Choose <strong>Courtyard by Marriott Waikiki Beach</strong> for the smart loyalty play — same brand, same points, two pools, beach access, and $352 saved over four nights at $275 a night.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "28px" }}>
-              Choose <strong>Waikiki Beach Marriott Resort & Spa</strong> for the full beachfront flagship experience — ocean views, five dining venues, a spa, and Marriott's best in Hawaii at $329 a night.
+              Choose <strong>Waikiki Beach Marriott Resort & Spa</strong> for Marriott's flagship Waikiki experience — a 9.0 rating from 4,000 guests, two-minute beach access, and a spa at $363 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
               <a href="https://expedia.com/affiliates/workhomebalance_llc/hono6_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Courtyard Waikiki Beach →</a>
