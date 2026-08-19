@@ -29,14 +29,14 @@ export default function HonoluluDeal7Blog() {
 
         <div style={{ maxWidth: "780px", margin: "0 auto", padding: "52px 24px 80px" }}>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "20px" }}>
-            December 26th through the 31st — five nights in Honolulu, ending on New Year's Eve in Waikiki. This is the wild card deal, and the city delivers it in style: two of the most distinctive boutique hotels in Hawaii, both in Waikiki, both with personalities that no chain resort can manufacture. The Surfjack Hotel & Swim Club and The Laylow, Autograph Collection are the answer to the question of what happens when Waikiki hotels stop trying to look like every other resort in the Pacific.
+            December 26th through the 31st — five nights in Honolulu, ending on New Year's Eve in Waikiki. This is the wild card deal: two of the most distinctive boutique hotels in Hawaii, both rated 9.0 on Expedia, both with personalities that no chain resort can replicate. The Surfjack Hotel & Swim Club and The Laylow Waikiki are the answer to the question of what Waikiki hotels look like when they stop trying to be everything and commit to being something specific.
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
-            The Surfjack at $187 a night leans into the surf culture roots of Hawaii — a property designed around its pool deck, its creative community, and the kind of easy, genuine island energy that the big resorts spend millions trying to fake. The Laylow at $299 a night goes full retro-Hawaii: a 1960s-inspired aesthetic with bungalow-style rooms, a mid-century pool scene, and the collaboration with Hideout restaurant that has made it one of the most talked-about hotel food programs in the city. New Year's Eve in Waikiki fireworks light up the sky over the beach — you'll be five minutes' walk away regardless of which you choose.
+            The Surfjack at $534 a night is the surf-culture play — a 9.0-rated boutique on Lewers Street known for its top-rated pool, poolside bar, and the kind of easy, genuine island energy that larger resorts spend millions trying to manufacture. The Laylow at $664 a night goes full retro-Hawaii: a 4-star Autograph Collection property steps from the beach with live music nightly at Hideout, free cruiser bikes, refreshing shaved ice at the tropical pool, and surfing lessons and dolphin swims arranged from the lobby desk. New Year's Eve fireworks over Waikiki are an eight-minute walk from the Surfjack and right at the doorstep of the Laylow. The gap is $130 a night — $648 over five nights.
           </p>
 
           <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
-            $187 or $299. Surf culture or retro Hawaii. New Year's Eve in Waikiki, two very different ways.
+            $534 or $664. Both rated 9.0. New Year's Eve in Waikiki — two boutiques that actually have a point of view.
           </p>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
@@ -44,17 +44,17 @@ export default function HonoluluDeal7Blog() {
           <div style={{ marginBottom: "56px" }}>
             <img src="https://images.unsplash.com/photo-1455587734955-081b22074882?w=900&h=500&fit=crop&auto=format" alt="The Surfjack Hotel and Swim Club Waikiki" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>The Surfjack Hotel & Swim Club — Island Creative at $187</h2>
-              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$187 / night</span>
+              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>The Surfjack Hotel & Swim Club — Island Creative at $534</h2>
+              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$534 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              The Surfjack Hotel & Swim Club is Waikiki's creative class hotel — a boutique property built around its pool deck and the surf culture that defines Hawaii's actual identity, not the postcard version. The rooms are designed for people who want something that feels genuinely Hawaiian rather than generically tropical, and the pool area has become one of the best social scenes in the neighborhood. Mahina & Sun's, the on-property restaurant, serves breakfast and brunch that locals actually show up for — a strong signal that the hotel is doing something right.
+              The Surfjack Hotel & Swim Club sits at 412 Lewers Street — rated 9.0 out of 10 from over 1,000 Expedia guests, with Expedia highlighting it as "loved by couples" and featuring a "top-rated pool" that consistently draws the best reviews of any pool scene in this part of Waikiki. The poolside bar keeps the energy going through the afternoon. The on-site American restaurant, balconies, and free WiFi round out a property that over-delivers for its 3.5-star classification.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Five nights at $187 totals $935. For New Year's week, that's remarkably competitive for a boutique property with this much personality. Waikiki's beach and the fireworks are walking distance. The Surfjack's own New Year's pool events make it easy to celebrate without going anywhere at all.
+              Five nights at $534 totals $2,671. The International Market Place and Royal Hawaiian Center are five minutes away, Waikiki Beach is eight minutes on foot, and the airport is sixteen minutes by car. For New Year's week, the Surfjack's pool and bar become the center of the celebration — the kind of intimate, personality-driven property where the staff knows your name by day two and the other guests become part of the trip.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want a boutique hotel with genuine surf-culture personality — $187 a night, a great pool scene, and a restaurant that locals actually love in December Waikiki.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Couples and travelers who want a 9.0-rated boutique with genuine surf-culture personality — top-rated pool, poolside bar, and New Year's Eve in a hotel that actually has character at $534 a night.
             </p>
             <a href="https://expedia.com/affiliates/workhomebalance_llc/hono7_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book The Surfjack Hotel →
@@ -66,17 +66,17 @@ export default function HonoluluDeal7Blog() {
           <div style={{ marginBottom: "56px" }}>
             <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=900&h=500&fit=crop&auto=format" alt="The Laylow Autograph Collection Waikiki" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>The Laylow, Autograph Collection — Retro Hawaii at $299</h2>
-              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$299 / night</span>
+              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>The Laylow Waikiki, Autograph Collection — Retro Hawaii at $664</h2>
+              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$664 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              The Laylow is mid-century Hawaii executed perfectly — a 1960s-inspired design aesthetic carried through bungalow-style rooms, a central pool that looks like it was lifted from a classic surf film, and a deliberate warmth that sets it apart from every other boutique hotel in the neighborhood. As a Marriott Autograph Collection property, it delivers independent personality with loyalty program integration — a combination that's hard to find anywhere in the Pacific.
+              The Laylow Waikiki is a 4-star Autograph Collection property classified by Expedia as "Luxury" — steps from Waikiki Beach, with vibrant live music filling Hideout (the hotel's restaurant and bar) every night, a tropical pool area serving refreshing shaved ice, free cruiser bikes for shoreline exploration, and a lobby desk that arranges surfing lessons and dolphin swims. The mid-century Hawaiian aesthetic carries through every detail: the lobby lounge, the bungalow-style rooms with king beds and dual balconies, the fire-lit outdoor terrace.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Hideout, the Laylow's restaurant and bar, has developed a reputation as one of the most creative food and cocktail programs in Waikiki — again, a place that locals seek out, not just hotel guests. Five nights at $299 totals $1,495. For New Year's Eve, the Laylow's intimate scale means a celebration that feels curated rather than crowded.
+              Five nights at $664 totals $3,319. New Year's Eve at the Laylow means Hideout's live music, the tropical pool, and fireworks over Waikiki Beach a short walk away. The Laylow's Autograph Collection status puts it in Marriott's portfolio of independent hotels with distinct identities — same loyalty points, completely different experience from any other Marriott property on the island.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the most design-forward boutique hotel in Waikiki — mid-century Hawaii aesthetics, a celebrated restaurant, and Marriott points at $299 a night.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the most design-forward luxury boutique in Waikiki — live music nightly, free cruiser bikes, steps from the beach, and New Year's Eve ambiance that feels curated at $664 a night.
             </p>
             <a href="https://expedia.com/affiliates/workhomebalance_llc/hono7_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book The Laylow →
@@ -88,10 +88,10 @@ export default function HonoluluDeal7Blog() {
           <div style={{ background: "#EBF3FF", borderRadius: "20px", padding: "36px 32px", marginBottom: "48px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>The Bottom Line</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "12px" }}>
-              Choose <strong>The Surfjack Hotel & Swim Club</strong> for surf-culture personality and a pool scene that defines the Waikiki boutique experience — $187 a night, five nights, the kind of hotel that makes the trip feel like yours.
+              Choose <strong>The Surfjack Hotel & Swim Club</strong> for surf-culture personality and the top-rated pool scene in this part of Waikiki — 9.0-rated, poolside bar, $534 a night, and $648 saved over five nights versus the Laylow.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "28px" }}>
-              Choose <strong>The Laylow</strong> for mid-century Hawaii design done right — a celebrated restaurant, Autograph Collection quality, and New Year's Eve ambiance that feels intimate rather than overwhelming at $299 a night.
+              Choose <strong>The Laylow Waikiki</strong> for 4-star Autograph Collection luxury with live music every night, steps-from-the-beach positioning, free cruiser bikes, and New Year's Eve at one of the most talked-about boutique hotels in Hawaii at $664 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
               <a href="https://expedia.com/affiliates/workhomebalance_llc/hono7_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>The Surfjack Hotel →</a>
