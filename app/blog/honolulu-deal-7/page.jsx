@@ -56,7 +56,7 @@ export default function HonoluluDeal7Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want a boutique hotel with genuine surf-culture personality — $187 a night, a great pool scene, and a restaurant that locals actually love in December Waikiki.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu7_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono7_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book The Surfjack Hotel →
             </a>
           </div>
@@ -78,7 +78,7 @@ export default function HonoluluDeal7Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the most design-forward boutique hotel in Waikiki — mid-century Hawaii aesthetics, a celebrated restaurant, and Marriott points at $299 a night.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu7_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono7_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book The Laylow →
             </a>
           </div>
@@ -94,8 +94,8 @@ export default function HonoluluDeal7Blog() {
               Choose <strong>The Laylow</strong> for mid-century Hawaii design done right — a celebrated restaurant, Autograph Collection quality, and New Year's Eve ambiance that feels intimate rather than overwhelming at $299 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu7_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>The Surfjack Hotel →</a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu7_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>The Laylow →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono7_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>The Surfjack Hotel →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono7_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>The Laylow →</a>
             </div>
           </div>
 

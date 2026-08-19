@@ -56,7 +56,7 @@ export default function HonoluluDeal6Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Marriott loyalists who want the brand and the points without the resort premium — $189 a night, four nights, $560 saved versus the flagship.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu6_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono6_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Courtyard Waikiki Beach →
             </a>
           </div>
@@ -78,7 +78,7 @@ export default function HonoluluDeal6Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the full Marriott resort experience in Waikiki — beachfront positioning, ocean views, five dining options, and a spa at $329 a night.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu6_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono6_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Waikiki Beach Marriott Resort →
             </a>
           </div>
@@ -94,8 +94,8 @@ export default function HonoluluDeal6Blog() {
               Choose <strong>Waikiki Beach Marriott Resort & Spa</strong> for the full beachfront flagship experience — ocean views, five dining venues, a spa, and Marriott's best in Hawaii at $329 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu6_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Courtyard Waikiki Beach →</a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu6_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Waikiki Beach Marriott →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono6_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Courtyard Waikiki Beach →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono6_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Waikiki Beach Marriott →</a>
             </div>
           </div>
 

@@ -56,7 +56,7 @@ export default function HonoluluDeal3Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want a genuinely good boutique hotel in Waikiki without the resort markup — $139 a night, great reviews, and the real Waikiki experience.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu3_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono3_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Vive Hotel Waikiki →
             </a>
           </div>
@@ -78,7 +78,7 @@ export default function HonoluluDeal3Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the definitive Honolulu luxury experience — a century-old institution, beachfront Waikiki, and service that has set the Hawaiian standard for generations.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu3_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono3_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Halekulani →
             </a>
           </div>
@@ -94,8 +94,8 @@ export default function HonoluluDeal3Blog() {
               Choose <strong>Halekulani</strong> if this is the Hawaii trip — a century of legendary service, beachfront Waikiki, and the most celebrated hotel in the Pacific at $529 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu3_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Vive Hotel Waikiki →</a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu3_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Halekulani →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono3_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Vive Hotel Waikiki →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono3_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Halekulani →</a>
             </div>
           </div>
 

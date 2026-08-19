@@ -56,7 +56,7 @@ export default function HonoluluDeal4Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want dependable Sheraton quality in the absolute center of Waikiki — history, amenities, and location at $199 a night.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu4_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono4_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Sheraton Princess Kaiulani →
             </a>
           </div>
@@ -78,7 +78,7 @@ export default function HonoluluDeal4Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want ocean views, beachfront access, and full resort amenities at the mid-range price point — the Hyatt's twin towers directly across from Waikiki Beach.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu4_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono4_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Hyatt Regency Waikiki Beach Resort →
             </a>
           </div>
@@ -94,8 +94,8 @@ export default function HonoluluDeal4Blog() {
               Choose <strong>Hyatt Regency Waikiki Beach Resort</strong> for twin-tower beachfront positioning, ocean-view rooms, and the full resort experience directly across from the water at $265 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu4_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Sheraton Princess Kaiulani →</a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu4_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Hyatt Regency Waikiki →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono4_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Sheraton Princess Kaiulani →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono4_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Hyatt Regency Waikiki →</a>
             </div>
           </div>
 

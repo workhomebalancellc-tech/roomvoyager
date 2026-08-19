@@ -56,7 +56,7 @@ export default function HonoluluDeal1Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Budget travelers who want to maximize every dollar in Honolulu — $65 a night in Waikiki, with the whole island within reach.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book The Polynesian Hotel →
             </a>
           </div>
@@ -78,7 +78,7 @@ export default function HonoluluDeal1Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want a proper hotel at a budget price — Diamond Head views, rooftop pool, and the quieter end of Waikiki at $129 a night.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Queen Kapiolani Hotel →
             </a>
           </div>
@@ -94,8 +94,8 @@ export default function HonoluluDeal1Blog() {
               Choose <strong>Queen Kapiolani Hotel</strong> for a proper hotel with Diamond Head views and rooftop pool at $129 a night — the best value in a full-service property on this end of Waikiki.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>The Polynesian Hotel →</a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Queen Kapiolani Hotel →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>The Polynesian Hotel →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Queen Kapiolani Hotel →</a>
             </div>
           </div>
 

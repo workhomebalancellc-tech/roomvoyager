@@ -56,7 +56,7 @@ export default function HonoluluDeal5Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Families or groups who want the full Waikiki resort experience — multiple pools, private lagoon, twenty-plus dining options, and the largest resort footprint in Hawaii.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu5_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono5_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Hilton Hawaiian Village →
             </a>
           </div>
@@ -78,7 +78,7 @@ export default function HonoluluDeal5Blog() {
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the most iconic hotel experience in Hawaii — 120 years of history, beachfront Waikiki, and a property that makes Christmas feel genuinely legendary.
             </p>
-            <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu5_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
+            <a href="https://expedia.com/affiliates/workhomebalance_llc/hono5_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book Moana Surfrider →
             </a>
           </div>
@@ -94,8 +94,8 @@ export default function HonoluluDeal5Blog() {
               Choose <strong>Moana Surfrider</strong> for Waikiki's most historic and romanticized property — 120 years of beachfront history, the iconic banyan courtyard, and a Christmas week that becomes a lifelong memory at $395 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu5_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Hilton Hawaiian Village →</a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/honolulu5_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Moana Surfrider →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono5_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Hilton Hawaiian Village →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/hono5_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Moana Surfrider →</a>
             </div>
           </div>
 
