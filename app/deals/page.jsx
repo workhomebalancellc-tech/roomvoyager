@@ -36,8 +36,9 @@ const DOMESTIC = [
   {
     city: "Honolulu",
     img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=900&fit=crop&auto=format",
-    link: "/packages",
-    locked: true,
+    link: "/deals/honolulu",
+    liveDate: "2026-08-23",
+    weekEnd: "2026-08-29",
   },
   {
     city: "Nashville",
