@@ -19,67 +19,67 @@ export default function MontegoBayDeal1Blog() {
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
             <p style={{ color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🔥 Deals of the Week · Montego Bay</p>
             <h1 style={{ color: "#fff", fontSize: "clamp(22px, 4vw, 42px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.15, textShadow: "0 2px 14px rgba(0,0,0,0.4)" }}>
-              $95 or $169 a Night. Montego Bay in January.
+              $68 or $253 a Night. Seven Nights in Montego Bay.
             </h1>
             <p style={{ color: "#BFDBFE", fontSize: "clamp(13px, 1.5vw, 16px)", maxWidth: "560px", margin: 0, lineHeight: 1.6 }}>
-              Seven nights in Jamaica. The Caribbean is the same from both rooms.
+              January in Jamaica. The budget option or the beachfront resort — $1,295 between them over seven nights.
             </p>
           </div>
         </div>
 
         <div style={{ maxWidth: "780px", margin: "0 auto", padding: "52px 24px 80px" }}>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "20px" }}>
-            January 4th through the 11th — seven nights in Montego Bay as the new year settles over the Caribbean. January in Jamaica is peak season for good reason: the weather is dry, the water is warm, and the island is running at full capacity. The trade winds come in off the sea and the reggae plays a little louder at night. There is no bad time to be in Montego Bay in January, but there is a smarter way to budget it.
+            January 4th through the 11th — seven nights in Montego Bay at the peak of Caribbean winter season. This deal presents the fundamental travel question in its clearest form: how much of your budget goes to the room, and how much stays available for the island itself? Two properties. Same city. Same week. $185 apart every single night.
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
-            This deal is the fundamental Montego Bay question: how much do you want to spend on the room itself? Doctors Cave Beach Hotel at $95 a night puts you steps from one of the most famous beaches in the Caribbean — Doctors Cave Beach, the legendary strip that draws travelers from across the world — at a price that leaves your January budget largely intact. Holiday Inn Resort Montego Bay at $169 a night steps it up with full resort amenities, multiple pools, and a more expansive waterfront setup. The difference is $74 a night. Over seven nights, that's $518 — a real number worth thinking about before you book.
+            Tropical Court Hotel at $68 a night is the floor — a no-frills base in Montego Bay that keeps seven nights in Jamaica under $500, leaving the rest of your budget for the things that actually define a Jamaica trip: jerk chicken at Scotchies, a day at Dunn's River Falls, sunset rum punch on the Hip Strip. Coyaba Beach Resort at $253 a night is the resort version: a beachfront property in Rose Hall with the full amenity package, designed for travelers who want the Caribbean experience delivered to them rather than discovered. Seven nights here is $1,771. The gap is $1,295 — real money either way you look at it.
           </p>
 
           <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
-            $95 or $169. Both put you in Montego Bay in January — one just puts $518 back in your pocket.
+            $68 or $253. Seven nights in Jamaica — one puts $1,295 back in your pocket.
           </p>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           <div style={{ marginBottom: "56px" }}>
-            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&h=500&fit=crop&auto=format" alt="Doctors Cave Beach Hotel" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&h=500&fit=crop&auto=format" alt="Tropical Court Hotel Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Doctors Cave Beach Hotel — Legendary Beach at $95</h2>
-              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$95 / night</span>
+              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Tropical Court Hotel — Budget Base at $68</h2>
+              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$68 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Doctors Cave Beach Hotel sits directly on its namesake beach — one of the most storied stretches of sand in the Caribbean, a beach that has drawn visitors to Montego Bay since the 1920s when it earned its reputation for healing mineral waters. The hotel itself is modest and efficient: comfortable rooms, solid service, and the kind of location that no amount of amenity budget can replicate. Seven nights here at $95 is $665 total — a week in Jamaica for less than most hotels charge for a weekend in peak season.
+              Tropical Court Hotel is the honest budget choice in Montego Bay: straightforward, centrally located, and priced at $68 a night for a city that can drain a travel budget faster than almost anywhere in the Caribbean. Seven nights here is $476 total — the entire accommodation cost for a week in Jamaica at peak season for under $500. That math leaves serious room in the trip budget for everything that actually makes Montego Bay worth the flight.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              January at Doctors Cave means dry weather, turquoise water, and the Hip Strip right outside your door. The bars, jerk chicken stands, and sunset spots that define Montego Bay nightlife are all within walking distance. The $95 you save on the room goes directly into those experiences — and in Jamaica, those experiences are what you came for.
+              Montego Bay rewards travelers who step outside the resort gates. The Hip Strip, Doctors Cave Beach, the Half Moon golf course, the Rose Hall Great House, Scotchies jerk chicken — none of these require a five-star address to access. Tropical Court puts you in the city, keeps your costs down, and trusts that you know how to spend the money you saved on the room. At $68 a night, that's exactly the right approach.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the most famous beach address in Montego Bay — directly on Doctors Cave Beach, steps from the Hip Strip, at $95 a night.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Budget travelers who want to put their money into the Jamaica experience rather than the room — $68 a night, seven nights, $476 total.
             </p>
             <a href="https://expedia.com/affiliates/workhomebalance_llc/mb1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
-              Book Doctors Cave Beach Hotel →
+              Book Tropical Court Hotel →
             </a>
           </div>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           <div style={{ marginBottom: "56px" }}>
-            <img src="https://images.unsplash.com/photo-1540202404-a2f29016b523?w=900&h=500&fit=crop&auto=format" alt="Holiday Inn Resort Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
+            <img src="https://images.unsplash.com/photo-1540202404-a2f29016b523?w=900&h=500&fit=crop&auto=format" alt="Coyaba Beach Resort Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Holiday Inn Resort Montego Bay — Full Resort at $169</h2>
-              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$169 / night</span>
+              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Coyaba Beach Resort — Beachfront Rose Hall at $253</h2>
+              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$253 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Holiday Inn Resort Montego Bay is what you get when you want the full resort package in MoBay without the all-inclusive price tag: multiple pools, a private beach, water sports, on-site dining, and the kind of organized resort energy that keeps a family or a group occupied without leaving the property. At $169 a night, it's a legitimate mid-range resort deal in January — when comparable waterfront properties in Montego Bay are charging $250 and up.
+              Coyaba Beach Resort sits on the coveted Rose Hall stretch of Montego Bay coastline — the same corridor as the Hilton, the Hyatt Ziva, and the Iberostar, where Jamaica's premium resort real estate is concentrated. A boutique beachfront property with private beach access, multiple pools, and the kind of quiet elegance that distinguishes Coyaba from the larger chain resorts sharing its address. "Coyaba" is the Arawak word for paradise, and the resort earns the name with a setting that puts the Caribbean Sea at your doorstep from the moment you arrive.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Seven nights at $169 comes to $1,183 — a week at a full waterfront resort with amenities for under $1,200. The resort sits on a private beach with calm, clear water and has the facilities to make a seven-night trip entirely self-contained if that's your preference. It's a solid value for the full resort experience in peak January season.
+              At $253 a night, seven nights is $1,771. That is a meaningful resort investment — but for a beachfront boutique in peak January Jamaica at Rose Hall, it's also a strong value relative to the larger properties on the same strip. January dry season means calm water, perfect beach weather, and the Blue Mountains visible on the horizon on clear afternoons. This is the kind of week you remember for a long time.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the full resort setup — multiple pools, private beach, water sports — at a mid-range January rate of $169 a night.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want a boutique beachfront resort experience in Rose Hall — private beach, pool, and quiet elegance at $253 a night in January.
             </p>
             <a href="https://expedia.com/affiliates/workhomebalance_llc/mb1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
-              Book Holiday Inn Resort Montego Bay →
+              Book Coyaba Beach Resort →
             </a>
           </div>
 
@@ -88,19 +88,19 @@ export default function MontegoBayDeal1Blog() {
           <div style={{ background: "#EBF3FF", borderRadius: "20px", padding: "36px 32px", marginBottom: "48px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>The Bottom Line</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "12px" }}>
-              Choose <strong>Doctors Cave Beach Hotel</strong> if the beach address is everything — you're directly on one of Jamaica's most iconic stretches of sand at $95 a night, and the $518 you save over seven nights goes straight into the Montego Bay experience.
+              Choose <strong>Tropical Court Hotel</strong> if you want to spend your money on Jamaica rather than the room — $68 a night, seven nights, $476 total, with over $1,200 freed up for the island itself.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "28px" }}>
-              Choose <strong>Holiday Inn Resort Montego Bay</strong> for the full resort package — pools, private beach, water sports, and on-site dining at $169 a night, still under market for a waterfront January stay.
+              Choose <strong>Coyaba Beach Resort</strong> for boutique beachfront in Rose Hall — private beach access, pool, and the kind of quiet Caribbean setting that makes January in Montego Bay genuinely extraordinary at $253 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/mb1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Doctors Cave Beach Hotel →</a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/mb1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Holiday Inn Resort →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/mb1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Tropical Court Hotel →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/mb1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Coyaba Beach Resort →</a>
             </div>
           </div>
 
           <div style={{ textAlign: "center", padding: "12px 0" }}>
-            <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>January in Montego Bay. The trade winds don't check your rate. 🇯🇲</p>
+            <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>January in Montego Bay. Budget or beachfront — Jamaica delivers either way. 🇯🇲</p>
             <a href="/rewards" style={{ color: ORANGE, fontWeight: "700", fontSize: "14px", textDecoration: "none" }}>Learn about RoomVoyager Rewards →</a>
           </div>
         </div>
