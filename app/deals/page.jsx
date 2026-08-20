@@ -88,8 +88,9 @@ const INTERNATIONAL = [
   {
     city: "Montego Bay",
     img: "https://images.unsplash.com/photo-1530225029356-e301a685e6b1?w=600&h=900&fit=crop&auto=format",
-    link: "/packages",
-    locked: true,
+    link: "/deals/montego-bay",
+    liveDate: "2026-08-30",
+    weekEnd: "2026-09-05",
   },
   {
     city: "Rome",
