@@ -70,10 +70,14 @@
 https://script.google.com/home/projects/1mFEJ1nVwUZljGNSs3zr278Y7Hp1FjTI6iEll5Vv3Us5fbNdKxeH4RCM0/edit
 ```
 
+**Reusable script file:** `roomvoyager/roomvoyager-deals-writer.gs`
+Copy its contents into the Apps Script editor each time.
+
 For each new city:
 1. Open the Apps Script project above
-2. Update the CONFIG block: `START_ROW`, `DEALS` (columns B–F), `CALLOUTS` (column V)
-3. Save → Run `writeDeals()`
+2. Paste `roomvoyager-deals-writer.gs` contents (replacing everything)
+3. Update the CONFIG block: `START_ROW`, `DEALS` (columns B–F), `CALLOUTS` (column V)
+4. Save → Run `writeDeals()`
 
 **Critical:** Column B = dates (NOT deal#). Never include deal number as first value — column A auto-calculates.
 
