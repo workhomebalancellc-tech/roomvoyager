@@ -19,64 +19,64 @@ export default function MontegoBayDeal2Blog() {
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
             <p style={{ color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🔥 Deals of the Week · Montego Bay</p>
             <h1 style={{ color: "#fff", fontSize: "clamp(22px, 4vw, 42px)", fontWeight: "800", margin: "0 0 10px", lineHeight: 1.15, textShadow: "0 2px 14px rgba(0,0,0,0.4)" }}>
-              Beach or Hip Strip. Both Under $90.
+              $103 or $338. City Hotel or All-Inclusive Beach.
             </h1>
             <p style={{ color: "#BFDBFE", fontSize: "clamp(13px, 1.5vw, 16px)", maxWidth: "560px", margin: 0, lineHeight: 1.6 }}>
-              Four nights in January. Two very different ways to do Montego Bay.
+              Three nights in Montego Bay in January. Two completely different trips.
             </p>
           </div>
         </div>
 
         <div style={{ maxWidth: "780px", margin: "0 auto", padding: "52px 24px 80px" }}>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "20px" }}>
-            January 9th through the 13th — four nights in Montego Bay at the height of Caribbean winter season. This deal isn't about how much you spend. Both options come in under $90 a night. It's about where you want to be: in the action on the Hip Strip, the neon-lit stretch of bars, jerk spots, and rum shacks that defines Montego Bay nightlife — or on the water, with sand under your feet and the Caribbean at your front door.
+            January 20th through the 23rd — three nights in Montego Bay at the tail end of peak winter season. This deal is the clearest version of a classic travel choice: a city hotel that keeps your costs low and your options open, versus an all-inclusive beachfront resort that wraps everything — room, meals, drinks, and beach access — into a single daily rate.
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
-            Wexford Court Hotel at $72 a night drops you directly in the middle of the Hip Strip scene — the same block as the best rum bars, reggae clubs, and rooftop spots in the city. SeaGarden Beach Resort at $89 a night is the beachfront version: sand, calm water, and resort grounds that put the Caribbean experience front and center. Same budget, same city. Completely different four nights.
+            Pineapple Court Hotel at $103 a night is the lean, flexible option — a well-located city hotel in Montego Bay that puts you in the middle of the action without locking you into a resort. Three nights here is $309, leaving your entire food, drink, and activity budget wide open. SeaGarden Beach Resort All-Inclusive at $338 a night is the flip side: a beachfront all-inclusive where every meal, every drink, and every water sport is covered from the moment you check in. Three nights all-in is $1,014. The question is how you prefer to experience Jamaica.
           </p>
 
           <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
-            $72 or $89. Beach or Hip Strip — both under $90, both in Montego Bay in January.
+            $103 or $338. City freedom or beachfront all-inclusive — three nights in January, your call.
           </p>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           <div style={{ marginBottom: "56px" }}>
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&h=500&fit=crop&auto=format" alt="Wexford Court Hotel Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&h=500&fit=crop&auto=format" alt="Pineapple Court Hotel Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Wexford Court Hotel — Hip Strip Central at $72</h2>
-              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$72 / night</span>
+              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Pineapple Court Hotel — City Base at $103</h2>
+              <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$103 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Wexford Court Hotel is the classic budget choice for travelers who come to Montego Bay for the scene rather than the resort. Sitting right on Gloucester Avenue — the famous Hip Strip — it puts you in the center of everything: the rum bars, the jerk chicken, the live music that starts in the afternoon and goes until the stars come out. At $72 a night, four nights comes to $288. That's the entire accommodation cost for four nights in peak January Jamaica.
+              Pineapple Court Hotel is the practical city choice in Montego Bay — centrally located, reasonably priced, and designed for travelers who want a clean, comfortable base without paying resort rates for amenities they won't use. At $103 a night, three nights is $309. That is the total accommodation cost for three nights in peak January Jamaica, which means the rest of your budget goes exactly where you want it: jerk chicken at the roadside spots the resorts can't replicate, beach bars on the Hip Strip, a day trip to the Blue Mountains, or a boat out to the reef.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              The hotel has a pool, an on-site bar, and enough comfort to sleep well between late nights. The beach is a short walk. But the real draw is the location: you are on the Hip Strip, which in Montego Bay is not just a street — it is the reason people come to MoBay and keep coming back. At $72, you're paying for proximity to that energy, and it's worth every dollar.
+              The Hotel is close enough to Doctors Cave Beach and the Hip Strip to make a trip on foot viable, and Montego Bay's taxi network fills in any gaps easily. For three nights, a city hotel at $103 keeps the trip fast and flexible — you decide each day what Jamaica looks like, rather than having it decided for you by a resort itinerary.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the Montego Bay street-level experience — Hip Strip bars, reggae, jerk chicken, and nightlife, all out the front door at $72 a night.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want a low-cost, flexible base in Montego Bay — $103 a night, city-center access, and a wide-open budget for the island itself.
             </p>
             <a href="https://expedia.com/affiliates/workhomebalance_llc/mb2_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
-              Book Wexford Court Hotel →
+              Book Pineapple Court Hotel →
             </a>
           </div>
 
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           <div style={{ marginBottom: "56px" }}>
-            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe2fa?w=900&h=500&fit=crop&auto=format" alt="SeaGarden Beach Resort Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
+            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe2fa?w=900&h=500&fit=crop&auto=format" alt="SeaGarden Beach Resort All-Inclusive" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>SeaGarden Beach Resort — Beachfront at $89</h2>
-              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$89 / night</span>
+              <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>SeaGarden Beach Resort All-Inclusive — Beach Everything at $338</h2>
+              <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$338 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              SeaGarden Beach Resort delivers the Caribbean beach experience at a price point that rarely comes with actual beachfront access: $89 a night, private beach, all-inclusive amenities included. Four nights here is $356 — under $400 for four nights at a beachfront resort in peak Jamaica season. The resort sits on calm water ideal for swimming and snorkeling, with meals, drinks, and water sports folded into the rate. When you factor in what you're not spending on food and drinks, the all-inclusive math gets even more compelling.
+              SeaGarden Beach Resort is Montego Bay's all-inclusive answer for travelers who want the Caribbean experience delivered in a single package: private beach, multiple pools, unlimited meals and drinks, water sports included, and a beachfront setting that makes the most of Jamaica's January dry season. At $338 a night, three nights is $1,014 — but when you factor out what you'd spend on food and drinks independently over three full days, the all-inclusive math often works in the resort's favor for travelers who eat and drink well.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              This is the option for travelers who want to land in Montego Bay and not have to make decisions about where to eat or drink — everything is on property and covered. The beach is calm and swimmable year-round, and January's dry season makes it ideal for spending serious time in the water.
+              The all-inclusive format suits three-night stays particularly well. You land, you unpack once, everything is handled, and you spend the days between the beach and the pool. January weather at SeaGarden is prime: calm water, bright sun, and the kind of beach afternoon that makes the flight worth it. If the point of three nights in Montego Bay is to actually get on the beach, this is the answer.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
-              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want beachfront all-inclusive at a budget price — private beach, meals, drinks, and water sports at $89 a night in January.
+              <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want everything handled — private beach, unlimited food and drinks, pools, and water sports at $338 a night all-inclusive.
             </p>
             <a href="https://expedia.com/affiliates/workhomebalance_llc/mb2_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}>
               Book SeaGarden Beach Resort →
@@ -88,19 +88,19 @@ export default function MontegoBayDeal2Blog() {
           <div style={{ background: "#EBF3FF", borderRadius: "20px", padding: "36px 32px", marginBottom: "48px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#111827", margin: "0 0 20px" }}>The Bottom Line</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "12px" }}>
-              Choose <strong>Wexford Court Hotel</strong> if you want the Montego Bay street experience — the Hip Strip, the rum bars, the reggae, the real city energy — at $72 a night with the beach a short walk away.
+              Choose <strong>Pineapple Court Hotel</strong> if you want to explore Montego Bay on your own terms — $103 a night, city center, and a budget that lets you eat, drink, and move around Jamaica freely.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "28px" }}>
-              Choose <strong>SeaGarden Beach Resort</strong> for beachfront all-inclusive under $90 — private beach, meals, drinks, and water sports at $89 a night in peak January season.
+              Choose <strong>SeaGarden Beach Resort All-Inclusive</strong> if the goal is beach, sun, and zero decisions — private beach, unlimited food and drinks, and water sports at $338 a night with everything included.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/mb2_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Wexford Court Hotel →</a>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/mb2_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>Pineapple Court Hotel →</a>
               <a href="https://expedia.com/affiliates/workhomebalance_llc/mb2_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>SeaGarden Beach Resort →</a>
             </div>
           </div>
 
           <div style={{ textAlign: "center", padding: "12px 0" }}>
-            <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>January in Montego Bay. The Hip Strip or the shore — both are Jamaica. 🇯🇲</p>
+            <p style={{ fontSize: "18px", fontWeight: "800", color: "#111827", margin: "0 0 8px" }}>Three nights in January. City flex or beach everything — Jamaica works either way. 🇯🇲</p>
             <a href="/rewards" style={{ color: ORANGE, fontWeight: "700", fontSize: "14px", textDecoration: "none" }}>Learn about RoomVoyager Rewards →</a>
           </div>
         </div>
