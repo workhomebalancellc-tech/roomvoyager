@@ -14,7 +14,7 @@ export default function HonoluluDeal5Blog() {
         <NavBar active="deals" />
 
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
-          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&h=700&fit=crop&auto=format" alt="Honolulu luxury resort Waikiki" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 45%" }} />
+          <img src="/Deals/56/honolulu_destination.jpg" alt="Honolulu luxury resort Waikiki" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 45%" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.45) 0%, rgba(0,15,60,0.75) 100%)" }} />
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
             <p style={{ color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🔥 Deals of the Week · Honolulu</p>
@@ -42,7 +42,7 @@ export default function HonoluluDeal5Blog() {
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           <div style={{ marginBottom: "56px" }}>
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&h=500&fit=crop&auto=format" alt="Hilton Hawaiian Village Waikiki" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
+            <img src="/Deals/56/HiltonHawaiianVillageWaikiki1.jpg" alt="Hilton Hawaiian Village Waikiki" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Hilton Hawaiian Village — Waikiki's Largest Resort at $742</h2>
               <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$742 / night</span>
@@ -64,7 +64,7 @@ export default function HonoluluDeal5Blog() {
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           <div style={{ marginBottom: "56px" }}>
-            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=900&h=500&fit=crop&auto=format" alt="Moana Surfrider Westin Waikiki" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
+            <img src="/Deals/56/MoanaSurfriderWestinWaikiki1.jpg" alt="Moana Surfrider Westin Waikiki" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Moana Surfrider, A Westin Resort & Spa — Waikiki's First Lady at $977</h2>
               <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$977 / night</span>
