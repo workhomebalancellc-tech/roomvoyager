@@ -42,7 +42,7 @@ export default function MontegoBayDeal4Blog() {
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           <div style={{ marginBottom: "56px" }}>
-            <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=900&h=500&fit=crop&auto=format" alt="Mystic Ridge Paradise Ocho Rios" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
+            <img src="/Deals/62/mysticridgeparadise1.jpg" alt="Mystic Ridge Paradise Ocho Rios" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Mystic Ridge Paradise — Ocho Rios Villa at $245</h2>
               <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$245 / night</span>
@@ -64,7 +64,7 @@ export default function MontegoBayDeal4Blog() {
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           <div style={{ marginBottom: "56px" }}>
-            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe2fa?w=900&h=500&fit=crop&auto=format" alt="Deja Resort All-Inclusive Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
+            <img src="/Deals/62/dejaresort1.jpg" alt="Deja Resort All-Inclusive Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Deja Resort All-Inclusive — MoBay Beachfront at $440</h2>
               <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$440 / night</span>
