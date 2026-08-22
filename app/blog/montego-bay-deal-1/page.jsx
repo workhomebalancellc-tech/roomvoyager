@@ -14,7 +14,7 @@ export default function MontegoBayDeal1Blog() {
         <NavBar active="deals" />
 
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
-          <img src="https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?w=1600&h=700&fit=crop&auto=format" alt="Montego Bay Jamaica beach" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 60%" }} />
+          <img src="/Deals/59/montegobay_destination.jpg" alt="Montego Bay Jamaica beach" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 60%" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.45) 0%, rgba(0,15,60,0.75) 100%)" }} />
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
             <p style={{ color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🔥 Deals of the Week · Montego Bay</p>
@@ -42,7 +42,7 @@ export default function MontegoBayDeal1Blog() {
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           <div style={{ marginBottom: "56px" }}>
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&h=500&fit=crop&auto=format" alt="Tropical Court Hotel Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
+            <img src="/Deals/59/tropicalcourt1.jpg" alt="Tropical Court Hotel Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Tropical Court Hotel — Budget Base at $68</h2>
               <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$68 / night</span>
@@ -64,7 +64,7 @@ export default function MontegoBayDeal1Blog() {
           <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: "48px" }} />
 
           <div style={{ marginBottom: "56px" }}>
-            <img src="https://images.unsplash.com/photo-1540202404-a2f29016b523?w=900&h=500&fit=crop&auto=format" alt="Coyaba Beach Resort Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
+            <img src="/Deals/59/coyaba1.jpg" alt="Coyaba Beach Resort Montego Bay" style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>Coyaba Beach Resort — Beachfront Rose Hall at $253</h2>
               <span style={{ background: "#EFF6FF", color: "#1D4ED8", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$253 / night</span>
