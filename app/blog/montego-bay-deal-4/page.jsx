@@ -14,7 +14,7 @@ export default function MontegoBayDeal4Blog() {
         <NavBar active="deals" />
 
         <div style={{ position: "relative", height: "340px", overflow: "hidden" }}>
-          <img src="https://images.unsplash.com/photo-1540202404-a2f29016b523?w=1600&h=700&fit=crop&auto=format" alt="Jamaica resort" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 55%" }} />
+          <img src="/Deals/62/montegobay_destination.jpg" alt="Jamaica resort" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 55%" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,30,100,0.45) 0%, rgba(0,15,60,0.75) 100%)" }} />
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", textAlign: "center" }}>
             <p style={{ color: ORANGE, fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.14em", margin: "0 0 10px" }}>🔥 Deals of the Week · Montego Bay</p>
