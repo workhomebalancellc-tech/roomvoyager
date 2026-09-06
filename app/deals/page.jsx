@@ -44,8 +44,7 @@ const DOMESTIC = [
     city: "Nashville",
     img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&h=900&fit=crop&auto=format",
     link: "/deals/nashville",
-    liveDate: "2026-08-29",
-    weekEnd: "2026-09-04",
+    locked: true,
   },
   {
     city: "New Orleans",
@@ -72,8 +71,7 @@ const INTERNATIONAL = [
     city: "Punta Cana",
     img: "/Deals/17/puntacana_destination.jpg",
     link: "/deals/punta-cana",
-    liveDate: "2026-08-22",
-    weekEnd: "2026-08-28",
+    locked: true,
   },
   {
     city: "Cancún",
