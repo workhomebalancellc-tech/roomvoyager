@@ -62,7 +62,9 @@
 | Miami | 39–44 | 39–44 |
 | Cancún | 45–51 | 45–51 |
 | Honolulu | 53–59 | 52–58 |
-| **Montego Bay** | **60–66** | **59–65** |
+| Montego Bay | 60–66 | 59–65 |
+| **Nashville** | **67–73** | **66–72** |
+| **Punta Cana** | **74–80** | **73–79** |
 
 ### Write Technique — Apps Script
 **Project URL:**
@@ -110,6 +112,9 @@ fetch(`https://docs.google.com/spreadsheets/d/1wJXIYWVloZrTTNYESLey2ChylVH2dARgb
 - Add city object with `city`, `img`, `link`, `liveDate`, `weekEnd`
 
 ---
+
+## Display Preferences
+- **Always present deal options in a chart/table** — never list them in plain text. Use the visualize widget with a table layout showing deal#, type, hotel A, price A, hotel B, price B.
 
 ## Next Up: Montego Bay
 - Start at spreadsheet **row 60**, `START_ROW = 60`
