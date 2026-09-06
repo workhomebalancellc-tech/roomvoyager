@@ -71,7 +71,7 @@ export default function NashvilleDeal5Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Upscale travelers who want polished 4-star service in a quieter Vanderbilt neighborhood — without the downtown noise, at the best price in this tier.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas5_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville5_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function NashvilleDeal5Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the most central Nashville address possible — Broadway steps away, Country Music Hall of Fame below, and a 9.4-rated luxury experience throughout.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas5_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville5_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function NashvilleDeal5Blog() {
               Choose <strong>Omni Nashville Hotel</strong> if location is everything — Broadway steps away, the Country Music Hall of Fame below your feet, and a 9.4-rated downtown experience at $427 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas5_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville5_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Loews Nashville →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas5_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville5_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Omni Nashville →
               </a>
             </div>

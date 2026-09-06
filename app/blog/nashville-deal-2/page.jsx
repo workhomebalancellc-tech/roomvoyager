@@ -71,7 +71,7 @@ export default function NashvilleDeal2Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the cheapest well-reviewed option with free parking and easy airport access — minimal fuss, maximum savings.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas2_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville2_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function NashvilleDeal2Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want apartment-style comfort, a full kitchen, and a rooftop pool in a creative neighborhood — for just $8 more per night than a basic budget hotel.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas2_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville2_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function NashvilleDeal2Blog() {
               Choose <strong>Mint House at Marathon Village</strong> if you want something with real character — a full kitchen, rooftop pool, and apartment-style living in a cool Nashville neighborhood for just $8 more per night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas2_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville2_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Baymont Donelson →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas2_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville2_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Mint House Marathon Village →
               </a>
             </div>

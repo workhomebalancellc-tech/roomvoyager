@@ -71,7 +71,7 @@ export default function NashvilleDeal3Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want real Nashville personality, walkable Broadway access, and boutique character — without the luxury hotel price tag.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas3_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville3_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function NashvilleDeal3Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Luxury travelers who want Nashville's finest address — river views, world-class spa, acclaimed dining, and five-star service from arrival to departure.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas3_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville3_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function NashvilleDeal3Blog() {
               Choose <strong>Four Seasons Nashville</strong> if you want the city's undisputed finest hotel — Cumberland River views, a world-class spa, and five-star everything at $709 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas3_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville3_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Sobro Guest House →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas3_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville3_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Four Seasons Nashville →
               </a>
             </div>

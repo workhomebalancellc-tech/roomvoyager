@@ -71,7 +71,7 @@ export default function NashvilleDeal6Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Smart travelers doing an extended Nashville stay who want a kitchen, more space, and Hyatt loyalty points — at $222 less per night than the Grand Hyatt.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas6_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville6_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function NashvilleDeal6Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the full Grand Hyatt flagship experience — 9.6 rating, downtown Nashville's finest address, and a stay that feels like an occasion.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas6_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville6_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function NashvilleDeal6Blog() {
               Choose <strong>Grand Hyatt Nashville</strong> if you want Nashville's flagship Hyatt experience — a 9.6-rated downtown tower with rooftop pool and grand hotel service at $383 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas6_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville6_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Hyatt House Downtown →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas6_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville6_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Grand Hyatt Nashville →
               </a>
             </div>

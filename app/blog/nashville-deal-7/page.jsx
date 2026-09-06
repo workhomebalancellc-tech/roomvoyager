@@ -71,7 +71,7 @@ export default function NashvilleDeal7Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want to experience Nashville like a local — 12 South's walkable neighborhood life, a 9.8-rated boutique, and residential character you won't find downtown.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas7_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville7_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function NashvilleDeal7Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Design-forward travelers who want a rooftop bar, Gulch neighborhood access, and World of Hyatt points — with a 9.4 rating that validates every dollar.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas7_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville7_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function NashvilleDeal7Blog() {
               Choose <strong>Thompson Nashville by Hyatt</strong> if you want rooftop culture, Gulch design energy, and World of Hyatt points — a 9.4-rated design hotel that earns every penny at $333 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas7_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville7_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 The Gilmore 12 South →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas7_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville7_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Thompson Nashville →
               </a>
             </div>

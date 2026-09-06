@@ -71,7 +71,7 @@ export default function NashvilleDeal1Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Budget-conscious travelers who want to spend their money on Broadway, live music, and Nashville's incredible food scene — not the room.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas1_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville1_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function NashvilleDeal1Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want Hilton reliability near Vanderbilt and Music Row — a comfortable home base for a full week in Nashville without going full-luxury.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas1_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville1_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function NashvilleDeal1Blog() {
               Choose <strong>Hilton Garden Inn Nashville Vanderbilt</strong> if you want reliability and a neighborhood that feels like Nashville rather than a motel strip. At $131 a night, it's the sensible mid-range pick for a full February week.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Fiddler's Inn →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Hilton Garden Inn Vanderbilt →
               </a>
             </div>

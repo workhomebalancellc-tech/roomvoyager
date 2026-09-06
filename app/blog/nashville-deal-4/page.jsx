@@ -71,7 +71,7 @@ export default function NashvilleDeal4Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Design-conscious travelers who want a hotel with real character and local soul — not just a comfortable room, but a genuinely interesting place to stay.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas4_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville4_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function NashvilleDeal4Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the entertainment resort experience — multiple bars, live music on-site, and a hotel that matches Nashville's party energy beat for beat.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/nas4_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/nashville4_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function NashvilleDeal4Blog() {
               Choose <strong>Margaritaville Nashville</strong> if you want the full entertainment resort experience — live music on-site, multiple bars, and a hotel that goes all-in on the Nashville party vibe at $260 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas4_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville4_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Bode Nashville →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/nas4_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/nashville4_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Margaritaville Nashville →
               </a>
             </div>
