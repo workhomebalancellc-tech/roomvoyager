@@ -71,7 +71,7 @@ export default function PuntaCanaDeal1Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Budget-maximizing travelers who want to get to Punta Cana for the lowest possible cost — spend the savings on excursions, beach clubs, and local food instead.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca1_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta1_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function PuntaCanaDeal1Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want Marriott Bonvoy reliability and a true resort experience in Punta Cana — without the all-inclusive price tag — at $137 a night.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca1_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta1_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function PuntaCanaDeal1Blog() {
               Choose <strong>Four Points by Sheraton Puntacana</strong> if you want the genuine Marriott resort experience — 9.0 rating, Bonvoy points, full pool and spa, at $137 a night for February 7–14.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta1_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Hotel Marimba →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta1_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Four Points by Sheraton →
               </a>
             </div>

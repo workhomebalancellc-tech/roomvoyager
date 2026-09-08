@@ -71,7 +71,7 @@ export default function PuntaCanaDeal7Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Adults-only travelers who want boutique atmosphere over resort scale — pool, spa, 9.4-rated intimacy at $156 a night.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca7_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta7_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function PuntaCanaDeal7Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the Cap Cana Marina experience at boutique scale — VIP Access, 9.6-rated, outdoor pool and bar, at $591 a night.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca7_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta7_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function PuntaCanaDeal7Blog() {
               Choose <strong>Hotel Casa Don Luis Cap Cana</strong> if you want the Cap Cana Marina boutique experience — VIP Access, 9.6 rating, and one of the Caribbean's most beautiful addresses at $591 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca7_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta7_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Faranda Single 1 Adults Only →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca7_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta7_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Casa Don Luis Cap Cana →
               </a>
             </div>

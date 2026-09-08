@@ -39,7 +39,7 @@ export default function PuntaCanaDeal2Blog() {
             Punta Cana doesn't have to cost a fortune. While the destination is famous for its sprawling all-inclusive resorts, the area also has local hotels that offer a genuine Caribbean stay at prices that are almost hard to believe. This week's deal puts the two most affordable legitimate hotel options head to head — both under $30 a night, one closer to the beach, one closer to the town center.
           </p>
           <p style={{ fontSize: "17px", lineHeight: 1.8, color: "#374151", marginBottom: "48px" }}>
-            Hotel Maracas Punta Cana comes in at $28 a night — a local hotel that's a five-minute walk from Cortecito Beach, with a poolside bar, restaurant, and outdoor pool. Hotel Marimba Punta Cana lands at $27 a night — a slightly cheaper option in the Bávaro area with its own bar, restaurant, and spa services. The $1-a-night price difference makes this deal almost entirely about location preference. Beach proximity or town center access — both for under $30.
+            Hotel Maracas Punta Cana comes in at $28 a night — a local hotel that's a five-minute walk from Cortecito Beach, with a poolside bar, restaurant, and outdoor pool. My Home Hotel Punta Cana lands at $27 a night — a slightly cheaper option in the Bávaro area with its own amenities and a comfortable home-style stay. The $1-a-night price difference makes this deal almost entirely about location preference. Beach proximity or town center access — both for under $30.
           </p>
 
           <p style={{ fontSize: "15px", lineHeight: 1.6, color: NAVY, fontWeight: "700", fontStyle: "italic", textAlign: "center", margin: "0 0 48px", borderLeft: `3px solid ${ORANGE}`, paddingLeft: "16px" }}>
@@ -71,7 +71,7 @@ export default function PuntaCanaDeal2Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Budget travelers who want genuine beach proximity — a five-minute walk to Cortecito Beach, a pool and bar on-site, and $28 a night that makes the whole week affordable.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca2_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta2_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -86,31 +86,31 @@ export default function PuntaCanaDeal2Blog() {
           <div style={{ marginBottom: "56px" }}>
             <img
               src="https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?w=800&h=450&fit=crop&auto=format"
-              alt="Hotel Marimba Punta Cana Bávaro"
+              alt="My Home Hotel Punta Cana"
               style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "16px", marginBottom: "28px" }}
             />
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px", flexWrap: "wrap" }}>
               <h2 style={{ fontSize: "26px", fontWeight: "800", color: "#111827", margin: 0 }}>
-                Hotel Marimba Punta Cana — Bávaro Town Center at $27 a Night
+                My Home Hotel Punta Cana — Bávaro Town Center at $27 a Night
               </h2>
               <span style={{ background: "#DCFCE7", color: "#166534", fontSize: "13px", fontWeight: "800", padding: "4px 12px", borderRadius: "20px", whiteSpace: "nowrap" }}>$27 / night</span>
             </div>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              Hotel Marimba Punta Cana is based in the Bávaro area — the commercial and residential heart of the tourist zone that connects to the resort corridor. It comes with a bar, full restaurant, and spa services that give it a step up in amenities compared to some other budget options. At just $27 a night, the Marimba is the cheapest well-equipped hotel in this entire market.
+              My Home Hotel Punta Cana is based in the Bávaro area — the commercial and residential heart of the tourist zone that connects to the resort corridor. It comes with a bar, full restaurant, and spa services that give it a step up in amenities compared to some other budget options. At just $27 a night, the Marimba is the cheapest well-equipped hotel in this entire market.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "16px" }}>
-              The Bávaro location gives you access to local markets, pharmacies, local restaurants, and the day-to-day rhythm of Punta Cana as a real town rather than just a resort bubble. For travelers who want to feel more like a resident than a tourist — or who simply want the cheapest possible base with real amenities — Hotel Marimba at $27 a night is hard to argue with.
+              The Bávaro location gives you access to local markets, pharmacies, local restaurants, and the day-to-day rhythm of Punta Cana as a real town rather than just a resort bubble. For travelers who want to feel more like a resident than a tourist — or who simply want the cheapest possible base with real amenities — My Home Hotel at $27 a night is hard to argue with.
             </p>
             <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#6B7280", marginBottom: "24px", fontStyle: "italic" }}>
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Budget travelers who want to be in the Bávaro town rhythm — local restaurants, markets, spa on-site, and the lowest nightly rate of any equipped hotel in the area.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca2_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta2_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
             >
-              Book Hotel Marimba →
+              Book My Home Hotel →
             </a>
           </div>
 
@@ -123,14 +123,14 @@ export default function PuntaCanaDeal2Blog() {
               Choose <strong>Hotel Maracas</strong> if beach proximity matters — a five-minute walk to Cortecito Beach with a pool and bar on-site at $28 a night.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151", marginBottom: "28px" }}>
-              Choose <strong>Hotel Marimba</strong> if you want the Bávaro town experience — local market access, a spa on-site, and the absolute lowest nightly rate in the market at $27.
+              Choose <strong>My Home Hotel</strong> if you want the Bávaro town experience — local market access, a spa on-site, and the absolute lowest nightly rate in the market at $27.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca2_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta2_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Hotel Maracas →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca2_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
-                Hotel Marimba →
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta2_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+                My Home Hotel →
               </a>
             </div>
           </div>

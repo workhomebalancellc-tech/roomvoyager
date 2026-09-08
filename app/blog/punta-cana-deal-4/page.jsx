@@ -71,7 +71,7 @@ export default function PuntaCanaDeal4Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Independent travelers who want Marriott quality and Bonvoy points in Punta Cana — without the all-inclusive constraint — at $151 a night.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca4_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta4_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function PuntaCanaDeal4Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the classic all-inclusive Punta Cana experience — private beach, everything included, 8.2-rated at scale, for $272 a night.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca4_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta4_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function PuntaCanaDeal4Blog() {
               Choose <strong>Barceló Bávaro Palace</strong> if you want the full all-inclusive beach palace experience — everything included, private beach, and 6,000+ reviews backing it up at $272 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca4_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta4_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 AC Hotel by Marriott →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca4_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta4_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Barceló Bávaro Palace →
               </a>
             </div>

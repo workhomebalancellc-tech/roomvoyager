@@ -71,7 +71,7 @@ export default function PuntaCanaDeal5Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want a well-reviewed all-inclusive Punta Cana resort at a realistic price — beach, pools, everything included, at $285 a night.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca5_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta5_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function PuntaCanaDeal5Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want the premium all-inclusive experience — 19 restaurants, private beach, 9.6-rated, VIP Access, at $649 a night for February in Punta Cana.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca5_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta5_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function PuntaCanaDeal5Blog() {
               Choose <strong>Family Selection at Grand Palladium Select Bávaro</strong> if you want Punta Cana's premium all-inclusive tier — 19 restaurants, private beach, 9.6-rated excellence at $649 a night.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca5_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta5_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Sunscape Coco →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca5_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta5_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Grand Palladium Select Bávaro →
               </a>
             </div>

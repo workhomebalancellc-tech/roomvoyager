@@ -71,7 +71,7 @@ export default function PuntaCanaDeal3Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers who want an intimate, well-run boutique stay — breakfast every morning, a pool, and a 9.4 guest rating at just $43 a night.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca3_1"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta3_1"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -105,7 +105,7 @@ export default function PuntaCanaDeal3Blog() {
               <strong style={{ color: "#374151", fontStyle: "normal" }}>Best for:</strong> Travelers for whom Punta Cana's finest address is the goal — a 9.8-rated Oscar de la Renta–designed beachfront enclave where nothing is left to chance.
             </p>
             <a
-              href="https://expedia.com/affiliates/workhomebalance_llc/pca3_2"
+              href="https://expedia.com/affiliates/workhomebalance_llc/punta3_2"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "14px 28px", borderRadius: "12px", fontSize: "15px", fontWeight: "800", textDecoration: "none", boxShadow: "0 4px 14px rgba(255,102,0,0.35)" }}
@@ -126,10 +126,10 @@ export default function PuntaCanaDeal3Blog() {
               Choose <strong>Tortuga Bay Hotel</strong> if you want Punta Cana's finest address — a 9.8-rated beachfront enclave designed by Oscar de la Renta where the experience matches every penny of the $1,600-a-night price tag.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca3_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta3_1" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: ORANGE, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 MANAYA B&B →
               </a>
-              <a href="https://expedia.com/affiliates/workhomebalance_llc/pca3_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
+              <a href="https://expedia.com/affiliates/workhomebalance_llc/punta3_2" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: NAVY, color: "#fff", padding: "13px 24px", borderRadius: "12px", fontSize: "14px", fontWeight: "800", textDecoration: "none" }}>
                 Tortuga Bay Hotel →
               </a>
             </div>
