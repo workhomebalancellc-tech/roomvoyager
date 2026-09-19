@@ -48,8 +48,7 @@ const DOMESTIC = [
   {
     city: "New Orleans",
     img: "https://images.unsplash.com/photo-1595867818082-083862f3d630?w=600&h=900&fit=crop&auto=format",
-    link: "/hotels",
-    locked: true,
+    link: "/deals/new-orleans",
   },
 ];
 
@@ -81,8 +80,7 @@ const INTERNATIONAL = [
   {
     city: "London",
     img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&h=900&fit=crop&auto=format",
-    link: "/packages",
-    locked: true,
+    link: "/deals/london",
   },
   {
     city: "Montego Bay",
